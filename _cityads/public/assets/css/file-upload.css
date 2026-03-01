@@ -1,0 +1,77 @@
+.file-upload {
+    margin-bottom: 20px;
+    position: relative;
+    /* max-width: 300px; */
+}
+
+.file-upload .file-input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.file-preview {
+    position: relative;
+    width: 120px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fafafa;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.file-preview img.preview-img {
+    max-width: 100%;
+    border-radius: 6px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* .file-info {
+    font-size: 13px;
+    color: #555;
+}
+
+.file-name {
+    display: block;
+    font-weight: bold;
+} */
+
+.file-info .file-name {
+    display: block;
+    font-weight: bold;
+    white-space: nowrap;        
+    overflow: hidden;           
+    text-overflow: ellipsis;    
+    max-width: 80px;           
+}
+
+.file-size {
+    display: block;
+    color: #777;
+}
+
+.file-preview .remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: #8a95a0;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    line-height: 18px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.file-preview .remove-btn:hover {
+    background: #5867dd;
+}
+
+.file-preview video.preview-img {
+    max-width: 100%;
+    border-radius: 6px;
+    display: block;
+    margin-bottom: 8px;
+}
