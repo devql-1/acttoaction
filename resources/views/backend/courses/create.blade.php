@@ -66,7 +66,26 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                {{-- CATEGORY --}}
+                                <div class="form-group row">
+                                    <div class="col-md-3">
+                                        <label>Category <span class="text-danger">*</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select name="category_id"
+                                            class="form-control @error('category_id') is-invalid @enderror" required>
+                                            <option value="">-- Select Category --</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('category_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                                 {{-- TOTAL SESSIONS --}}
                                 <div class="form-group row">
                                     <div class="col-md-3"><label>Total Sessions</label></div>
@@ -217,20 +236,20 @@
             });
 
             const html = `
-                                        <div class="border rounded p-3 mb-3 bg-light" id="${rowId}">
-                                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                                <select class="form-control w-50" onchange="loadCenters(this, '${rowId}')">
-                                                    ${options}
-                                                </select>
-                                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                                    onclick="removeStateRow('${rowId}')">
-                                                    <i class="fa fa-times me-1"></i> Remove
-                                                </button>
-                                            </div>
-                                            <div class="centers-container" id="centers_${rowId}">
-                                                <small class="text-muted">Select a state to see centers.</small>
-                                            </div>
-                                        </div>`;
+                                                    <div class="border rounded p-3 mb-3 bg-light" id="${rowId}">
+                                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                                            <select class="form-control w-50" onchange="loadCenters(this, '${rowId}')">
+                                                                ${options}
+                                                            </select>
+                                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                                                onclick="removeStateRow('${rowId}')">
+                                                                <i class="fa fa-times me-1"></i> Remove
+                                                            </button>
+                                                        </div>
+                                                        <div class="centers-container" id="centers_${rowId}">
+                                                            <small class="text-muted">Select a state to see centers.</small>
+                                                        </div>
+                                                    </div>`;
 
             document.getElementById('stateRowsContainer').insertAdjacentHTML('beforeend', html);
             document.getElementById('noStateMsg').style.display = 'none';
@@ -266,23 +285,23 @@
                     let html = '<div class="row">';
                     centers.forEach(center => {
                         html += `
-                                                    <div class="col-md-6 mb-2">
-                                                        <div class="form-check border rounded p-2 bg-white">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                name="center_ids[]"
-                                                                value="${center.id}"
-                                                                id="center_${center.id}_${rowId}">
-                                                            <label class="form-check-label w-100" for="center_${center.id}_${rowId}">
-                                                                <strong>${center.name}</strong>
-                                                                <small class="text-muted d-block">
-                                                                    <i class="fa fa-map-marker me-1"></i>${center.address ?? 'No address provided'}
-                                                                </small>
-                                                                ${center.phone
+                                                                <div class="col-md-6 mb-2">
+                                                                    <div class="form-check border rounded p-2 bg-white">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                            name="center_ids[]"
+                                                                            value="${center.id}"
+                                                                            id="center_${center.id}_${rowId}">
+                                                                        <label class="form-check-label w-100" for="center_${center.id}_${rowId}">
+                                                                            <strong>${center.name}</strong>
+                                                                            <small class="text-muted d-block">
+                                                                                <i class="fa fa-map-marker me-1"></i>${center.address ?? 'No address provided'}
+                                                                            </small>
+                                                                            ${center.phone
                                 ? `<small class="text-muted"><i class="fa fa-phone me-1"></i>${center.phone}</small>`
                                 : ''}
-                                                            </label>
-                                                        </div>
-                                                    </div>`;
+                                                                        </label>
+                                                                    </div>
+                                                                </div>`;
                     });
                     html += '</div>';
 

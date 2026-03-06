@@ -56,7 +56,7 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::with(['subEvents.centers.state'])->findOrFail($id);
-        return view('backend.sub-events-index', compact('event'));
+        return view('backend.events.show', compact('event'));
     }
 
     public function edit($id)

@@ -7,22 +7,12 @@
                 <h3 class="fw-bold mb-3">Courses</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home">
-                        <a href="#">
-                            <i class="icon-home"></i>
-                        </a>
+                        <a href="#"><i class="icon-home"></i></a>
                     </li>
-                    <li class="separator">
-                        <i class="icon-arrow-right"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">Courses</a>
-                    </li>
-                    <li class="separator">
-                        <i class="icon-arrow-right"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#">All Courses</a>
-                    </li>
+                    <li class="separator"><i class="icon-arrow-right"></i></li>
+                    <li class="nav-item"><a href="#">Courses</a></li>
+                    <li class="separator"><i class="icon-arrow-right"></i></li>
+                    <li class="nav-item"><a href="#">All Courses</a></li>
                 </ul>
             </div>
 
@@ -58,34 +48,24 @@
                                 <table class="table align-items-center mb-0" id="basic-datatables">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col" class="text-center">Duration</th>
-                                            <th scope="col" class="text-center">Sessions</th>
-                                            <th scope="col" class="text-center">Mode</th>
-                                            <th scope="col" class="text-center">Age Group</th>
-                                            <th scope="col" class="text-center">Fees</th>
-                                            <th scope="col" class="text-center">Status</th>
-                                            <th scope="col" class="text-center">Action</th>
+                                            <th>#</th>
+                                            <th>Title</th>
+                                            <th class="text-center">Duration</th>
+                                            <th class="text-center">Sessions</th>
+                                            <th class="text-center">Mode</th>
+                                            <th class="text-center">Age Group</th>
+                                            <th class="text-center">Fees</th>
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse($courses as $course)
-                                            <tr id="record-row-{{ $course->id }}">
+                                            <tr>
                                                 <td>{{ $loop->iteration }}</td>
-
-                                                <td>
-                                                    <strong>{{ $course->title }}</strong>
-                                                </td>
-
-                                                <td class="text-center">
-                                                    {{ $course->duration ?? '--' }}
-                                                </td>
-
-                                                <td class="text-center">
-                                                    {{ $course->sessions ?? '--' }}
-                                                </td>
-
+                                                <td><strong>{{ $course->title }}</strong></td>
+                                                <td class="text-center">{{ $course->duration ?? '--' }}</td>
+                                                <td class="text-center">{{ $course->sessions ?? '--' }}</td>
                                                 <td class="text-center">
                                                     @if($course->mode == 'online')
                                                         <span class="badge badge-info">Online</span>
@@ -95,25 +75,22 @@
                                                         <span class="badge badge-secondary">Both</span>
                                                     @endif
                                                 </td>
-
+                                                <td class="text-center">{{ $course->age_group ?? '--' }}</td>
+                                                <td class="text-center">&#8377;{{ number_format($course->fees, 2) }}</td>
                                                 <td class="text-center">
-                                                    {{ $course->age_group ?? '--' }}
-                                                </td>
-
-                                                <td class="text-center">
-                                                    ₹{{ number_format($course->fees, 2) }}
-                                                </td>
-
                                                 <td class="text-center">
                                                     <label class="switch">
-                                                        <input type="checkbox" class="toggle-status" data-id="{{ $course->id }}"
-                                                            data-url="{{ route('courses.status-update', $course->id) }}" {{ $course->status == 1 ? 'checked' : '' }}>
+                                                        <input type="checkbox" class="toggle-status"
+                                                            data-id="{{ $course->id }}"
+                                                            data-url="{{ route('courses.status-update', $course->id) }}"
+                                                            {{ $course->status == 1 ? 'checked' : '' }}>
                                                         <span class="record-toggle"></span>
                                                     </label>
                                                 </td>
-
+                                                </td>
                                                 <td class="text-center">
                                                     <div class="form-button-action">
+
                                                         <a href="{{ route('courses.show', $course->id) }}"
                                                             class="btn btn-link btn-info btn-lg me-2" title="View">
                                                             <i class="fa fa-eye"></i>
@@ -124,13 +101,21 @@
                                                             <i class="fa fa-edit"></i>
                                                         </a>
 
+                                                        {{-- Hidden delete form --}}
+                                                        <form id="delete-form-{{ $course->id }}"
+                                                            action="{{ route('courses.delete', $course->id) }}"
+                                                            method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
+
                                                         <a href="javascript:void(0)"
                                                             class="btn btn-link btn-danger btn-lg delete-record"
                                                             data-id="{{ $course->id }}"
-                                                            data-url="{{ route('courses.delete', $course->id) }}"
                                                             title="Delete">
                                                             <i class="fa fa-trash"></i>
                                                         </a>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -146,8 +131,39 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).on('click', '.delete-record', function () {
+            const id = $(this).data('id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This course will be permanently deleted.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        });
+
+        // ── Status Toggle ─────────────────────────────────────────
+        $(document).on('change', '.toggle-status', function () {
+            const id     = $(this).data('id');
+            const url    = $(this).data('url');
+            const status = $(this).is(':checked') ? 1 : 0;
+            const token  = '{{ csrf_token() }}';
+
+            $.post(url, { _token: token, id: id, status: status });
+        });
+
+    </script>
 
 @endsection

@@ -8,7 +8,7 @@ use App\Models\Course;
 use App\Models\CourseSession;
 use App\Models\CourseDocument;
 use App\Models\State;
-use Illuminate\Support\Facades\DB;
+use App\Models\CourseCategory;
 
 class CourseController extends Controller
 {
@@ -21,12 +21,14 @@ class CourseController extends Controller
     public function create()
     {
         $states = State::where('status', 1)->get();
-        return view('backend.courses.create', compact('states'));
+        $categories = CourseCategory::where('status', 1)->get();
+        return view('backend.courses.create', compact('states', 'categories'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'category_id' => 'required|exists:course_categories,id',
             'title' => 'required',
             'duration' => 'required',
             'fees' => 'required|numeric',
@@ -37,49 +39,36 @@ class CourseController extends Controller
             'center_ids.*' => 'exists:centers,id',
         ]);
 
-        DB::beginTransaction();
+        $course = Course::create([
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'duration' => $request->duration,
+            'sessions' => $request->total_sessions,
+            'mode' => $request->mode,
+            'age_group' => $request->age_group,
+            'fees' => $request->fees,
+            'instagram_link' => $request->instagram_link ?? null,
+            'highlights_link' => $request->highlights_link ?? null,
+        ]);
 
-        try {
-
-            // Create course
-            $course = Course::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'duration' => $request->duration,
-                'sessions' => $request->total_sessions,
-                'mode' => $request->mode,
-                'age_group' => $request->age_group,
-                'fees' => $request->fees,
-                'instagram_link' => $request->instagram_link ?? null,
-                'highlights_link' => $request->highlights_link ?? null,
-            ]);
-
-            // Attach centers
-            if ($request->filled('center_ids')) {
-                $course->centers()->sync($request->center_ids);
-            }
-
-            // Upload documents (PDF)
-            if ($request->hasFile('documents')) {
-                foreach ($request->file('documents') as $file) {
-                    $path = $file->store('course_documents', 'public');
-                    CourseDocument::create([
-                        'course_id' => $course->id,
-                        'document_name' => $file->getClientOriginalName(),
-                        'document_file' => $path,
-                    ]);
-                }
-            }
-
-            DB::commit();
-
-            return redirect()->route('admin.courses-index')
-                ->with('success', 'Course created successfully');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', $e->getMessage())->withInput();
+        if ($request->filled('center_ids')) {
+            $course->centers()->sync($request->center_ids);
         }
+
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $file) {
+                $path = $file->store('course_documents', 'public');
+                CourseDocument::create([
+                    'course_id' => $course->id,
+                    'document_name' => $file->getClientOriginalName(),
+                    'document_file' => $path,
+                ]);
+            }
+        }
+
+        return redirect()->route('courses')
+            ->with('success', 'Course created successfully');
     }
 
     public function show($id)
@@ -92,13 +81,15 @@ class CourseController extends Controller
     {
         $course = Course::with('sessions', 'documents', 'centers')->findOrFail($id);
         $states = State::where('status', 1)->get();
+        $categories = CourseCategory::where('status', 1)->get();
         $selectedCenters = $course->centers->pluck('id')->toArray();
-        return view('backend.courses.edit', compact('course', 'states', 'selectedCenters'));
+        return view('backend.courses.edit', compact('course', 'states', 'categories', 'selectedCenters'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
+            'category_id' => 'required|exists:course_categories,id',
             'title' => 'required',
             'duration' => 'required',
             'fees' => 'required|numeric',
@@ -108,35 +99,25 @@ class CourseController extends Controller
             'center_ids.*' => 'exists:centers,id',
         ]);
 
-        DB::beginTransaction();
+        $course = Course::findOrFail($id);
 
-        try {
-            $course = Course::findOrFail($id);
+        $course->update([
+            'category_id' => $request->category_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'duration' => $request->duration,
+            'sessions' => $request->total_sessions,
+            'mode' => $request->mode,
+            'age_group' => $request->age_group,
+            'fees' => $request->fees,
+            'instagram_link' => $request->instagram_link ?? null,
+            'highlights_link' => $request->highlights_link ?? null,
+        ]);
 
-            $course->update([
-                'title' => $request->title,
-                'description' => $request->description,
-                'duration' => $request->duration,
-                'sessions' => $request->total_sessions,
-                'mode' => $request->mode,
-                'age_group' => $request->age_group,
-                'fees' => $request->fees,
-                'instagram_link' => $request->instagram_link ?? null,
-                'highlights_link' => $request->highlights_link ?? null,
-            ]);
+        $course->centers()->sync($request->center_ids ?? []);
 
-            // Sync centers (adds new, removes unchecked)
-            $course->centers()->sync($request->center_ids ?? []);
-
-            DB::commit();
-
-            return redirect()->route('admin.courses-index')
-                ->with('success', 'Course updated successfully');
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', $e->getMessage())->withInput();
-        }
+        return redirect()->route('courses')
+            ->with('success', 'Course updated successfully');
     }
 
     public function status(Request $request)

@@ -96,7 +96,12 @@
             </ul>
           </div>
         </li>
-
+        <li class="nav-item">
+          <a href="{{ route('course-categories-index') }}">
+            <i class="fas fa-tags"></i>
+            <p>Course Categories</p>
+          </a>
+        </li>
         {{-- Courses --}}
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#courses">
@@ -132,6 +137,7 @@
             </ul>
           </div>
         </li>
+
 
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#service">

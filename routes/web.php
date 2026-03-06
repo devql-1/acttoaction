@@ -49,8 +49,7 @@ use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\CenterController;
 use App\Http\Controllers\admin\EventController;
 use App\Http\Controllers\admin\SubEventController;
-
-
+use App\Http\Controllers\admin\CourseCategoryController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -404,6 +403,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('sub-events/{id}', [SubEventController::class, 'destroy'])->name('sub-events-destroy');
         Route::get('events/{event_id}/sub-events', [SubEventController::class, 'index'])->name('sub-events-index');
 
+
+        Route::get('course-categories', [CourseCategoryController::class, 'index'])->name('course-categories-index');
+        Route::get('course-categories/create', [CourseCategoryController::class, 'create'])->name('course-categories-create');
+        Route::post('course-categories', [CourseCategoryController::class, 'store'])->name('course-categories-store');
+        Route::post('course-categories/status', [CourseCategoryController::class, 'status'])->name('course-categories-status');
+        Route::get('course-categories/{id}/edit', [CourseCategoryController::class, 'edit'])->name('course-categories-edit');
+        Route::put('course-categories/{id}', [CourseCategoryController::class, 'update'])->name('course-categories-update');
+        Route::delete('course-categories/{id}', [CourseCategoryController::class, 'destroy'])->name('course-categories-destroy');
     });
 });
 

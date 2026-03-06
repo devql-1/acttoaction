@@ -15,7 +15,8 @@ class Course extends Model
         'age_group',
         'fees',
         'instagram_link',
-        'highlights_link'
+        'highlights_link',
+        'category_id',
     ];
 
     public function sessions()
@@ -26,5 +27,9 @@ class Course extends Model
     public function documents()
     {
         return $this->hasMany(CourseDocument::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(CourseCategory::class, 'category_id');
     }
 }
