@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Validator;
 class VideoGalleryController extends Controller
 {
     //This method will show listing for video-gallery
-    public function index(){
+    public function index()
+    {
         $video_gallery = VideoGallery::get();
-        return view('backend.video_gallery.index',compact('video_gallery'));
+        return view('backend.video_gallery.index', compact('video_gallery'));
     }
 
     //This method will store a record of video gallery
-   public function store(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'video_item' => 'required|file|mimes:mp4,avi,mov,wmv|max:51200', // max 50MB
@@ -30,7 +31,7 @@ class VideoGalleryController extends Controller
         $create->video_name = $request->video_name;
 
         if ($request->hasFile('video_poster')) {
-            $filename = time().'.'.$request->video_poster->extension();
+            $filename = time() . '.' . $request->video_poster->extension();
             $request->video_poster->move(public_path('img'), $filename);
             $create->video_poster = $filename;
         }
@@ -48,19 +49,21 @@ class VideoGalleryController extends Controller
     }
 
     //This method will show video gallery form for updating a listing
-    public function edit($id){
+    public function edit($id)
+    {
         $video_gallery = VideoGallery::find($id);
-        return view('backend.video_gallery.edit',compact('video_gallery'));
+        return view('backend.video_gallery.edit', compact('video_gallery'));
     }
 
     //This method will update a existing listing of video gallery
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'video_item' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:51200'
         ]);
 
-        if($validator->passes()){
+        if ($validator->passes()) {
             $update = VideoGallery::find($id);
             $update->video_name = $request->video_name;
 
@@ -100,14 +103,15 @@ class VideoGalleryController extends Controller
 
             $update->save();
 
-            return redirect()->route('admin.video_gallery')->with('success','Video Gallery Data Updated Successfully');
-        }else{
+            return redirect()->route('admin.video_gallery')->with('success', 'Video Gallery Data Updated Successfully');
+        } else {
             return redirect()->back()->withInput()->withErrors($validator);
         }
     }
 
     //This method will destroy a particular listing
-    public function destroy($id){
+    public function destroy($id)
+    {
         VideoGallery::find($id)->delete();
         return response()->json(['success' => true]);
     }

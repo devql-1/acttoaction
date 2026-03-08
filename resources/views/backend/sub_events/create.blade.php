@@ -18,7 +18,8 @@
 
             {{-- Parent Event Info Bar --}}
             <div class="alert alert-light border mb-4 d-flex align-items-center gap-3">
-                <img src="{{ $event->banner_url }}" class="rounded" style="width:45px;height:45px;object-fit:cover;">
+                <img src="{{ asset($event->banner_image) }}" class="rounded"
+                    style="width:45px;height:45px;object-fit:cover;">
                 <div>
                     <strong>{{ $event->title }}</strong>
                     <small class="text-muted d-block">
@@ -38,7 +39,8 @@
                             <div class="card-title">Sub Event Details</div>
                         </div>
 
-                        <form action="{{ route('sub-events-store', $event->id) }}" method="POST">
+                        <form action="{{ route('sub-events-store', $event->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="card-body">
@@ -159,6 +161,41 @@
                                 </div>
 
                             </div>
+                            {{-- IMAGE UPLOAD --}}
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label>Sub Event Banner</label>
+                                    <small class="text-muted d-block fw-normal">Optional. JPG, PNG, WEBP up to 2MB.</small>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="file" name="banner_image" accept="image/*"
+                                        class="form-control @error('banner_image') is-invalid @enderror">
+                                    @error('banner_image')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                    {{-- Preview selected image --}}
+                                    <div id="bannerPreview" class="mt-2">
+                                        <img id="bannerPreviewImg" src="#" alt="Preview"
+                                            style="display:none; max-width: 200px; max-height: 150px; border-radius:5px; object-fit:cover;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                // Show preview of selected image
+                                document.querySelector('input[name="banner_image"]').addEventListener('change', function (e) {
+                                    const file = e.target.files[0];
+                                    const preview = document.getElementById('bannerPreviewImg');
+                                    if (file) {
+                                        preview.src = URL.createObjectURL(file);
+                                        preview.style.display = 'block';
+                                    } else {
+                                        preview.src = '';
+                                        preview.style.display = 'none';
+                                    }
+                                });
+                            </script>
 
                             <div class="card-action d-flex justify-content-between align-items-center">
                                 <a href="{{ route('events-index', $event->id) }}" class="btn btn-secondary">
@@ -195,20 +232,20 @@
             });
 
             const html = `
-                                    <div class="border rounded p-3 mb-3 bg-light" id="${rowId}">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <select class="form-control w-50" onchange="loadCenters(this, '${rowId}')">
-                                                ${options}
-                                            </select>
-                                            <button type="button" class="btn btn-outline-danger btn-sm"
-                                                onclick="removeStateRow('${rowId}')">
-                                                <i class="fa fa-times me-1"></i> Remove
-                                            </button>
-                                        </div>
-                                        <div id="centers_${rowId}">
-                                            <small class="text-muted">Select a state to see centers.</small>
-                                        </div>
-                                    </div>`;
+                                                                <div class="border rounded p-3 mb-3 bg-light" id="${rowId}">
+                                                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                                                        <select class="form-control w-50" onchange="loadCenters(this, '${rowId}')">
+                                                                            ${options}
+                                                                        </select>
+                                                                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                                                            onclick="removeStateRow('${rowId}')">
+                                                                            <i class="fa fa-times me-1"></i> Remove
+                                                                        </button>
+                                                                    </div>
+                                                                    <div id="centers_${rowId}">
+                                                                        <small class="text-muted">Select a state to see centers.</small>
+                                                                    </div>
+                                                                </div>`;
 
             document.getElementById('stateRowsContainer').insertAdjacentHTML('beforeend', html);
             document.getElementById('noStateMsg').style.display = 'none';
@@ -242,21 +279,21 @@
                     let html = '<div class="row">';
                     centers.forEach(center => {
                         html += `
-                                                <div class="col-md-6 mb-2">
-                                                    <div class="form-check border rounded p-2 bg-white">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="center_ids[]"
-                                                            value="${center.id}"
-                                                            id="center_${center.id}_${rowId}">
-                                                        <label class="form-check-label w-100" for="center_${center.id}_${rowId}">
-                                                            <strong>${center.name}</strong>
-                                                            <small class="text-muted d-block">
-                                                                <i class="fa fa-map-marker me-1"></i>${center.address ?? 'No address'}
-                                                            </small>
-                                                            ${center.phone ? `<small class="text-muted"><i class="fa fa-phone me-1"></i>${center.phone}</small>` : ''}
-                                                        </label>
-                                                    </div>
-                                                </div>`;
+                                                                            <div class="col-md-6 mb-2">
+                                                                                <div class="form-check border rounded p-2 bg-white">
+                                                                                    <input class="form-check-input" type="checkbox"
+                                                                                        name="center_ids[]"
+                                                                                        value="${center.id}"
+                                                                                        id="center_${center.id}_${rowId}">
+                                                                                    <label class="form-check-label w-100" for="center_${center.id}_${rowId}">
+                                                                                        <strong>${center.name}</strong>
+                                                                                        <small class="text-muted d-block">
+                                                                                            <i class="fa fa-map-marker me-1"></i>${center.address ?? 'No address'}
+                                                                                        </small>
+                                                                                        ${center.phone ? `<small class="text-muted"><i class="fa fa-phone me-1"></i>${center.phone}</small>` : ''}
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>`;
                     });
                     html += '</div>';
                     container.innerHTML = html;

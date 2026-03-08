@@ -29,9 +29,9 @@ class QuizTestController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'test_name'   => 'required|string|max:255|unique:psych_tests,test_name',
+            'test_name' => 'required|string|max:255|unique:psych_tests,test_name',
             'description' => 'nullable|string',
-            'duration'    => 'nullable|string|max:100',
+            'duration' => 'nullable|string|max:100',
         ]);
 
         $test = PsychTest::create($request->only('test_name', 'description', 'duration'));
@@ -54,9 +54,9 @@ class QuizTestController extends Controller
         $test = PsychTest::findOrFail($id);
 
         $request->validate([
-            'test_name'   => 'required|string|max:255|unique:psych_tests,test_name,' . $id,
+            'test_name' => 'required|string|max:255|unique:psych_tests,test_name,' . $id,
             'description' => 'nullable|string',
-            'duration'    => 'nullable|string|max:100',
+            'duration' => 'nullable|string|max:100',
         ]);
 
         $test->update($request->only('test_name', 'description', 'duration'));
@@ -79,4 +79,5 @@ class QuizTestController extends Controller
         $categories = $test->categories()->withCount('questions')->get();
         return view('backend.psych.tests.show', compact('test', 'categories'));
     }
+
 }

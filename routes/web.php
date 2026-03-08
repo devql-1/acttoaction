@@ -69,7 +69,24 @@ use App\Http\Controllers\Admin\QuizQuestionController;
 // frontend routes
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/course', [HomeController::class, 'course'])->name('course');
+Route::get('/course', [HomeController::class, 'course'])->name('index.course');
+Route::get('/event', [HomeController::class, 'event'])->name('event');
+Route::get('/events/{id}', [HomeController::class, 'subevent'])->name('frontend.events.subevent');
+Route::get('/tests', [HomeController::class, 'quicktest'])->name('frontend.tests');
+Route::get('/tests/{id}', [HomeController::class, 'quicktestshow'])->name('frontend.tests.show');
+
+// routes/web.php
+Route::get('tests/{test}/take', [HomeController::class, 'take'])->name('frontend.tests.take');
+Route::post('tests/{test}/submit', [HomeController::class, 'submit'])->name('frontend.tests.submit');
+
+Route::get('/tests/{id}', [HomeController::class, 'show'])
+    ->name('frontend.tests.show');
+
+// Quiz-taking page (all questions with scale)
+Route::get('/tests/{id}/take', [HomeController::class, 'take'])
+    ->name('frontend.tests.take');
+
+
 Route::get('/servicedetails/{slug}', [HomeController::class, 'servicedetails'])->name('servicedetails');
 Route::get('/service', [HomeController::class, 'service'])->name('service');
 Route::get('/project', [HomeController::class, 'project'])->name('project');
@@ -366,8 +383,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('courses/{id}', [CourseController::class, 'destroy'])->name('courses.delete');
         Route::get('courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
         Route::get('status-update/{id}', [CourseController::class, 'status_update'])->name('courses.status-update');
-
-
+        Route::put(('courses/{id}'), [CourseController::class, 'update'])->name('courses.update');
         // ── States ─────────────────────────────────────────
 
         Route::get('states', [StateController::class, 'index'])->name('states-index');

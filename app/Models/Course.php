@@ -17,6 +17,7 @@ class Course extends Model
         'instagram_link',
         'highlights_link',
         'category_id',
+        'banner_image',
     ];
 
     public function sessions()
@@ -31,5 +32,9 @@ class Course extends Model
     public function category()
     {
         return $this->belongsTo(CourseCategory::class, 'category_id');
+    }
+    public function centers()
+    {
+        return $this->belongsToMany(Center::class, 'course_center', 'course_id', 'center_id');
     }
 }

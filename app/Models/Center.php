@@ -42,4 +42,5 @@ class Center extends Model
     {
         return $query->where('state_id', $stateId);
     }
+
 }

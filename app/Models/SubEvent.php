@@ -20,7 +20,8 @@ class SubEvent extends Model
         'age_group',
         'mode',
         'max_seats',
-        'status'
+        'status',
+        'banner_image',
     ];
 
     protected $casts = [

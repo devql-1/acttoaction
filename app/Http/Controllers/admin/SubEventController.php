@@ -31,11 +31,19 @@ class SubEventController extends Controller
             'age_group' => 'nullable|string|max:100',
             'mode' => 'required|in:online,offline,both',
             'max_seats' => 'nullable|integer|min:1',
+            'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'center_ids' => 'nullable|array',
             'center_ids.*' => 'exists:centers,id',
         ]);
 
-        // Create sub event linked to parent event
+        // Handle banner image upload
+        $bannerPath = null;
+        if ($request->hasFile('banner_image')) {
+            $filename = time() . '.' . $request->banner_image->extension();
+            $request->banner_image->move(public_path('img/event_banners'), $filename);
+            $bannerPath = 'img/event_banners/' . $filename;
+        }
+
         $subEvent = SubEvent::create([
             'event_id' => $event->id,
             'title' => $request->title,
@@ -47,15 +55,15 @@ class SubEventController extends Controller
             'age_group' => $request->age_group,
             'mode' => $request->mode,
             'max_seats' => $request->max_seats,
+            'banner_image' => $bannerPath,
             'status' => 1,
         ]);
 
-        // Attach selected centers
         if ($request->filled('center_ids')) {
             $subEvent->centers()->sync($request->center_ids);
         }
 
-        return redirect()->route('events-show', $event->id)
+        return redirect()->route('events-index', $event->id)
             ->with('success', 'Sub event added successfully');
     }
 
@@ -63,12 +71,7 @@ class SubEventController extends Controller
     {
         $subEvent = SubEvent::with(['event', 'centers.state'])->findOrFail($id);
         $states = State::where('status', 1)->get();
-
-        // Selected center IDs
         $selectedCenters = $subEvent->centers->pluck('id')->toArray();
-
-        // Group existing centers by state_id so edit blade can pre-render rows
-        // Format: { state_id: [center, center, ...] }
         $centersByState = $subEvent->centers
             ->groupBy('state_id')
             ->map(fn($centers) => $centers->values())
@@ -94,11 +97,24 @@ class SubEventController extends Controller
             'age_group' => 'nullable|string|max:100',
             'mode' => 'required|in:online,offline,both',
             'max_seats' => 'nullable|integer|min:1',
+            'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'center_ids' => 'nullable|array',
             'center_ids.*' => 'exists:centers,id',
         ]);
 
         $subEvent = SubEvent::findOrFail($id);
+        $bannerPath = $subEvent->banner_image; // keep existing by default
+
+        // Handle banner image upload
+        if ($request->hasFile('banner_image')) {
+            // Delete old image if exists
+            if ($bannerPath && file_exists(public_path($bannerPath))) {
+                unlink(public_path($bannerPath));
+            }
+            $filename = time() . '.' . $request->banner_image->extension();
+            $request->banner_image->move(public_path('img/event_banners'), $filename);
+            $bannerPath = 'img/event_banners/' . $filename;
+        }
 
         $subEvent->update([
             'title' => $request->title,
@@ -110,12 +126,12 @@ class SubEventController extends Controller
             'age_group' => $request->age_group,
             'mode' => $request->mode,
             'max_seats' => $request->max_seats,
+            'banner_image' => $bannerPath,
         ]);
 
-        // Sync centers (adds new, removes unchecked)
         $subEvent->centers()->sync($request->center_ids ?? []);
 
-        return redirect()->route('events-index', $subEvent->event_id)
+        return redirect()->route('sub-events-index', $subEvent->event_id)
             ->with('success', 'Sub event updated successfully');
     }
 
@@ -131,12 +147,18 @@ class SubEventController extends Controller
         $subEvent = SubEvent::findOrFail($id);
         $eventId = $subEvent->event_id;
 
-        $subEvent->centers()->detach(); // remove pivot records
+        // Delete banner image if exists
+        if ($subEvent->banner_image && file_exists(public_path($subEvent->banner_image))) {
+            unlink(public_path($subEvent->banner_image));
+        }
+
+        $subEvent->centers()->detach();
         $subEvent->delete();
 
         return redirect()->route('sub-events-index', $eventId)
             ->with('success', 'Sub event deleted successfully');
     }
+
     public function index($event_id)
     {
         $event = Event::findOrFail($event_id);

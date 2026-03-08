@@ -46,12 +46,25 @@
                                         <td>{{ $loop->iteration }}</td>
 
                                         <td>
-                                            <div class="avatar">
-                                                <img src="{{ $event->banner_url }}"
-                                                    alt="{{ $event->title }}"
-                                                    class="avatar-img rounded"
-                                                    style="width:50px;height:50px;object-fit:cover;">
-                                            </div>
+                      <!-- Fancybox CSS -->
+           
+<!-- Thumbnail -->
+<div class="event-banner-thumb" style="display:inline-block;cursor:pointer;">
+    <a data-fancybox="gallery" data-options='{"buttons": [], "click": "close"}' href="{{ asset($event->banner_image) }}">
+        <img src="{{ asset($event->banner_image) }}"
+             alt="{{ $event->title }}"
+             style="width:50px;height:50px;object-fit:cover;
+                    border-radius:8px;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+                    transition:transform 0.3s;">
+    </a>
+</div>
+
+<style>
+.event-banner-thumb img:hover {
+    transform: scale(1.1);
+}
+</style>
                                         </td>
 
                                         <td>

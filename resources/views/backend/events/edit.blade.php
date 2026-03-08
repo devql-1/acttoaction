@@ -99,8 +99,8 @@
                                         {{-- Current banner preview --}}
                                         @if($event->banner_image)
                                             <div class="mb-2">
-                                                <img src="{{ $event->banner_url }}" alt="Current Banner" class="rounded"
-                                                    style="max-height:120px;">
+                                                <img src="{{ asset($event->banner_image) }}" alt="Current Banner"
+                                                    class="rounded" style="max-height:120px;">
                                                 <small class="text-muted d-block mt-1">
                                                     <i class="fa fa-image me-1"></i>Current banner
                                                 </small>
