@@ -218,6 +218,29 @@
             </ul>
           </div>
         </li> --}}
+
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#quiz-tests-menu">
+            <i class="fas fa-brain"></i>
+            <p>Quiz Tests</p>
+            <span class="caret"></span>
+          </a>
+          <div class="collapse" id="quiz-tests-menu">
+            <ul class="nav nav-collapse">
+              <li>
+                <a href="{{ route('quiz-tests.index') }}">
+                  <span class="sub-item">All Tests</span>
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('quiz-tests.create') }}">
+                  <span class="sub-item">Create Test</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#blogs">
             <i class="fas fa-folder-open"></i>

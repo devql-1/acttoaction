@@ -1,56 +1,23 @@
-<footer class="footer bg-light pt-5 pb-4">
-  <div class="container">
-    <div class="row">
+<footer
+  style="background:#ffffff; border-top:1px solid #e5e7eb; padding:15px 0; font-family:Arial, sans-serif; margin-top:40px;">
+  <div class="container-fluid">
 
-      <!-- About -->
-      <div class="col-md-2 mb-4">
-        <h6 class="fw-bold">4K Act To Action</h6>
-        <p class="mb-0">Chat with us</p>
+    <div
+      style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:13px; color:#6b7280;">
+
+      <!-- LEFT -->
+      <div>
+        <strong style="color:#374151;">4K Act To Action</strong> Admin Panel
       </div>
 
-      <!-- Operating Hours -->
-      <div class="col-md-2 mb-4">
-        <h6 class="fw-bold">Operating Hours</h6>
-        <p class="mb-1">Tue - Sat: 11am - 7pm</p>
-        <p class="mb-0">Sunday: 10am - 4pm</p>
+      <!-- CENTER -->
+
+
+      <!-- RIGHT -->
+      <div>
+        © 2025 All Rights Reserved
       </div>
 
-      <!-- Social -->
-      <div class="col-md-2 mb-4">
-        <h6 class="fw-bold">Follow Us</h6>
-        <ul class="list-unstyled">
-          <li><a href="#" target="_blank">Instagram</a></li>
-          <li><a href="#" target="_blank">YouTube</a></li>
-        </ul>
-      </div>
-
-      <!-- Legal -->
-      <div class="col-md-2 mb-4">
-        <h6 class="fw-bold">Legal</h6>
-        <ul class="list-unstyled">
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
-          <li><a href="#">Refund Policy</a></li>
-        </ul>
-      </div>
-
-      <!-- Location -->
-      <div class="col-md-2 mb-4">
-        <h6 class="fw-bold">Location</h6>
-        <p class="mb-0">
-          Rising Passion Studio,<br>
-          Hoshiar Singh Marg,<br>
-          Moti Nagar, Vaishali Nagar,<br>
-          Jaipur - 302021
-        </p>
-      </div>
-
-    </div>
-
-    <hr>
-
-    <div class="text-center small">
-      © 2025 4K Act To Action. All Rights Reserved.
     </div>
 
   </div>

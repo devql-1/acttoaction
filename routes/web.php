@@ -50,6 +50,10 @@ use App\Http\Controllers\admin\CenterController;
 use App\Http\Controllers\admin\EventController;
 use App\Http\Controllers\admin\SubEventController;
 use App\Http\Controllers\admin\CourseCategoryController;
+use App\Http\Controllers\Admin\QuizTestController;
+use App\Http\Controllers\Admin\QuizCategoryController;
+use App\Http\Controllers\Admin\QuizQuestionController;
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -411,6 +415,37 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('course-categories/{id}/edit', [CourseCategoryController::class, 'edit'])->name('course-categories-edit');
         Route::put('course-categories/{id}', [CourseCategoryController::class, 'update'])->name('course-categories-update');
         Route::delete('course-categories/{id}', [CourseCategoryController::class, 'destroy'])->name('course-categories-destroy');
+
+        Route::get('quiz-tests', [QuizTestController::class, 'index'])->name('quiz-tests.index');
+        Route::get('quiz-tests/create', [QuizTestController::class, 'create'])->name('quiz-tests.create');
+        Route::post('quiz-tests', [QuizTestController::class, 'store'])->name('quiz-tests.store');
+        Route::get('quiz-tests/{id}', [QuizTestController::class, 'show'])->name('quiz-tests.show');
+        Route::get('quiz-tests/{id}/edit', [QuizTestController::class, 'edit'])->name('quiz-tests.edit');
+        Route::put('quiz-tests/{id}', [QuizTestController::class, 'update'])->name('quiz-tests.update');
+        Route::delete('quiz-tests/{id}', [QuizTestController::class, 'destroy'])->name('quiz-tests.destroy');
+
+
+        // CATEGORIES (nested under test)
+        Route::get('quiz-tests/{testId}/categories', [QuizCategoryController::class, 'index'])->name('quiz-categories.index');
+        Route::get('quiz-tests/{testId}/categories/create', [QuizCategoryController::class, 'create'])->name('quiz-categories.create');
+        Route::post('quiz-tests/{testId}/categories', [QuizCategoryController::class, 'store'])->name('quiz-categories.store');
+        Route::get('quiz-tests/{testId}/categories/{id}/edit', [QuizCategoryController::class, 'edit'])->name('quiz-categories.edit');
+        Route::put('quiz-tests/{testId}/categories/{id}', [QuizCategoryController::class, 'update'])->name('quiz-categories.update');
+        Route::delete('quiz-tests/{testId}/categories/{id}', [QuizCategoryController::class, 'destroy'])->name('quiz-categories.destroy');
+
+
+        // QUESTIONS — Bulk create (no categoryId in URL)
+
+        Route::get('quiz-tests/{testId}/questions/create', [QuizQuestionController::class, 'create'])->name('quiz-questions.create');
+        Route::post('quiz-tests/{testId}/questions', [QuizQuestionController::class, 'store'])->name('quiz-questions.store');
+
+        // QUESTIONS — Per-category list, edit, delete
+        Route::get('quiz-tests/{testId}/categories/{categoryId}/questions', [QuizQuestionController::class, 'index'])->name('quiz-questions.index');
+        Route::get('quiz-tests/{testId}/categories/{categoryId}/questions/{id}/edit', [QuizQuestionController::class, 'edit'])->name('quiz-questions.edit');
+        Route::put('quiz-tests/{testId}/categories/{categoryId}/questions/{id}', [QuizQuestionController::class, 'update'])->name('quiz-questions.update');
+        Route::delete('quiz-tests/{testId}/categories/{categoryId}/questions/{id}', [QuizQuestionController::class, 'destroy'])->name('quiz-questions.destroy');
+
+
     });
 });
 
