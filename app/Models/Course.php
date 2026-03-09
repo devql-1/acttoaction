@@ -37,4 +37,5 @@ class Course extends Model
     {
         return $this->belongsToMany(Center::class, 'course_center', 'course_id', 'center_id');
     }
+
 }

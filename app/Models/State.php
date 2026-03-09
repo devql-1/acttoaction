@@ -25,4 +25,8 @@ class State extends Model
     {
         return $this->hasMany(Center::class)->where('status', 1);
     }
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }

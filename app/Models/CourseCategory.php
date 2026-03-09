@@ -24,4 +24,8 @@ class CourseCategory extends Model
     {
         return $query->where('status', 1);
     }
+    public function getCoursesCountAttribute()
+    {
+        return $this->courses()->count();
+    }
 }

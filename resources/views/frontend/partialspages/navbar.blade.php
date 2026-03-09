@@ -43,8 +43,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="departments.html" class="{{ request()->is('departments.html') ? 'active' : '' }}">
-                            Courses
+                        <a href="{{ route('aboutus') }}" class="{{ request()->is('aboutus') ? 'active' : '' }}">
+                            About Us
                         </a>
                     </li>
                     <li>

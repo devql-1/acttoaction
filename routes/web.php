@@ -69,7 +69,11 @@ use App\Http\Controllers\Admin\QuizQuestionController;
 // frontend routes
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/aboutus', [HomeController::class, 'about'])->name('aboutus');
+Route::get('/volunteer', [HomeController::class, 'volunteer'])->name('volunteer');
 Route::get('/course', [HomeController::class, 'course'])->name('index.course');
+Route::get('/course/{id}', [HomeController::class, 'course_details'])->name('course.details');
+
 Route::get('/event', [HomeController::class, 'event'])->name('event');
 Route::get('/events/{id}', [HomeController::class, 'subevent'])->name('frontend.events.subevent');
 Route::get('/tests', [HomeController::class, 'quicktest'])->name('frontend.tests');
@@ -95,7 +99,7 @@ Route::get('blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('blogs/filter/{id}', [HomeController::class, 'blog_filter'])->name('home.blogs_filter');
 Route::get('blogs/search', [HomeController::class, 'blog_search'])->name('home.blogs_search');
 Route::get('/blogdetails/{slug}', [HomeController::class, 'blogdetails'])->name('blogdetails');
-Route::get('/aboutus', [HomeController::class, 'aboutus'])->name('aboutus');
+
 Route::get('/team', [HomeController::class, 'team'])->name('team');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/contactus', [HomeController::class, 'contactus'])->name('contactus');

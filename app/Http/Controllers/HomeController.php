@@ -38,14 +38,18 @@ class HomeController extends Controller
             ->get();
 
         // All active categories with their courses
-        $categories = CourseCategory::with('courses')
+        $categories = CourseCategory::withCount('courses')
+            ->with('courses')
             ->where('status', 1)
             ->get();
 
         // All courses
-        $allCourses = Course::with('category')
+
+        $allCourses = Course::with(['category', 'centers.state'])
             ->latest()
             ->get();
+
+
         return view('frontend.course.course', compact('featuredCourses', 'categories', 'allCourses'));
     }
     public function event()
@@ -177,5 +181,27 @@ class HomeController extends Controller
             'overallPercent',
             'totalAnswered'
         ));
+    }
+
+    public function about()
+    {
+        return view('frontend.about.about');
+    }
+    public function volunteer()
+    {
+        return view('frontend.volunteer.volunteer');
+    }
+    public function course_details($id)
+    {
+        $course = Course::with(['category', 'centers.state'])
+            ->findOrFail($id);
+
+        $otherCourses = Course::with('category')
+            ->where('id', '!=', $id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('frontend.course.coursedetails', compact('course', 'otherCourses'));
     }
 }
