@@ -1002,7 +1002,8 @@
                                     <li><i class="bi bi-award-fill"></i> <span><strong>Certificate:</strong> On
                                             Completion</span></li>
                                 </ul>
-                                <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-enroll-big">
+                                <a href="{{ route('enrollment.enroll', $course->id) }}" target="_blank"
+                                    class="btn-enroll-big">
                                     <i class="bi bi-person-plus-fill"></i> Enroll Now
                                 </a>
                                 <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-wa">

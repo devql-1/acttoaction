@@ -53,6 +53,9 @@ use App\Http\Controllers\admin\CourseCategoryController;
 use App\Http\Controllers\Admin\QuizTestController;
 use App\Http\Controllers\Admin\QuizCategoryController;
 use App\Http\Controllers\Admin\QuizQuestionController;
+use App\Http\Controllers\Admin\EnrollmentController;
+use App\Http\Controllers\Admin\TestGraphConfigController;
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -63,9 +66,11 @@ use App\Http\Controllers\Admin\QuizQuestionController;
 // });
 
 
-
-
-
+Route::get('/enrollment/{id}', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
+Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->name('enrollment.store');
+// routes/web.php
+Route::post('/test/{id}/submit', [HomeController::class, 'submit'])->name('test.submit');
+Route::get('/test/{id}/result', [HomeController::class, 'result'])->name('test.result');
 // frontend routes
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -80,16 +85,28 @@ Route::get('/tests', [HomeController::class, 'quicktest'])->name('frontend.tests
 Route::get('/tests/{id}', [HomeController::class, 'quicktestshow'])->name('frontend.tests.show');
 
 // routes/web.php
-Route::get('tests/{test}/take', [HomeController::class, 'take'])->name('frontend.tests.take');
-Route::post('tests/{test}/submit', [HomeController::class, 'submit'])->name('frontend.tests.submit');
+
 
 Route::get('/tests/{id}', [HomeController::class, 'show'])
     ->name('frontend.tests.show');
+Route::get('/take-test/{id}', [HomeController::class, 'take'])->name('quicktest.take');
 
 // Quiz-taking page (all questions with scale)
-Route::get('/tests/{id}/take', [HomeController::class, 'take'])
-    ->name('frontend.tests.take');
 
+//ENROLLMENT FORM 
+// routes/web.php
+
+
+
+// Public
+
+// Admin (wrap in auth + admin middleware as needed)
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
+    Route::get('/enrollments/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
+    Route::patch('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
+    Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+});
 
 Route::get('/servicedetails/{slug}', [HomeController::class, 'servicedetails'])->name('servicedetails');
 Route::get('/service', [HomeController::class, 'service'])->name('service');
@@ -465,6 +482,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('quiz-tests/{testId}/categories/{categoryId}/questions/{id}', [QuizQuestionController::class, 'update'])->name('quiz-questions.update');
         Route::delete('quiz-tests/{testId}/categories/{categoryId}/questions/{id}', [QuizQuestionController::class, 'destroy'])->name('quiz-questions.destroy');
 
+        Route::resource('test-graph-configs', TestGraphConfigController::class);
 
     });
 });

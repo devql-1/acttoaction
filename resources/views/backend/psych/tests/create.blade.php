@@ -122,12 +122,19 @@
                                 </div>
 
                                 <div class="mb-4">
-                                    <label class="form-label">Duration <small
-                                            class="text-muted fw-normal">(optional)</small></label>
+                                    <label class="form-label">Duration </small></label>
                                     <input type="text" name="duration"
                                         class="form-control @error('duration') is-invalid @enderror"
                                         value="{{ old('duration') }}" placeholder="e.g. 30 minutes">
                                     @error('duration')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Age Range </small></label>
+                                    <input type="text" name="age" class="form-control @error('age') is-invalid @enderror"
+                                        value="{{ old('age') }}" placeholder="e.g. 18-35">
+                                    @error('age')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

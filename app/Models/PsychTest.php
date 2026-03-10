@@ -12,7 +12,7 @@ class PsychTest extends Model
 
     protected $table = 'psych_tests';
 
-    protected $fillable = ['test_name', 'description', 'duration', 'status'];
+    protected $fillable = ['test_name', 'description', 'duration', 'status', 'age'];
 
     // One test has many categories
     public function categories()
@@ -35,5 +35,10 @@ class PsychTest extends Model
     public function getTotalMarksAttribute(): int
     {
         return $this->categories()->sum('total_marks');
+    }
+    // inside app/Models/Test.php
+    public function graphConfig()
+    {
+        return $this->hasOne(TestGraphConfig::class, 'test_id');
     }
 }

@@ -98,6 +98,12 @@
                                     value="{{ old('duration', $test->duration) }}" placeholder="e.g. 30 minutes">
                                 @error('duration')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
+                            <div class="mb-4">
+                                <label class="form-label">Age Range</label>
+                                <input type="text" name="age" class="form-control @error('age') is-invalid @enderror"
+                                    value="{{ old('age', $test->age) }}" placeholder="e.g. 18-35">
+                                @error('age')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-purple px-4">
                                     <i class="fas fa-save me-1"></i> Update Test

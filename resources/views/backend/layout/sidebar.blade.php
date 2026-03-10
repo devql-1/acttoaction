@@ -138,7 +138,12 @@
           </div>
         </li>
 
-
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.test-graph-configs.*') ? 'active' : '' }}"
+            href="{{ route('test-graph-configs.index') }}">
+            <i class="bi bi-bar-chart-fill me-2"></i> Graph Configs
+          </a>
+        </li>
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#service">
             <i class="fas fa-folder-open"></i>

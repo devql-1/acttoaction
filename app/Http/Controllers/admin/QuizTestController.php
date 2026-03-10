@@ -30,11 +30,12 @@ class QuizTestController extends Controller
     {
         $request->validate([
             'test_name' => 'required|string|max:255|unique:psych_tests,test_name',
-            'description' => 'nullable|string',
-            'duration' => 'nullable|string|max:100',
+            'description' => 'required|string',
+            'duration' => 'required|string|max:100',
+            'age' => 'required|string|max:100',
         ]);
 
-        $test = PsychTest::create($request->only('test_name', 'description', 'duration'));
+        $test = PsychTest::create($request->only('test_name', 'description', 'duration', 'age'));
 
         // After test created, redirect to categories page to start building
         return redirect()->route('quiz-categories.index', $test->id)
@@ -57,9 +58,10 @@ class QuizTestController extends Controller
             'test_name' => 'required|string|max:255|unique:psych_tests,test_name,' . $id,
             'description' => 'nullable|string',
             'duration' => 'nullable|string|max:100',
+            'age' => 'required|string|max:100',
         ]);
 
-        $test->update($request->only('test_name', 'description', 'duration'));
+        $test->update($request->only('test_name', 'description', 'duration', 'age'));
 
         return redirect()->route('quiz-tests.index')
             ->with('success', 'Test updated successfully.');

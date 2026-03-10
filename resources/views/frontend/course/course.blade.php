@@ -439,7 +439,7 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            background: #25d366;
+            background: #ff7300;
             color: #fff;
             padding: 10px 18px;
             border-radius: 22px;
@@ -449,7 +449,7 @@
         }
 
         .c-btn-enroll:hover {
-            background: #1ebe5d;
+            background: #000000;
             color: #fff;
         }
 
@@ -891,8 +891,10 @@
                                                     ₹{{ number_format($course->fees) }}
                                                     <small>Full Course</small>
                                                 </div>
-                                                <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="c-btn-enroll">
-                                                    <i class="bi bi-whatsapp"></i> Enroll Now
+
+                                                <a href="{{ route('course.details', $course->id) }}" target="_blank"
+                                                    class="c-btn-enroll">
+                                                    <i class=""></i> View Details
                                                 </a>
                                             </div>
                                         </div>
@@ -1141,15 +1143,15 @@
                 <div style="overflow:hidden;">
                     <div id="vidTrack"
                         style="display:flex; gap:16px;
-                                                                        transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
+                                                                                                        transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
 
                         @foreach($videos as $video)
                             <div style="flex:0 0 calc(25% - 12px); min-width:0;">
                                 <div class="video-card" onclick="openVideo('{{ $video['id'] }}')"
                                     style="cursor:pointer; background:var(--surface-color);
-                                                                                                                                       border-radius:10px; overflow:hidden;
-                                                                                                                                       box-shadow:0 5px 20px rgba(0,0,0,0.08);
-                                                                                                                                       transition:transform 0.3s, box-shadow 0.3s;"
+                                                                                                                                                                                                       border-radius:10px; overflow:hidden;
+                                                                                                                                                                                                       box-shadow:0 5px 20px rgba(0,0,0,0.08);
+                                                                                                                                                                                                       transition:transform 0.3s, box-shadow 0.3s;"
                                     onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 15px 35px rgba(0,0,0,0.15)'"
                                     onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 5px 20px rgba(0,0,0,0.08)'">
 
@@ -1161,13 +1163,13 @@
                                         {{-- Play overlay --}}
                                         <div
                                             style="position:absolute;inset:0;
-                                                                                                                                                background:rgba(0,0,0,0.25);
-                                                                                                                                                display:flex;align-items:center;justify-content:center;">
+                                                                                                                                                                                                                background:rgba(0,0,0,0.25);
+                                                                                                                                                                                                                display:flex;align-items:center;justify-content:center;">
                                             <div
                                                 style="width:44px;height:44px;border-radius:50%;
-                                                                                                                                                    background:rgba(255,255,255,0.95);
-                                                                                                                                                    display:flex;align-items:center;justify-content:center;
-                                                                                                                                                    box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+                                                                                                                                                                                                                    background:rgba(255,255,255,0.95);
+                                                                                                                                                                                                                    display:flex;align-items:center;justify-content:center;
+                                                                                                                                                                                                                    box-shadow:0 4px 15px rgba(0,0,0,0.3);">
                                                 <i class="fas fa-play"
                                                     style="color:#ff0000;font-size:15px;margin-left:3px;"></i>
                                             </div>
@@ -1176,9 +1178,9 @@
                                         {{-- Duration --}}
                                         <div
                                             style="position:absolute;bottom:6px;right:8px;
-                                                                                                                                                background:rgba(0,0,0,0.8);color:#fff;
-                                                                                                                                                font-size:11px;font-weight:600;
-                                                                                                                                                padding:2px 6px;border-radius:3px;">
+                                                                                                                                                                                                                background:rgba(0,0,0,0.8);color:#fff;
+                                                                                                                                                                                                                font-size:11px;font-weight:600;
+                                                                                                                                                                                                                padding:2px 6px;border-radius:3px;">
                                             {{ $video['duration'] }}
                                         </div>
                                     </div>
@@ -1187,17 +1189,17 @@
                                     <div style="padding:12px 14px 16px;">
                                         <h5
                                             style="font-size:13px;font-weight:600;
-                                                                                                                                               color:var(--heading-color);line-height:1.4;
-                                                                                                                                               margin-bottom:5px;
-                                                                                                                                               display:-webkit-box;-webkit-line-clamp:2;
-                                                                                                                                               -webkit-box-orient:vertical;overflow:hidden;">
+                                                                                                                                                                                                               color:var(--heading-color);line-height:1.4;
+                                                                                                                                                                                                               margin-bottom:5px;
+                                                                                                                                                                                                               display:-webkit-box;-webkit-line-clamp:2;
+                                                                                                                                                                                                               -webkit-box-orient:vertical;overflow:hidden;">
                                             {{ $video['title'] }}
                                         </h5>
                                         <p
                                             style="font-size:11px;color:color-mix(in srgb,var(--default-color),transparent 35%);
-                                                                                                                                              line-height:1.5;margin:0;
-                                                                                                                                              display:-webkit-box;-webkit-line-clamp:2;
-                                                                                                                                              -webkit-box-orient:vertical;overflow:hidden;">
+                                                                                                                                                                                                              line-height:1.5;margin:0;
+                                                                                                                                                                                                              display:-webkit-box;-webkit-line-clamp:2;
+                                                                                                                                                                                                              -webkit-box-orient:vertical;overflow:hidden;">
                                             {{ $video['desc'] }}
                                         </p>
                                     </div>
@@ -1218,18 +1220,19 @@
         VIDEO MODAL WITH RECOMMENDATIONS
         ══════════════════════════════════ --}}
         <div id="videoModal" style="display:none; position:fixed; inset:0; z-index:99999;
-                                                                background:rgba(0,0,0,0.92); align-items:center; justify-content:center;
-                                                                padding:20px;" onclick="closeVideo(event)">
+                                                                                                background:rgba(0,0,0,0.92); align-items:center; justify-content:center;
+                                                                                                padding:20px;"
+            onclick="closeVideo(event)">
 
             <div style="position:relative; width:100%; max-width:1100px;
-                                                                    display:flex; gap:16px; align-items:flex-start;"
+                                                                                                    display:flex; gap:16px; align-items:flex-start;"
                 onclick="event.stopPropagation()">
 
                 {{-- Close button --}}
                 <button onclick="closeVideo()"
                     style="position:absolute;top:-40px;right:0;
-                                                                           background:none;border:none;color:#fff;
-                                                                           font-size:28px;cursor:pointer;line-height:1;z-index:1;">
+                                                                                                           background:none;border:none;color:#fff;
+                                                                                                           font-size:28px;cursor:pointer;line-height:1;z-index:1;">
                     <i class="fas fa-times"></i>
                 </button>
 
@@ -1237,27 +1240,30 @@
                 <div style="flex:1; min-width:0;">
                     <div
                         style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;
-                                                                            border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+                                                                                                            border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
                         <iframe id="videoFrame" src=""
                             style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media;
-                                                                                   gyroscope; picture-in-picture; web-share" allowfullscreen>
+                                                                                                                   gyroscope; picture-in-picture; web-share" allowfullscreen>
                         </iframe>
                     </div>
                     {{-- Playing title --}}
-                    <p id="videoTitle" style="color:#fff;font-size:14px;font-weight:600;
-                                                                          margin-top:12px;line-height:1.4;"></p>
+                    <p id="videoTitle"
+                        style="color:#fff;font-size:14px;font-weight:600;
+                                                                                                          margin-top:12px;line-height:1.4;">
+                    </p>
                 </div>
 
                 {{-- RIGHT: Recommended sidebar --}}
                 <div
                     style="width:300px; flex-shrink:0;
-                                                                        max-height:75vh; overflow-y:auto;
-                                                                        scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.2) transparent;">
+                                                                                                        max-height:75vh; overflow-y:auto;
+                                                                                                        scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.2) transparent;">
 
-                    <p style="color:rgba(255,255,255,0.6);font-size:12px;
-                                                                          font-weight:600;text-transform:uppercase;
-                                                                          letter-spacing:1px;margin-bottom:12px;">
+                    <p
+                        style="color:rgba(255,255,255,0.6);font-size:12px;
+                                                                                                          font-weight:600;text-transform:uppercase;
+                                                                                                          letter-spacing:1px;margin-bottom:12px;">
                         Recommended
                     </p>
 
@@ -1312,39 +1318,39 @@
                     item.onclick = () => switchVideo(v.id);
 
                     item.innerHTML = `
-                                                                <div style="position:relative;flex-shrink:0;width:120px;">
-                                                                    <img src="${v.thumb}"
-                                                                         style="width:120px;height:68px;object-fit:cover;
-                                                                                border-radius:6px;display:block;">
-                                                                    <div style="position:absolute;bottom:4px;right:5px;
-                                                                                background:rgba(0,0,0,0.8);color:#fff;
-                                                                                font-size:10px;font-weight:600;padding:1px 5px;border-radius:3px;">
-                                                                        ${v.duration}
-                                                                    </div>
-                                                                    <div style="position:absolute;inset:0;display:flex;
-                                                                                align-items:center;justify-content:center;">
-                                                                        <div style="width:28px;height:28px;border-radius:50%;
-                                                                                    background:rgba(255,255,255,0.9);
-                                                                                    display:flex;align-items:center;justify-content:center;">
-                                                                            <i class="fas fa-play"
-                                                                               style="color:#ff0000;font-size:10px;margin-left:2px;"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div style="flex:1;min-width:0;">
-                                                                    <p style="color:#fff;font-size:12px;font-weight:600;
-                                                                               line-height:1.4;margin:0 0 4px;
-                                                                               display:-webkit-box;-webkit-line-clamp:2;
-                                                                               -webkit-box-orient:vertical;overflow:hidden;">
-                                                                        ${v.title}
-                                                                    </p>
-                                                                    <p style="color:rgba(255,255,255,0.45);font-size:11px;margin:0;
-                                                                               display:-webkit-box;-webkit-line-clamp:2;
-                                                                               -webkit-box-orient:vertical;overflow:hidden;">
-                                                                        ${v.desc}
-                                                                    </p>
-                                                                </div>
-                                                            `;
+                                                                                                <div style="position:relative;flex-shrink:0;width:120px;">
+                                                                                                    <img src="${v.thumb}"
+                                                                                                         style="width:120px;height:68px;object-fit:cover;
+                                                                                                                border-radius:6px;display:block;">
+                                                                                                    <div style="position:absolute;bottom:4px;right:5px;
+                                                                                                                background:rgba(0,0,0,0.8);color:#fff;
+                                                                                                                font-size:10px;font-weight:600;padding:1px 5px;border-radius:3px;">
+                                                                                                        ${v.duration}
+                                                                                                    </div>
+                                                                                                    <div style="position:absolute;inset:0;display:flex;
+                                                                                                                align-items:center;justify-content:center;">
+                                                                                                        <div style="width:28px;height:28px;border-radius:50%;
+                                                                                                                    background:rgba(255,255,255,0.9);
+                                                                                                                    display:flex;align-items:center;justify-content:center;">
+                                                                                                            <i class="fas fa-play"
+                                                                                                               style="color:#ff0000;font-size:10px;margin-left:2px;"></i>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div style="flex:1;min-width:0;">
+                                                                                                    <p style="color:#fff;font-size:12px;font-weight:600;
+                                                                                                               line-height:1.4;margin:0 0 4px;
+                                                                                                               display:-webkit-box;-webkit-line-clamp:2;
+                                                                                                               -webkit-box-orient:vertical;overflow:hidden;">
+                                                                                                        ${v.title}
+                                                                                                    </p>
+                                                                                                    <p style="color:rgba(255,255,255,0.45);font-size:11px;margin:0;
+                                                                                                               display:-webkit-box;-webkit-line-clamp:2;
+                                                                                                               -webkit-box-orient:vertical;overflow:hidden;">
+                                                                                                        ${v.desc}
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                            `;
 
                     list.appendChild(item);
                 });
