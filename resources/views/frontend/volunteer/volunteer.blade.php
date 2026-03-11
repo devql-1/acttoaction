@@ -921,6 +921,7 @@
 
         <!-- =================== VOLUNTEER FORM =================== -->
         <section class="volunteer-form-section section section-alt" id="join-form">
+
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Submit Your Application</h2>
@@ -937,42 +938,57 @@
                             <p class="form-subtitle">Fill in the form below and our team will soon contact you. All fields
                                 marked <span style="color:var(--accent-color);font-weight:700;">*</span> are required.</p>
 
-                            <form id="volunteerForm" novalidate>
+                            <form id="volunteerForm" method="POST" novalidate>
+                                @csrf
+
                                 <!-- Personal Info -->
                                 <p
                                     style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-color);margin-bottom:16px;">
                                     <i class="bi bi-person me-1"></i> Personal Information
                                 </p>
+
                                 <div class="row gy-3 mb-3">
+
                                     <div class="col-md-6">
                                         <label class="form-label">First Name <span class="req">*</span></label>
-                                        <input type="text" class="form-control" placeholder="e.g. Rahul" required>
+                                        <input type="text" name="first_name" class="form-control" placeholder="e.g. Rahul">
+                                        <small class="text-danger first_name_error"></small>
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label">Last Name <span class="req">*</span></label>
-                                        <input type="text" class="form-control" placeholder="e.g. Sharma" required>
+                                        <input type="text" name="last_name" class="form-control" placeholder="e.g. Sharma">
+                                        <small class="text-danger last_name_error"></small>
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label">Email Address <span class="req">*</span></label>
-                                        <input type="email" class="form-control" placeholder="yourname@email.com" required>
+                                        <input type="email" name="email" class="form-control"
+                                            placeholder="yourname@email.com">
+                                        <small class="text-danger email_error"></small>
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label">Phone Number <span class="req">*</span></label>
-                                        <input type="tel" class="form-control" placeholder="+91 98765 43210" required>
+                                        <input type="tel" name="phone" class="form-control" placeholder="+91 98765 43210">
+                                        <small class="text-danger phone_error"></small>
                                     </div>
+
                                     <div class="col-md-4">
                                         <label class="form-label">Age <span class="req">*</span></label>
-                                        <input type="number" class="form-control" placeholder="e.g. 24" min="16" max="60"
-                                            required>
+                                        <input type="number" name="age" class="form-control" placeholder="e.g. 24" min="16"
+                                            max="60">
                                     </div>
+
                                     <div class="col-md-8">
                                         <label class="form-label">City / Address <span class="req">*</span></label>
-                                        <input type="text" class="form-control" placeholder="e.g. Vaishali Nagar, Jaipur"
-                                            required>
+                                        <input type="text" name="city" class="form-control"
+                                            placeholder="e.g. Vaishali Nagar, Jaipur">
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label">State <span class="req">*</span></label>
-                                        <select class="form-select" required>
+                                        <select name="state" class="form-select">
                                             <option value="" disabled selected>Select your state</option>
                                             <option>Rajasthan</option>
                                             <option>Delhi</option>
@@ -992,58 +1008,72 @@
                                             <option>Other</option>
                                         </select>
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label">Current Occupation</label>
-                                        <input type="text" class="form-control"
+                                        <input type="text" name="occupation" class="form-control"
                                             placeholder="e.g. Student, Teacher, Freelancer">
                                     </div>
+
                                 </div>
 
                                 <hr class="divider">
 
                                 <!-- Role Selection -->
+
                                 <p
                                     style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-color);margin-bottom:16px;">
                                     <i class="bi bi-briefcase me-1"></i> Area of Interest <span class="req">*</span>
                                 </p>
+
                                 <div class="role-checkbox-group mb-3">
+
                                     <label class="role-check-item">
-                                        <input type="checkbox" name="role" value="acting-trainer">
+                                        <input type="checkbox" name="role[]" value="acting-trainer">
                                         <span><i class="bi bi-camera-video me-1"></i> Acting Trainer</span>
                                     </label>
+
                                     <label class="role-check-item">
-                                        <input type="checkbox" name="role" value="photographer">
+                                        <input type="checkbox" name="role[]" value="photographer">
                                         <span><i class="bi bi-camera me-1"></i> Photographer / Videographer</span>
                                     </label>
+
                                     <label class="role-check-item">
-                                        <input type="checkbox" name="role" value="social-media">
-                                        <span><i class="bi bi-megaphone me-1"></i> Social Media &amp; PR</span>
+                                        <input type="checkbox" name="role[]" value="social-media">
+                                        <span><i class="bi bi-megaphone me-1"></i> Social Media & PR</span>
                                     </label>
+
                                     <label class="role-check-item">
-                                        <input type="checkbox" name="role" value="event-coordinator">
+                                        <input type="checkbox" name="role[]" value="event-coordinator">
                                         <span><i class="bi bi-calendar-event me-1"></i> Event Coordinator</span>
                                     </label>
+
                                     <label class="role-check-item">
-                                        <input type="checkbox" name="role" value="child-dev">
+                                        <input type="checkbox" name="role[]" value="child-dev">
                                         <span><i class="bi bi-heart-pulse me-1"></i> Child Development</span>
                                     </label>
+
                                     <label class="role-check-item">
-                                        <input type="checkbox" name="role" value="other">
+                                        <input type="checkbox" name="role[]" value="other">
                                         <span><i class="bi bi-three-dots me-1"></i> Other</span>
                                     </label>
+
                                 </div>
 
                                 <hr class="divider">
 
                                 <!-- Availability & Message -->
+
                                 <p
                                     style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-color);margin-bottom:16px;">
                                     <i class="bi bi-chat-dots me-1"></i> Tell Us More
                                 </p>
+
                                 <div class="row gy-3">
+
                                     <div class="col-md-6">
                                         <label class="form-label">Availability</label>
-                                        <select class="form-select">
+                                        <select name="availability" class="form-select">
                                             <option value="" disabled selected>How available are you?</option>
                                             <option>Weekends only</option>
                                             <option>Weekdays only</option>
@@ -1052,9 +1082,10 @@
                                             <option>Full-time</option>
                                         </select>
                                     </div>
+
                                     <div class="col-md-6">
                                         <label class="form-label">How did you hear about us?</label>
-                                        <select class="form-select">
+                                        <select name="hear_about" class="form-select">
                                             <option value="" disabled selected>Select an option</option>
                                             <option>Instagram</option>
                                             <option>WhatsApp</option>
@@ -1064,16 +1095,19 @@
                                             <option>Other</option>
                                         </select>
                                     </div>
+
                                     <div class="col-12">
                                         <label class="form-label">Why do you want to join Act to Action?</label>
-                                        <textarea class="form-control" rows="4"
+                                        <textarea name="message" class="form-control" rows="4"
                                             placeholder="Tell us about yourself, your passion, and what you'd love to contribute to Act to Action..."></textarea>
                                     </div>
+
                                     <div class="col-12">
                                         <label class="form-label">Any relevant experience or skills?</label>
-                                        <textarea class="form-control" rows="3"
+                                        <textarea name="experience" class="form-control" rows="3"
                                             placeholder="e.g. 2 years teaching theatre, event management at college, photography skills..."></textarea>
                                     </div>
+
                                 </div>
 
                                 <div class="mt-4">
@@ -1083,13 +1117,15 @@
                                 </div>
 
                                 <!-- Success message -->
-                                <div class="success-msg" id="successMsg">
+                                <div class="success-msg" id="successMsg" style="display:none;">
                                     <i class="bi bi-check-circle-fill"></i>
                                     <h5>Application Submitted Successfully! 🎉</h5>
                                     <p>Thank you for your interest in joining Act to Action. Our team will soon contact you
-                                        via WhatsApp or phone. We look forward to having you on board!</p>
+                                        via WhatsApp or phone.</p>
                                 </div>
+
                             </form>
+
                         </div>
                     </div>
 
@@ -1202,4 +1238,69 @@
             </div>
         </section>
     </main>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('#volunteerForm').submit(function (e) {
+
+                e.preventDefault();
+
+                let formData = new FormData(this);
+
+                $('.text-danger').text('');
+
+                $.ajax({
+
+                    url: "{{ route('volunteer.store') }}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+
+                    success: function (response) {
+
+                        if (response.status == 200) {
+
+                            toastr.success(response.message);
+
+                            $('#volunteerForm')[0].reset();
+
+                            $('#successMsg').fadeIn();
+
+                        }
+
+                    },
+
+                    error: function (xhr) {
+
+                        if (xhr.status === 422) {
+
+                            let errors = xhr.responseJSON.errors;
+
+                            $.each(errors, function (key, value) {
+
+                                $('.' + key + '_error').text(value[0]);
+
+                            });
+
+                            toastr.error("Please fix the errors");
+
+                        }
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+
 @endsection

@@ -48,13 +48,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="services.html" class="{{ request()->is('services.html') ? 'active' : '' }}">
-                            Programs
-                        </a>
-                    </li>
-                    <li>
-                        <a href="doctors.html" class="{{ request()->is('doctors.html') ? 'active' : '' }}">
-                            Instructors
+                        <a href="{{ route('frontend.tests') }}" class="{{ request()->routeIs('frontend.tests') ? 'active' : '' }}">
+                            Tests
                         </a>
                     </li>
 

@@ -18,7 +18,7 @@ class TestGraphConfigController extends Controller
     /** Show create form for a specific test */
     public function create()
     {
-        // Only tests that DON'T have a config yet
+
         $tests = PsychTest::whereDoesntHave('graphConfig')->latest()->get();
         return view('backend.test_graph_configs.create', compact('tests'));
     }

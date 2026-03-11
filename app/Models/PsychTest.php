@@ -41,4 +41,8 @@ class PsychTest extends Model
     {
         return $this->hasOne(TestGraphConfig::class, 'test_id');
     }
+    public function resultRanges()
+    {
+        return $this->hasMany(TestResultRange::class, 'test_id')->orderBy('min_percent');
+    }
 }

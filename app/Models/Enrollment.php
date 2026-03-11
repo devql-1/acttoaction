@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+use Illuminate\Support\Str;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,6 +31,7 @@ class Enrollment extends Model
         'terms_accepted',
         'newsletter_subscribed',
         'status',
+        'fee',
     ];
 
     protected $casts = [

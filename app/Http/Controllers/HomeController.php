@@ -263,9 +263,7 @@ class HomeController extends Controller
 
         // Graph config
         $graphConfig = \App\Models\TestGraphConfig::where('test_id', $id)->first();
-        $graphType = ($graphConfig && $graphConfig->is_active)
-            ? $graphConfig->graph_type
-            : 'bar';
+        $graphType = $graphConfig ? $graphConfig->graph_type : 'hello';
 
         // ── Store everything in session ──
         session([
@@ -343,4 +341,9 @@ class HomeController extends Controller
 
         return view('frontend.course.coursedetails', compact('course', 'otherCourses'));
     }
+    public function blog()
+    {
+        return view('frontend.blog.blog');
+    }
+
 }

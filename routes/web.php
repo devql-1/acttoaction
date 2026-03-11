@@ -55,7 +55,9 @@ use App\Http\Controllers\Admin\QuizCategoryController;
 use App\Http\Controllers\Admin\QuizQuestionController;
 use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\TestGraphConfigController;
-
+use App\Http\Controllers\Admin\TestResultRangeController;
+use App\Http\Controllers\Admin\BlogAuthorController;
+use App\Http\Controllers\Admin\VolunteerController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -64,8 +66,8 @@ use App\Http\Controllers\Admin\TestGraphConfigController;
 // Route::get('/admission-form', function () {
 //     return view('frontend.admission');
 // });
-
-
+Route::post('/admin/volunteer-submit', [VolunteerController::class,'store'])->name('volunteer.store');
+Route::get('/blog', [HomeController::class, 'index'])->name('blog');
 Route::get('/enrollment/{id}', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
 Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->name('enrollment.store');
 // routes/web.php
@@ -179,7 +181,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/contact-info', [ContactInfoController::class, 'update'])->name('admin.contact-info.update');
 
 
-
         // Admin Routes 
         Route::get('/', [AdminController::class, 'index'])->name('admin');
 
@@ -280,7 +281,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('blogs/store', [BlogController::class, 'store'])->name('admin.blog-store');
         Route::get('blogs/{id}/edit', [BlogController::class, 'edit'])->name('admin.blog-edit');
         Route::post('blogs/{id}/update', [BlogController::class, 'update'])->name('admin.blog-update');
-        Route::get('blogs/{id}/destroy', [BlogController::class, 'destroy'])->name('admin.blog-destroy');
+        Route::delete('blogs/{id}/destroy', [BlogController::class, 'destroy'])->name('admin.blog-destroy');
         Route::post('blogs/toggle-status', [BlogController::class, 'blog_toggleStatus'])->name('admin.blog-status');
 
 
@@ -289,7 +290,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('blogs-category/store', [BlogCategoryController::class, 'store'])->name('admin.blog-category-store');
         Route::get('blogs-category/{id}/edit', [BlogCategoryController::class, 'edit'])->name('admin.blog-category-edit');
         Route::post('blogs-category/{id}/update', [BlogCategoryController::class, 'update'])->name('admin.blog-category-update');
-        Route::get('blogs-category/{id}/destroy', [BlogCategoryController::class, 'destroy'])->name('admin.blog-category-destroy');
+        Route::delete('blogs-category/{id}/destroy', [BlogCategoryController::class, 'destroy'])->name('admin.blog-category-destroy');
         Route::post('blogs-category/toggle-status', [BlogCategoryController::class, 'blogCategory_toggleStatus'])->name('admin.blog-category-status');
 
         // Admin Brands Routes
@@ -483,6 +484,40 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('quiz-tests/{testId}/categories/{categoryId}/questions/{id}', [QuizQuestionController::class, 'destroy'])->name('quiz-questions.destroy');
 
         Route::resource('test-graph-configs', TestGraphConfigController::class);
+
+        Route::get('test-result-ranges', [TestResultRangeController::class, 'tests'])
+            ->name('test-result-ranges.tests');
+        Route::get('test-result-ranges/{id}', [TestResultRangeController::class, 'index'])->name('test-result-ranges.index');
+        Route::get('test-result-ranges/create/{testId}', [TestResultRangeController::class, 'create'])->name('test-result-ranges.create');
+        Route::post('test-result-ranges/{testId}', [TestResultRangeController::class, 'store'])->name('test-result-ranges.store');
+        Route::any('test-result-ranges/{testId}/edit/{id}', [TestResultRangeController::class, 'edit'])->name('test-result-ranges.edit');
+        Route::any('test-result-ranges/{testId}/update/{id}', [TestResultRangeController::class, 'update'])->name('test-result-ranges.update');
+        Route::delete('test-result-ranges/{testId}/{id}', [TestResultRangeController::class, 'destroy'])->name('test-result-ranges.destroy');
+
+
+        Route::get('/blog-authors', [BlogAuthorController::class, 'index'])->name('admin.blog-author.index');
+        Route::get('/blog-authors/create', [BlogAuthorController::class, 'create'])->name('admin.blog-author.create');
+        Route::post('/blog-authors/store', [BlogAuthorController::class, 'store'])->name('admin.blog-author.store');
+        Route::get('/blog-authors/edit/{id}', [BlogAuthorController::class, 'edit'])->name('admin.blog-author.edit');
+        Route::post('/blog-authors/update/{id}', [BlogAuthorController::class, 'update'])->name('admin.blog-author.update');
+        Route::delete('/blog-authors/destroy/{id}', [BlogAuthorController::class, 'destroy'])->name('admin.blog-author.destroy');
+        Route::post('/blog-authors/toggle-status', [BlogAuthorController::class, 'toggleStatus'])->name('admin.blog-author.toggle-status');
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
 
     });
 });
