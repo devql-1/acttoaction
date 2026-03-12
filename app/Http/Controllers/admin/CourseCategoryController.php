@@ -39,8 +39,7 @@ class CourseCategoryController extends Controller
             'status' => 1,
         ]);
 
-        return redirect()->route('course-categories-index')
-            ->with('success', 'Category created successfully');
+        return redirect()->route('course-categories-index')->with('success', 'Category created successfully');
     }
 
     public function edit($id)
@@ -60,18 +59,19 @@ class CourseCategoryController extends Controller
 
         $imagePath = $category->image;
         if ($request->hasFile('image')) {
-            if ($imagePath)
+            if ($imagePath) {
                 Storage::disk('public')->delete($imagePath);
+            }
             $imagePath = $request->file('image')->store('category_images', 'public');
         }
 
         $category->update([
             'name' => $request->name,
             'image' => $imagePath,
+            'description' => $request->description,
         ]);
 
-        return redirect()->route('course-categories-index')
-            ->with('success', 'Category updated successfully');
+        return redirect()->route('course-categories-index')->with('success', 'Category updated successfully');
     }
 
     public function status(Request $request)
@@ -86,7 +86,8 @@ class CourseCategoryController extends Controller
         $category = CourseCategory::findOrFail($id);
 
         if ($category->courses()->count() > 0) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->with('error', 'Cannot delete. ' . $category->courses()->count() . ' courses are assigned to this category.');
         }
 

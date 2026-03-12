@@ -25,4 +25,5 @@ class Blog extends Model
     {
         return $this->belongsTo(BlogAuthor::class, 'author_id');
     }
-}
+
+}   

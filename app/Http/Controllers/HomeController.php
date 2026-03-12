@@ -7,41 +7,49 @@ use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Event;
 use App\Models\PsychTest;
+use App\Models\Blog;
+use App\Models\BlogCategory;
+use App\Models\YoutubeVideo;
+use App\Http\Controllers\Admin\EnrollmentController;
+use App\Http\Controllers\Admin\VolunteerController;
 class HomeController extends Controller
 {
     public function index()
     {
         // Featured courses (first 6)
-        $featuredCourses = Course::with('category')
-            ->latest()
-            ->take(6)
-            ->get();
+        $featuredCourses = Course::with('category')->latest()->take(6)->get();
 
         // All active categories with their courses
-        $categories = CourseCategory::with('courses')
+        $categories = CourseCategory::with('courses')->where('status', 1)->get();
+
+        // All courses
+        $allCourses = Course::with('category')->latest()->get();
+
+        return view('frontend.Home.index', compact('featuredCourses', 'categories', 'allCourses'));
+    }
+    public function cat_course()
+    {
+        // All active categories with their courses + sessions + documents
+        $categories = CourseCategory::with([
+            'courses' => function ($q) {
+                $q->with(['sessions', 'documents'])->latest();
+            },
+        ])
             ->where('status', 1)
             ->get();
 
-        // All courses
-        $allCourses = Course::with('category')
-            ->latest()
-            ->get();
+        // All courses (for hero image fallback)
+        $allCourses = Course::with('category')->latest()->get();
 
-        return view('frontend.Home.index', compact('featuredCourses', 'categories', 'allCourses'));
+        return view('frontend.course.cat_course', compact('categories', 'allCourses'));
     }
 
     public function course()
     {
-        $featuredCourses = Course::with('category')
-            ->latest()
-            ->take(6)
-            ->get();
+        $featuredCourses = Course::with('category')->latest()->take(6)->get();
 
         // All active categories with their courses
-        $categories = CourseCategory::withCount('courses')
-            ->with('courses')
-            ->where('status', 1)
-            ->get();
+        $categories = CourseCategory::withCount('courses')->with('courses')->where('status', 1)->get();
 
         // All courses
 
@@ -49,28 +57,30 @@ class HomeController extends Controller
             ->latest()
             ->get();
 
-
         return view('frontend.course.course', compact('featuredCourses', 'categories', 'allCourses'));
     }
     public function event()
     {
-        $events = Event::where('status', 1)
-            ->withCount('subEvents')
-            ->latest('event_date')
-            ->take(6)
-            ->get();
+        $events = Event::with('subEvents')->latest('event_date')->get();
 
-        return view('frontend.event.event', compact('events'));
+        $videoData = YoutubeVideo::with('youtubeCategory')->latest()->get()->map(
+            fn($v) => [
+                'id' => $v->youtube_id,
+                'thumb' => 'https://img.youtube.com/vi/' . $v->youtube_id . '/mqdefault.jpg',
+                'title' => $v->name,
+                'desc' => $v->youtubeCategory?->name ?? '',
+                'duration' => '',
+            ],
+        );
+
+        return view('frontend.event.event', compact('events', 'videoData'));
     }
     public function subevent($id)
     {
-        $event = Event::with([
-            'subEvents' => function ($q) {
-                $q->where('status', 1)->orderBy('event_date')->orderBy('start_time');
-            }
-        ])->findOrFail($id);
+        $event = Event::with('subEvents')->findOrFail($id);
+        $otherEvents = Event::with('subEvents')->where('id', '!=', $id)->latest('event_date')->take(3)->get();
 
-        return view('frontend.event.subevent', compact('event'));
+        return view('frontend.event.subevent', compact('event', 'otherEvents'));
     }
     public function quicktest()
     {
@@ -85,12 +95,9 @@ class HomeController extends Controller
 
     public function show($id)
     {
-        $test = PsychTest::withCount(['categories', 'questions'])
-            ->findOrFail($id);
+        $test = PsychTest::withCount(['categories', 'questions'])->findOrFail($id);
 
-        $categories = $test->categories()
-            ->withCount('questions')
-            ->get();
+        $categories = $test->categories()->withCount('questions')->get();
         if ($categories->isEmpty() || $test->questions()->count() === 0) {
             return abort(404);
         }
@@ -99,35 +106,27 @@ class HomeController extends Controller
 
     public function take($id)
     {
-
-
         $test = PsychTest::with([
             'categories' => fn($q) => $q->orderBy('id'),
             'categories.questions' => fn($q) => $q->orderBy('id'),
         ])->findOrFail($id);
 
-
         $allQuestions = $test->categories->flatMap(fn($cat) => $cat->questions);
         $totalQuestions = $allQuestions->count();
 
         if ($totalQuestions === 0) {
-            return redirect()->route('frontend.tests.show', $id)
-                ->with('error', 'This test has no questions yet.');
+            return redirect()->route('frontend.tests.show', $id)->with('error', 'This test has no questions yet.');
         }
         if (!$test || $test->categories->isEmpty() || $totalQuestions === 0) {
             return abort(404);
-
         }
         return view('frontend.quick-test.take', [
             'test' => $test,
             'categories' => $test->categories,
-            'allQuestions' => $allQuestions,       // 
+            'allQuestions' => $allQuestions, //
             'totalQuestions' => $totalQuestions,
         ]);
     }
-
-
-
 
     // public function submit(Request $request, $id)
     // {
@@ -225,16 +224,14 @@ class HomeController extends Controller
             }
 
             $categoryScores[] = [
-                'name' => $cat->category_name ?? $cat->name ?? 'Section',
+                'name' => $cat->category_name ?? ($cat->name ?? 'Section'),
                 'icon' => $cat->icon ?? '📋',
                 'color' => $cat->color ?? '#175cdd',
                 'score' => $catMax > 0 ? (int) round(($catEarned / $catMax) * 100) : 0,
             ];
         }
 
-        $overallPercent = $maxScore > 0
-            ? (int) round(($totalScore / $maxScore) * 100)
-            : 0;
+        $overallPercent = $maxScore > 0 ? (int) round(($totalScore / $maxScore) * 100) : 0;
 
         // Type scores
         $typeKeys = ['performer', 'empath', 'creator', 'leader', 'voice', 'director'];
@@ -256,10 +253,7 @@ class HomeController extends Controller
         $topTypeKey = array_key_first($typeScores);
 
         // Match result range
-        $range = \App\Models\TestResultRange::where('test_id', $id)
-            ->where('min_percent', '<=', $overallPercent)
-            ->where('max_percent', '>=', $overallPercent)
-            ->first();
+        $range = \App\Models\TestResultRange::where('test_id', $id)->where('min_percent', '<=', $overallPercent)->where('max_percent', '>=', $overallPercent)->first();
 
         // Graph config
         $graphConfig = \App\Models\TestGraphConfig::where('test_id', $id)->first();
@@ -275,18 +269,20 @@ class HomeController extends Controller
                 'type_scores' => $typeScores,
                 'top_type_key' => $topTypeKey,
                 'graph_type' => $graphType,
-                'range' => $range ? [
-                    'label' => $range->label,
-                    'emoji' => $range->emoji,
-                    'tagline' => $range->tagline,
-                    'description' => $range->description,
-                    'recommended_course' => $range->recommended_course,
-                    'tags' => $range->tags,
-                    'color' => $range->color,
-                    'min_percent' => $range->min_percent,
-                    'max_percent' => $range->max_percent,
-                ] : null,
-            ]
+                'range' => $range
+                    ? [
+                        'label' => $range->label,
+                        'emoji' => $range->emoji,
+                        'tagline' => $range->tagline,
+                        'description' => $range->description,
+                        'recommended_course' => $range->recommended_course,
+                        'tags' => $range->tags,
+                        'color' => $range->color,
+                        'min_percent' => $range->min_percent,
+                        'max_percent' => $range->max_percent,
+                    ]
+                    : null,
+            ],
         ]);
 
         return redirect()->route('test.result', $id);
@@ -295,8 +291,7 @@ class HomeController extends Controller
     {
         // Guard — if no session, send back to test
         if (!session()->has('quiz_result')) {
-            return redirect()->route('frontend.tests.show', $id)
-                ->with('error', 'No result found. Please take the test first.');
+            return redirect()->route('frontend.tests.show', $id)->with('error', 'No result found. Please take the test first.');
         }
 
         $data = session('quiz_result');
@@ -315,7 +310,7 @@ class HomeController extends Controller
             'topTypeKey' => $data['top_type_key'],
             'overallPct' => $data['overall_percent'],
             'graphType' => $data['graph_type'],
-            'range' => $data['range'],       // array or null
+            'range' => $data['range'], // array or null
             'answers' => $data['answers'],
         ]);
     }
@@ -330,20 +325,98 @@ class HomeController extends Controller
     }
     public function course_details($id)
     {
-        $course = Course::with(['category', 'centers.state'])
-            ->findOrFail($id);
+        $course = Course::with(['category', 'centers.state'])->findOrFail($id);
 
-        $otherCourses = Course::with('category')
-            ->where('id', '!=', $id)
-            ->latest()
-            ->take(4)
-            ->get();
+        $otherCourses = Course::with('category')->where('id', '!=', $id)->latest()->take(4)->get();
 
         return view('frontend.course.coursedetails', compact('course', 'otherCourses'));
     }
     public function blog()
     {
-        return view('frontend.blog.blog');
-    }
+        // All active categories
+        $categories = BlogCategory::where('status', 1)
+            ->withCount(['posts' => fn($q) => $q->where('status', 1)])
+            ->get();
 
+        // Total published blogs
+        $totalBlogs = Blog::where('status', 1)->count();
+
+        // Featured post — latest published blog with author + category
+        $featured = Blog::with(['author', 'category'])
+            ->where('status', 1)
+            ->latest()
+            ->first();
+
+        // Blog grid — all published, eager-load author + category
+        // Filter by category slug if ?category= param present
+        $blogsQuery = Blog::with(['author', 'category'])->where('status', 1);
+
+        if ($categorySlug = request('category')) {
+            $blogsQuery->whereHas('category', fn($q) => $q->where('slug', $categorySlug));
+        }
+        $blogs = $blogsQuery->latest()->paginate(12);
+
+        // Recent posts for sidebar (5 latest)
+        $recentPosts = Blog::with('category')->where('status', 1)->latest()->limit(5)->get();
+
+        // Popular tags — all unique tags from blogs
+        // (assumes a `tags` column as comma-separated string, or adjust to your schema)
+        // If you don't have tags, pass an empty array:
+        $tags = collect(['Acting', 'Screen Acting', 'DramATA', 'Kids', 'Jaipur', 'Casting', 'Summer Camp', 'Theatre', 'Workshops', 'Confidence', 'NEP 2020', 'Performance']);
+
+        return view('frontend.blog.blog', compact('categories', 'totalBlogs', 'featured', 'blogs', 'recentPosts', 'tags'));
+    }
+    public function blog_details($slug)
+    {
+        $blog = Blog::with(['author', 'category'])
+            ->where('slug', $slug)
+            ->where('status', 1)
+            ->firstOrFail();
+
+        // Related posts — same category, exclude current post
+        $related = Blog::with(['author', 'category'])
+            ->where('status', 1)
+            ->where('id', '!=', $blog->id)
+            ->where('category_id', $blog->category_id)
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        // Sidebar: recent posts
+        $recentPosts = Blog::with('category')->where('status', 1)->latest()->limit(4)->get();
+
+        // Sidebar: categories with post counts
+        $categories = BlogCategory::where('status', 1)
+            ->withCount(['posts' => fn($q) => $q->where('status', 1)])
+            ->get();
+
+        // Sidebar & tag section tags
+        $tags = collect(['Acting', 'Screen Acting', 'DramATA', 'Kids', 'Jaipur', 'Casting', 'Summer Camp', 'Theatre', 'Workshops', 'Confidence', 'NEP 2020', 'Performance']);
+
+        return view('frontend.blog.blogdetails', compact('blog', 'related', 'recentPosts', 'categories', 'tags'));
+    }
+    public function blog_category($slug)
+    {
+        $currentCategory = BlogCategory::where('slug', $slug)->where('status', 1)->firstOrFail();
+
+        $categories = BlogCategory::where('status', 1)
+            ->withCount(['posts' => fn($q) => $q->where('status', 1)])
+            ->get();
+
+        $totalBlogs = Blog::where('status', 1)->count();
+
+        $blogs = Blog::with(['author', 'category'])
+            ->where('status', 1)
+            ->where('category_id', $currentCategory->id)
+            ->latest()
+            ->paginate(12);
+
+        $recentPosts = Blog::with('category')->where('status', 1)->latest()->limit(5)->get();
+
+        $tags = collect(['Acting', 'Screen Acting', 'Kids', 'Jaipur', 'Casting', 'Workshops', 'Confidence']);
+
+        $featured = $blogs->first();
+
+        return view('frontend.blog.blog', compact('categories', 'totalBlogs', 'featured', 'blogs', 'recentPosts', 'tags', 'currentCategory'));
+    }
 }

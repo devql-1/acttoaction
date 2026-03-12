@@ -7,7 +7,7 @@ use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Course;
-
+use Razorpay\Api\Api;
 class EnrollmentController extends Controller
 {
     /** Show the multi-step enrollment form */
@@ -41,21 +41,11 @@ class EnrollmentController extends Controller
         $courseStates = array_keys($centresByState);
 
         // Other courses for step 5
-        $otherCourses = Course::with('category')
-            ->where('id', '!=', $id)
-            ->latest()
-            ->take(5)
-            ->get();
+        $otherCourses = Course::with('category')->where('id', '!=', $id)->latest()->take(5)->get();
 
-        return view('frontend.enrollment.create', compact(
-            'course',
-            'otherCourses',
-            'centresByState',
-            'courseStates'
-        ));
+        return view('frontend.enrollment.create', compact('course', 'otherCourses', 'centresByState', 'courseStates'));
     }
     /** Handle form submission */
-
 
     public function store(Request $request)
     {
@@ -66,27 +56,19 @@ class EnrollmentController extends Controller
             'gender' => 'required|in:Male,Female,Other',
             'father_name' => 'required|string|max:100',
             'mother_name' => 'required|string|max:100',
-            'parent_phone' => 'nullable|string|max:15',
-            'parent_email' => 'nullable|email|max:150',
             'phone' => 'required|string|min:10|max:15',
             'email' => 'required|email|max:150',
-            'address' => 'nullable|string|max:500',
             'school' => 'required|string|max:200',
             'grade' => 'required|string|max:50',
-            'achievements' => 'nullable|string|max:1000',
             'state' => 'required|string|max:100',
-            'city' => 'nullable|string|max:100',
             'centre' => 'required|string|max:200',
             'mode' => 'required|string|max:50',
             'course' => 'required|string|max:200',
-            'newsletter' => 'nullable|boolean',
         ]);
 
         $age = Carbon::parse($validated['dob'])->age;
 
-        // get course price from database
         $course = Course::where('title', $validated['course'])->first();
-
         $fee = $course ? $course->fees : 0;
 
         $enrollment = Enrollment::create([
@@ -97,32 +79,34 @@ class EnrollmentController extends Controller
             'gender' => $validated['gender'],
             'father_name' => $validated['father_name'],
             'mother_name' => $validated['mother_name'],
-            'parent_phone' => $validated['parent_phone'] ?? null,
-            'parent_email' => $validated['parent_email'] ?? null,
             'phone' => $validated['phone'],
             'email' => $validated['email'],
-            'address' => $validated['address'] ?? null,
             'school' => $validated['school'],
             'grade' => $validated['grade'],
-            'achievements' => $validated['achievements'] ?? null,
             'state' => $validated['state'],
-            'city' => $validated['city'] ?? null,
             'centre' => $validated['centre'],
             'mode' => $validated['mode'],
             'course' => $validated['course'],
             'fee' => $fee,
-            'terms_accepted' => true,
-            'newsletter_subscribed' => $validated['newsletter'] ?? false,
             'status' => 'pending',
+        ]);
+
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+
+        $order = $api->order->create([
+            'receipt' => $enrollment->reference_id,
+            'amount' => $fee * 100,
+            'currency' => 'INR',
         ]);
 
         return response()->json([
             'success' => true,
-            'reference_id' => $enrollment->reference_id,
+            'order_id' => $order['id'],
+            'amount' => $fee * 100,
+            'enrollment_id' => $enrollment->id,
+            'razorpay_key' => config('services.razorpay.key'),
         ]);
     }
-
-
 
     /** Admin: list all enrollments */
     public function index()
@@ -153,5 +137,35 @@ class EnrollmentController extends Controller
     {
         Enrollment::findOrFail($id)->delete();
         return back()->with('success', 'Enrollment deleted.');
+    }
+    public function verifyPayment(Request $request)
+    {
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+
+        try {
+            $attributes = [
+                'razorpay_order_id' => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'razorpay_signature' => $request->razorpay_signature,
+            ];
+
+            $api->utility->verifyPaymentSignature($attributes);
+
+            $enrollment = Enrollment::find($request->enrollment_id);
+            $enrollment->status = 'paid';
+            $enrollment->payment_id = $request->razorpay_payment_id;
+            $enrollment->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment successful',
+                'reference_id' => $enrollment->reference_id,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Payment verification failed',
+            ]);
+        }
     }
 }

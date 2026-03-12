@@ -66,10 +66,15 @@ use App\Http\Controllers\Admin\VolunteerController;
 // Route::get('/admission-form', function () {
 //     return view('frontend.admission');
 // });
-Route::post('/admin/volunteer-submit', [VolunteerController::class,'store'])->name('volunteer.store');
-Route::get('/blog', [HomeController::class, 'index'])->name('blog');
+
+Route::post('/admin/volunteer-submit', [VolunteerController::class, 'store'])->name('volunteer.store');
+Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blog.index');
+Route::get('/blog/category/{slug}', [HomeController::class, 'blog_category'])->name('frontend.blog.category');
+Route::get('/blog/{slug}', [HomeController::class, 'blog_details'])->name('frontend.blog.details');
+
 Route::get('/enrollment/{id}', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
 Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->name('enrollment.store');
+Route::post('/verify-payment', [EnrollmentController::class, 'verifyPayment']);
 // routes/web.php
 Route::post('/test/{id}/submit', [HomeController::class, 'submit'])->name('test.submit');
 Route::get('/test/{id}/result', [HomeController::class, 'result'])->name('test.result');
@@ -80,7 +85,7 @@ Route::get('/aboutus', [HomeController::class, 'about'])->name('aboutus');
 Route::get('/volunteer', [HomeController::class, 'volunteer'])->name('volunteer');
 Route::get('/course', [HomeController::class, 'course'])->name('index.course');
 Route::get('/course/{id}', [HomeController::class, 'course_details'])->name('course.details');
-
+Route::get('/cat_course', [HomeController::class, 'cat_course'])->name('frontend.course.cat_course');
 Route::get('/event', [HomeController::class, 'event'])->name('event');
 Route::get('/events/{id}', [HomeController::class, 'subevent'])->name('frontend.events.subevent');
 Route::get('/tests', [HomeController::class, 'quicktest'])->name('frontend.tests');
@@ -88,27 +93,25 @@ Route::get('/tests/{id}', [HomeController::class, 'quicktestshow'])->name('front
 
 // routes/web.php
 
-
-Route::get('/tests/{id}', [HomeController::class, 'show'])
-    ->name('frontend.tests.show');
+Route::get('/tests/{id}', [HomeController::class, 'show'])->name('frontend.tests.show');
 Route::get('/take-test/{id}', [HomeController::class, 'take'])->name('quicktest.take');
 
 // Quiz-taking page (all questions with scale)
 
-//ENROLLMENT FORM 
+//ENROLLMENT FORM
 // routes/web.php
-
-
 
 // Public
 
 // Admin (wrap in auth + admin middleware as needed)
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
-    Route::get('/enrollments/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
-    Route::patch('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
-    Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
-});
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
+        Route::get('/enrollments/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
+        Route::patch('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
+        Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+    });
 
 Route::get('/servicedetails/{slug}', [HomeController::class, 'servicedetails'])->name('servicedetails');
 Route::get('/service', [HomeController::class, 'service'])->name('service');
@@ -125,17 +128,9 @@ Route::get('/contactus', [HomeController::class, 'contactus'])->name('contactus'
 Route::get('/privacy', [HomeController::class, 'privacy'])->name('privacy');
 Route::post('/contactus/listing', [FrontendContactusController::class, 'contactus_store'])->name('home.contactus.store');
 
-
-
-
-
-
-
-
-// for the user 
+// for the user
 Route::group(['prefix' => 'account'], function () {
-
-    // Guest middleware for user 
+    // Guest middleware for user
     Route::group(['middleware' => 'guest'], function () {
         Route::get('login', [LoginController::class, 'index'])->name('account.login');
         Route::get('register', [LoginController::class, 'register'])->name('account.register');
@@ -143,24 +138,22 @@ Route::group(['prefix' => 'account'], function () {
         Route::post('process-register', [LoginController::class, 'process_register'])->name('account.processRegister');
     });
 
-    // Authenticated middleware for user 
+    // Authenticated middleware for user
     Route::group(['middleware' => 'auth'], function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('account.dashboard');
         Route::get('logout', [LoginController::class, 'logout'])->name('account.logout');
     });
 });
 
-
-// for the admin 
+// for the admin
 Route::group(['prefix' => 'admin'], function () {
-
-    // Guest middleware for user 
+    // Guest middleware for user
     Route::group(['middleware' => 'admin.guest'], function () {
         Route::get('login', [AdminLoginController::class, 'index'])->name('admin.login');
         Route::post('authenticate', [AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
     });
 
-    // Authenticated middleware for admin 
+    // Authenticated middleware for admin
     Route::group(['middleware' => 'admin.auth'], function () {
         // Route::get('dashboard',[AdminDashboardController::class,'index'])->name('admin.dashboard');
         Route::get('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
@@ -174,21 +167,18 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/enquiries/latest', [EnquiryController::class, 'latest']);
         Route::get('/enquiry-destroy/{id}', [EnquiryController::class, 'destroy'])->name('admin.enquiries-destroy');
 
-
-
-        // Admin Contact Info Routes 
+        // Admin Contact Info Routes
         Route::get('/contact-info', [ContactInfoController::class, 'edit'])->name('admin.contact-info.edit');
         Route::post('/contact-info', [ContactInfoController::class, 'update'])->name('admin.contact-info.update');
 
-
-        // Admin Routes 
+        // Admin Routes
         Route::get('/', [AdminController::class, 'index'])->name('admin');
 
         // Admin Profile Routes
         Route::get('profile', [AdminProfileController::class, 'profile'])->name('admin.profile');
         Route::post('profile/update', [AdminProfileController::class, 'profile_update'])->name('admin.profile.update');
 
-        // Admin Slider Routes 
+        // Admin Slider Routes
         Route::get('slider', [SliderController::class, 'index'])->name('admin.slider');
         Route::post('slider-add', [SliderController::class, 'store'])->name('admin.slider-store');
         Route::post('slider-edit', [SliderController::class, 'update'])->name('admin.slider-update');
@@ -211,7 +201,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('about-category/{id}/update', [AboutCategoryController::class, 'update'])->name('admin.about-category-update');
         Route::get('about-category/{id}/destroy', [AboutCategoryController::class, 'destroy'])->name('admin.about-category-destroy');
         Route::post('about-category/toggle-status', [AboutCategoryController::class, 'aboutCategory_toggleStatus'])->name('admin.about-category-status');
-
 
         // Admin Service Routes
         Route::get('service', [ServiceController::class, 'index'])->name('admin.service');
@@ -284,7 +273,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('blogs/{id}/destroy', [BlogController::class, 'destroy'])->name('admin.blog-destroy');
         Route::post('blogs/toggle-status', [BlogController::class, 'blog_toggleStatus'])->name('admin.blog-status');
 
-
         // Admin Blog Category Routes
         Route::get('blogs-category', [BlogCategoryController::class, 'index'])->name('admin.blog-category');
         Route::post('blogs-category/store', [BlogCategoryController::class, 'store'])->name('admin.blog-category-store');
@@ -354,11 +342,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('industry-faq/{id}/destroy', [IndustryFaqController::class, 'destroy'])->name('admin.industry-faq-destroy');
         Route::post('industry-faq/toggle-status', [IndustryFaqController::class, 'industryFaq_toggleStatus'])->name('admin.industry-faq-status');
 
-
         // Admin Short Form Routes
         Route::get('/admission/short-form/listing', [AdmissionController::class, 'admission_short_form_listing'])->name('admin.admission_short_form');
         Route::get('/admission/short-form/enquiry-destroy/{id}', [AdmissionController::class, 'admission_short_form_destroy'])->name('admin.admission_short_form-destroy');
-
 
         // ContactUs Enquiry Routes
         Route::get('contactus/listing', [FrontendContactusController::class, 'contactus_enquiry'])->name('admin.contactus_enquiry');
@@ -366,8 +352,6 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Admin Icon Route
         Route::post('/icons/add', [IconController::class, 'add'])->name('icons.add');
-
-
 
         /* =========================
            Youtube Category Routes
@@ -397,7 +381,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('youtube-videos/update/{id}', [YoutubeVideoController::class, 'update'])->name('youtubeVideos.update');
         Route::delete('youtube-videos/delete/{id}', [YoutubeVideoController::class, 'destroy'])->name('youtubeVideos.destroy');
 
-
         Route::get('courses', [CourseController::class, 'index'])->name('courses');
         Route::get('courses/create', [CourseController::class, 'create'])->name('courses.create');
         Route::post('courses/store', [CourseController::class, 'store'])->name('courses.store');
@@ -405,7 +388,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('courses/{id}', [CourseController::class, 'destroy'])->name('courses.delete');
         Route::get('courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
         Route::get('status-update/{id}', [CourseController::class, 'status_update'])->name('courses.status-update');
-        Route::put(('courses/{id}'), [CourseController::class, 'update'])->name('courses.update');
+        Route::put('courses/{id}', [CourseController::class, 'update'])->name('courses.update');
         // ── States ─────────────────────────────────────────
 
         Route::get('states', [StateController::class, 'index'])->name('states-index');
@@ -445,7 +428,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('sub-events/{id}', [SubEventController::class, 'destroy'])->name('sub-events-destroy');
         Route::get('events/{event_id}/sub-events', [SubEventController::class, 'index'])->name('sub-events-index');
 
-
         Route::get('course-categories', [CourseCategoryController::class, 'index'])->name('course-categories-index');
         Route::get('course-categories/create', [CourseCategoryController::class, 'create'])->name('course-categories-create');
         Route::post('course-categories', [CourseCategoryController::class, 'store'])->name('course-categories-store');
@@ -462,7 +444,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('quiz-tests/{id}', [QuizTestController::class, 'update'])->name('quiz-tests.update');
         Route::delete('quiz-tests/{id}', [QuizTestController::class, 'destroy'])->name('quiz-tests.destroy');
 
-
         // CATEGORIES (nested under test)
         Route::get('quiz-tests/{testId}/categories', [QuizCategoryController::class, 'index'])->name('quiz-categories.index');
         Route::get('quiz-tests/{testId}/categories/create', [QuizCategoryController::class, 'create'])->name('quiz-categories.create');
@@ -470,7 +451,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('quiz-tests/{testId}/categories/{id}/edit', [QuizCategoryController::class, 'edit'])->name('quiz-categories.edit');
         Route::put('quiz-tests/{testId}/categories/{id}', [QuizCategoryController::class, 'update'])->name('quiz-categories.update');
         Route::delete('quiz-tests/{testId}/categories/{id}', [QuizCategoryController::class, 'destroy'])->name('quiz-categories.destroy');
-
 
         // QUESTIONS — Bulk create (no categoryId in URL)
 
@@ -485,15 +465,13 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::resource('test-graph-configs', TestGraphConfigController::class);
 
-        Route::get('test-result-ranges', [TestResultRangeController::class, 'tests'])
-            ->name('test-result-ranges.tests');
+        Route::get('test-result-ranges', [TestResultRangeController::class, 'tests'])->name('test-result-ranges.tests');
         Route::get('test-result-ranges/{id}', [TestResultRangeController::class, 'index'])->name('test-result-ranges.index');
         Route::get('test-result-ranges/create/{testId}', [TestResultRangeController::class, 'create'])->name('test-result-ranges.create');
         Route::post('test-result-ranges/{testId}', [TestResultRangeController::class, 'store'])->name('test-result-ranges.store');
         Route::any('test-result-ranges/{testId}/edit/{id}', [TestResultRangeController::class, 'edit'])->name('test-result-ranges.edit');
         Route::any('test-result-ranges/{testId}/update/{id}', [TestResultRangeController::class, 'update'])->name('test-result-ranges.update');
         Route::delete('test-result-ranges/{testId}/{id}', [TestResultRangeController::class, 'destroy'])->name('test-result-ranges.destroy');
-
 
         Route::get('/blog-authors', [BlogAuthorController::class, 'index'])->name('admin.blog-author.index');
         Route::get('/blog-authors/create', [BlogAuthorController::class, 'create'])->name('admin.blog-author.create');
@@ -502,28 +480,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/blog-authors/update/{id}', [BlogAuthorController::class, 'update'])->name('admin.blog-author.update');
         Route::delete('/blog-authors/destroy/{id}', [BlogAuthorController::class, 'destroy'])->name('admin.blog-author.destroy');
         Route::post('/blog-authors/toggle-status', [BlogAuthorController::class, 'toggleStatus'])->name('admin.blog-author.toggle-status');
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
     });
 });
 
 Route::get('indexx', [indexController::class, 'index'])->name('index');
-
-
-
-

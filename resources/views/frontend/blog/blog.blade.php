@@ -1371,73 +1371,80 @@
             display: flex;
         }
     </style>
-    </head>
 
-    <body>
 
-        <!-- ===== SCROLL TOP ===== -->
-        <a href="#" class="scroll-top d-flex align-items-center justify-content-center" id="scrollTop">
-            <i class="bi bi-arrow-up-short"></i>
-        </a>
+    <!-- ===== SCROLL TOP ===== -->
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center" id="scrollTop">
+        <i class="bi bi-arrow-up-short"></i>
+    </a>
+    <main class="main">
 
-        <main class="main">
-            <!-- ===== BLOG HERO ===== -->
-            <section class="blog-hero">
-                <div class="container hero-inner">
-                    <div class="row align-items-center">
-                        <div class="col-lg-7">
-                            <div class="eyebrow"><i class="bi bi-journal-richtext"></i> Our Stories</div>
-                            <h1>Behind the <em>Curtain</em> &<br>Beyond the Stage</h1>
-                            <p>Casting wins, workshops, student spotlights, and behind-the-scenes from Jaipur's #1 screen
-                                acting
-                                school for kids.</p>
-                            <div class="hero-stats">
-                                <div class="hs"><span class="num">50+</span><span class="lbl">Articles</span></div>
-                                <div class="hs"><span class="num">4</span><span class="lbl">Categories</span></div>
-                                <div class="hs"><span class="num">1000+</span><span class="lbl">Students Featured</span>
+        {{-- ===== BLOG HERO ===== --}}
+        <section class="blog-hero">
+            <div class="container hero-inner">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <div class="eyebrow"><i class="bi bi-journal-richtext"></i> Our Stories</div>
+                        <h1>Behind the <em>Curtain</em> &<br>Beyond the Stage</h1>
+                        <p>Casting wins, workshops, student spotlights, and behind-the-scenes from Jaipur's #1 screen
+                            acting school for kids.</p>
+                        <div class="hero-stats">
+                            <div class="hs">
+                                <span class="num">{{ $totalBlogs }}+</span>
+                                <span class="lbl">Articles</span>
+                            </div>
+                            <div class="hs">
+                                <span class="num">{{ $categories->count() }}</span>
+                                <span class="lbl">Categories</span>
+                            </div>
+                            <div class="hs">
+                                <span class="num">1000+</span>
+                                <span class="lbl">Students Featured</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 d-none d-lg-flex justify-content-end">
+                        {{-- Decorative mosaic - show recent blog images --}}
+                        @php $mosaicBlogs = \App\Models\Blog::where('status',1)->whereNotNull('image')->latest()->limit(4)->get(); @endphp
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:380px;opacity:.85;">
+                            @foreach ($mosaicBlogs as $mi => $mb)
+                                <img src="{{ asset('img/' . $mb->image) }}"
+                                    style="border-radius:16px;height:{{ $mi % 2 === 0 ? '180' : '140' }}px;object-fit:cover;width:100%;{{ $mi === 1 ? 'margin-top:30px;' : ($mi === 2 ? 'margin-top:-30px;' : '') }}"
+                                    alt="{{ $mb->title }}">
+                            @endforeach
+                            {{-- Fallback placeholders if fewer than 4 images --}}
+                            @for ($fi = $mosaicBlogs->count(); $fi < 4; $fi++)
+                                <div
+                                    style="border-radius:16px;height:{{ $fi % 2 === 0 ? '180' : '140' }}px;background:linear-gradient(135deg,#175cdd22,#175cdd44);width:100%;">
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-5 d-none d-lg-flex justify-content-end">
-                            <!-- Decorative mosaic -->
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:380px;opacity:.85;">
-                                <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=300&q=70"
-                                    style="border-radius:16px;height:180px;object-fit:cover;width:100%;" alt="">
-                                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=70"
-                                    style="border-radius:16px;height:180px;object-fit:cover;width:100%;margin-top:30px;"
-                                    alt="">
-                                <img src="https://images.unsplash.com/photo-1549737221-bef65e2604a6?w=300&q=70"
-                                    style="border-radius:16px;height:140px;object-fit:cover;width:100%;margin-top:-30px;"
-                                    alt="">
-                                <img src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=300&q=70"
-                                    style="border-radius:16px;height:140px;object-fit:cover;width:100%;" alt="">
-                            </div>
+                            @endfor
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Category Filter Bar -->
-                <div class="category-bar">
-                    <div class="container">
-                        <div class="cat-tabs">
-                            <button class="cat-tab active" onclick="filterPosts('all',this)">All Posts <span
-                                    class="cat-count">20</span></button>
-                            <button class="cat-tab" onclick="filterPosts('media',this)">Media Coverage <span
-                                    class="cat-count">3</span></button>
-                            <button class="cat-tab" onclick="filterPosts('casting',this)">Castings <span
-                                    class="cat-count">4</span></button>
-                            <button class="cat-tab" onclick="filterPosts('workshop',this)">Workshops &amp; Events <span
-                                    class="cat-count">5</span></button>
-                            <button class="cat-tab" onclick="filterPosts('dramata',this)">DramATA <span
-                                    class="cat-count">5</span></button>
-                            <button class="cat-tab" onclick="filterPosts('story',this)">Student Stories <span
-                                    class="cat-count">3</span></button>
-                        </div>
+            {{-- Category Filter Bar --}}
+            <div class="category-bar">
+                <div class="container">
+                    <div class="cat-tabs">
+                        <button class="cat-tab {{ !request('category') ? 'active' : '' }}"
+                            onclick="filterPosts('all',this)">
+                            All Posts <span class="cat-count">{{ $totalBlogs }}</span>
+                        </button>
+                        @foreach ($categories as $cat)
+                            <button class="cat-tab {{ request('category') === $cat->slug ? 'active' : '' }}"
+                                onclick="filterPosts('{{ $cat->slug }}',this)" data-slug="{{ $cat->slug }}">
+                                {{ $cat->category_name }}
+                                <span class="cat-count">{{ $cat->blogs_count }}</span>
+                            </button>
+                        @endforeach
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <!-- ===== FEATURED POST ===== -->
+        {{-- ===== FEATURED POST ===== --}}
+        @if ($featured)
             <section class="featured-post-section">
                 <div class="container">
                     <div class="featured-label"><i class="bi bi-star-fill"></i> Featured Story</div>
@@ -1445,34 +1452,59 @@
                         <div class="row g-0">
                             <div class="col-lg-6">
                                 <div class="fc-img" style="height:100%;min-height:340px;">
-                                    <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80"
-                                        alt="Parents Activity Session" style="height:100%;min-height:340px;" />
+                                    @if ($featured->image)
+                                        <img src="{{ asset('img/' . $featured->image) }}" alt="{{ $featured->title }}"
+                                            style="height:100%;min-height:340px;" />
+                                    @else
+                                        <div
+                                            style="height:100%;min-height:340px;background:linear-gradient(135deg,#175cdd,#0d3a8e);">
+                                        </div>
+                                    @endif
                                     <div class="fc-overlay"></div>
-                                    <span class="fc-badge">Workshops &amp; Events</span>
+                                    @if ($featured->category)
+                                        <span class="fc-badge">{{ $featured->category->category_name }}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="fc-body d-flex flex-column h-100 justify-content-center">
                                     <div class="fc-meta">
-                                        <span class="meta-item"><i class="bi bi-calendar3"></i> May 13, 2025</span>
-                                        <span class="meta-item"><i class="bi bi-clock"></i> 1 min read</span>
-                                        <span class="meta-item"><i class="bi bi-eye"></i> 1.2k views</span>
+                                        <span class="meta-item">
+                                            <i class="bi bi-calendar3"></i>
+                                            {{ $featured->created_at->format('M j, Y') }}
+                                        </span>
+                                        <span class="meta-item">
+                                            <i class="bi bi-clock"></i>
+                                            {{ max(1, (int) (str_word_count(strip_tags($featured->description ?? '')) / 200)) }}
+                                            min read
+                                        </span>
                                     </div>
-                                    <h2>Parents Activity Session at the Act to Action Graduation Ceremony 2024</h2>
-                                    <p>Join Kritesh Agarwal at the Act to Action Graduation Ceremony 2024 for a
-                                        transformative
-                                        Parent Activity Session. Discover powerful techniques for building deeper
-                                        connections
-                                        with your child through the magic of theatre and performance arts.</p>
+                                    <h2>{{ $featured->title }}</h2>
+                                    <p>{{ Str::limit(strip_tags($featured->short_description ?? $featured->description), 200) }}
+                                    </p>
                                     <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                                        <div class="fc-author">
-                                            <div class="avatar">KA</div>
-                                            <div class="au-info">
-                                                <span class="au-name">Kritesh Agarwal</span>
-                                                <span class="au-role">Founder & Director</span>
+                                        @if ($featured->author)
+                                            <div class="fc-author">
+                                                @if ($featured->author->image)
+                                                    <img src="{{ asset('img/authors/' . $featured->author->image) }}"
+                                                        class="avatar"
+                                                        style="width:44px;height:44px;border-radius:50%;object-fit:cover;"
+                                                        alt="{{ $featured->author->name }}">
+                                                @else
+                                                    <div class="avatar">
+                                                        {{ strtoupper(substr($featured->author->name, 0, 2)) }}</div>
+                                                @endif
+                                                <div class="au-info">
+                                                    <span class="au-name">{{ $featured->author->name }}</span>
+                                                    <span
+                                                        class="au-role">{{ $featured->author->designation ?? 'Author' }}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <a href="#" class="btn-read-more">Read More <i class="bi bi-arrow-right"></i></a>
+                                        @endif
+                                        <a href="{{ route('frontend.blog.details', $featured->slug) }}"
+                                            class="btn-read-more">
+                                            Read More <i class="bi bi-arrow-right"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -1480,532 +1512,289 @@
                     </div>
                 </div>
             </section>
+        @endif
 
-            <!-- ===== BLOG GRID + SIDEBAR ===== -->
-            <section class="blog-grid-section light-background">
-                <div class="container">
-                    <div class="blog-layout">
+        {{-- ===== BLOG GRID + SIDEBAR ===== --}}
+        <section class="blog-grid-section light-background">
+            <div class="container">
+                <div class="blog-layout">
 
-                        <!-- LEFT: GRID -->
-                        <div>
-                            <div class="blog-card-wrap" id="blogGrid">
-
-                                <!-- 1 -->
-                                <div class="bc" data-cat="workshop">
+                    {{-- LEFT: GRID --}}
+                    <div>
+                        <div class="blog-card-wrap" id="blogGrid">
+                            @forelse($blogs as $blog)
+                                <div class="bc" data-cat="{{ $blog->category->slug ?? 'uncategorized' }}">
                                     <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=600&q=75"
-                                            alt="Vision Board Mandala" />
-                                        <span class="bc-cat cat-workshop">Workshop</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> May 8, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 1 min read</span>
-                                        </div>
-                                        <h3>Vision Board Mandala — Guest Session with Nitya Bajoria</h3>
-                                        <p>Join the "Vision Board Mandala" guest session with Nitya Bajoria, a psychologist
-                                            and
-                                            psychotherapist, on January 12, 2025. Spark creativity and goal-setting in young
-                                            minds.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">SJ</div><span>Sanchit Jadaun</span>
+                                        @if ($blog->image)
+                                            <img src="{{ asset('img/' . $blog->image) }}" alt="{{ $blog->title }}" />
+                                        @else
+                                            <div
+                                                style="height:220px;background:linear-gradient(135deg,#175cdd22,#175cdd55);display:flex;align-items:center;justify-content:center;">
+                                                <i class="bi bi-journal-richtext"
+                                                    style="font-size:3rem;color:#175cdd44;"></i>
                                             </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 2 -->
-                                <div class="bc" data-cat="workshop">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1549737221-bef65e2604a6?w=600&q=75"
-                                            alt="Mental Health Special" />
-                                        <span class="bc-cat cat-workshop">Workshop</span>
+                                        @endif
+                                        @if ($blog->category)
+                                            <span class="bc-cat" style="background:var(--accent-color);">
+                                                {{ $blog->category->category_name }}
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="bc-body">
                                         <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> May 8, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 1 min read</span>
+                                            <span><i class="bi bi-calendar3"></i>
+                                                {{ $blog->created_at->format('M j, Y') }}</span>
+                                            <span><i class="bi bi-clock"></i>
+                                                {{ max(1, (int) (str_word_count(strip_tags($blog->description ?? '')) / 200)) }}
+                                                min read
+                                            </span>
                                         </div>
-                                        <h3>Mental Health Special Workshop — Tools for Inner Strength</h3>
-                                        <p>This workshop is designed to provide participants with valuable insights and
-                                            tools to
-                                            enhance their mental well-being and emotional resilience through performing
-                                            arts.
+                                        <h3>{{ $blog->title }}</h3>
+                                        <p>{{ Str::limit(strip_tags($blog->short_description ?? $blog->description), 120) }}
                                         </p>
                                         <div class="bc-footer">
                                             <div class="bc-author">
-                                                <div class="av">SJ</div><span>Sanchit Jadaun</span>
+                                                @if ($blog->author)
+                                                    @if ($blog->author->image)
+                                                        <img src="{{ asset('img/authors/' . $blog->author->image) }}"
+                                                            class="av" style="border-radius:50%;object-fit:cover;"
+                                                            alt="{{ $blog->author->name }}">
+                                                    @else
+                                                        <div class="av">
+                                                            {{ strtoupper(substr($blog->author->name, 0, 2)) }}</div>
+                                                    @endif
+                                                    <span>{{ $blog->author->name }}</span>
+                                                @else
+                                                    <div class="av">AA</div>
+                                                    <span>Act to Action</span>
+                                                @endif
                                             </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
+                                            <a href="{{ route('frontend.blog.details', $blog->slug) }}" class="bc-link">
+                                                Read <i class="bi bi-arrow-right"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- 3 -->
-                                <div class="bc" data-cat="workshop">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=75"
-                                            alt="Language Workshop" />
-                                        <span class="bc-cat cat-workshop">Workshop</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> May 8, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 1 min read</span>
-                                        </div>
-                                        <h3>Sign Language Workshop with Manoj Bhardwaj, Founder of Nupur Sansthan</h3>
-                                        <p>Join the Act to Action Sign Language Workshop on Sunday, August 11, 2024, from 12
-                                            PM
-                                            to 3 PM. A unique and inclusive session breaking barriers through communication.
-                                        </p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">SJ</div><span>Sanchit Jadaun</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
+                            @empty
+                                <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#888;">
+                                    <i class="bi bi-journal-x"
+                                        style="font-size:3rem;display:block;margin-bottom:16px;"></i>
+                                    No blog posts found.
                                 </div>
+                            @endforelse
+                        </div>
 
-                                <!-- 4 -->
-                                <div class="bc" data-cat="casting">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1616469829526-7057a1427626?w=600&q=75"
-                                            alt="Nurturing Talent" />
-                                        <span class="bc-cat cat-casting">Casting</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Mar 9, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 2 min read</span>
-                                        </div>
-                                        <h3>Nurturing Young Talent for the International Film Industry</h3>
-                                        <p>Act to Action offers transformative acting workshops for kids, enhancing
-                                            confidence,
-                                            creativity, and communication skills that open doors to the international
-                                            entertainment industry.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">KA</div><span>Kritesh Agarwal</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 5 -->
-                                <div class="bc" data-cat="story">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=75"
-                                            alt="Dhaniksh Journey" />
-                                        <span class="bc-cat cat-story">Student Story</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Mar 9, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 4 min read</span>
-                                        </div>
-                                        <h3>The Power of Passion & Dedication: Dhaniksh Dadhich's Journey to Cinema</h3>
-                                        <p>From a curious child to a screen performer — Dhaniksh's story proves that with
-                                            the
-                                            right training and mentorship, any dream is achievable.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">KA</div><span>Kritesh Agarwal</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 6 -->
-                                <div class="bc" data-cat="media">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=600&q=75"
-                                            alt="Five Years" />
-                                        <span class="bc-cat cat-media">Media Coverage</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Mar 9, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 2 min read</span>
-                                        </div>
-                                        <h3>Act-to-Action: Five Years of Transforming Dreams into Reality</h3>
-                                        <p>As we celebrate five incredible years, we look back at how a single vision in
-                                            Jaipur
-                                            blossomed into India's most loved screen acting school for children.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">TV</div><span>Toshi Vijay</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 7 -->
-                                <div class="bc" data-cat="casting">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&q=75"
-                                            alt="Summer Camp 2024" />
-                                        <span class="bc-cat cat-casting">Casting</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Mar 9, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 2 min read</span>
-                                        </div>
-                                        <h3>Summer Camp 2024: A Unique Vision for Holistic Child Development</h3>
-                                        <p>Our Summer Camp 2024 blended acting, storytelling, movement and
-                                            confidence-building
-                                            into a once-in-a-lifetime experience for over 200 children.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">TV</div><span>Toshi Vijay</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 8 -->
-                                <div class="bc" data-cat="casting">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=75"
-                                            alt="Zee TV Doosri Maa" />
-                                        <span class="bc-cat cat-casting">Casting</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Mar 9, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 3 min read</span>
-                                        </div>
-                                        <h3>Act to Action's Contribution to Zee TV's "Doosri Maa"</h3>
-                                        <p>When Zee TV came calling, our students answered. This is the behind-the-scenes
-                                            story
-                                            of how Act to Action placed young actors on one of India's biggest television
-                                            shows.
-                                        </p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">KA</div><span>Kritesh Agarwal</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 9 -->
-                                <div class="bc" data-cat="media">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1560523159-4a9692d222ef?w=600&q=75"
-                                            alt="Star Achievers Award" />
-                                        <span class="bc-cat cat-media">Media Coverage</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Mar 9, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 2 min read</span>
-                                        </div>
-                                        <h3>Star Achievers Award: Celebrating Young Talent in Jaipur's Entertainment
-                                            Industry
-                                        </h3>
-                                        <p>The Star Achievers Award was a landmark evening, honouring the brightest young
-                                            performers emerging from Jaipur's growing entertainment landscape.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">TV</div><span>Toshi Vijay</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 10 -->
-                                <div class="bc" data-cat="dramata">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=75"
-                                            alt="Dramata 2025" />
-                                        <span class="bc-cat cat-dramata">DramATA</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Sep 25, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 2 min read</span>
-                                        </div>
-                                        <h3>Dramata 2025: Jaipur's Premier Inter-School Drama Competition Nurturing Young
-                                            Talent
-                                        </h3>
-                                        <p>Jaipur, a UNESCO World Heritage City, hosts its biggest drama competition yet —
-                                            DramATA 2025 — celebrating young theatre artists across schools.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">AA</div><span>Act to Action</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 11 -->
-                                <div class="bc" data-cat="dramata">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=600&q=75"
-                                            alt="Dramata Mayoor" />
-                                        <span class="bc-cat cat-dramata">DramATA</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Sep 25, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 3 min read</span>
-                                        </div>
-                                        <h3>Dramata 2025 × Mayoor School Jaipur — A Legacy of Excellence Meets Innovation
-                                        </h3>
-                                        <p>Act to Action Screen Acting School joins forces with Mayoor School Jaipur — a
-                                            partnership where legacy meets creative innovation on the grandest stage.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">AA</div><span>Act to Action</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 12 -->
-                                <div class="bc" data-cat="story">
-                                    <div class="bc-img">
-                                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=75"
-                                            alt="Aadvika Sharma" />
-                                        <span class="bc-cat cat-story">Student Story</span>
-                                    </div>
-                                    <div class="bc-body">
-                                        <div class="bc-meta">
-                                            <span><i class="bi bi-calendar3"></i> Jul 14, 2025</span>
-                                            <span><i class="bi bi-clock"></i> 2 min read</span>
-                                        </div>
-                                        <h3>🌟 Aadvika Sharma — A Storyteller, A Dreamer, A Doer</h3>
-                                        <p>Sometimes a child walks into your space and quietly changes everything. Aadvika
-                                            Sharma is one such exceptional student whose journey at Act to Action is truly
-                                            inspiring.</p>
-                                        <div class="bc-footer">
-                                            <div class="bc-author">
-                                                <div class="av">AA</div><span>Act to Action</span>
-                                            </div>
-                                            <a href="#" class="bc-link">Read <i class="bi bi-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div><!-- end blog-card-wrap -->
-
-                            <!-- Load More -->
+                        {{-- Pagination --}}
+                        @if ($blogs->hasPages())
                             <div class="text-center mt-5">
-                                <button class="load-more-btn" onclick="loadMore(this)">
-                                    <i class="bi bi-arrow-down-circle"></i> Load More Articles
-                                </button>
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                    {{-- Previous --}}
+                                    @if ($blogs->onFirstPage())
+                                        <span class="blog-page-btn disabled">&laquo;</span>
+                                    @else
+                                        <a href="{{ $blogs->previousPageUrl() }}" class="blog-page-btn">&laquo;</a>
+                                    @endif
+
+                                    {{-- Page numbers --}}
+                                    @foreach ($blogs->getUrlRange(1, $blogs->lastPage()) as $page => $url)
+                                        @if ($page == $blogs->currentPage())
+                                            <span class="blog-page-btn active">{{ $page }}</span>
+                                        @else
+                                            <a href="{{ $url }}" class="blog-page-btn">{{ $page }}</a>
+                                        @endif
+                                    @endforeach
+
+                                    {{-- Next --}}
+                                    @if ($blogs->hasMorePages())
+                                        <a href="{{ $blogs->nextPageUrl() }}" class="blog-page-btn">&raquo;</a>
+                                    @else
+                                        <span class="blog-page-btn disabled">&raquo;</span>
+                                    @endif
+                                </div>
                             </div>
-                        </div><!-- end left -->
+                        @endif
+                    </div>{{-- end LEFT --}}
 
-                        <!-- RIGHT: SIDEBAR -->
-                        <aside class="sidebar">
+                    {{-- RIGHT: SIDEBAR --}}
+                    <aside class="sidebar">
 
-                            <!-- Search -->
-                            <div class="sidebar-card">
+                        {{-- Search --}}
+                        <div class="sidebar-card">
+                            <form action="#" method="GET">
                                 <div style="position:relative;">
-                                    <input type="text" placeholder="Search articles…"
+                                    <input type="text" name="q" value="{{ request('q') }}"
+                                        placeholder="Search articles…"
                                         style="width:100%;border:1.5px solid color-mix(in srgb,#3c4049,transparent 80%);border-radius:50px;padding:12px 50px 12px 20px;font-size:14px;outline:none;color:#3c4049;transition:border-color .3s;"
                                         onfocus="this.style.borderColor='#175cdd'"
-                                        onblur="this.style.borderColor='color-mix(in srgb,#3c4049,transparent 80%)'" />
-                                    <i class="bi bi-search"
-                                        style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#175cdd;font-size:15px;"></i>
+                                        onblur="this.style.borderColor='color-mix(in srgb,#3c4049,transparent 80%)'">
+                                    <button type="submit"
+                                        style="position:absolute;right:18px;top:50%;transform:translateY(-50%);background:none;border:none;padding:0;cursor:pointer;">
+                                        <i class="bi bi-search" style="color:#175cdd;font-size:15px;"></i>
+                                    </button>
                                 </div>
-                            </div>
-
-                            <!-- Categories -->
-                            <div class="sidebar-card">
-                                <h5>Categories</h5>
-                                <ul class="cat-list">
-                                    <li><a href="#" class="active" onclick="filterPosts('all',null);return false;">All Posts
-                                            <span class="badge">20</span></a></li>
-                                    <li><a href="#" onclick="filterPosts('media',null);return false;">Media Coverage <span
-                                                class="badge">3</span></a></li>
-                                    <li><a href="#" onclick="filterPosts('casting',null);return false;">Castings <span
-                                                class="badge">4</span></a></li>
-                                    <li><a href="#" onclick="filterPosts('workshop',null);return false;">Workshops &amp;
-                                            Events
-                                            <span class="badge">5</span></a></li>
-                                    <li><a href="#" onclick="filterPosts('dramata',null);return false;">DramATA <span
-                                                class="badge">5</span></a></li>
-                                    <li><a href="#" onclick="filterPosts('story',null);return false;">Student Stories <span
-                                                class="badge">3</span></a></li>
-                                </ul>
-                            </div>
-
-                            <!-- Recent Posts -->
-                            <div class="sidebar-card">
-                                <h5>Recent Posts</h5>
-                                <a href="#" class="text-decoration-none">
-                                    <div class="recent-post">
-                                        <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=200&q=60"
-                                            alt="" />
-                                        <div class="rp-info">
-                                            <h6>DramATA 2025 – Jaipur's First Stage for Young Actors</h6>
-                                            <span>Sep 16, 2025</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" class="text-decoration-none">
-                                    <div class="recent-post">
-                                        <img src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=200&q=60"
-                                            alt="" />
-                                        <div class="rp-info">
-                                            <h6>From Our Classroom to the Camera: Adani Green TVC</h6>
-                                            <span>Jul 7, 2025</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" class="text-decoration-none">
-                                    <div class="recent-post">
-                                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=200&q=60"
-                                            alt="" />
-                                        <div class="rp-info">
-                                            <h6>Aadvika Sharma – A Storyteller, A Dreamer, A Doer</h6>
-                                            <span>Jul 14, 2025</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="#" class="text-decoration-none">
-                                    <div class="recent-post">
-                                        <img src="https://images.unsplash.com/photo-1549737221-bef65e2604a6?w=200&q=60"
-                                            alt="" />
-                                        <div class="rp-info">
-                                            <h6>Parents Activity Session at Graduation Ceremony 2024</h6>
-                                            <span>May 13, 2025</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <!-- Tags -->
-                            <div class="sidebar-card">
-                                <h5>Popular Tags</h5>
-                                <div class="tag-cloud">
-                                    <a href="#">Acting</a><a href="#">Screen Acting</a><a href="#">DramATA</a>
-                                    <a href="#">Kids</a><a href="#">Jaipur</a><a href="#">Casting</a>
-                                    <a href="#">Summer Camp</a><a href="#">Theatre</a><a href="#">Workshops</a>
-                                    <a href="#">Confidence</a><a href="#">NEP 2020</a><a href="#">Performance</a>
-                                </div>
-                            </div>
-
-                            <!-- About Widget -->
-                            <div class="sidebar-card">
-                                <h5>About This Blog</h5>
-                                <p style="font-size:13px;line-height:1.7;color:color-mix(in srgb,#3c4049,transparent 20%);">
-                                    Stories from India's first screen acting school for children (ages 3–29). Founded in
-                                    2019 by
-                                    Kritesh Agarwal. Registered with Startup India & iStart Rajasthan.</p>
-                                <a href="acttoaction-enroll.html"
-                                    style="display:inline-flex;align-items:center;gap:8px;background:var(--accent-color);color:#fff;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:600;margin-top:12px;transition:all .3s;">
-                                    <i class="bi bi-person-plus-fill"></i> Enroll Today
-                                </a>
-                            </div>
-
-                            <!-- Newsletter -->
-                            <div class="sidebar-newsletter">
-                                <h5>Stay Updated</h5>
-                                <p>Get the latest stories, casting news and workshop updates delivered to your inbox.</p>
-                                <input type="email" class="ns-input" placeholder="Your email address" />
-                                <button class="ns-btn"><i class="bi bi-send-fill me-2"></i>Subscribe</button>
-                            </div>
-
-                        </aside>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ===== NEWSLETTER CTA ===== -->
-            <section class="newsletter-cta">
-                <div class="container">
-                    <div class="inner">
-                        <div
-                            style="display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 18px;border-radius:50px;margin-bottom:20px;">
-                            Never Miss a Story
+                            </form>
                         </div>
-                        <h2>Get the Latest from<br>Act to Action</h2>
-                        <p>Casting wins, workshops, student spotlights & school updates — delivered fresh.</p>
-                        <div class="nl-form">
-                            <input type="email" placeholder="Enter your email address" />
-                            <button><i class="bi bi-send-fill me-2"></i> Subscribe Free</button>
+
+                        {{-- Categories --}}
+                        <div class="sidebar-card">
+                            <h5>Categories</h5>
+                            <ul class="cat-list">
+                                <li>
+                                    <a href="#" class="{{ !request('category') ? 'active' : '' }}">
+                                        All Posts <span class="badge">{{ $totalBlogs }}</span>
+                                    </a>
+                                </li>
+                                @foreach ($categories as $cat)
+                                    <li>
+                                        <a href="{{ route('frontend.blog.category', $cat->slug) }}"
+                                            class="{{ request('category') === $cat->slug ? 'active' : '' }}">
+                                            {{ $cat->category_name }}
+                                            <span class="badge">{{ $cat->blogs_count }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <p style="font-size:12px;color:rgba(255,255,255,.45);margin-top:14px;">No spam. Unsubscribe anytime.
-                            500+ parents already subscribed.</p>
-                    </div>
+
+                        {{-- Recent Posts --}}
+                        <div class="sidebar-card">
+                            <h5>Recent Posts</h5>
+                            @foreach ($recentPosts as $rp)
+                                <a href="#" class="text-decoration-none">
+                                    <div class="recent-post">
+                                        @if ($rp->image)
+                                            <img src="{{ asset('img/' . $rp->image) }}" alt="{{ $rp->title }}" />
+                                        @else
+                                            <div
+                                                style="width:70px;height:60px;border-radius:8px;background:linear-gradient(135deg,#175cdd22,#175cdd55);flex-shrink:0;">
+                                            </div>
+                                        @endif
+                                        <div class="rp-info">
+                                            <h6>{{ Str::limit($rp->title, 60) }}</h6>
+                                            <span>{{ $rp->created_at->format('M j, Y') }}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+
+                        {{-- Tags --}}
+                        <div class="sidebar-card">
+                            <h5>Popular Tags</h5>
+                            <div class="tag-cloud">
+                                @foreach ($tags as $tag)
+                                    <a href="#">{{ $tag }}</a>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- About Widget --}}
+                        <div class="sidebar-card">
+                            <h5>About This Blog</h5>
+                            <p style="font-size:13px;line-height:1.7;color:color-mix(in srgb,#3c4049,transparent 20%);">
+                                Stories from India's first screen acting school for children (ages 3–29). Founded in
+                                2019 by
+                                Kritesh Agarwal. Registered with Startup India &amp; iStart Rajasthan.
+                            </p>
+                            <a href="#enroll"
+                                style="display:inline-flex;align-items:center;gap:8px;background:var(--accent-color);color:#fff;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:600;margin-top:12px;transition:all .3s;">
+                                <i class="bi bi-person-plus-fill"></i> Enroll Today
+                            </a>
+                        </div>
+
+                        {{-- Newsletter --}}
+                        <div class="sidebar-newsletter">
+                            <h5>Stay Updated</h5>
+                            <p>Get the latest stories, casting news and workshop updates delivered to your inbox.</p>
+                            <input type="email" class="ns-input" placeholder="Your email address" />
+                            <button class="ns-btn"><i class="bi bi-send-fill me-2"></i>Subscribe</button>
+                        </div>
+
+                    </aside>
                 </div>
-            </section>
+            </div>
+        </section>
 
+        {{-- ===== NEWSLETTER CTA ===== --}}
+        <section class="newsletter-cta">
+            <div class="container">
+                <div class="inner">
+                    <div
+                        style="display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 18px;border-radius:50px;margin-bottom:20px;">
+                        Never Miss a Story
+                    </div>
+                    <h2>Get the Latest from<br>Act to Action</h2>
+                    <p>Casting wins, workshops, student spotlights &amp; school updates — delivered fresh.</p>
+                    <div class="nl-form">
+                        <input type="email" placeholder="Enter your email address" />
+                        <button><i class="bi bi-send-fill me-2"></i> Subscribe Free</button>
+                    </div>
+                    <p style="font-size:12px;color:rgba(255,255,255,.45);margin-top:14px;">
+                        No spam. Unsubscribe anytime. 500+ parents already subscribed.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-            <script>
+    </main>
+@endsection
 
-                // ===== MOBILE NAV =====
-                const mnt = document.querySelector('.mobile-nav-toggle');
-                if (mnt) mnt.addEventListener('click', () => {
-                    document.body.classList.toggle('mobile-nav-active');
-                    mnt.classList.toggle('bi-list');
-                    mnt.classList.toggle('bi-x');
-                });
+@section('script')
+    <script>
+        // ===== CATEGORY FILTER (client-side for instant feel) =====
+        function filterPosts(cat, btn) {
+            // Update tab active state
+            document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+            if (btn) btn.classList.add('active');
 
-                // ===== CATEGORY FILTER =====
-                function filterPosts(cat, btn) {
-                    // Update tab active
-                    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-                    if (btn) btn.classList.add('active');
-                    // Update sidebar links
-                    document.querySelectorAll('.cat-list a').forEach(a => a.classList.remove('active'));
-
-                    const cards = document.querySelectorAll('#blogGrid .bc');
-                    cards.forEach(c => {
-                        const cardCat = c.getAttribute('data-cat');
-                        if (cat === 'all' || cardCat === cat) {
-                            c.style.display = 'flex';
-                            c.style.animation = 'fadeInUp .4s ease';
-                        } else {
-                            c.style.display = 'none';
-                        }
-                    });
+            const cards = document.querySelectorAll('#blogGrid .bc');
+            let shown = 0;
+            cards.forEach(c => {
+                const cardCat = c.getAttribute('data-cat');
+                if (cat === 'all' || cardCat === cat) {
+                    c.style.display = '';
+                    c.style.animation = 'fadeInUp .4s ease';
+                    shown++;
+                } else {
+                    c.style.display = 'none';
                 }
+            });
+        }
 
-                // ===== LOAD MORE =====
-                function loadMore(btn) {
-                    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Loading…';
-                    btn.disabled = true;
-                    setTimeout(() => {
-                        btn.innerHTML = '<i class="bi bi-check-circle"></i> All articles loaded';
-                        btn.style.borderColor = '#2a9d8f';
-                        btn.style.color = '#2a9d8f';
-                    }, 1200);
+        // ===== FADE IN ON SCROLL =====
+        const style = document.createElement('style');
+        style.textContent = `
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .blog-page-btn {
+        display:inline-flex;align-items:center;justify-content:center;
+        width:40px;height:40px;border-radius:8px;border:1.5px solid #ddd;
+        color:#3c4049;text-decoration:none;font-size:14px;font-weight:600;transition:all .2s;
+    }
+    .blog-page-btn:hover { background:#175cdd;color:#fff;border-color:#175cdd; }
+    .blog-page-btn.active { background:#175cdd;color:#fff;border-color:#175cdd; }
+    .blog-page-btn.disabled { opacity:.4;pointer-events:none; }
+`;
+        document.head.appendChild(style);
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    e.target.style.animationDelay = (i * 0.07) + 's';
+                    e.target.style.animation = 'fadeInUp .5s ease forwards';
+                    observer.unobserve(e.target);
                 }
+            });
+        }, {
+            threshold: 0.1
+        });
+        document.querySelectorAll('.bc').forEach(c => observer.observe(c));
 
-                // ===== FADE IN ANIMATION =====
-                const style = document.createElement('style');
-                style.textContent = '@keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }';
-                document.head.appendChild(style);
-
-                // Animate cards on scroll
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach((e, i) => {
-                        if (e.isIntersecting) {
-                            e.target.style.animationDelay = (i * 0.07) + 's';
-                            e.target.style.animation = 'fadeInUp .5s ease forwards';
-                            observer.unobserve(e.target);
-                        }
-                    });
-                }, { threshold: 0.1 });
-                document.querySelectorAll('.bc').forEach(c => observer.observe(c));
-            </script>
-
-        </main>
+        // ===== MOBILE NAV =====
+        const mnt = document.querySelector('.mobile-nav-toggle');
+        if (mnt) mnt.addEventListener('click', () => {
+            document.body.classList.toggle('mobile-nav-active');
+            mnt.classList.toggle('bi-list');
+            mnt.classList.toggle('bi-x');
+        });
+    </script>
 @endsection

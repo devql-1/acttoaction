@@ -34,10 +34,12 @@ class EventController extends Controller
 
         // Upload banner image
         $bannerPath = null;
-        if ($request->hasFile('banner_image')) {
-            $bannerPath = $request->file('banner_image')->store('event_banners', 'public');
-        }
 
+        if ($request->hasFile('banner_image')) {
+            $filename = time() . '.' . $request->banner_image->extension();
+            $request->banner_image->move(public_path('img/event_banners'), $filename);
+            $bannerPath = 'img/event_banners/' . $filename;
+        }
         $event = Event::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -49,8 +51,7 @@ class EventController extends Controller
             'status' => 1,
         ]);
 
-        return redirect()->route('events-index', $event->id)
-            ->with('success', 'Event created successfully. Now add sub events below.');
+        return redirect()->route('events-index', $event->id)->with('success', 'Event created successfully. Now add sub events below.');
     }
 
     public function show($id)
@@ -81,12 +82,18 @@ class EventController extends Controller
 
         // Handle banner image update
         $bannerPath = $event->banner_image;
+
         if ($request->hasFile('banner_image')) {
             // Delete old image
-            if ($bannerPath) {
-                Storage::disk('public')->delete($bannerPath);
+            if ($bannerPath && file_exists(public_path($bannerPath))) {
+                unlink(public_path($bannerPath));
             }
-            $bannerPath = $request->file('banner_image')->store('event_banners', 'public');
+
+            // Upload new image
+            $filename = time() . '.' . $request->banner_image->extension();
+            $request->banner_image->move(public_path('img/event_banners'), $filename);
+
+            $bannerPath = 'img/event_banners/' . $filename;
         }
 
         $event->update([
@@ -99,8 +106,7 @@ class EventController extends Controller
             'highlights_link' => $request->highlights_link,
         ]);
 
-        return redirect()->route('events-index')
-            ->with('success', 'Event updated successfully');
+        return redirect()->route('events-index')->with('success', 'Event updated successfully');
     }
 
     public function status(Request $request)
