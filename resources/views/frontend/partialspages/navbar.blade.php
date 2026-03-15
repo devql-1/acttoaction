@@ -54,13 +54,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('s') }}" class="{{ request()->is('doctors.html') ? 'active' : '' }}">
-                            Instructors
+                        <a href="{{ route('volunteer') }}"
+                            class="{{ request()->routeIs('volunteer') ? 'active' : '' }}">
+                            volunteer
                         </a>
                     </li>
 
                     <!-- Dropdown -->
-                    <li class="dropdown">
+                    {{-- <li class="dropdown">
                         <a href="#"><span>More Pages</span><i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
                             <li><a href="department-details.html">Course Details</a></li>
@@ -73,7 +74,7 @@
                             <li><a href="privacy.html">Privacy</a></li>
                             <li><a href="404.html">404</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
 
                     <li>
                         <a href="contact.html" class="{{ request()->is('contact.html') ? 'active' : '' }}">
