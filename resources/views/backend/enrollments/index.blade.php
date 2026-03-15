@@ -102,8 +102,7 @@
 
                         {{-- Filters --}}
                         <div class="card-body border-bottom pb-3">
-                            <form method="GET" action="{{ route('admin.enrollments.index') }}"
-                                class="row g-2 align-items-end">
+                            <form method="GET" action="#" class="row g-2 align-items-end">
                                 <div class="col-md-5">
                                     <input type="text" name="search" class="form-control form-control-sm"
                                         placeholder="Search name, phone, email, reference ID..."
@@ -128,8 +127,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="{{ route('admin.enrollments.index') }}"
-                                        class="btn btn-secondary btn-sm w-100">
+                                    <a href="#" class="btn btn-secondary btn-sm w-100">
                                         <i class="fa fa-times me-1"></i> Clear
                                     </a>
                                 </div>
@@ -216,14 +214,14 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="d-flex gap-1 justify-content-center">
-                                                        <a href="{{ route('admin.enrollments.show', $e->id) }}"
+                                                        <a href="{{ route('enrollments.show', $e->id) }}"
                                                             class="btn btn-sm btn-icon btn-primary btn-round"
                                                             title="View">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
                                                         {{-- Hidden delete form --}}
                                                         <form id="del-form-{{ $e->id }}" method="POST"
-                                                            action="{{ route('admin.enrollments.destroy', $e->id) }}"
+                                                            action="{{ route('enrollments.destroy', $e->id) }}"
                                                             style="display:none;">
                                                             @csrf @method('DELETE')
                                                         </form>

@@ -1,12 +1,17 @@
 @extends('frontend.course.layout')
 @section('content')
     <style>
+        /* ── FAILED SCREEN anim override ── */
+        #failedScreen .success-anim {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+        }
+
         :root {
             --ink: #0e1c35;
             --ink2: #1e3a5f;
-            --blue: #175cdd;
-            --blue-lt: #4a85f5;
-            --gold: #f5a623;
+            --blue: #ff6a00;
+            --blue-lt: #ff6a00;
+            --gold: #ff6a00;
             --surface: #ffffff;
             --muted: #6b7a99;
             --border: #dde5f4;
@@ -1723,12 +1728,22 @@ $otherCourses = $otherCourses ?? collect();
                 {{-- ══ SUCCESS ══ --}}
                 <div class="success-screen" id="successScreen" style="display:none;">
                     <div class="success-anim">🎉</div>
-                    <div class="success-title">Enrollment Submitted!</div>
+                    <div class="success-title">Payment Successful!</div>
                     <p class="success-sub">
-                        Your child's seat has been reserved for <strong>{{ $course->title }}</strong>.
+                        Your seat has been reserved for <strong>{{ $course->title }}</strong>.
                         Our team will contact you within 24 hours to confirm your batch and free demo class.
                     </p>
                     <div class="success-ref"><span>Reference ID:</span>&nbsp;<span id="refId">ATA-000000</span></div>
+                    <div
+                        style="background:#ecfdf5;border:1.5px solid #86efac;border-radius:14px;padding:16px 20px;margin:16px 0;text-align:left;">
+                        <div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:4px;"><i
+                                class="bi bi-check-circle-fill"></i> What happens next?</div>
+                        <ul style="font-size:13px;color:#166534;margin:0;padding-left:18px;line-height:2;">
+                            <li>You'll receive a WhatsApp confirmation shortly</li>
+                            <li>Our team will call to confirm your batch timing</li>
+                            <li>Free demo class will be scheduled within 48 hours</li>
+                        </ul>
+                    </div>
                     <div class="success-actions">
                         <a href="https://wa.me/919352023276" target="_blank" class="btn-wa">
                             <i class="bi bi-whatsapp"></i> Message on WhatsApp
@@ -1739,16 +1754,47 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
+                {{-- ══ FAILED ══ --}}
+                <div class="success-screen" id="failedScreen" style="display:none;">
+                    <div class="success-anim">❌</div>
+                    <div class="success-title" style="color:#dc2626;">Payment Failed</div>
+                    <p class="success-sub">
+                        Your payment could not be processed. Don't worry — your enrollment details have been saved.
+                        You can try again or contact us for help.
+                        <br><br>
+                        <span style="font-size:13px;color:#9ca3af;">
+                            Redirecting to course page in <strong id="failedCountdown">10</strong> seconds...
+                        </span>
+                    </p>
+                    <div id="failedPaymentId"
+                        style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;padding:14px 20px;margin:16px 0;font-size:13px;color:#991b1b;display:none;">
+                        <i class="bi bi-info-circle-fill"></i>
+                        Payment ID: <strong id="failedPidText"></strong> — share this with support if needed.
+                    </div>
+                    <div class="success-actions">
+                        <button class="btn-next" onclick="retryPayment()" style="background:#dc2626;">
+                            <i class="bi bi-arrow-repeat"></i> Retry Payment
+                        </button>
+                        <a href="{{ url('/courses/' . $course->id) }}" class="btn-home">
+                            <i class="bi bi-arrow-left"></i> Back to Course
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </main>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        /* ── DB data: state => centres for THIS course only ── */
+        /* ── DB data ── */
         var CENTRE_DATA = @json($centresByState);
         var COURSE_STATES = @json($courseStates);
 
-        /* ── Centre dropdown: populate on state change ── */
+        /* ── Silent save state ── */
+        var _enrollmentId = null;
+        var _silentSaveDone = false;
+
+        /* ── Centre dropdown ── */
         function updateCentres() {
             var state = document.getElementById('state').value;
             var sel = document.getElementById('centre');
@@ -1756,7 +1802,6 @@ $otherCourses = $otherCourses ?? collect();
 
             sel.innerHTML = '<option value="">— Select a Centre —</option>';
             wrap.style.display = 'none';
-
             if (!state) return;
 
             var list = CENTRE_DATA[state];
@@ -1774,7 +1819,7 @@ $otherCourses = $otherCourses ?? collect();
             }
         }
 
-        /* ── Show centre detail card ── */
+        /* ── Centre detail card ── */
         function showCentreInfo() {
             var sel = document.getElementById('centre');
             var wrap = document.getElementById('centre-info-wrap');
@@ -1857,9 +1902,7 @@ $otherCourses = $otherCourses ?? collect();
             for (var i = 0; i < TOTAL_STEPS; i++) {
                 var si = document.getElementById('si-' + i);
                 var circle = si.querySelector('.step-circle');
-                si.className = 'step-item' +
-                    (i < step ? ' done' : '') +
-                    (i === step ? ' active' : '');
+                si.className = 'step-item' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
                 circle.textContent = i < step ? '\u2713' : String(i + 1);
             }
             var pct = step === 0 ? 0 : (step / (TOTAL_STEPS - 1)) * 100;
@@ -1900,8 +1943,8 @@ $otherCourses = $otherCourses ?? collect();
                 var dobVal = document.getElementById('dob').value;
                 var dobOk = false;
                 if (dobVal) {
-                    var d = new Date(dobVal);
-                    var now = new Date();
+                    var d = new Date(dobVal),
+                        now = new Date();
                     var age = now.getFullYear() - d.getFullYear();
                     var mo = now.getMonth() - d.getMonth();
                     if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
@@ -1924,7 +1967,6 @@ $otherCourses = $otherCourses ?? collect();
             } else if (step === 3) {
                 req('state', document.getElementById('state').value !== '');
                 req('centre', document.getElementById('centre').value !== '');
-                /* mode is always pre-selected — skip validation */
 
             } else if (step === 4) {
                 req('course', document.querySelector('input[name="course"]:checked') !== null);
@@ -1940,6 +1982,7 @@ $otherCourses = $otherCourses ?? collect();
         /* ── Nav ── */
         function nextStep(step) {
             if (!validateStep(step)) return;
+            if (step === 3 && !_silentSaveDone) silentSave();
             if (step === 4) buildSummary();
             currentStep = step + 1;
             updateStepper(currentStep, false);
@@ -1948,6 +1991,62 @@ $otherCourses = $otherCourses ?? collect();
         function prevStep(step) {
             currentStep = step - 1;
             updateStepper(currentStep, true);
+        }
+
+        /* ── Silent lead save (after Step 4) ── */
+        function silentSave() {
+            function getVal(id) {
+                var el = document.getElementById(id);
+                return (el && el.value) ? el.value : '';
+            }
+
+            function radioVal(name) {
+                var el = document.querySelector('input[name="' + name + '"]:checked');
+                return el ? el.value : '';
+            }
+
+            fetch('{{ route('enrollment.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        _token: '{{ csrf_token() }}',
+                        course_id: '{{ $course->id }}',
+                        first_name: getVal('firstName'),
+                        last_name: getVal('lastName'),
+                        dob: getVal('dob'),
+                        gender: radioVal('gender'),
+                        father_name: getVal('fatherName'),
+                        mother_name: getVal('motherName'),
+                        parent_phone: getVal('parentPhone'),
+                        parent_email: getVal('parentEmail'),
+                        phone: getVal('phone'),
+                        email: getVal('email'),
+                        address: getVal('address'),
+                        school: getVal('school'),
+                        grade: getVal('grade'),
+                        achievements: getVal('achievements'),
+                        state: getVal('state'),
+                        city: getVal('city'),
+                        centre: getVal('centre'),
+                        mode: radioVal('mode'),
+                        course: '{{ $course->title }}',
+                        is_lead: 1,
+                    }),
+                })
+                .then(function(res) {
+                    return res.ok ? res.json() : null;
+                })
+                .then(function(data) {
+                    if (data && data.enrollment_id) {
+                        _enrollmentId = data.enrollment_id;
+                        _silentSaveDone = true;
+                    }
+                })
+                .catch(function() {});
         }
 
         /* ── Summary ── */
@@ -1961,6 +2060,7 @@ $otherCourses = $otherCourses ?? collect();
                 var el = document.querySelector('input[name="' + name + '"]:checked');
                 return el ? el.value : '\u2014';
             }
+
             var items = [
                 ['Student Name', getVal('firstName') + ' ' + getVal('lastName')],
                 ['Date of Birth', getVal('dob')],
@@ -1990,7 +2090,34 @@ $otherCourses = $otherCourses ?? collect();
             }
         }
 
-        /* ── Submit ── */
+        /* ── Helper: hide all steps, show a result screen ── */
+        function showResultScreen(screenId) {
+            document.querySelectorAll('.step-content').forEach(function(el) {
+                el.style.display = 'none';
+            });
+            document.getElementById(screenId).style.display = 'block';
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        /* ── Helper: start countdown then redirect ── */
+        function startFailedCountdown() {
+            var countdown = 10;
+            var courseUrl = '{{ url('/courses/' . $course->id) }}';
+            var timer = setInterval(function() {
+                countdown--;
+                var el = document.getElementById('failedCountdown');
+                if (el) el.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    window.location.href = courseUrl;
+                }
+            }, 1000);
+        }
+
+        /* ── Final submit ── */
         function submitForm() {
             if (!validateStep(5)) return;
 
@@ -2028,9 +2155,9 @@ $otherCourses = $otherCourses ?? collect();
                 course: radioVal('course'),
                 coupon: getVal('coupon'),
                 newsletter: document.getElementById('newsletter').checked ? 1 : 0,
+                enrollment_id: _enrollmentId,
             };
 
-            /* Disable button to prevent double submit */
             var btn = document.querySelector('.submit-btn');
             btn.disabled = true;
             btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting…';
@@ -2040,7 +2167,7 @@ $otherCourses = $otherCourses ?? collect();
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     body: JSON.stringify(payload),
                 })
@@ -2056,7 +2183,6 @@ $otherCourses = $otherCourses ?? collect();
                     }
                     if (!res.ok) {
                         return res.text().then(function(text) {
-                            console.error('Server error:', text);
                             alert('Server error (' + res.status + '). Please try again.');
                             btn.disabled = false;
                             btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
@@ -2065,43 +2191,99 @@ $otherCourses = $otherCourses ?? collect();
                     return res.json();
                 })
                 .then(function(data) {
+                    if (!data || !data.success) return;
 
-                    if (!data.success) return;
-
-                    var options = {
-                        "key": data.razorpay_key,
-                        "amount": data.amount,
-                        "currency": "INR",
-                        "name": "Act To Action",
-                        "description": "Course Enrollment",
-                        "order_id": data.order_id,
-
-                        "handler": function(response) {
-
+                    var rzp = new Razorpay({
+                        key: data.razorpay_key,
+                        amount: data.amount,
+                        currency: 'INR',
+                        name: 'Act To Action',
+                        description: 'Course Enrollment',
+                        order_id: data.order_id,
+                        handler: function(response) {
                             verifyPayment(response, data.enrollment_id);
-
                         },
-
-                        "prefill": {
-                            "name": payload.first_name + " " + payload.last_name,
-                            "email": payload.email,
-                            "contact": payload.phone
+                        prefill: {
+                            name: payload.first_name + ' ' + payload.last_name,
+                            email: payload.email,
+                            contact: payload.phone,
                         },
-
-                        "theme": {
-                            "color": "#175cdd"
+                        theme: {
+                            color: '#175cdd'
+                        },
+                        modal: {
+                            ondismiss: function() {
+                                btn.disabled = false;
+                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                            }
                         }
-                    };
-
-                    var rzp = new Razorpay(options);
+                    });
                     rzp.open();
                 })
-                .catch(function(err) {
-                    console.error(err);
+                .catch(function() {
                     alert('Network error. Please check your connection and try again.');
                     btn.disabled = false;
                     btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
                 });
+        }
+
+        /* ── Verify payment ── */
+        function verifyPayment(response, enrollmentId) {
+            fetch('{{ route('enrollment.verify') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_signature: response.razorpay_signature,
+                        enrollment_id: enrollmentId,
+                    }),
+                })
+                .then(function(res) {
+                    return res.json();
+                })
+                .then(function(data) {
+                    if (data.success) {
+                        document.getElementById('refId').textContent = data.reference_id || ('ATA-' + enrollmentId);
+                        showResultScreen('successScreen');
+                    } else {
+                        showResultScreen('failedScreen');
+                        if (response.razorpay_payment_id) {
+                            document.getElementById('failedPidText').textContent = response.razorpay_payment_id;
+                            document.getElementById('failedPaymentId').style.display = 'block';
+                        }
+                        startFailedCountdown();
+                    }
+                })
+                .catch(function() {
+                    showResultScreen('failedScreen');
+                    startFailedCountdown();
+                });
+        }
+
+        /* ── Retry payment ── */
+        function retryPayment() {
+            document.getElementById('failedScreen').style.display = 'none';
+
+            /* Restore step-content display so stepper works again */
+            document.querySelectorAll('.step-content').forEach(function(el) {
+                el.style.display = '';
+            });
+
+            var btn = document.querySelector('.submit-btn');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+
+            currentStep = 5;
+            updateStepper(5, false);
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         /* INIT */

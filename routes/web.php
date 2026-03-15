@@ -50,14 +50,15 @@ use App\Http\Controllers\admin\CenterController;
 use App\Http\Controllers\admin\EventController;
 use App\Http\Controllers\admin\SubEventController;
 use App\Http\Controllers\admin\CourseCategoryController;
-use App\Http\Controllers\Admin\QuizTestController;
-use App\Http\Controllers\Admin\QuizCategoryController;
-use App\Http\Controllers\Admin\QuizQuestionController;
-use App\Http\Controllers\Admin\EnrollmentController;
-use App\Http\Controllers\Admin\TestGraphConfigController;
-use App\Http\Controllers\Admin\TestResultRangeController;
-use App\Http\Controllers\Admin\BlogAuthorController;
-use App\Http\Controllers\Admin\VolunteerController;
+use App\Http\Controllers\admin\QuizTestController;
+use App\Http\Controllers\admin\QuizCategoryController;
+use App\Http\Controllers\admin\QuizQuestionController;
+use App\Http\Controllers\admin\EnrollmentController;
+use App\Http\Controllers\admin\TestGraphConfigController;
+use App\Http\Controllers\admin\TestResultRangeController;
+use App\Http\Controllers\admin\BlogAuthorController;
+use App\Http\Controllers\admin\VolunteerController;
+use App\Http\Controllers\admin\EmailTemplateController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -74,7 +75,7 @@ Route::get('/blog/{slug}', [HomeController::class, 'blog_details'])->name('front
 
 Route::get('/enrollment/{id}', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
 Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->name('enrollment.store');
-Route::post('/verify-payment', [EnrollmentController::class, 'verifyPayment']);
+Route::post('/verify-payment', [EnrollmentController::class, 'verifyPayment'])->name('enrollment.verify');
 // routes/web.php
 Route::post('/test/{id}/submit', [HomeController::class, 'submit'])->name('test.submit');
 Route::get('/test/{id}/result', [HomeController::class, 'result'])->name('test.result');
@@ -105,14 +106,6 @@ Route::get('/take-test/{id}', [HomeController::class, 'take'])->name('quicktest.
 // Public
 
 // Admin (wrap in auth + admin middleware as needed)
-Route::prefix('admin')
-    ->middleware(['auth'])
-    ->group(function () {
-        Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
-        Route::get('/enrollments/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
-        Route::patch('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
-        Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
-    });
 
 Route::get('/servicedetails/{slug}', [HomeController::class, 'servicedetails'])->name('servicedetails');
 Route::get('/service', [HomeController::class, 'service'])->name('service');
@@ -481,6 +474,43 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/blog-authors/update/{id}', [BlogAuthorController::class, 'update'])->name('admin.blog-author.update');
         Route::delete('/blog-authors/destroy/{id}', [BlogAuthorController::class, 'destroy'])->name('admin.blog-author.destroy');
         Route::post('/blog-authors/toggle-status', [BlogAuthorController::class, 'toggleStatus'])->name('admin.blog-author.toggle-status');
+        Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
+        Route::get('/enrollments/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
+        Route::patch('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
+        Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
+
+        Route::get('/email-templates', [EmailTemplateController::class, 'index'])->name('email-templates.index');
+        Route::get('/email-templates/create', [EmailTemplateController::class, 'create'])->name('email-templates.create');
+        Route::post('/email-templates', [EmailTemplateController::class, 'store'])->name('email-templates.store');
+        Route::get('/email-templates/{id}/edit', [EmailTemplateController::class, 'edit'])->name('email-templates.edit');
+        Route::put('/email-templates/{id}', [EmailTemplateController::class, 'update'])->name('email-templates.update');
+        Route::delete('/email-templates/{id}', [EmailTemplateController::class, 'destroy'])->name('email-templates.destroy');
+        Route::post('admin/email-templates/{id}/test', [EmailTemplateController::class, 'sendTest'])->name('email-templates.test');
+        Route::get('/test-email-render', function () {
+            $template = \App\Models\EmailTemplate::findBySlug('enrollment-confrimation');
+
+            if (!$template) {
+                return 'Still not found — check slug again';
+            }
+
+            $variables = [
+                'student_name' => 'Aryan Sharma',
+                'course_name' => 'Screen Acting',
+                'centre' => 'Jaipur Centre',
+                'reference_id' => 'ATA-00001',
+                'amount' => '₹5,000',
+                'payment_id' => 'pay_TEST123',
+            ];
+
+            ['subject' => $subject, 'body' => $body] = $template->render($variables);
+
+            return response()->json([
+                'subject' => $subject,
+                'has_student' => str_contains($body, 'Aryan Sharma'),
+                'has_course' => str_contains($body, 'Screen Acting'),
+                'body_snippet' => substr($body, 0, 500),
+            ]);
+        });
     });
 });
 

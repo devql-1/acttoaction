@@ -5,6 +5,7 @@ use App\Models\ContactInfo;
 use Illuminate\Support\Facades\Schema;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\EmailService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->singleton(EmailService::class, function () {
+            return new EmailService();
+        });
     }
 
     /**
