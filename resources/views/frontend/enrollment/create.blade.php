@@ -957,44 +957,204 @@
         }
 
         /* ── RESPONSIVE ── */
-        @media(max-width:640px) {
-            .panel-head {
-                padding: 20px 20px 16px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
+        /* ── RESPONSIVE ── */
 
-            .panel-body {
-                padding: 24px 20px;
-            }
+        /* Tablet: 641–860px */
+        @media (max-width: 860px) {
 
-            .panel-footer {
-                padding: 18px 20px;
-                flex-wrap: wrap;
-            }
-
-            .row-2,
-            .row-3 {
-                grid-template-columns: 1fr;
-            }
-
-            .course-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .stepper {
-                gap: 0;
-            }
-
-            .step-label {
-                display: none;
+            .stepper-wrap,
+            .form-wrap {
+                padding-left: 16px;
+                padding-right: 16px;
             }
         }
 
-        @media(max-width:420px) {
+        /* Mobile: ≤640px */
+        @media (max-width: 640px) {
+
+            /* Header */
+            .header-inner {
+                padding: 28px 16px 24px;
+            }
+
+            .page-header h1 {
+                font-size: 22px;
+            }
+
+            .trust-row {
+                gap: 8px;
+            }
+
+            .trust-chip {
+                font-size: 10px;
+                padding: 4px 10px;
+            }
+
+            /* Stepper */
+            .stepper-wrap {
+                padding: 20px 14px 0;
+            }
+
+            .step-circle {
+                width: 30px;
+                height: 30px;
+                font-size: 11px;
+            }
+
+            .stepper::before {
+                top: 15px;
+                left: 15px;
+                right: 15px;
+            }
+
+            .stepper-progress {
+                top: 15px;
+                left: 15px;
+            }
+
+            .step-label {
+                font-size: 9px;
+            }
+
+            /* Form panels */
+            .form-wrap {
+                padding: 14px 12px 48px;
+            }
+
+            .form-panel {
+                border-radius: 18px;
+            }
+
+            .panel-head {
+                padding: 16px 16px 14px;
+                flex-direction: row;
+                /* keep icon + text side by side */
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .ph-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+                flex-shrink: 0;
+            }
+
+            .ph-title {
+                font-size: 17px;
+            }
+
+            .panel-body {
+                padding: 18px 16px;
+            }
+
+            .panel-footer {
+                padding: 14px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            /* Fields: all grids collapse to single column */
+            .row-2,
+            .row-3 {
+                grid-template-columns: 1fr;
+                gap: 0;
+                /* field-group already has margin-bottom:20px */
+            }
+
+            /* Step indicator text stays next to Continue button */
+            .panel-footer>div:last-child {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-left: auto;
+            }
+
+            /* Shrink buttons slightly so they don't overflow */
+            .btn-next {
+                padding: 11px 22px;
+                font-size: 13px;
+            }
+
+            .btn-back {
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+
+            /* Course grid: 2 columns on mobile */
+            .course-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            /* Coupon row stacks on very small screens */
+            .coupon-row {
+                flex-wrap: wrap;
+            }
+
+            .coupon-row .fi {
+                min-width: 0;
+            }
+
+            .btn-apply {
+                width: 100%;
+            }
+
+            /* Success screen */
+            .success-screen {
+                padding: 40px 20px;
+            }
+
+            .success-title {
+                font-size: 24px;
+            }
+        }
+
+        /* Very small: ≤420px */
+        @media (max-width: 420px) {
+
+            /* Step labels hidden — circles alone are enough */
+            .step-label {
+                display: none;
+            }
+
+            .step-circle {
+                width: 28px;
+                height: 28px;
+                font-size: 10px;
+            }
+
+            .stepper::before {
+                top: 14px;
+                left: 14px;
+                right: 14px;
+            }
+
+            .stepper-progress {
+                top: 14px;
+                left: 14px;
+            }
+
+            /* Course grid: single column */
             .course-grid {
                 grid-template-columns: 1fr;
+            }
+
+            /* Footer buttons full-width */
+            .panel-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .panel-footer>div:last-child {
+                flex-direction: row-reverse;
+                justify-content: space-between;
+                margin-left: 0;
+            }
+
+            .btn-next,
+            .btn-back {
+                justify-content: center;
             }
         }
     </style>
