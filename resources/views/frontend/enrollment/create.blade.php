@@ -1868,7 +1868,8 @@ $otherCourses = $otherCourses ?? collect();
                 {{-- ══ FAILED ══ --}}
                 <div class="success-screen" id="failedScreen" style="display:none;">
                     <div class="success-anim">❌</div>
-                    <div class="success-title" style="color:#dc2626;">Payment Failed</di <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                    <div class="success-title" style="color:#dc2626;">Payment Failed</di>
+                        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                         <script>
                             /* ── DB data ── */
                             var CENTRE_DATA = @json($centresByState);
