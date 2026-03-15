@@ -59,6 +59,7 @@ use App\Http\Controllers\admin\TestResultRangeController;
 use App\Http\Controllers\admin\BlogAuthorController;
 use App\Http\Controllers\admin\VolunteerController;
 use App\Http\Controllers\admin\EmailTemplateController;
+use App\Http\Controllers\admin\EventRegistrationController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -67,6 +68,13 @@ use App\Http\Controllers\admin\EmailTemplateController;
 // Route::get('/admission-form', function () {
 //     return view('frontend.admission');
 // });
+Route::get('/{event_id}/register', [EventRegistrationController::class, 'show'])->name('register');
+
+Route::post('/{event_id}/register', [EventRegistrationController::class, 'store'])->name('register.store');
+
+Route::get('/sub-event/{sub_event_id}/details', [EventRegistrationController::class, 'subEventDetails'])->name('subevent.details');
+
+Route::get('/register/success/{id}', [EventRegistrationController::class, 'success'])->name('register.success');
 
 Route::post('/admin/volunteer-submit', [VolunteerController::class, 'store'])->name('volunteer.store');
 Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blog.index');
@@ -486,6 +494,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/email-templates/{id}', [EmailTemplateController::class, 'update'])->name('email-templates.update');
         Route::delete('/email-templates/{id}', [EmailTemplateController::class, 'destroy'])->name('email-templates.destroy');
         Route::post('admin/email-templates/{id}/test', [EmailTemplateController::class, 'sendTest'])->name('email-templates.test');
+
+        Route::get('/event-registrations', [EventRegistrationController::class, 'adminIndex'])->name('event-registrations.index');
+        Route::get('/event-registrations/{id}', [EventRegistrationController::class, 'adminShow'])->name('event-registrations.show');
+        Route::patch('/event-registrations/{id}/status', [EventRegistrationController::class, 'adminUpdateStatus'])->name('event-registrations.status');
     });
 });
 
