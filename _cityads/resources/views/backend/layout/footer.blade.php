@@ -1,28 +1,24 @@
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="https://digigrowinfotech.com/">
-                    Digi Grow Infotech
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Help </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Licenses </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2025, made with <i class="fa fa-heart heart text-danger"></i> by
-              <a href="https://digigrowinfotech.com/">Digi Grow Infotech</a>
-            </div>
-            <div>
-              Distributed by
-              <a target="_blank" href="https://digigrowinfotech.com/">Digi Grow Infotech</a>.
-            </div>
-          </div>
-        </footer>
+<footer
+  style="background:#ffffff; border-top:1px solid #e5e7eb; padding:15px 0; font-family:Arial, sans-serif; margin-top:40px;">
+  <div class="container-fluid">
+
+    <div
+      style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-size:13px; color:#6b7280;">
+
+      <!-- LEFT -->
+      <div>
+        <strong style="color:#374151;">4K Act To Action</strong> Admin Panel
       </div>
+
+      <!-- CENTER -->
+
+
+      <!-- RIGHT -->
+      <div>
+        © 2025 All Rights Reserved
+      </div>
+
+    </div>
+
+  </div>
+</footer>
