@@ -9,16 +9,7 @@ class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'description',
-        'event_date',
-        'event_end_date',
-        'banner_image',
-        'instagram_link',
-        'highlights_link',
-        'status'
-    ];
+    protected $fillable = ['title', 'description', 'event_date', 'event_end_date', 'banner_image', 'instagram_link', 'highlights_link', 'status'];
 
     protected $casts = [
         'event_date' => 'date',
@@ -40,9 +31,7 @@ class Event extends Model
     // Get banner image full URL
     public function getBannerUrlAttribute()
     {
-        return $this->banner_image
-            ? asset('storage/' . $this->banner_image)
-            : asset('assets/img/placeholder-image.jpg');
+        return $this->banner_image ? asset('storage/' . $this->banner_image) : asset('assets/img/placeholder-image.jpg');
     }
 
     // Scope: active events only
@@ -61,5 +50,9 @@ class Event extends Model
     public function scopePast($query)
     {
         return $query->where('event_date', '<', now());
+    }
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
     }
 }

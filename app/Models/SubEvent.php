@@ -9,20 +9,7 @@ class SubEvent extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'event_id',
-        'title',
-        'description',
-        'event_date',
-        'start_time',
-        'end_time',
-        'fees',
-        'age_group',
-        'mode',
-        'max_seats',
-        'status',
-        'banner_image',
-    ];
+    protected $fillable = ['event_id', 'title', 'description', 'event_date', 'start_time', 'end_time', 'fees', 'age_group', 'mode', 'max_seats', 'status', 'banner_image'];
 
     protected $casts = [
         'event_date' => 'date',
@@ -44,17 +31,13 @@ class SubEvent extends Model
     // Centers with state info
     public function centersWithState()
     {
-        return $this->belongsToMany(Center::class, 'sub_event_centers')
-            ->with('state')
-            ->where('centers.status', 1);
+        return $this->belongsToMany(Center::class, 'sub_event_centers')->with('state')->where('centers.status', 1);
     }
 
     // Get centers grouped by state
     public function centersByState()
     {
-        return $this->centersWithState()
-            ->get()
-            ->groupBy('state.name');
+        return $this->centersWithState()->get()->groupBy('state.name');
     }
 
     // Scope: active sub events only
@@ -73,9 +56,7 @@ class SubEvent extends Model
     public function getTimeRangeAttribute()
     {
         if ($this->start_time && $this->end_time) {
-            return date('h:i A', strtotime($this->start_time))
-                . ' - '
-                . date('h:i A', strtotime($this->end_time));
+            return date('h:i A', strtotime($this->start_time)) . ' - ' . date('h:i A', strtotime($this->end_time));
         }
         return '--';
     }
@@ -84,5 +65,9 @@ class SubEvent extends Model
     public function getIsFreeAttribute()
     {
         return $this->fees == 0;
+    }
+    public function registrations()
+    {
+        return $this->hasMany(EventRegistration::class);
     }
 }
