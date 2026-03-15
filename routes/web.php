@@ -486,31 +486,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/email-templates/{id}', [EmailTemplateController::class, 'update'])->name('email-templates.update');
         Route::delete('/email-templates/{id}', [EmailTemplateController::class, 'destroy'])->name('email-templates.destroy');
         Route::post('admin/email-templates/{id}/test', [EmailTemplateController::class, 'sendTest'])->name('email-templates.test');
-        Route::get('/test-email-render', function () {
-            $template = \App\Models\EmailTemplate::findBySlug('enrollment-confrimation');
-
-            if (!$template) {
-                return 'Still not found — check slug again';
-            }
-
-            $variables = [
-                'student_name' => 'Aryan Sharma',
-                'course_name' => 'Screen Acting',
-                'centre' => 'Jaipur Centre',
-                'reference_id' => 'ATA-00001',
-                'amount' => '₹5,000',
-                'payment_id' => 'pay_TEST123',
-            ];
-
-            ['subject' => $subject, 'body' => $body] = $template->render($variables);
-
-            return response()->json([
-                'subject' => $subject,
-                'has_student' => str_contains($body, 'Aryan Sharma'),
-                'has_course' => str_contains($body, 'Screen Acting'),
-                'body_snippet' => substr($body, 0, 500),
-            ]);
-        });
     });
 });
 
