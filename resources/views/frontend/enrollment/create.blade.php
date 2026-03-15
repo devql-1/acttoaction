@@ -969,10 +969,7 @@
             }
         }
 
-        /* Mobile: ≤640px */
         @media (max-width: 640px) {
-
-            /* Header */
             .header-inner {
                 padding: 28px 16px 24px;
             }
@@ -990,7 +987,6 @@
                 padding: 4px 10px;
             }
 
-            /* Stepper */
             .stepper-wrap {
                 padding: 20px 14px 0;
             }
@@ -1016,7 +1012,6 @@
                 font-size: 9px;
             }
 
-            /* Form panels */
             .form-wrap {
                 padding: 14px 12px 48px;
             }
@@ -1028,7 +1023,6 @@
             .panel-head {
                 padding: 16px 16px 14px;
                 flex-direction: row;
-                /* keep icon + text side by side */
                 align-items: flex-start;
                 gap: 10px;
             }
@@ -1048,46 +1042,56 @@
                 padding: 18px 16px;
             }
 
+            /* ── FOOTER FIX ── */
+            /* ── NAVIGATION BUTTONS ── */
             .panel-footer {
-                padding: 14px 16px;
-                flex-wrap: wrap;
-                gap: 10px;
+                padding: 22px 36px;
+                border-top: 1.5px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                background: #fafbff;
+                flex-wrap: nowrap;
             }
 
-            /* Fields: all grids collapse to single column */
+            .footer-right {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                flex-shrink: 0;
+                margin-left: auto;
+            }
+
+            .step-indicator {
+                display: none;
+            }
+
+            .btn-next {
+                padding: 10px 18px;
+                font-size: 13px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .btn-back {
+                padding: 10px 14px;
+                font-size: 13px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
             .row-2,
             .row-3 {
                 grid-template-columns: 1fr;
                 gap: 0;
-                /* field-group already has margin-bottom:20px */
             }
 
-            /* Step indicator text stays next to Continue button */
-            .panel-footer>div:last-child {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-left: auto;
-            }
-
-            /* Shrink buttons slightly so they don't overflow */
-            .btn-next {
-                padding: 11px 22px;
-                font-size: 13px;
-            }
-
-            .btn-back {
-                padding: 10px 18px;
-                font-size: 13px;
-            }
-
-            /* Course grid: 2 columns on mobile */
             .course-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px;
             }
 
-            /* Coupon row stacks on very small screens */
             .coupon-row {
                 flex-wrap: wrap;
             }
@@ -1100,7 +1104,6 @@
                 width: 100%;
             }
 
-            /* Success screen */
             .success-screen {
                 padding: 40px 20px;
             }
@@ -1110,10 +1113,7 @@
             }
         }
 
-        /* Very small: ≤420px */
         @media (max-width: 420px) {
-
-            /* Step labels hidden — circles alone are enough */
             .step-label {
                 display: none;
             }
@@ -1135,26 +1135,22 @@
                 left: 14px;
             }
 
-            /* Course grid: single column */
             .course-grid {
                 grid-template-columns: 1fr;
             }
 
-            /* Footer buttons full-width */
-            .panel-footer {
-                flex-direction: column;
-                align-items: stretch;
+            /* on very small screens, back button shows icon only */
+            .btn-back .back-text {
+                display: none;
             }
 
-            .panel-footer>div:last-child {
-                flex-direction: row-reverse;
-                justify-content: space-between;
-                margin-left: 0;
-            }
-
-            .btn-next,
             .btn-back {
-                justify-content: center;
+                padding: 10px 12px;
+            }
+
+            .btn-next {
+                padding: 10px 14px;
+                font-size: 12px;
             }
         }
     </style>
@@ -1294,12 +1290,11 @@ $otherCourses = $otherCourses ?? collect();
     <main class="main">
         <div class="page-title"></div>
 
-        {{-- ── HEADER ── --}}
         <header class="page-header">
             <div class="header-inner">
                 <a href="{{ url('/') }}" class="header-logo">
                     <div class="logo-mark">🎭</div>
-                    <span class="logo-text">Act<span></span>To</span>Action</span>
+                    <span class="logo-text">Act<span>To</span>Action</span>
                 </a>
                 <div class="header-eyebrow"><i class="bi bi-star-fill"></i> India's First Screen Acting School</div>
                 <h1>Enroll in <em>{{ $course->title }}</em></h1>
@@ -1354,7 +1349,7 @@ $otherCourses = $otherCourses ?? collect();
         <div class="form-wrap">
             <div class="form-panel">
 
-                {{-- ══ STEP 1 — PERSONAL ══ --}}
+                {{-- ══ STEP 1 ══ --}}
                 <div class="step-content active" data-step="0">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#eff6ff;color:var(--blue);"><i class="bi bi-person-fill"
@@ -1386,10 +1381,8 @@ $otherCourses = $otherCourses ?? collect();
                             <div class="field-group">
                                 <label>Date of Birth <span class="req">*</span></label>
                                 <input class="fi" type="date" id="dob" />
-                                <div class="field-hint">
-                                    Age group for this course:
-                                    <strong>{{ $course->age_group ?? '3–29 years' }}</strong>
-                                </div>
+                                <div class="field-hint">Age group for this course:
+                                    <strong>{{ $course->age_group ?? '3–29 years' }}</strong></div>
                                 <div class="field-error" id="err-dob"><i class="bi bi-exclamation-circle"></i> Please
                                     enter a valid date of birth</div>
                             </div>
@@ -1418,7 +1411,7 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                     <div class="panel-footer">
                         <div></div>
-                        <div style="display:flex;align-items:center;gap:16px;">
+                        <div class="footer-right">
                             <span class="step-indicator">Step <strong>1</strong> of 6</span>
                             <button class="btn-next" onclick="nextStep(0)">Continue <i
                                     class="bi bi-arrow-right"></i></button>
@@ -1426,7 +1419,7 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 2 — PARENTS ══ --}}
+                {{-- ══ STEP 2 ══ --}}
                 <div class="step-content" data-step="1">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#fdf2f8;color:#db2777;"><i class="bi bi-people-fill"
@@ -1467,8 +1460,9 @@ $otherCourses = $otherCourses ?? collect();
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn-back" onclick="prevStep(1)"><i class="bi bi-arrow-left"></i> Back</button>
-                        <div style="display:flex;align-items:center;gap:16px;">
+                        <button class="btn-back" onclick="prevStep(1)"><i class="bi bi-arrow-left"></i> <span
+                                class="back-text">Back</span></button>
+                        <div class="footer-right">
                             <span class="step-indicator">Step <strong>2</strong> of 6</span>
                             <button class="btn-next" onclick="nextStep(1)">Continue <i
                                     class="bi bi-arrow-right"></i></button>
@@ -1476,7 +1470,7 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 3 — CONTACT & ACADEMIC ══ --}}
+                {{-- ══ STEP 3 ══ --}}
                 <div class="step-content" data-step="2">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#ecfdf5;color:#059669;"><i class="bi bi-telephone-fill"
@@ -1543,8 +1537,9 @@ $otherCourses = $otherCourses ?? collect();
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn-back" onclick="prevStep(2)"><i class="bi bi-arrow-left"></i> Back</button>
-                        <div style="display:flex;align-items:center;gap:16px;">
+                        <button class="btn-back" onclick="prevStep(2)"><i class="bi bi-arrow-left"></i> <span
+                                class="back-text">Back</span></button>
+                        <div class="footer-right">
                             <span class="step-indicator">Step <strong>3</strong> of 6</span>
                             <button class="btn-next" onclick="nextStep(2)">Continue <i
                                     class="bi bi-arrow-right"></i></button>
@@ -1552,10 +1547,7 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 4 — LOCATION & CENTRE ══
-                 States from $courseStates (only states with centres for THIS course)
-                 Centres from $centresByState[selectedState] via JS
-            ══ --}}
+                {{-- ══ STEP 4 ══ --}}
                 <div class="step-content" data-step="3">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#fff7ed;color:#d97706;"><i class="bi bi-geo-alt-fill"
@@ -1567,8 +1559,7 @@ $otherCourses = $otherCourses ?? collect();
                                 <strong>{{ $course->title }}</strong> is available at
                                 <strong>{{ $course->centers->count() }}
                                     {{ Str::plural('centre', $course->centers->count()) }}</strong>
-                                in
-                                <strong>{{ count($courseStates ?? []) }}
+                                in <strong>{{ count($courseStates ?? []) }}
                                     {{ Str::plural('state', count($courseStates ?? [])) }}</strong>.
                             </p>
                         </div>
@@ -1591,7 +1582,6 @@ $otherCourses = $otherCourses ?? collect();
                                 <input class="fi" type="text" id="city" placeholder="Your city name" />
                             </div>
                         </div>
-
                         <div class="field-group">
                             <label>Act to Action Centre <span class="req">*</span></label>
                             <select class="fi" id="centre" onchange="showCentreInfo()">
@@ -1600,8 +1590,6 @@ $otherCourses = $otherCourses ?? collect();
                             <div class="field-error" id="err-centre"><i class="bi bi-exclamation-circle"></i> Please
                                 select a centre</div>
                         </div>
-
-                        {{-- Centre detail card --}}
                         <div id="centre-info-wrap" style="display:none;margin-top:8px;">
                             <div
                                 style="background:#f0f5ff;border:1.5px solid #dbeafe;border-radius:14px;padding:18px 20px;">
@@ -1614,24 +1602,19 @@ $otherCourses = $otherCourses ?? collect();
                                             —</div>
                                         <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
                                             <span id="ci-phone-wrap"
-                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#059669;font-weight:600;">
-                                                <i class="bi bi-telephone-fill"></i> <span id="ci-phone"></span>
-                                            </span>
+                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#059669;font-weight:600;"><i
+                                                    class="bi bi-telephone-fill"></i> <span id="ci-phone"></span></span>
                                             <span id="ci-email-wrap"
-                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#175cdd;font-weight:600;">
-                                                <i class="bi bi-envelope-fill"></i> <span id="ci-email"></span>
-                                            </span>
+                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#175cdd;font-weight:600;"><i
+                                                    class="bi bi-envelope-fill"></i> <span id="ci-email"></span></span>
                                             <a id="ci-map" href="#" target="_blank"
-                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#d97706;font-weight:600;text-decoration:none;">
-                                                <i class="bi bi-map-fill"></i> View on Map
-                                            </a>
+                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#d97706;font-weight:600;text-decoration:none;"><i
+                                                    class="bi bi-map-fill"></i> View on Map</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- Mode — locked from course.mode, shown as info card + hidden radio --}}
                         <div class="field-group" style="margin-top:22px;">
                             <label>Class Mode</label>
                             <div
@@ -1640,20 +1623,19 @@ $otherCourses = $otherCourses ?? collect();
                                 <div>
                                     <div style="font-size:14px;font-weight:700;color:#166534;">{{ $modeMeta['label'] }}
                                     </div>
-                                    <div style="font-size:12px;color:#4ade80;margin-top:2px;">
-                                        Pre-set for <strong>{{ $course->title }}</strong> — cannot be changed
-                                    </div>
+                                    <div style="font-size:12px;color:#4ade80;margin-top:2px;">Pre-set for
+                                        <strong>{{ $course->title }}</strong> — cannot be changed</div>
                                 </div>
                                 <i class="bi bi-lock-fill ms-auto" style="color:#16a34a;font-size:16px;"></i>
                             </div>
-                            {{-- Hidden radio so radioVal('mode') in summary returns the correct value --}}
                             <input type="radio" name="mode" value="{{ $modeMeta['label'] }}" checked
                                 style="display:none;" />
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn-back" onclick="prevStep(3)"><i class="bi bi-arrow-left"></i> Back</button>
-                        <div style="display:flex;align-items:center;gap:16px;">
+                        <button class="btn-back" onclick="prevStep(3)"><i class="bi bi-arrow-left"></i> <span
+                                class="back-text">Back</span></button>
+                        <div class="footer-right">
                             <span class="step-indicator">Step <strong>4</strong> of 6</span>
                             <button class="btn-next" onclick="nextStep(3)">Continue <i
                                     class="bi bi-arrow-right"></i></button>
@@ -1661,10 +1643,7 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 5 — COURSE ══
-                 One pre-selected course card for $course
-                 $otherCourses as switchable alternatives
-            ══ --}}
+                {{-- ══ STEP 5 ══ --}}
                 <div class="step-content" data-step="4">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#f5f3ff;color:#7c3aed;"><i class="bi bi-mortarboard-fill"
@@ -1676,61 +1655,48 @@ $otherCourses = $otherCourses ?? collect();
                         </div>
                     </div>
                     <div class="panel-body">
-
                         <div class="form-divider"><span>Your Selected Course</span></div>
-
-                        {{-- Pre-selected course detail card --}}
                         <div
                             style="background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:2px solid #bfdbfe;border-radius:18px;padding:22px 24px;margin-bottom:24px;position:relative;overflow:hidden;">
-                            {{-- Badge --}}
                             <div
                                 style="position:absolute;top:16px;right:16px;background:#175cdd;color:#fff;font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:.5px;">
-                                ✓ SELECTED
-                            </div>
+                                ✓ SELECTED</div>
                             <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;">
                                 <div style="font-size:48px;line-height:1;margin-top:2px;">🎭</div>
                                 <div style="flex:1;min-width:180px;">
                                     <div style="font-size:20px;font-weight:900;color:var(--ink);margin-bottom:4px;">
-                                        {{ $course->title }}
-                                    </div>
+                                        {{ $course->title }}</div>
                                     @if ($course->category)
                                         <div
                                             style="font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;">
-                                            {{ $course->category->name }}
-                                        </div>
+                                            {{ $course->category->name }}</div>
                                     @endif
                                     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
                                         @if ($course->age_group)
                                             <span
-                                                style="background:#eff6ff;color:#175cdd;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
-                                                <i class="bi bi-people-fill me-1"></i>Age {{ $course->age_group }}
-                                            </span>
+                                                style="background:#eff6ff;color:#175cdd;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;"><i
+                                                    class="bi bi-people-fill me-1"></i>Age {{ $course->age_group }}</span>
                                         @endif
                                         @if ($course->duration)
                                             <span
-                                                style="background:#f5f3ff;color:#7c3aed;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
-                                                <i class="bi bi-clock-fill me-1"></i>{{ $course->duration }}
-                                            </span>
+                                                style="background:#f5f3ff;color:#7c3aed;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;"><i
+                                                    class="bi bi-clock-fill me-1"></i>{{ $course->duration }}</span>
                                         @endif
                                         @if ($course->sessions)
                                             <span
-                                                style="background:#ecfdf5;color:#059669;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
-                                                <i class="bi bi-calendar-check-fill me-1"></i>{{ $course->sessions }}
-                                                Sessions
-                                            </span>
+                                                style="background:#ecfdf5;color:#059669;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;"><i
+                                                    class="bi bi-calendar-check-fill me-1"></i>{{ $course->sessions }}
+                                                Sessions</span>
                                         @endif
                                         <span
-                                            style="background:#fff7ed;color:#d97706;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
-                                            {{ $modeMeta['icon'] }} {{ $course->mode }}
-                                        </span>
+                                            style="background:#fff7ed;color:#d97706;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">{{ $modeMeta['icon'] }}
+                                            {{ $course->mode }}</span>
                                     </div>
                                     @if ($course->description)
                                         <p style="font-size:13px;color:#6b7280;line-height:1.6;margin:0;">
-                                            {{ Str::limit($course->description, 120) }}
-                                        </p>
+                                            {{ Str::limit($course->description, 120) }}</p>
                                     @endif
                                 </div>
-                                {{-- Fee --}}
                                 @if ($course->fees)
                                     <div
                                         style="text-align:center;min-width:110px;background:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 2px 12px rgba(23,92,221,.08);">
@@ -1738,18 +1704,15 @@ $otherCourses = $otherCourses ?? collect();
                                             style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">
                                             Course Fee</div>
                                         <div style="font-size:28px;font-weight:900;color:#175cdd;line-height:1;">
-                                            ₹{{ number_format($course->fees) }}
-                                        </div>
+                                            ₹{{ number_format($course->fees) }}</div>
                                         <div style="font-size:10px;color:#9ca3af;margin-top:3px;">Incl. of taxes</div>
                                     </div>
                                 @endif
                             </div>
-                            {{-- Hidden radio pre-checked --}}
                             <input type="radio" name="course" id="c-main" value="{{ $course->title }}" checked
                                 style="display:none;" />
                         </div>
 
-                        {{-- Other courses --}}
                         @if ($otherCourses->count() > 0)
                             <div class="form-divider"><span>Or Switch to Another Course</span></div>
                             <div class="course-grid" style="margin-bottom:24px;">
@@ -1763,13 +1726,11 @@ $otherCourses = $otherCourses ?? collect();
                                             <div class="coll-age">
                                                 @if ($oc->age_group)
                                                     Age {{ $oc->age_group }} ·
-                                                @endif
-                                                {{ $oc->duration ?? '3 months' }}
+                                                @endif{{ $oc->duration ?? '3 months' }}
                                             </div>
                                             @if ($oc->fees)
                                                 <div style="font-size:13px;font-weight:800;color:#175cdd;margin-top:6px;">
-                                                    ₹{{ number_format($oc->fees) }}
-                                                </div>
+                                                    ₹{{ number_format($oc->fees) }}</div>
                                             @endif
                                         </label>
                                     </div>
@@ -1777,9 +1738,8 @@ $otherCourses = $otherCourses ?? collect();
                             </div>
                         @endif
 
-                        <div class="field-error" id="err-course" style="margin-bottom:16px;">
-                            <i class="bi bi-exclamation-circle"></i> Please select a course
-                        </div>
+                        <div class="field-error" id="err-course" style="margin-bottom:16px;"><i
+                                class="bi bi-exclamation-circle"></i> Please select a course</div>
 
                         <div class="form-divider"><span>Payment</span></div>
                         <div
@@ -1802,14 +1762,14 @@ $otherCourses = $otherCourses ?? collect();
                                     style="text-transform:uppercase;" />
                                 <button class="btn-apply" onclick="applyCoupon()">Apply</button>
                             </div>
-                            <div class="coupon-badge" id="couponBadge" style="display:none;">
-                                <i class="bi bi-check-circle-fill"></i> Coupon applied! ₹200 off
-                            </div>
+                            <div class="coupon-badge" id="couponBadge" style="display:none;"><i
+                                    class="bi bi-check-circle-fill"></i> Coupon applied! ₹200 off</div>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn-back" onclick="prevStep(4)"><i class="bi bi-arrow-left"></i> Back</button>
-                        <div style="display:flex;align-items:center;gap:16px;">
+                        <button class="btn-back" onclick="prevStep(4)"><i class="bi bi-arrow-left"></i> <span
+                                class="back-text">Back</span></button>
+                        <div class="footer-right">
                             <span class="step-indicator">Step <strong>5</strong> of 6</span>
                             <button class="btn-next" onclick="nextStep(4)">Review &amp; Confirm <i
                                     class="bi bi-arrow-right"></i></button>
@@ -1817,7 +1777,7 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 6 — REVIEW ══ --}}
+                {{-- ══ STEP 6 ══ --}}
                 <div class="step-content" data-step="5">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#ecfdf5;color:#059669;"><i
@@ -1848,15 +1808,13 @@ $otherCourses = $otherCourses ?? collect();
                                 <div class="check-box" id="chk-terms"></div>
                                 <div class="check-text">
                                     <strong>I agree to the Terms &amp; Conditions <span class="check-req">*</span></strong>
-                                    <span>I have read and accept the
-                                        <a href="https://www.acttoaction.com/terms-and-conditions" target="_blank"
+                                    <span>I have read and accept the <a
+                                            href="https://www.acttoaction.com/terms-and-conditions" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
-                                            onclick="event.stopPropagation()">Terms &amp; Conditions</a>
-                                        and
-                                        <a href="https://www.acttoaction.com/refund-policy" target="_blank"
+                                            onclick="event.stopPropagation()">Terms &amp; Conditions</a> and <a
+                                            href="https://www.acttoaction.com/refund-policy" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
-                                            onclick="event.stopPropagation()">Refund Policy</a>.
-                                    </span>
+                                            onclick="event.stopPropagation()">Refund Policy</a>.</span>
                                 </div>
                             </label>
                             <label class="check-card" id="chk-newsletter-card" onclick="toggleCheck('newsletter')">
@@ -1869,18 +1827,16 @@ $otherCourses = $otherCourses ?? collect();
                                 </div>
                             </label>
                         </div>
-                        <div class="field-error" id="err-terms">
-                            <i class="bi bi-exclamation-circle"></i> You must agree to the Terms &amp; Conditions to
-                            continue
-                        </div>
+                        <div class="field-error" id="err-terms"><i class="bi bi-exclamation-circle"></i> You must agree
+                            to the Terms &amp; Conditions to continue</div>
                     </div>
                     <div class="panel-footer">
-                        <button class="btn-back" onclick="prevStep(5)"><i class="bi bi-arrow-left"></i> Back</button>
-                        <div style="display:flex;align-items:center;gap:16px;">
+                        <button class="btn-back" onclick="prevStep(5)"><i class="bi bi-arrow-left"></i> <span
+                                class="back-text">Back</span></button>
+                        <div class="footer-right">
                             <span class="step-indicator">Final Step</span>
-                            <button class="btn-next submit-btn" onclick="submitForm()">
-                                <i class="bi bi-check2-circle"></i> Submit Enrollment
-                            </button>
+                            <button class="btn-next submit-btn" onclick="submitForm()"><i
+                                    class="bi bi-check2-circle"></i> Submit Enrollment</button>
                         </div>
                     </div>
                 </div>
@@ -1889,10 +1845,8 @@ $otherCourses = $otherCourses ?? collect();
                 <div class="success-screen" id="successScreen" style="display:none;">
                     <div class="success-anim">🎉</div>
                     <div class="success-title">Payment Successful!</div>
-                    <p class="success-sub">
-                        Your seat has been reserved for <strong>{{ $course->title }}</strong>.
-                        Our team will contact you within 24 hours to confirm your batch and free demo class.
-                    </p>
+                    <p class="success-sub">Your seat has been reserved for <strong>{{ $course->title }}</strong>. Our team
+                        will contact you within 24 hours to confirm your batch and free demo class.</p>
                     <div class="success-ref"><span>Reference ID:</span>&nbsp;<span id="refId">ATA-000000</span></div>
                     <div
                         style="background:#ecfdf5;border:1.5px solid #86efac;border-radius:14px;padding:16px 20px;margin:16px 0;text-align:left;">
@@ -1905,548 +1859,518 @@ $otherCourses = $otherCourses ?? collect();
                         </ul>
                     </div>
                     <div class="success-actions">
-                        <a href="https://wa.me/919352023276" target="_blank" class="btn-wa">
-                            <i class="bi bi-whatsapp"></i> Message on WhatsApp
-                        </a>
-                        <a href="{{ url('/') }}" class="btn-home">
-                            <i class="bi bi-house"></i> Back to Home
-                        </a>
+                        <a href="https://wa.me/919352023276" target="_blank" class="btn-wa"><i
+                                class="bi bi-whatsapp"></i> Message on WhatsApp</a>
+                        <a href="{{ url('/') }}" class="btn-home"><i class="bi bi-house"></i> Back to Home</a>
                     </div>
                 </div>
 
                 {{-- ══ FAILED ══ --}}
                 <div class="success-screen" id="failedScreen" style="display:none;">
                     <div class="success-anim">❌</div>
-                    <div class="success-title" style="color:#dc2626;">Payment Failed</div>
-                    <p class="success-sub">
-                        Your payment could not be processed. Don't worry — your enrollment details have been saved.
-                        You can try again or contact us for help.
-                        <br><br>
-                        <span style="font-size:13px;color:#9ca3af;">
-                            Redirecting to course page in <strong id="failedCountdown">10</strong> seconds...
-                        </span>
-                    </p>
-                    <div id="failedPaymentId"
-                        style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;padding:14px 20px;margin:16px 0;font-size:13px;color:#991b1b;display:none;">
-                        <i class="bi bi-info-circle-fill"></i>
-                        Payment ID: <strong id="failedPidText"></strong> — share this with support if needed.
-                    </div>
-                    <div class="success-actions">
-                        <button class="btn-next" onclick="retryPayment()" style="background:#dc2626;">
-                            <i class="bi bi-arrow-repeat"></i> Retry Payment
-                        </button>
-                        <a href="{{ url('/courses/' . $course->id) }}" class="btn-home">
-                            <i class="bi bi-arrow-left"></i> Back to Course
-                        </a>
-                    </div>
-                </div>
+                    <div class="success-title" style="color:#dc2626;">Payment Failed</di <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                        <script>
+                            /* ── DB data ── */
+                            var CENTRE_DATA = @json($centresByState);
+                            var COURSE_STATES = @json($courseStates);
 
-            </div>
-        </div>
-    </main>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script>
-        /* ── DB data ── */
-        var CENTRE_DATA = @json($centresByState);
-        var COURSE_STATES = @json($courseStates);
+                            /* ── Silent save state ── */
+                            var _enrollmentId = null;
+                            var _silentSaveDone = false;
 
-        /* ── Silent save state ── */
-        var _enrollmentId = null;
-        var _silentSaveDone = false;
+                            /* ── Centre dropdown ── */
+                            function updateCentres() {
+                                var state = document.getElementById('state').value;
+                                var sel = document.getElementById('centre');
+                                var wrap = document.getElementById('centre-info-wrap');
 
-        /* ── Centre dropdown ── */
-        function updateCentres() {
-            var state = document.getElementById('state').value;
-            var sel = document.getElementById('centre');
-            var wrap = document.getElementById('centre-info-wrap');
+                                sel.innerHTML = '<option value="">— Select a Centre —</option>';
+                                wrap.style.display = 'none';
+                                if (!state) return;
 
-            sel.innerHTML = '<option value="">— Select a Centre —</option>';
-            wrap.style.display = 'none';
-            if (!state) return;
+                                var list = CENTRE_DATA[state];
+                                if (list && list.length > 0) {
+                                    for (var i = 0; i < list.length; i++) {
+                                        var o = document.createElement('option');
+                                        o.value = list[i].name;
+                                        o.textContent = list[i].name;
+                                        o.dataset.address = list[i].address || '';
+                                        o.dataset.phone = list[i].phone || '';
+                                        o.dataset.email = list[i].email || '';
+                                        o.dataset.map = list[i].map || '';
+                                        sel.appendChild(o);
+                                    }
+                                }
+                            }
 
-            var list = CENTRE_DATA[state];
-            if (list && list.length > 0) {
-                for (var i = 0; i < list.length; i++) {
-                    var o = document.createElement('option');
-                    o.value = list[i].name;
-                    o.textContent = list[i].name;
-                    o.dataset.address = list[i].address || '';
-                    o.dataset.phone = list[i].phone || '';
-                    o.dataset.email = list[i].email || '';
-                    o.dataset.map = list[i].map || '';
-                    sel.appendChild(o);
-                }
-            }
-        }
+                            /* ── Centre detail card ── */
+                            function showCentreInfo() {
+                                var sel = document.getElementById('centre');
+                                var wrap = document.getElementById('centre-info-wrap');
+                                var opt = sel.options[sel.selectedIndex];
 
-        /* ── Centre detail card ── */
-        function showCentreInfo() {
-            var sel = document.getElementById('centre');
-            var wrap = document.getElementById('centre-info-wrap');
-            var opt = sel.options[sel.selectedIndex];
+                                if (!opt || !opt.value) {
+                                    wrap.style.display = 'none';
+                                    return;
+                                }
 
-            if (!opt || !opt.value) {
-                wrap.style.display = 'none';
-                return;
-            }
+                                document.getElementById('ci-name').textContent = opt.value;
+                                document.getElementById('ci-address').textContent = opt.dataset.address || '—';
 
-            document.getElementById('ci-name').textContent = opt.value;
-            document.getElementById('ci-address').textContent = opt.dataset.address || '—';
+                                var phoneWrap = document.getElementById('ci-phone-wrap');
+                                var emailWrap = document.getElementById('ci-email-wrap');
+                                var mapLink = document.getElementById('ci-map');
 
-            var phoneWrap = document.getElementById('ci-phone-wrap');
-            var emailWrap = document.getElementById('ci-email-wrap');
-            var mapLink = document.getElementById('ci-map');
+                                if (opt.dataset.phone) {
+                                    document.getElementById('ci-phone').textContent = opt.dataset.phone;
+                                    phoneWrap.style.display = 'inline-flex';
+                                } else {
+                                    phoneWrap.style.display = 'none';
+                                }
 
-            if (opt.dataset.phone) {
-                document.getElementById('ci-phone').textContent = opt.dataset.phone;
-                phoneWrap.style.display = 'inline-flex';
-            } else {
-                phoneWrap.style.display = 'none';
-            }
+                                if (opt.dataset.email) {
+                                    document.getElementById('ci-email').textContent = opt.dataset.email;
+                                    emailWrap.style.display = 'inline-flex';
+                                } else {
+                                    emailWrap.style.display = 'none';
+                                }
 
-            if (opt.dataset.email) {
-                document.getElementById('ci-email').textContent = opt.dataset.email;
-                emailWrap.style.display = 'inline-flex';
-            } else {
-                emailWrap.style.display = 'none';
-            }
+                                if (opt.dataset.map) {
+                                    mapLink.href = opt.dataset.map;
+                                    mapLink.style.display = 'inline-flex';
+                                } else {
+                                    mapLink.style.display = 'none';
+                                }
 
-            if (opt.dataset.map) {
-                mapLink.href = opt.dataset.map;
-                mapLink.style.display = 'inline-flex';
-            } else {
-                mapLink.style.display = 'none';
-            }
+                                wrap.style.display = 'block';
+                            }
 
-            wrap.style.display = 'block';
-        }
+                            /* ── Coupon ── */
+                            function applyCoupon() {
+                                var code = document.getElementById('coupon').value.trim().toUpperCase();
+                                var badge = document.getElementById('couponBadge');
+                                var valid = ['WELCOME20', 'ATA100', 'TRYACT', 'FREE50'];
+                                if (valid.indexOf(code) !== -1) {
+                                    badge.style.display = 'inline-flex';
+                                } else {
+                                    badge.style.display = 'none';
+                                    if (code) alert('Invalid coupon code. Try WELCOME20 for \u20b9200 off.');
+                                }
+                            }
 
-        /* ── Coupon ── */
-        function applyCoupon() {
-            var code = document.getElementById('coupon').value.trim().toUpperCase();
-            var badge = document.getElementById('couponBadge');
-            var valid = ['WELCOME20', 'ATA100', 'TRYACT', 'FREE50'];
-            if (valid.indexOf(code) !== -1) {
-                badge.style.display = 'inline-flex';
-            } else {
-                badge.style.display = 'none';
-                if (code) alert('Invalid coupon code. Try WELCOME20 for \u20b9200 off.');
-            }
-        }
+                            /* ── Auto age ── */
+                            document.getElementById('dob').addEventListener('change', function() {
+                                var dob = new Date(this.value);
+                                if (isNaN(dob.getTime())) return;
+                                var today = new Date();
+                                var age = today.getFullYear() - dob.getFullYear();
+                                var m = today.getMonth() - dob.getMonth();
+                                if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+                                document.getElementById('ageDisplay').value = age >= 0 ? age + ' years old' : '';
+                            });
 
-        /* ── Auto age ── */
-        document.getElementById('dob').addEventListener('change', function() {
-            var dob = new Date(this.value);
-            if (isNaN(dob.getTime())) return;
-            var today = new Date();
-            var age = today.getFullYear() - dob.getFullYear();
-            var m = today.getMonth() - dob.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-            document.getElementById('ageDisplay').value = age >= 0 ? age + ' years old' : '';
-        });
+                            /* ── Checkbox ── */
+                            function toggleCheck(id) {
+                                var card = document.getElementById('chk-' + id + '-card');
+                                var inp = document.getElementById(id);
+                                inp.checked = !inp.checked;
+                                card.classList.toggle('checked', inp.checked);
+                                if (id === 'terms') document.getElementById('err-terms').classList.remove('show');
+                            }
 
-        /* ── Checkbox ── */
-        function toggleCheck(id) {
-            var card = document.getElementById('chk-' + id + '-card');
-            var inp = document.getElementById(id);
-            inp.checked = !inp.checked;
-            card.classList.toggle('checked', inp.checked);
-            if (id === 'terms') document.getElementById('err-terms').classList.remove('show');
-        }
+                            /* ── Stepper ── */
+                            var currentStep = 0;
+                            var TOTAL_STEPS = 6;
 
-        /* ── Stepper ── */
-        var currentStep = 0;
-        var TOTAL_STEPS = 6;
+                            function updateStepper(step, goingBack) {
+                                for (var i = 0; i < TOTAL_STEPS; i++) {
+                                    var si = document.getElementById('si-' + i);
+                                    var circle = si.querySelector('.step-circle');
+                                    si.className = 'step-item' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
+                                    circle.textContent = i < step ? '\u2713' : String(i + 1);
+                                }
+                                var pct = step === 0 ? 0 : (step / (TOTAL_STEPS - 1)) * 100;
+                                document.getElementById('stepperProgress').style.width = pct + '%';
+                                document.getElementById('miniBar').style.width = ((step + 1) / TOTAL_STEPS * 100) + '%';
+                                document.querySelectorAll('.step-content').forEach(function(el, idx) {
+                                    el.classList.remove('active', 'back-anim');
+                                    if (idx === step) {
+                                        el.classList.add('active');
+                                        if (goingBack) el.classList.add('back-anim');
+                                    }
+                                });
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: 'smooth'
+                                });
+                            }
 
-        function updateStepper(step, goingBack) {
-            for (var i = 0; i < TOTAL_STEPS; i++) {
-                var si = document.getElementById('si-' + i);
-                var circle = si.querySelector('.step-circle');
-                si.className = 'step-item' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
-                circle.textContent = i < step ? '\u2713' : String(i + 1);
-            }
-            var pct = step === 0 ? 0 : (step / (TOTAL_STEPS - 1)) * 100;
-            document.getElementById('stepperProgress').style.width = pct + '%';
-            document.getElementById('miniBar').style.width = ((step + 1) / TOTAL_STEPS * 100) + '%';
-            document.querySelectorAll('.step-content').forEach(function(el, idx) {
-                el.classList.remove('active', 'back-anim');
-                if (idx === step) {
-                    el.classList.add('active');
-                    if (goingBack) el.classList.add('back-anim');
-                }
-            });
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+                            /* ── Validation ── */
+                            function showErr(id, show) {
+                                var el = document.getElementById('err-' + id);
+                                if (el) el.classList.toggle('show', show);
+                                var fi = document.getElementById(id);
+                                if (fi) fi.classList.toggle('has-error', show);
+                            }
 
-        /* ── Validation ── */
-        function showErr(id, show) {
-            var el = document.getElementById('err-' + id);
-            if (el) el.classList.toggle('show', show);
-            var fi = document.getElementById(id);
-            if (fi) fi.classList.toggle('has-error', show);
-        }
+                            function validateStep(step) {
+                                var ok = true;
 
-        function validateStep(step) {
-            var ok = true;
+                                function req(id, cond) {
+                                    showErr(id, !cond);
+                                    if (!cond) ok = false;
+                                }
 
-            function req(id, cond) {
-                showErr(id, !cond);
-                if (!cond) ok = false;
-            }
+                                if (step === 0) {
+                                    req('firstName', document.getElementById('firstName').value.trim() !== '');
+                                    req('lastName', document.getElementById('lastName').value.trim() !== '');
+                                    var dobVal = document.getElementById('dob').value;
+                                    var dobOk = false;
+                                    if (dobVal) {
+                                        var d = new Date(dobVal),
+                                            now = new Date();
+                                        var age = now.getFullYear() - d.getFullYear();
+                                        var mo = now.getMonth() - d.getMonth();
+                                        if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
+                                        dobOk = (age >= 3 && age <= 29);
+                                    }
+                                    req('dob', dobOk);
+                                    req('gender', document.querySelector('input[name="gender"]:checked') !== null);
 
-            if (step === 0) {
-                req('firstName', document.getElementById('firstName').value.trim() !== '');
-                req('lastName', document.getElementById('lastName').value.trim() !== '');
-                var dobVal = document.getElementById('dob').value;
-                var dobOk = false;
-                if (dobVal) {
-                    var d = new Date(dobVal),
-                        now = new Date();
-                    var age = now.getFullYear() - d.getFullYear();
-                    var mo = now.getMonth() - d.getMonth();
-                    if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
-                    dobOk = (age >= 3 && age <= 29);
-                }
-                req('dob', dobOk);
-                req('gender', document.querySelector('input[name="gender"]:checked') !== null);
+                                } else if (step === 1) {
+                                    req('fatherName', document.getElementById('fatherName').value.trim() !== '');
+                                    req('motherName', document.getElementById('motherName').value.trim() !== '');
 
-            } else if (step === 1) {
-                req('fatherName', document.getElementById('fatherName').value.trim() !== '');
-                req('motherName', document.getElementById('motherName').value.trim() !== '');
+                                } else if (step === 2) {
+                                    var ph = document.getElementById('phone').value.replace(/\D/g, '');
+                                    req('phone', ph.length >= 10);
+                                    req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
+                                    req('school', document.getElementById('school').value.trim() !== '');
+                                    req('grade', document.getElementById('grade').value !== '');
 
-            } else if (step === 2) {
-                var ph = document.getElementById('phone').value.replace(/\D/g, '');
-                req('phone', ph.length >= 10);
-                req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
-                req('school', document.getElementById('school').value.trim() !== '');
-                req('grade', document.getElementById('grade').value !== '');
+                                } else if (step === 3) {
+                                    req('state', document.getElementById('state').value !== '');
+                                    req('centre', document.getElementById('centre').value !== '');
 
-            } else if (step === 3) {
-                req('state', document.getElementById('state').value !== '');
-                req('centre', document.getElementById('centre').value !== '');
+                                } else if (step === 4) {
+                                    req('course', document.querySelector('input[name="course"]:checked') !== null);
 
-            } else if (step === 4) {
-                req('course', document.querySelector('input[name="course"]:checked') !== null);
+                                } else if (step === 5) {
+                                    var terms = document.getElementById('terms').checked;
+                                    showErr('terms', !terms);
+                                    if (!terms) ok = false;
+                                }
+                                return ok;
+                            }
 
-            } else if (step === 5) {
-                var terms = document.getElementById('terms').checked;
-                showErr('terms', !terms);
-                if (!terms) ok = false;
-            }
-            return ok;
-        }
+                            /* ── Nav ── */
+                            function nextStep(step) {
+                                if (!validateStep(step)) return;
+                                if (step === 3 && !_silentSaveDone) silentSave();
+                                if (step === 4) buildSummary();
+                                currentStep = step + 1;
+                                updateStepper(currentStep, false);
+                            }
 
-        /* ── Nav ── */
-        function nextStep(step) {
-            if (!validateStep(step)) return;
-            if (step === 3 && !_silentSaveDone) silentSave();
-            if (step === 4) buildSummary();
-            currentStep = step + 1;
-            updateStepper(currentStep, false);
-        }
+                            function prevStep(step) {
+                                currentStep = step - 1;
+                                updateStepper(currentStep, true);
+                            }
 
-        function prevStep(step) {
-            currentStep = step - 1;
-            updateStepper(currentStep, true);
-        }
+                            /* ── Silent lead save (after Step 4) ── */
+                            function silentSave() {
+                                function getVal(id) {
+                                    var el = document.getElementById(id);
+                                    return (el && el.value) ? el.value : '';
+                                }
 
-        /* ── Silent lead save (after Step 4) ── */
-        function silentSave() {
-            function getVal(id) {
-                var el = document.getElementById(id);
-                return (el && el.value) ? el.value : '';
-            }
+                                function radioVal(name) {
+                                    var el = document.querySelector('input[name="' + name + '"]:checked');
+                                    return el ? el.value : '';
+                                }
 
-            function radioVal(name) {
-                var el = document.querySelector('input[name="' + name + '"]:checked');
-                return el ? el.value : '';
-            }
+                                fetch('{{ route('enrollment.store') }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify({
+                                            _token: '{{ csrf_token() }}',
+                                            course_id: '{{ $course->id }}',
+                                            first_name: getVal('firstName'),
+                                            last_name: getVal('lastName'),
+                                            dob: getVal('dob'),
+                                            gender: radioVal('gender'),
+                                            father_name: getVal('fatherName'),
+                                            mother_name: getVal('motherName'),
+                                            parent_phone: getVal('parentPhone'),
+                                            parent_email: getVal('parentEmail'),
+                                            phone: getVal('phone'),
+                                            email: getVal('email'),
+                                            address: getVal('address'),
+                                            school: getVal('school'),
+                                            grade: getVal('grade'),
+                                            achievements: getVal('achievements'),
+                                            state: getVal('state'),
+                                            city: getVal('city'),
+                                            centre: getVal('centre'),
+                                            mode: radioVal('mode'),
+                                            course: '{{ $course->title }}',
+                                            is_lead: 1,
+                                        }),
+                                    })
+                                    .then(function(res) {
+                                        return res.ok ? res.json() : null;
+                                    })
+                                    .then(function(data) {
+                                        if (data && data.enrollment_id) {
+                                            _enrollmentId = data.enrollment_id;
+                                            _silentSaveDone = true;
+                                        }
+                                    })
+                                    .catch(function() {});
+                            }
 
-            fetch('{{ route('enrollment.store') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        _token: '{{ csrf_token() }}',
-                        course_id: '{{ $course->id }}',
-                        first_name: getVal('firstName'),
-                        last_name: getVal('lastName'),
-                        dob: getVal('dob'),
-                        gender: radioVal('gender'),
-                        father_name: getVal('fatherName'),
-                        mother_name: getVal('motherName'),
-                        parent_phone: getVal('parentPhone'),
-                        parent_email: getVal('parentEmail'),
-                        phone: getVal('phone'),
-                        email: getVal('email'),
-                        address: getVal('address'),
-                        school: getVal('school'),
-                        grade: getVal('grade'),
-                        achievements: getVal('achievements'),
-                        state: getVal('state'),
-                        city: getVal('city'),
-                        centre: getVal('centre'),
-                        mode: radioVal('mode'),
-                        course: '{{ $course->title }}',
-                        is_lead: 1,
-                    }),
-                })
-                .then(function(res) {
-                    return res.ok ? res.json() : null;
-                })
-                .then(function(data) {
-                    if (data && data.enrollment_id) {
-                        _enrollmentId = data.enrollment_id;
-                        _silentSaveDone = true;
-                    }
-                })
-                .catch(function() {});
-        }
+                            /* ── Summary ── */
+                            function buildSummary() {
+                                function getVal(id) {
+                                    var el = document.getElementById(id);
+                                    return (el && el.value) ? el.value : '\u2014';
+                                }
 
-        /* ── Summary ── */
-        function buildSummary() {
-            function getVal(id) {
-                var el = document.getElementById(id);
-                return (el && el.value) ? el.value : '\u2014';
-            }
+                                function radioVal(name) {
+                                    var el = document.querySelector('input[name="' + name + '"]:checked');
+                                    return el ? el.value : '\u2014';
+                                }
 
-            function radioVal(name) {
-                var el = document.querySelector('input[name="' + name + '"]:checked');
-                return el ? el.value : '\u2014';
-            }
+                                var items = [
+                                    ['Student Name', getVal('firstName') + ' ' + getVal('lastName')],
+                                    ['Date of Birth', getVal('dob')],
+                                    ['Gender', radioVal('gender')],
+                                    ["Father's Name", getVal('fatherName')],
+                                    ["Mother's Name", getVal('motherName')],
+                                    ['Phone', getVal('phone')],
+                                    ['Email', getVal('email')],
+                                    ['School', getVal('school')],
+                                    ['Class', getVal('grade')],
+                                    ['State', getVal('state')],
+                                    ['Centre', getVal('centre')],
+                                    ['Mode', radioVal('mode')],
+                                    ['Course', radioVal('course')],
+                                    ['Coupon', (getVal('coupon') && getVal('coupon') !== '\u2014') ? getVal('coupon') : 'None'],
+                                ];
+                                var grid = document.getElementById('summary-grid');
+                                grid.innerHTML = '';
+                                for (var i = 0; i < items.length; i++) {
+                                    var div = document.createElement('div');
+                                    div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
+                                    div.innerHTML =
+                                        '<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;">' +
+                                        items[i][0] + '</div>' +
+                                        '<div style="font-size:14px;font-weight:600;color:var(--ink);">' + items[i][1] + '</div>';
+                                    grid.appendChild(div);
+                                }
+                            }
 
-            var items = [
-                ['Student Name', getVal('firstName') + ' ' + getVal('lastName')],
-                ['Date of Birth', getVal('dob')],
-                ['Gender', radioVal('gender')],
-                ["Father's Name", getVal('fatherName')],
-                ["Mother's Name", getVal('motherName')],
-                ['Phone', getVal('phone')],
-                ['Email', getVal('email')],
-                ['School', getVal('school')],
-                ['Class', getVal('grade')],
-                ['State', getVal('state')],
-                ['Centre', getVal('centre')],
-                ['Mode', radioVal('mode')],
-                ['Course', radioVal('course')],
-                ['Coupon', (getVal('coupon') && getVal('coupon') !== '\u2014') ? getVal('coupon') : 'None'],
-            ];
-            var grid = document.getElementById('summary-grid');
-            grid.innerHTML = '';
-            for (var i = 0; i < items.length; i++) {
-                var div = document.createElement('div');
-                div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
-                div.innerHTML =
-                    '<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;">' +
-                    items[i][0] + '</div>' +
-                    '<div style="font-size:14px;font-weight:600;color:var(--ink);">' + items[i][1] + '</div>';
-                grid.appendChild(div);
-            }
-        }
+                            /* ── Helper: hide all steps, show a result screen ── */
+                            function showResultScreen(screenId) {
+                                document.querySelectorAll('.step-content').forEach(function(el) {
+                                    el.style.display = 'none';
+                                });
+                                document.getElementById(screenId).style.display = 'block';
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: 'smooth'
+                                });
+                            }
 
-        /* ── Helper: hide all steps, show a result screen ── */
-        function showResultScreen(screenId) {
-            document.querySelectorAll('.step-content').forEach(function(el) {
-                el.style.display = 'none';
-            });
-            document.getElementById(screenId).style.display = 'block';
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
+                            /* ── Helper: start countdown then redirect ── */
+                            function startFailedCountdown() {
+                                var countdown = 10;
+                                var courseUrl = '{{ url('/courses/' . $course->id) }}';
+                                var timer = setInterval(function() {
+                                    countdown--;
+                                    var el = document.getElementById('failedCountdown');
+                                    if (el) el.textContent = countdown;
+                                    if (countdown <= 0) {
+                                        clearInterval(timer);
+                                        window.location.href = courseUrl;
+                                    }
+                                }, 1000);
+                            }
 
-        /* ── Helper: start countdown then redirect ── */
-        function startFailedCountdown() {
-            var countdown = 10;
-            var courseUrl = '{{ url('/courses/' . $course->id) }}';
-            var timer = setInterval(function() {
-                countdown--;
-                var el = document.getElementById('failedCountdown');
-                if (el) el.textContent = countdown;
-                if (countdown <= 0) {
-                    clearInterval(timer);
-                    window.location.href = courseUrl;
-                }
-            }, 1000);
-        }
+                            /* ── Final submit ── */
+                            function submitForm() {
+                                if (!validateStep(5)) return;
 
-        /* ── Final submit ── */
-        function submitForm() {
-            if (!validateStep(5)) return;
+                                function getVal(id) {
+                                    var el = document.getElementById(id);
+                                    return (el && el.value) ? el.value : '';
+                                }
 
-            function getVal(id) {
-                var el = document.getElementById(id);
-                return (el && el.value) ? el.value : '';
-            }
+                                function radioVal(name) {
+                                    var el = document.querySelector('input[name="' + name + '"]:checked');
+                                    return el ? el.value : '';
+                                }
 
-            function radioVal(name) {
-                var el = document.querySelector('input[name="' + name + '"]:checked');
-                return el ? el.value : '';
-            }
+                                var payload = {
+                                    _token: '{{ csrf_token() }}',
+                                    course_id: '{{ $course->id }}',
+                                    first_name: getVal('firstName'),
+                                    last_name: getVal('lastName'),
+                                    dob: getVal('dob'),
+                                    gender: radioVal('gender'),
+                                    father_name: getVal('fatherName'),
+                                    mother_name: getVal('motherName'),
+                                    parent_phone: getVal('parentPhone'),
+                                    parent_email: getVal('parentEmail'),
+                                    phone: getVal('phone'),
+                                    email: getVal('email'),
+                                    address: getVal('address'),
+                                    school: getVal('school'),
+                                    grade: getVal('grade'),
+                                    achievements: getVal('achievements'),
+                                    state: getVal('state'),
+                                    city: getVal('city'),
+                                    centre: getVal('centre'),
+                                    mode: radioVal('mode'),
+                                    course: radioVal('course'),
+                                    coupon: getVal('coupon'),
+                                    newsletter: document.getElementById('newsletter').checked ? 1 : 0,
+                                    enrollment_id: _enrollmentId,
+                                };
 
-            var payload = {
-                _token: '{{ csrf_token() }}',
-                course_id: '{{ $course->id }}',
-                first_name: getVal('firstName'),
-                last_name: getVal('lastName'),
-                dob: getVal('dob'),
-                gender: radioVal('gender'),
-                father_name: getVal('fatherName'),
-                mother_name: getVal('motherName'),
-                parent_phone: getVal('parentPhone'),
-                parent_email: getVal('parentEmail'),
-                phone: getVal('phone'),
-                email: getVal('email'),
-                address: getVal('address'),
-                school: getVal('school'),
-                grade: getVal('grade'),
-                achievements: getVal('achievements'),
-                state: getVal('state'),
-                city: getVal('city'),
-                centre: getVal('centre'),
-                mode: radioVal('mode'),
-                course: radioVal('course'),
-                coupon: getVal('coupon'),
-                newsletter: document.getElementById('newsletter').checked ? 1 : 0,
-                enrollment_id: _enrollmentId,
-            };
+                                var btn = document.querySelector('.submit-btn');
+                                btn.disabled = true;
+                                btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting…';
 
-            var btn = document.querySelector('.submit-btn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting…';
+                                fetch('{{ route('enrollment.store') }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify(payload),
+                                    })
+                                    .then(function(res) {
+                                        if (res.status === 422) {
+                                            return res.json().then(function(data) {
+                                                var msgs = data.errors ? Object.values(data.errors).flat().join('\n') :
+                                                    'Validation failed.';
+                                                alert('Please fix the following:\n\n' + msgs);
+                                                btn.disabled = false;
+                                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                                            });
+                                        }
+                                        if (!res.ok) {
+                                            return res.text().then(function(text) {
+                                                alert('Server error (' + res.status + '). Please try again.');
+                                                btn.disabled = false;
+                                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                                            });
+                                        }
+                                        return res.json();
+                                    })
+                                    .then(function(data) {
+                                        if (!data || !data.success) return;
 
-            fetch('{{ route('enrollment.store') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify(payload),
-                })
-                .then(function(res) {
-                    if (res.status === 422) {
-                        return res.json().then(function(data) {
-                            var msgs = data.errors ? Object.values(data.errors).flat().join('\n') :
-                                'Validation failed.';
-                            alert('Please fix the following:\n\n' + msgs);
-                            btn.disabled = false;
-                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                        });
-                    }
-                    if (!res.ok) {
-                        return res.text().then(function(text) {
-                            alert('Server error (' + res.status + '). Please try again.');
-                            btn.disabled = false;
-                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                        });
-                    }
-                    return res.json();
-                })
-                .then(function(data) {
-                    if (!data || !data.success) return;
+                                        var rzp = new Razorpay({
+                                            key: data.razorpay_key,
+                                            amount: data.amount,
+                                            currency: 'INR',
+                                            name: 'Act To Action',
+                                            description: 'Course Enrollment',
+                                            order_id: data.order_id,
+                                            handler: function(response) {
+                                                verifyPayment(response, data.enrollment_id);
+                                            },
+                                            prefill: {
+                                                name: payload.first_name + ' ' + payload.last_name,
+                                                email: payload.email,
+                                                contact: payload.phone,
+                                            },
+                                            theme: {
+                                                color: '#175cdd'
+                                            },
+                                            modal: {
+                                                ondismiss: function() {
+                                                    btn.disabled = false;
+                                                    btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                                                }
+                                            }
+                                        });
+                                        rzp.open();
+                                    })
+                                    .catch(function() {
+                                        alert('Network error. Please check your connection and try again.');
+                                        btn.disabled = false;
+                                        btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                                    });
+                            }
 
-                    var rzp = new Razorpay({
-                        key: data.razorpay_key,
-                        amount: data.amount,
-                        currency: 'INR',
-                        name: 'Act To Action',
-                        description: 'Course Enrollment',
-                        order_id: data.order_id,
-                        handler: function(response) {
-                            verifyPayment(response, data.enrollment_id);
-                        },
-                        prefill: {
-                            name: payload.first_name + ' ' + payload.last_name,
-                            email: payload.email,
-                            contact: payload.phone,
-                        },
-                        theme: {
-                            color: '#175cdd'
-                        },
-                        modal: {
-                            ondismiss: function() {
+                            /* ── Verify payment ── */
+                            function verifyPayment(response, enrollmentId) {
+                                fetch('{{ route('enrollment.verify') }}', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Accept': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify({
+                                            razorpay_order_id: response.razorpay_order_id,
+                                            razorpay_payment_id: response.razorpay_payment_id,
+                                            razorpay_signature: response.razorpay_signature,
+                                            enrollment_id: enrollmentId,
+                                        }),
+                                    })
+                                    .then(function(res) {
+                                        return res.json();
+                                    })
+                                    .then(function(data) {
+                                        if (data.success) {
+                                            document.getElementById('refId').textContent = data.reference_id || ('ATA-' + enrollmentId);
+                                            showResultScreen('successScreen');
+                                        } else {
+                                            showResultScreen('failedScreen');
+                                            if (response.razorpay_payment_id) {
+                                                document.getElementById('failedPidText').textContent = response.razorpay_payment_id;
+                                                document.getElementById('failedPaymentId').style.display = 'block';
+                                            }
+                                            startFailedCountdown();
+                                        }
+                                    })
+                                    .catch(function() {
+                                        showResultScreen('failedScreen');
+                                        startFailedCountdown();
+                                    });
+                            }
+
+                            /* ── Retry payment ── */
+                            function retryPayment() {
+                                document.getElementById('failedScreen').style.display = 'none';
+
+                                /* Restore step-content display so stepper works again */
+                                document.querySelectorAll('.step-content').forEach(function(el) {
+                                    el.style.display = '';
+                                });
+
+                                var btn = document.querySelector('.submit-btn');
                                 btn.disabled = false;
                                 btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+
+                                currentStep = 5;
+                                updateStepper(5, false);
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: 'smooth'
+                                });
                             }
-                        }
-                    });
-                    rzp.open();
-                })
-                .catch(function() {
-                    alert('Network error. Please check your connection and try again.');
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                });
-        }
 
-        /* ── Verify payment ── */
-        function verifyPayment(response, enrollmentId) {
-            fetch('{{ route('enrollment.verify') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        razorpay_order_id: response.razorpay_order_id,
-                        razorpay_payment_id: response.razorpay_payment_id,
-                        razorpay_signature: response.razorpay_signature,
-                        enrollment_id: enrollmentId,
-                    }),
-                })
-                .then(function(res) {
-                    return res.json();
-                })
-                .then(function(data) {
-                    if (data.success) {
-                        document.getElementById('refId').textContent = data.reference_id || ('ATA-' + enrollmentId);
-                        showResultScreen('successScreen');
-                    } else {
-                        showResultScreen('failedScreen');
-                        if (response.razorpay_payment_id) {
-                            document.getElementById('failedPidText').textContent = response.razorpay_payment_id;
-                            document.getElementById('failedPaymentId').style.display = 'block';
-                        }
-                        startFailedCountdown();
-                    }
-                })
-                .catch(function() {
-                    showResultScreen('failedScreen');
-                    startFailedCountdown();
-                });
-        }
-
-        /* ── Retry payment ── */
-        function retryPayment() {
-            document.getElementById('failedScreen').style.display = 'none';
-
-            /* Restore step-content display so stepper works again */
-            document.querySelectorAll('.step-content').forEach(function(el) {
-                el.style.display = '';
-            });
-
-            var btn = document.querySelector('.submit-btn');
-            btn.disabled = false;
-            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-
-            currentStep = 5;
-            updateStepper(5, false);
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        /* INIT */
-        updateStepper(0, false);
-    </script>
-@endsection
+                            /* INIT */
+                            updateStepper(0, false);
+                        </script>
+                    @endsection
