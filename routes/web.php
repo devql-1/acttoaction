@@ -84,8 +84,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/aboutus', [HomeController::class, 'about'])->name('aboutus');
 Route::get('/volunteer', [HomeController::class, 'volunteer'])->name('volunteer');
 Route::get('/course', [HomeController::class, 'course'])->name('index.course');
+Route::get('/cat_course/{id}', [HomeController::class, 'cat_course'])->name('course.show');
 Route::get('/course/{id}', [HomeController::class, 'course_details'])->name('course.details');
-Route::get('/cat_course', [HomeController::class, 'cat_course'])->name('frontend.course.cat_course');
+
 Route::get('/event', [HomeController::class, 'event'])->name('event');
 Route::get('/events/{id}', [HomeController::class, 'subevent'])->name('frontend.events.subevent');
 Route::get('/tests', [HomeController::class, 'quicktest'])->name('frontend.tests');

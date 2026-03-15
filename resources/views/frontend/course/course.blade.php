@@ -7,20 +7,6 @@
 ══════════════════════════════════════════════════════════ --}}
 
     <style>
-        /* ═══ CSS VARIABLES ═══ */
-        :root {
-            --default-font: "Roboto", sans-serif;
-            --heading-font: "Montserrat", sans-serif;
-            --nav-font: "Lato", sans-serif;
-            --bg: #ffffff;
-            --dc: #3c4049;
-            --hc: #112344;
-            --ac: #175cdd;
-            --surface: #ffffff;
-            --light-bg: #f4f8ff;
-            --border: #e8edf5;
-        }
-
         /* ═══ HERO ═══ */
         .hero-section {
             position: relative;
@@ -1637,9 +1623,7 @@
                                 strtoupper(substr($category->name, 0, 3));
                         @endphp
 
-                        <a href="#panel-cat-{{ $category->id }}"
-                            onclick="smoothScroll(event,'cat-tabs-anchor');setTimeout(()=>showPanel('cat-{{ $category->id }}',document.querySelector('.cat-tab:nth-child({{ $ci + 1 }})')),50)"
-                            class="cat-card">
+                        <a href="{{ route('course.show', $category->id) }}" class="cat-card">
                             <div class="card-img">
                                 @if ($firstCourse && $firstCourse->banner_image)
                                     <img src="{{ asset($firstCourse->banner_image) }}" alt="{{ $category->name }}" />

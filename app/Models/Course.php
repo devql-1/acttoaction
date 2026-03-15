@@ -6,19 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
-    protected $fillable = [
-        'title',
-        'description',
-        'duration',
-        'sessions',
-        'mode',
-        'age_group',
-        'fees',
-        'instagram_link',
-        'highlights_link',
-        'category_id',
-        'banner_image',
-    ];
+    protected $fillable = ['title', 'description', 'duration', 'sessions', 'mode', 'age_group', 'fees', 'instagram_link', 'highlights_link', 'category_id', 'banner_image'];
 
     public function sessions()
     {
@@ -37,5 +25,4 @@ class Course extends Model
     {
         return $this->belongsToMany(Center::class, 'course_center', 'course_id', 'center_id');
     }
-
 }

@@ -27,37 +27,31 @@ class HomeController extends Controller
 
         return view('frontend.Home.index', compact('featuredCourses', 'categories', 'allCourses'));
     }
-    public function cat_course()
-    {
-        // All active categories with their courses + sessions + documents
-        $categories = CourseCategory::with([
-            'courses' => function ($q) {
-                $q->with(['sessions', 'documents'])->latest();
-            },
-        ])
-            ->where('status', 1)
-            ->get();
-
-        // All courses (for hero image fallback)
-        $allCourses = Course::with('category')->latest()->get();
-
-        return view('frontend.course.cat_course', compact('categories', 'allCourses'));
-    }
 
     public function course()
     {
         $featuredCourses = Course::with('category')->latest()->take(6)->get();
 
-        // All active categories with their courses
         $categories = CourseCategory::withCount('courses')->with('courses')->where('status', 1)->get();
-
-        // All courses
 
         $allCourses = Course::with(['category', 'centers.state'])
             ->latest()
             ->get();
 
         return view('frontend.course.course', compact('featuredCourses', 'categories', 'allCourses'));
+    }
+    public function cat_course($id)
+    {
+        $currentCategory = CourseCategory::with([
+            'courses' => function ($q) {
+                $q->with(['sessions', 'documents'])->latest();
+            },
+        ])->findOrFail($id);
+
+        // All categories for the switcher bar (with course count)
+        $allCategories = CourseCategory::with('courses')->where('status', 1)->get();
+
+        return view('frontend.course.cat_course', compact('currentCategory', 'allCategories'));
     }
     public function event()
     {
