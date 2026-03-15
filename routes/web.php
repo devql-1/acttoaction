@@ -90,7 +90,7 @@ Route::get('/course/{id}', [HomeController::class, 'course_details'])->name('cou
 
 Route::get('/event', [HomeController::class, 'event'])->name('event');
 Route::get('/events/{id}', [HomeController::class, 'subevent'])->name('frontend.events.subevent');
-Route::get('/tests', [HomeController::class, 'quicktest'])->name('frontend.tests');
+Route::get('/quiz-test', [HomeController::class, 'quicktest'])->name('frontend.tests');
 Route::get('/tests/{id}', [HomeController::class, 'quicktestshow'])->name('frontend.tests.show');
 
 // routes/web.php
