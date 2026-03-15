@@ -22,8 +22,7 @@
                 </ul>
             </div>
 
-            @if(session('success'))
-
+            @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -73,7 +72,6 @@
                                     <tbody>
 
                                         @forelse($tests as $test)
-
                                             @php $cfg = $test->graphConfig; @endphp
 
                                             <tr>
@@ -87,15 +85,14 @@
 
                                                 <td class="text-center">
 
-                                                    @if($cfg)
-
+                                                    @if ($cfg)
                                                         @php
                                                             $icons = [
                                                                 'bar' => '📊',
                                                                 'radar' => '🕸️',
                                                                 'pie' => '🥧',
                                                                 'line' => '📈',
-                                                                'none' => '🚫'
+                                                                'none' => '🚫',
                                                             ];
                                                         @endphp
 
@@ -103,26 +100,24 @@
                                                             {{ $icons[$cfg->graph_type] ?? '' }}
                                                             {{ ucfirst($cfg->graph_type) }}
                                                         </span>
-
                                                     @else
-
                                                         <span class="badge bg-light text-muted">
                                                             Not configured
                                                         </span>
-
                                                     @endif
 
                                                 </td>
 
                                                 <td class="text-center">
 
-                                                    @if($cfg)
-
-                                                        @if($cfg->is_active) <span class="badge bg-success">Active</span>
-                                                        @else <span class="badge bg-secondary">Inactive</span>
+                                                    @if ($cfg)
+                                                        @if ($cfg->is_active)
+                                                            <span class="badge bg-success">Active</span>
+                                                        @else
+                                                            <span class="badge bg-secondary">Inactive</span>
                                                         @endif
-
-                                                    @else <span class="text-muted">—</span>
+                                                    @else
+                                                        <span class="text-muted">—</span>
                                                     @endif
 
                                                 </td>
@@ -135,13 +130,13 @@
 
                                                 <td class="text-center">
 
-                                                    @if($cfg)
-
+                                                    @if ($cfg)
                                                         <div class="d-flex justify-content-center gap-2">
 
 
                                                             <a href="{{ route('test-graph-configs.edit', $cfg->id) }}"
-                                                                class="btn btn-sm btn-primary"> <i class="fa fa-edit"></i> </a>
+                                                                class="btn btn-sm btn-primary"> <i class="fa fa-edit"></i>
+                                                            </a>
 
                                                             <form id="delete-form-{{ $cfg->id }}"
                                                                 action="{{ route('test-graph-configs.destroy', $cfg->id) }}"
@@ -158,12 +153,10 @@
                                                             </button>
 
                                                         </div>
-
                                                     @else
-
                                                         <a href="{{ route('test-graph-configs.create') }}?test_id={{ $test->id }}"
-                                                            class="btn btn-sm btn-success"> <i class="fa fa-plus"></i> Add </a>
-
+                                                            class="btn btn-sm btn-success"> <i class="fa fa-plus"></i> Add
+                                                        </a>
                                                     @endif
 
                                                 </td>
@@ -178,7 +171,6 @@
                                                     <a href="{{ route('test-graph-configs.create') }}">Add first config</a>
                                                 </td>
                                             </tr>
-
                                         @endforelse
 
                                     </tbody>
@@ -189,8 +181,7 @@
 
                         </div>
 
-                        @if($tests->hasPages())
-
+                        @if ($tests->hasPages())
                             <div class="card-footer bg-white d-flex justify-content-end">
                                 {{ $tests->links() }}
                             </div>
@@ -210,7 +201,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
         function confirmDelete(id, name) {
 
             Swal.fire({
@@ -230,7 +220,6 @@
             });
 
         }
-
     </script>
 
 @endsection

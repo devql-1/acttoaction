@@ -271,16 +271,20 @@
         </div>
 
         {{-- ALERTS --}}
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show border-0">
                 <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
-        @if($errors->any())
+        @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show border-0">
                 <strong>Fix the errors below:</strong>
-                <ul class="mb-0 mt-1">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
+                <ul class="mb-0 mt-1">
+                    @foreach ($errors->all() as $e)
+                        <li>{{ $e }}</li>
+                    @endforeach
+                </ul>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
@@ -300,7 +304,7 @@
                                 <i class="fas fa-brain me-1"></i>{{ $test->test_name }}
                             </span>
                             <span class="chip green">
-
+                                {{ $categories->count() ? $categories->count() . ' existing' : 'No existing categories' }}
                             </span>
                         </div>
                     </div>
@@ -329,8 +333,9 @@
                                         Quick picks:
                                     </div>
                                     <div class="d-flex flex-wrap gap-2" id="exampleChips">
-                                        @foreach(['Leadership', 'Emotional Intelligence', 'Stage Confidence', 'Creativity', 'Communication', 'Empathy', 'Screen Presence', 'Storytelling'] as $ex)
-                                            <span class="ex-chip" onclick="pickExample('{{ $ex }}')">{{ $ex }}</span>
+                                        @foreach (['Leadership', 'Emotional Intelligence', 'Stage Confidence', 'Creativity', 'Communication', 'Empathy', 'Screen Presence', 'Storytelling'] as $ex)
+                                            <span class="ex-chip"
+                                                onclick="pickExample('{{ $ex }}')">{{ $ex }}</span>
                                         @endforeach
                                     </div>
                                 </div>
@@ -342,8 +347,7 @@
                                     Description
                                     <small class="text-muted fw-normal">(optional)</small>
                                 </label>
-                                <textarea name="description" id="catDesc"
-                                    class="form-control @error('description') is-invalid @enderror"
+                                <textarea name="description" id="catDesc" class="form-control @error('description') is-invalid @enderror"
                                     placeholder="Describe what this category measures — e.g. 'Measures a child\'s natural ability to lead and command attention in group settings.'"
                                     maxlength="300" oninput="updateDescCounter(this)">{{ old('description') }}</textarea>
                                 <div class="char-counter" id="descCounter">0 / 300</div>
@@ -368,11 +372,21 @@
                                 <label class="form-label">Accent Color</label>
                                 <div class="color-options" id="colorOptions">
                                     @php
-                                        $colors = ['#175cdd', '#7c3aed', '#059669', '#d97706', '#db2777', '#0891b2', '#dc2626', '#0f172a'];
+                                        $colors = [
+                                            '#175cdd',
+                                            '#7c3aed',
+                                            '#059669',
+                                            '#d97706',
+                                            '#db2777',
+                                            '#0891b2',
+                                            '#dc2626',
+                                            '#0f172a',
+                                        ];
                                     @endphp
-                                    @foreach($colors as $c)
+                                    @foreach ($colors as $c)
                                         <div class="color-swatch {{ old('color', '#175cdd') === $c ? 'selected' : '' }}"
-                                            style="background:{{ $c }};" onclick="pickColor('{{ $c }}', this)" title="{{ $c }}">
+                                            style="background:{{ $c }};"
+                                            onclick="pickColor('{{ $c }}', this)" title="{{ $c }}">
                                         </div>
                                     @endforeach
                                 </div>
@@ -410,7 +424,8 @@
                             <div class="tip-icon"><i class="fas fa-bullseye"></i></div>
                             <div>
                                 <div class="tip-title">Keep it focused</div>
-                                <div class="tip-sub">Each category should measure one clear trait — e.g. "Stage Confidence",
+                                <div class="tip-sub">Each category should measure one clear trait — e.g. "Stage
+                                    Confidence",
                                     not "Confidence and Creativity".</div>
                             </div>
                         </div>
@@ -418,7 +433,8 @@
                             <div class="tip-icon"><i class="fas fa-question-circle"></i></div>
                             <div>
                                 <div class="tip-title">Plan your questions</div>
-                                <div class="tip-sub">Each question in this category adds 5 marks. Aim for 5–10 questions per
+                                <div class="tip-sub">Each question in this category adds 5 marks. Aim for 5–10 questions
+                                    per
                                     category.</div>
                             </div>
                         </div>
@@ -452,10 +468,12 @@
                             <div class="cat-list-item">
                                 <div>
                                     <strong>
-                                        @if($cat->icon) {{ $cat->icon }} @endif
+                                        @if ($cat->icon)
+                                            {{ $cat->icon }}
+                                        @endif
                                         {{ $cat->category_name }}
                                     </strong>
-                                    @if($cat->description)
+                                    @if ($cat->description)
                                         <div class="sub">{{ Str::limit($cat->description, 40) }}</div>
                                     @endif
                                 </div>
@@ -500,6 +518,7 @@
         c.textContent = el.value.length + ' / 80';
         c.classList.toggle('warn', el.value.length > 70);
     }
+
     function updateDescCounter(el) {
         const c = document.getElementById('descCounter');
         c.textContent = el.value.length + ' / 300';
