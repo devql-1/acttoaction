@@ -37,7 +37,7 @@ class EventRegistrationController extends Controller
 
         $booked = EventRegistration::where('sub_event_id', $sub->id)
             ->whereIn('status', ['pending', 'confirmed'])
-            ->sum('tickets');
+            ->sum('max_seats');
 
         $available = $sub->max_seats ? max(0, $sub->max_seats - $booked) : null;
 
