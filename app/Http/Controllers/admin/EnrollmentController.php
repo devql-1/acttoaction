@@ -264,31 +264,31 @@ class EnrollmentController extends Controller
                     'error_reason' => $e->getMessage(),
                 ]);
             }
-            app(EmailService::class)->send(
-                'enrollment-confirmation',
-                $enrollment->email,
-                [
-                    'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
-                    'course_name' => $enrollment->course,
-                    'centre' => $enrollment->centre,
-                    'reference_id' => $enrollment->reference_id,
-                    'amount' => '₹' . number_format($enrollment->fee),
-                    'payment_id' => $request->razorpay_payment_id,
-                ],
-                $enrollment->first_name,
-            );
+            // app(EmailService::class)->send(
+            //     'enrollment-confirmation',
+            //     $enrollment->email,
+            //     [
+            //         'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
+            //         'course_name' => $enrollment->course,
+            //         'centre' => $enrollment->centre,
+            //         'reference_id' => $enrollment->reference_id,
+            //         'amount' => '₹' . number_format($enrollment->fee),
+            //         'payment_id' => $request->razorpay_payment_id,
+            //     ],
+            //     $enrollment->first_name,
+            // );
 
-            // ── Send to parent if available ──
-            if (!empty($enrollment->parent_email)) {
-                app(EmailService::class)->send('enrollment-confirmation', $enrollment->parent_email, [
-                    'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
-                    'course_name' => $enrollment->course,
-                    'centre' => $enrollment->centre,
-                    'reference_id' => $enrollment->reference_id,
-                    'amount' => '₹' . number_format($enrollment->fee),
-                    'payment_id' => $request->razorpay_payment_id,
-                ]);
-            }
+            // // ── Send to parent if available ──
+            // if (!empty($enrollment->parent_email)) {
+            //     app(EmailService::class)->send('enrollment-confirmation', $enrollment->parent_email, [
+            //         'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
+            //         'course_name' => $enrollment->course,
+            //         'centre' => $enrollment->centre,
+            //         'reference_id' => $enrollment->reference_id,
+            //         'amount' => '₹' . number_format($enrollment->fee),
+            //         'payment_id' => $request->razorpay_payment_id,
+            //     ]);
+            // }
 
             return response()->json([
                 'success' => false,
