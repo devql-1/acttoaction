@@ -1131,6 +1131,7 @@
                             <i class="bi bi-whatsapp"></i> Connect with Us
                         </a>
                     </div>
+
                     <div class="col-lg-8" data-aos="fade-left" data-aos-delay="100">
                         <p
                             style="font-size:13px;font-weight:700;color:var(--accent-color);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">
@@ -1603,7 +1604,8 @@
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
-                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div id="faq1" class="accordion-collapse collapse show"
+                                    data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">3–29 years. Our programs are thoughtfully designed to cater
                                         to every stage — from toddlers building confidence to young adults honing their
                                         professional craft.</div>
@@ -1648,7 +1650,8 @@
                                     </button>
                                 </h2>
                                 <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">We keep batches small — a maximum of 20 students per batch —
+                                    <div class="accordion-body">We keep batches small — a maximum of 20 students per batch
+                                        —
                                         to ensure every child receives personalized attention and guidance from our faculty.
                                     </div>
                                 </div>
@@ -1737,7 +1740,8 @@
                                     </button>
                                 </h2>
                                 <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Due to limited seats, there is generally no refund. However,
+                                    <div class="accordion-body">Due to limited seats, there is generally no refund.
+                                        However,
                                         within the first month, if the child is not comfortable with the class or acting as
                                         a subject, a refund of the remaining fees can be processed with mutual consent of
                                         the parent and mentor.</div>
@@ -1847,8 +1851,7 @@
                                     <input type="text" class="form-control" placeholder="Subject">
                                 </div>
                                 <div class="col-12">
-                                    <textarea class="form-control" rows="5"
-                                        placeholder="Your Message or Question..."></textarea>
+                                    <textarea class="form-control" rows="5" placeholder="Your Message or Question..."></textarea>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn-submit">Send Message <i class="bi bi-send ms-1"></i></button>
@@ -1868,5 +1871,4 @@
         </section>
 
     </main>
-
 @endsection

@@ -12,10 +12,24 @@ use App\Models\BlogCategory;
 use App\Models\YoutubeVideo;
 use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\VolunteerController;
+use App\Models\PageCategory;
+use App\Models\BlogTag;
+
 class HomeController extends Controller
 {
     public function index()
     {
+        $category = PageCategory::where('slug', 'course-page')->firstOrFail();
+        $videos = $category->activeVideos()->ordered()->get();
+        $tabs = $videos
+            ->groupBy(fn($item) => $item->video_category ?? 'uncategorized')
+            ->map(function ($g, $key) {
+                return [
+                    'key' => $key,
+                    'label' => optional($g->first())->category_label,
+                ];
+            })
+            ->values();
         // Featured courses (first 6)
         $featuredCourses = Course::with('category')->latest()->take(6)->get();
 
@@ -25,7 +39,7 @@ class HomeController extends Controller
         // All courses
         $allCourses = Course::with('category')->latest()->get();
 
-        return view('frontend.Home.index', compact('featuredCourses', 'categories', 'allCourses'));
+        return view('frontend.Home.index', compact('featuredCourses', 'categories', 'allCourses', 'videos', 'tabs'));
     }
 
     public function course()
@@ -325,38 +339,45 @@ class HomeController extends Controller
 
         return view('frontend.course.coursedetails', compact('course', 'otherCourses'));
     }
-    public function blog()
+    public function blog(Request $request)
     {
-        // All active categories
         $categories = BlogCategory::where('status', 1)
             ->withCount(['posts' => fn($q) => $q->where('status', 1)])
             ->get();
 
-        // Total published blogs
         $totalBlogs = Blog::where('status', 1)->count();
 
-        // Featured post — latest published blog with author + category
         $featured = Blog::with(['author', 'category'])
             ->where('status', 1)
             ->latest()
             ->first();
 
-        // Blog grid — all published, eager-load author + category
-        // Filter by category slug if ?category= param present
-        $blogsQuery = Blog::with(['author', 'category'])->where('status', 1);
+        $blogsQuery = Blog::with(['author', 'category', 'tags'])->where('status', 1);
 
         if ($categorySlug = request('category')) {
             $blogsQuery->whereHas('category', fn($q) => $q->where('slug', $categorySlug));
         }
-        $blogs = $blogsQuery->latest()->paginate(12);
 
-        // Recent posts for sidebar (5 latest)
+        if ($tagSlug = request('tag')) {
+            $blogsQuery->whereHas('tags', fn($q) => $q->where('slug', $tagSlug));
+        }
+
+        $blogs = $blogsQuery->latest()->paginate(12)->withQueryString();
+
         $recentPosts = Blog::with('category')->where('status', 1)->latest()->limit(5)->get();
 
-        // Popular tags — all unique tags from blogs
-        // (assumes a `tags` column as comma-separated string, or adjust to your schema)
-        // If you don't have tags, pass an empty array:
-        $tags = collect(['Acting', 'Screen Acting', 'DramATA', 'Kids', 'Jaipur', 'Casting', 'Summer Camp', 'Theatre', 'Workshops', 'Confidence', 'NEP 2020', 'Performance']);
+        $tags = BlogTag::withCount('blogs')->having('blogs_count', '>', 0)->orderByDesc('blogs_count')->limit(20)->get();
+
+        // ← AJAX request: return only cards + button HTML
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('frontend.blog.partials.blog-cards', compact('blogs'))->render(),
+                'hasMore' => $blogs->hasMorePages(),
+                'nextPage' => $blogs->currentPage() + 1,
+                'showing' => $blogs->count() + ($blogs->currentPage() - 1) * $blogs->perPage(),
+                'total' => $blogs->total(),
+            ]);
+        }
 
         return view('frontend.blog.blog', compact('categories', 'totalBlogs', 'featured', 'blogs', 'recentPosts', 'tags'));
     }

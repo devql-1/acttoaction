@@ -403,6 +403,22 @@
                     </a>
                 </li>
 
+                {{-- email --}}
+                <li class="nav-item">
+                    <a href="{{ route('email-templates.index') }}">
+                        <i class="fas fa-envelope"></i>
+                        <p>Email</p>
+                    </a>
+                </li>
+
+                {{-- payment --}}
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-credit-card"></i>
+                        <p>Payment</p>
+                    </a>
+                </li>
+
                 {{-- ══════════════════════════════════════════
                      SECTION: SYSTEM SETTINGS
                 ══════════════════════════════════════════ --}}

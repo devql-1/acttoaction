@@ -53,8 +53,10 @@
         </div>
 
         <div class="action exchange">
-            <div class="icon"><i class="fas fa-campground"></i></div>
-            <h1>Summer Camp</h1>
+            <a href="{{ route('summercamp') }}" class="action-link">
+                <div class="icon"><i class="fas fa-campground"></i></div>
+                <h1>Summer Camp</h1>
+            </a>
         </div>
 
     </div>
@@ -68,7 +70,10 @@
     </div>
 
     <div class="support">💬 Support</div>
-
+    {{-- @include('frontend.partialspages.testimonials-section', [
+        'videos' => $videos,
+        'tabs' => $tabs,
+    ]) --}}
 </body>
 
 </html>

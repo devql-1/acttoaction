@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['enrollment_id', 'razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature', 'amount', 'currency', 'status', 'method', 'bank', 'wallet', 'vpa', 'email', 'contact', 'description', 'error_code', 'error_reason', 'paid_at'];
+    protected $fillable = ['enrollment_id', 'razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature', 'amount', 'currency', 'status', 'method', 'bank', 'wallet', 'vpa', 'email', 'contact', 'description', 'error_code', 'error_reason', 'paid_at', 'transaction_type', 'type'];
 
     protected $casts = [
         'paid_at' => 'datetime',

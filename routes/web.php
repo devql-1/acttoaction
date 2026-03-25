@@ -60,6 +60,22 @@ use App\Http\Controllers\admin\BlogAuthorController;
 use App\Http\Controllers\admin\VolunteerController;
 use App\Http\Controllers\admin\EmailTemplateController;
 use App\Http\Controllers\admin\EventRegistrationController;
+use App\Http\Controllers\admin\TestimonialVideoController;
+use App\Http\Controllers\admin\BlogTagController;
+use App\Http\Controllers\admin\HeroBannerController;
+use App\Http\Controllers\SummerController;
+use App\Http\Controllers\admin\Summercamp\PersonController;
+use App\Http\Controllers\admin\Summercamp\WorkshopController;
+use App\Http\Controllers\admin\Summercamp\GalleryCategoryController;
+use App\Http\Controllers\admin\Summercamp\GalleryImageController;
+use App\Http\Controllers\admin\Summercamp\StatController;
+use App\Http\Controllers\admin\Summercamp\AboutSectionController;
+use App\Http\Controllers\admin\Summercamp\ThemeController;
+use App\Http\Controllers\WorkshopRegistrationController;
+
+use App\Http\Controllers\admin\WorkshopAgeGroupController;
+use App\Http\Controllers\admin\WorkshopCityController;
+use App\Http\Controllers\admin\WorkshopSchoolController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -68,9 +84,19 @@ use App\Http\Controllers\admin\EventRegistrationController;
 // Route::get('/admission-form', function () {
 //     return view('frontend.admission');
 // });
-Route::get('/{event_id}/register', [EventRegistrationController::class, 'show'])->name('register');
 
-Route::post('/{event_id}/register', [EventRegistrationController::class, 'store'])->name('register.store');
+// Registration
+// Route::get('/workshops/{school}/register', [WorkshopRegistrationController::class, 'showForm'])->name('frontend.summercamp.register');
+
+Route::post('/events/register/{sub_event_id}/create-order', [EventRegistrationController::class, 'createOrder'])->name('frontend.events.register.create-order');
+
+Route::post('/events/register/{registration_id}/verify-payment', [EventRegistrationController::class, 'verifyPayment'])->name('frontend.events.register.verify-payment');
+
+Route::get('/events/register/{sub_event_id}', [EventRegistrationController::class, 'show'])->name('frontend.events.register');
+
+Route::post('/events/register/{sub_event_id}', [EventRegistrationController::class, 'store'])->name('frontend.events.register.store');
+
+Route::get('/events/register/success/{id}', [EventRegistrationController::class, 'success'])->name('frontend.events.register.success');
 
 Route::get('/sub-event/{sub_event_id}/details', [EventRegistrationController::class, 'subEventDetails'])->name('subevent.details');
 
@@ -482,6 +508,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/blog-authors/update/{id}', [BlogAuthorController::class, 'update'])->name('admin.blog-author.update');
         Route::delete('/blog-authors/destroy/{id}', [BlogAuthorController::class, 'destroy'])->name('admin.blog-author.destroy');
         Route::post('/blog-authors/toggle-status', [BlogAuthorController::class, 'toggleStatus'])->name('admin.blog-author.toggle-status');
+
         Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
         Route::get('/enrollments/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
         Route::patch('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
@@ -498,7 +525,125 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/event-registrations', [EventRegistrationController::class, 'adminIndex'])->name('event-registrations.index');
         Route::get('/event-registrations/{id}', [EventRegistrationController::class, 'adminShow'])->name('event-registrations.show');
         Route::patch('/event-registrations/{id}/status', [EventRegistrationController::class, 'adminUpdateStatus'])->name('event-registrations.status');
+
+        /*
+|--------------------------------------------------------------------------
+| routes/web.php — add these routes
+|--------------------------------------------------------------------------
+*/
+
+        Route::get('/testimonial-videos', [TestimonialVideoController::class, 'index'])->name('admin.testimonials.index');
+        Route::get('/testimonial-videos/create', [TestimonialVideoController::class, 'create'])->name('admin.testimonials.create');
+        Route::post('/testimonial-videos', [TestimonialVideoController::class, 'store'])->name('admin.testimonials.store');
+        Route::get('/testimonial-videos/{testimonialVideo}/edit', [TestimonialVideoController::class, 'edit'])->name('admin.testimonials.edit');
+        Route::put('/testimonial-videos/{testimonialVideo}', [TestimonialVideoController::class, 'update'])->name('admin.testimonials.update');
+        Route::delete('/testimonial-videos/{testimonialVideo}', [TestimonialVideoController::class, 'destroy'])->name('admin.testimonials.destroy');
+
+        // Inline table actions (return JSON for the toggle switch / sort UI)
+        Route::patch('/testimonial-videos/{testimonialVideo}/toggle', [TestimonialVideoController::class, 'toggle'])->name('admin.testimonials.toggle');
+        Route::patch('/testimonial-videos/reorder', [TestimonialVideoController::class, 'reorder'])->name('admin.testimonials.reorder');
+
+        // Page Categories
+        Route::get('/testimonial-videos/categories', [TestimonialVideoController::class, 'categories'])->name('admin.testimonials.categories');
+        Route::post('/testimonial-videos/categories', [TestimonialVideoController::class, 'storeCategory'])->name('admin.testimonials.categories.store');
+        Route::put('/testimonial-videos/categories/{pageCategory}', [TestimonialVideoController::class, 'updateCategory'])->name('admin.testimonials.categories.update');
+        Route::delete('/testimonial-videos/categories/{pageCategory}', [TestimonialVideoController::class, 'destroyCategory'])->name('admin.testimonials.categories.destroy');
+
+        //blog tag
+        Route::get('blog-tags', [BlogTagController::class, 'index'])->name('admin.blog-tags.index');
+        Route::post('blog-tags', [BlogTagController::class, 'store'])->name('admin.blog-tags.store');
+        Route::put('blog-tags/{blogTag}', [BlogTagController::class, 'update'])->name('admin.blog-tags.update');
+        Route::delete('blog-tags/{blogTag}', [BlogTagController::class, 'destroy'])->name('admin.blog-tags.destroy');
+
+        // Summer camp everything
+        Route::resource('hero-banner', HeroBannerController::class)
+            ->parameters(['hero-banner' => 'heroBanner'])
+            ->names('hero-banner.index');
+
+        // Quick activate toggle
+        Route::post('hero-banner/{heroBanner}/activate', [HeroBannerController::class, 'activate'])->name('hero-banner.activate');
+
+        //perosn
+        Route::get('/people', [PersonController::class, 'index'])->name('people-index');
+        Route::get('/people/create', [PersonController::class, 'create'])->name('people-create');
+        Route::post('/people/store', [PersonController::class, 'store'])->name('people-store');
+        Route::get('/people/{person}/edit', [PersonController::class, 'edit'])->name('people-edit');
+        Route::put('/people/{person}/update', [PersonController::class, 'update'])->name('people-update');
+        Route::post('/people/status', [PersonController::class, 'status'])->name('people-status');
+        Route::delete('/people/{person}', [PersonController::class, 'destroy'])->name('people-destroy');
+
+        Route::get('/workshop-age-groups', [WorkshopAgeGroupController::class, 'index'])->name('workshop-age-groups-index');
+        Route::get('/workshop-age-groups/create', [WorkshopAgeGroupController::class, 'create'])->name('workshop-age-groups-create');
+        Route::post('/workshop-age-groups/store', [WorkshopAgeGroupController::class, 'store'])->name('workshop-age-groups-store');
+        Route::get('/workshop-age-groups/{workshopAgeGroup}/edit', [WorkshopAgeGroupController::class, 'edit'])->name('workshop-age-groups-edit');
+        Route::put('/workshop-age-groups/{workshopAgeGroup}', [WorkshopAgeGroupController::class, 'update'])->name('workshop-age-groups-update');
+        Route::post('/workshop-age-groups/status', [WorkshopAgeGroupController::class, 'status'])->name('workshop-age-groups-status');
+        Route::delete('/workshop-age-groups/{workshopAgeGroup}', [WorkshopAgeGroupController::class, 'destroy'])->name('workshop-age-groups-destroy');
+
+        // Cities
+        Route::get('/workshop-cities', [WorkshopCityController::class, 'index'])->name('workshop-cities-index');
+        Route::get('/workshop-cities/create', [WorkshopCityController::class, 'create'])->name('workshop-cities-create');
+        Route::post('/workshop-cities/store', [WorkshopCityController::class, 'store'])->name('workshop-cities-store');
+        Route::get('/workshop-cities/{workshopCity}/edit', [WorkshopCityController::class, 'edit'])->name('workshop-cities-edit');
+        Route::put('/workshop-cities/{workshopCity}', [WorkshopCityController::class, 'update'])->name('workshop-cities-update');
+        Route::post('/workshop-cities/status', [WorkshopCityController::class, 'status'])->name('workshop-cities-status');
+        Route::delete('/workshop-cities/{workshopCity}', [WorkshopCityController::class, 'destroy'])->name('workshop-cities-destroy');
+
+        // Schools
+        Route::get('/workshop-schools', [WorkshopSchoolController::class, 'index'])->name('workshop-schools-index');
+        Route::get('/workshop-schools/create', [WorkshopSchoolController::class, 'create'])->name('workshop-schools-create');
+        Route::post('/workshop-schools/store', [WorkshopSchoolController::class, 'store'])->name('workshop-schools-store');
+        Route::get('/workshop-schools/{workshopSchool}/edit', [WorkshopSchoolController::class, 'edit'])->name('workshop-schools-edit');
+        Route::put('/workshop-schools/{workshopSchool}', [WorkshopSchoolController::class, 'update'])->name('workshop-schools-update');
+        Route::post('/workshop-schools/status', [WorkshopSchoolController::class, 'status'])->name('workshop-schools-status');
+        Route::delete('/workshop-schools/{workshopSchool}', [WorkshopSchoolController::class, 'destroy'])->name('workshop-schools-destroy');
+
+        // ── Gallery Categories ────────────────────────────────────
+        Route::get('/gallery-categories', [GalleryCategoryController::class, 'index'])->name('gallery-categories-index');
+        Route::get('/gallery-categories/create', [GalleryCategoryController::class, 'create'])->name('gallery-categories-create');
+        Route::post('/gallery-categories/store', [GalleryCategoryController::class, 'store'])->name('gallery-categories-store');
+        Route::get('/gallery-categories/{galleryCategory}/edit', [GalleryCategoryController::class, 'edit'])->name('gallery-categories-edit');
+        Route::put('/gallery-categories/{galleryCategory}', [GalleryCategoryController::class, 'update'])->name('gallery-categories-update');
+        Route::post('/gallery-categories/status', [GalleryCategoryController::class, 'status'])->name('gallery-categories-status');
+        Route::delete('/gallery-categories/{galleryCategory}', [GalleryCategoryController::class, 'destroy'])->name('gallery-categories-destroy');
+
+        // ── Gallery Images ────────────────────────────────────────
+        Route::get('/gallery-images', [GalleryImageController::class, 'index'])->name('gallery-images-index');
+        Route::get('/gallery-images/create', [GalleryImageController::class, 'create'])->name('gallery-images-create');
+        Route::post('/gallery-images/store', [GalleryImageController::class, 'store'])->name('gallery-images-store');
+        Route::get('/gallery-images/{galleryImage}/edit', [GalleryImageController::class, 'edit'])->name('gallery-images-edit');
+        Route::put('/gallery-images/{galleryImage}', [GalleryImageController::class, 'update'])->name('gallery-images-update');
+        Route::post('/gallery-images/status', [GalleryImageController::class, 'status'])->name('gallery-images-status');
+        Route::delete('/gallery-images/{galleryImage}', [GalleryImageController::class, 'destroy'])->name('gallery-images-destroy');
+
+        Route::get('/stats', [StatController::class, 'index'])->name('stats-index');
+        Route::get('/stats/create', [StatController::class, 'create'])->name('stats-create');
+        Route::post('/stats/store', [StatController::class, 'store'])->name('stats-store');
+        Route::get('/stats/{stat}/edit', [StatController::class, 'edit'])->name('stats-edit');
+        Route::put('/stats/{stat}', [StatController::class, 'update'])->name('stats-update');
+        Route::post('/stats/status', [StatController::class, 'status'])->name('stats-status');
+        Route::delete('/stats/{stat}', [StatController::class, 'destroy'])->name('stats-destroy');
+
+        // ── About Section (single record) ────────────────────────
+        Route::get('/about-section', [AboutSectionController::class, 'index'])->name('about-section-index');
+        Route::get('/about-section/create', [AboutSectionController::class, 'create'])->name('about-section-create');
+        Route::post('/about-section/store', [AboutSectionController::class, 'store'])->name('about-section-store');
+        Route::get('/about-section/{aboutSection}/edit', [AboutSectionController::class, 'edit'])->name('about-section-edit');
+        Route::put('/about-section/{aboutSection}', [AboutSectionController::class, 'update'])->name('about-section-update');
+
+        Route::get('/themes', [ThemeController::class, 'adminIndex'])->name('themes.index');
+        Route::get('/themes/create', [ThemeController::class, 'create'])->name('themes.create');
+        Route::post('/themes/store', [ThemeController::class, 'store'])->name('themes.store');
+        Route::get('/themes/edit/{id}', [ThemeController::class, 'edit'])->name('themes.edit');
+        Route::post('/themes/update/{id}', [ThemeController::class, 'update'])->name('themes.update');
+        Route::delete('/themes/delete/{id}', [ThemeController::class, 'destroy'])->name('themes.delete');
     });
 });
-
+Route::get('/summer-camp', [SummerController::class, 'index'])->name('summercamp');
 Route::get('indexx', [indexController::class, 'index'])->name('index');
+Route::get('/workshops', [WorkshopController::class, 'index'])->name('workshops');
+Route::get('/workshops/{school}', [WorkshopController::class, 'workshopdetails'])->name('workshops.show');
+
+Route::post('/workshops/{school}/register', [WorkshopRegistrationController::class, 'register'])->name('frontend.summercamp.register.submit');
+
+Route::post('/register/{registration}/verify', [WorkshopRegistrationController::class, 'verifyPayment'])->name('frontend.summercamp.register.verify');

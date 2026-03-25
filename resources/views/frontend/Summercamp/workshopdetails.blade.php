@@ -1,0 +1,1174 @@
+{{-- resources/views/frontend/Summercamp/workshopdetails.blade.php --}}
+@extends('frontend.course.layout')
+
+@section('title', $school->name . ' – Act To Action')
+
+@push('styles')
+    <style>
+        .price-highlight {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .price-highlight small {
+            font-size: 1rem;
+            color: var(--default-color);
+            font-weight: 400;
+        }
+
+        .schedule-table {
+            background: var(--surface-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .schedule-table table {
+            width: 100%;
+        }
+
+        .schedule-table th {
+            color: var(--heading-color);
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
+        }
+
+        .schedule-table td {
+            padding: 1rem;
+            border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 95%);
+        }
+
+        .feature-box {
+            background: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .feature-box h5 {
+            color: var(--heading-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-box p {
+            margin: 0;
+            color: color-mix(in srgb, var(--default-color), transparent 20%);
+        }
+
+        /* Validation */
+        .form-control.is-invalid,
+        .form-select.is-invalid {
+            border-color: #dc2626 !important;
+            background-image: none;
+        }
+
+        .form-control.is-valid,
+        .form-select.is-valid {
+            border-color: #16a34a !important;
+            background-image: none;
+        }
+
+        .field-error {
+            display: none;
+            color: #dc2626;
+            font-size: 0.8rem;
+            margin-top: 4px;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        #regSubmitBtn {
+            transition: all 0.3s;
+        }
+
+        #regSubmitBtn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        #regSubmitBtn:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ── Child cards ── */
+        .child-card {
+            background: color-mix(in srgb, var(--accent-color), transparent 96%);
+            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .child-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: var(--heading-color);
+            font-size: 0.95rem;
+        }
+
+        .btn-remove-child {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-remove-child:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        .btn-add-child {
+            background: transparent;
+            border: 2px dashed color-mix(in srgb, var(--accent-color), transparent 50%);
+            color: var(--accent-color);
+            border-radius: 10px;
+            padding: 12px;
+            width: 100%;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-add-child:hover {
+            background: color-mix(in srgb, var(--accent-color), transparent 90%);
+            border-style: solid;
+        }
+
+        /* ── Total price badge ── */
+        #totalPriceBadge {
+            background: linear-gradient(135deg, var(--accent-color), #1e40af);
+            color: white;
+            border-radius: 10px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        #totalPriceBadge strong {
+            font-size: 1.3rem;
+        }
+
+        /* ── Confirmation overlay ── */
+        #confirmationOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #confirmationOverlay.show {
+            display: flex;
+        }
+
+        .confirmation-box {
+            background: white;
+            border-radius: 20px;
+            padding: 48px 40px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .confirmation-icon {
+            width: 80px;
+            height: 80px;
+            background: #dcfce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .confirmation-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 8px;
+        }
+
+        .confirmation-box p {
+            color: #6b7280;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .confirmation-detail {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: left;
+        }
+
+        .confirmation-detail div {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 0.9rem;
+        }
+
+        .confirmation-detail .key {
+            color: #6b7280;
+        }
+
+        .confirmation-detail .val {
+            font-weight: 600;
+            color: var(--heading-color);
+        }
+
+        .btn-confirm-close {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .btn-confirm-close:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+    </style>
+@endpush
+
+@section('content')
+    <main class="main">
+
+        {{-- ── Hero / Overview ── --}}
+        <section class="department-details section" style="padding-top: 120px; padding-bottom: 60px;">
+            <div class="container">
+                <nav aria-label="breadcrumb" data-aos="fade-up">
+                    <ol class="breadcrumb" style="background: none; padding: 0; margin-bottom: 30px;">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}"
+                                style="color: var(--accent-color); text-decoration: none;">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('workshops') }}"
+                                style="color: var(--accent-color); text-decoration: none;">Workshops</a></li>
+                        @if ($school->ageGroup && $school->city)
+                            <li class="breadcrumb-item">
+                                <a href="{{ route('workshops', ['age_group_id' => $school->age_group_id, 'city_id' => $school->city_id]) }}"
+                                    style="color: var(--accent-color); text-decoration: none;">
+                                    {{ $school->ageGroup->name }} · {{ $school->city->name }}
+                                </a>
+                            </li>
+                        @endif
+                        <li class="breadcrumb-item active" aria-current="page">{{ $school->name }}</li>
+                    </ol>
+                </nav>
+
+                <div class="row gy-4">
+                    {{-- Left --}}
+                    <div class="col-lg-8" data-aos="fade-up">
+                        <div class="mb-5">
+                            <div style="border-radius: 16px; overflow: hidden; height: 450px;">
+                                @if ($school->image_url)
+                                    <img src="{{ $school->image_url }}" alt="{{ $school->name }}"
+                                        class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                @else
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center"
+                                        style="background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 80%), color-mix(in srgb, var(--accent-color), transparent 60%));">
+                                        <i class="bi bi-building"
+                                            style="font-size: 5rem; color: var(--accent-color); opacity: 0.3;"></i>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="department-hero">
+                            <div class="badge-wrap">
+                                @if ($school->ageGroup)
+                                    <span class="specialty-badge"><i
+                                            class="bi bi-people-fill me-2"></i>{{ $school->ageGroup->name }}</span>
+                                @endif
+                                @if ($school->city?->name)
+                                    <span class="specialty-badge"><i
+                                            class="bi bi-building me-2"></i>{{ $school->city->name }}</span>
+                                @endif
+                            </div>
+                            <h1 class="department-title">{{ $school->name }}</h1>
+                            @if ($school->description)
+                                <p class="department-intro">{{ $school->description }}</p>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Right --}}
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                        @if ($school->timings)
+                            <div
+                                style="background: var(--surface-color); padding: 20px; border-radius: 12px; margin-bottom: 16px; border-left: 4px solid var(--accent-color);">
+                                <h5
+                                    style="color: var(--heading-color); font-weight: 600; margin-bottom: 8px; font-size: 1rem;">
+                                    <i class="bi bi-calendar-week me-2" style="color: var(--accent-color);"></i>Class
+                                    Schedule</h5>
+                                <p style="margin: 0; font-size: 0.9rem;">{{ $school->timings }}</p>
+                            </div>
+                        @endif
+                        @if ($school->city)
+                            <div
+                                style="background: var(--surface-color); padding: 20px; border-radius: 12px; margin-bottom: 16px; border-left: 4px solid var(--accent-color);">
+                                <h5
+                                    style="color: var(--heading-color); font-weight: 600; margin-bottom: 8px; font-size: 1rem;">
+                                    <i class="bi bi-geo-alt-fill me-2" style="color: var(--accent-color);"></i>City</h5>
+                                <p style="margin: 0; font-size: 0.9rem;">{{ $school->city->name }}</p>
+                            </div>
+                        @endif
+                        @if ($school->fees)
+                            <div
+                                style="background: var(--surface-color); padding: 20px; border-radius: 12px; margin-bottom: 16px; border-left: 4px solid var(--accent-color);">
+                                <h5
+                                    style="color: var(--heading-color); font-weight: 600; margin-bottom: 8px; font-size: 1rem;">
+                                    <i class="bi bi-currency-rupee me-2" style="color: var(--accent-color);"></i>Fees</h5>
+                                <p style="margin: 0; font-size: 1.2rem; font-weight: 600; color: var(--accent-color);">₹
+                                    {{ number_format($school->fees) }} <small style="font-size:0.8rem;color:#6b7280;">per
+                                        child</small></p>
+                            </div>
+                        @endif
+                        <div
+                            style="background: color-mix(in srgb, var(--accent-color), transparent 95%); padding: 24px; border-radius: 12px; text-align: center;">
+                            <i class="bi bi-telephone-fill"
+                                style="font-size: 2rem; color: var(--accent-color); margin-bottom: 12px; display: block;"></i>
+                            <h5 style="font-size: 1.1rem; margin-bottom: 8px;">Have Questions?</h5>
+                            <p
+                                style="font-size: 0.9rem; margin-bottom: 16px; color: color-mix(in srgb, var(--default-color), transparent 20%);">
+                                Call us for any queries</p>
+                            <a href="tel:+919024164323"
+                                style="display: inline-block; background: var(--accent-color); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">Call:
+                                +91 90241 64323</a>
+                            <p
+                                style="font-size: 0.85rem; margin-top: 12px; margin-bottom: 0; color: color-mix(in srgb, var(--default-color), transparent 40%);">
+                                Mon-Sat: 11 AM - 7 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- ── Location ── --}}
+        @if ($school->address)
+            <section class="section" style="padding: 80px 0;">
+                <div class="container">
+                    <div class="row align-items-center gy-4">
+                        <div class="col-lg-8" data-aos="fade-up">
+                            <h3 style="font-size: 2rem; font-weight: 300; margin-bottom: 24px;">Workshop Location</h3>
+                            <div style="border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                                <iframe src="https://maps.google.com/maps?q={{ urlencode($school->address) }}&output=embed"
+                                    width="100%" height="400" style="border:0;" allowfullscreen=""
+                                    loading="lazy"></iframe>
+                            </div>
+                        </div>
+                        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                            <div style="background: var(--surface-color); padding: 32px; border-radius: 16px;">
+                                <div class="mb-4">
+                                    <div
+                                        style="width:50px;height:50px;background:color-mix(in srgb,var(--accent-color),transparent 90%);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                                        <i class="bi bi-geo-alt-fill"
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                    <h5 style="font-size:1.1rem;margin-bottom:8px;">Address</h5>
+                                    <p
+                                        style="margin:0;line-height:1.6;color:color-mix(in srgb,var(--default-color),transparent 20%);">
+                                        {{ $school->address }}</p>
+                                </div>
+                                <div class="mb-4">
+                                    <div
+                                        style="width:50px;height:50px;background:color-mix(in srgb,var(--accent-color),transparent 90%);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                                        <i class="bi bi-telephone-fill"
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                    <h5 style="font-size:1.1rem;margin-bottom:8px;">Phone</h5>
+                                    <p style="margin:0;">+91 90241 64323</p>
+                                </div>
+                                <div>
+                                    <div
+                                        style="width:50px;height:50px;background:color-mix(in srgb,var(--accent-color),transparent 90%);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+                                        <i class="bi bi-envelope-fill"
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                    <h5 style="font-size:1.1rem;margin-bottom:8px;">Email</h5>
+                                    <p style="margin:0;">info@acttoaction.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- ── Registration Form ── --}}
+        <section class="section" id="registration"
+            style="padding: 80px 0; background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 97%) 0%, var(--surface-color) 100%);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+
+                        <div class="text-center mb-5" data-aos="fade-up">
+                            <h2 style="font-size: 2.5rem; font-weight: 300; margin-bottom: 16px;">Register for the Workshop
+                            </h2>
+                            <p class="lead">Fill out the form below to secure your spot.</p>
+                        </div>
+
+                        <div style="background: var(--surface-color); padding: 48px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06);"
+                            data-aos="fade-up" data-aos-delay="100">
+
+                            {{-- Progress Steps --}}
+                            <div class="row mb-5">
+                                <div class="col-md-4 mb-3 mb-md-0 text-center">
+                                    <div
+                                        style="width:60px;height:60px;background:var(--accent-color);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                                        <i class="bi bi-person-fill" style="font-size:1.5rem;color:white;"></i></div>
+                                    <h6 style="margin-bottom:4px;font-weight:500;">Fill Details</h6>
+                                    <small style="color:color-mix(in srgb,var(--default-color),transparent 40%);">Provide
+                                        information</small>
+                                </div>
+                                <div class="col-md-4 mb-3 mb-md-0 text-center">
+                                    <div id="step2Icon"
+                                        style="width:60px;height:60px;background:color-mix(in srgb,var(--accent-color),transparent 80%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;transition:all 0.4s;">
+                                        <i class="bi bi-check-circle-fill"
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                    <h6 style="margin-bottom:4px;font-weight:500;">Confirmation</h6>
+                                    <small style="color:color-mix(in srgb,var(--default-color),transparent 40%);">Receive
+                                        confirmation</small>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <div id="step3Icon"
+                                        style="width:60px;height:60px;background:color-mix(in srgb,var(--accent-color),transparent 80%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;transition:all 0.4s;">
+                                        <i class="bi bi-credit-card-fill"
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                    <h6 style="margin-bottom:4px;font-weight:500;">Payment</h6>
+                                    <small style="color:color-mix(in srgb,var(--default-color),transparent 40%);">Complete
+                                        payment</small>
+                                </div>
+                            </div>
+
+                            <form id="workshopRegForm" novalidate autocomplete="off">
+                                @csrf
+
+                                {{-- Parent / Guardian --}}
+                                <div class="mb-4">
+                                    <h5
+                                        style="margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid color-mix(in srgb,var(--default-color),transparent 95%);">
+                                        <i class="bi bi-person me-2" style="color:var(--accent-color);"></i>Parent /
+                                        Guardian Information
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <input type="text" id="f_parent_name" name="parent_name"
+                                                class="form-control" placeholder="Parent/Guardian Name *"
+                                                style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">
+                                            <div class="field-error" id="err_parent_name">Please enter parent/guardian
+                                                name.</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="email" id="f_email" name="email" class="form-control"
+                                                placeholder="Email Address *"
+                                                style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">
+                                            <div class="field-error" id="err_email">Please enter a valid email address.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="tel" id="f_phone" name="phone" class="form-control"
+                                                placeholder="Phone Number * (10 digits)"
+                                                style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">
+                                            <div class="field-error" id="err_phone">Please enter a valid 10-digit phone
+                                                number.</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="tel" id="f_whatsapp" name="whatsapp" class="form-control"
+                                                placeholder="WhatsApp Number (optional)"
+                                                style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">
+                                            <div class="field-error" id="err_whatsapp">Please enter a valid WhatsApp
+                                                number.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Children --}}
+                                <div class="mb-4">
+                                    <h5
+                                        style="margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid color-mix(in srgb,var(--default-color),transparent 95%);">
+                                        <i class="bi bi-mortarboard me-2" style="color:var(--accent-color);"></i>Student
+                                        Information
+                                        <small style="font-size:0.8rem;font-weight:400;color:#6b7280;margin-left:8px;">You
+                                            can add multiple children</small>
+                                    </h5>
+
+                                    <div id="childrenContainer">
+                                        {{-- First child rendered by JS below --}}
+                                    </div>
+
+                                    <button type="button" class="btn-add-child" id="btnAddChild">
+                                        <i class="bi bi-plus-circle"></i> Add Another Child
+                                    </button>
+                                </div>
+
+                                {{-- Workshop --}}
+                                <div class="mb-4">
+                                    <h5
+                                        style="margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid color-mix(in srgb,var(--default-color),transparent 95%);">
+                                        <i class="bi bi-calendar-event me-2"
+                                            style="color:var(--accent-color);"></i>Workshop Details
+                                    </h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" value="{{ $school->name }}"
+                                                readonly
+                                                style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);background:color-mix(in srgb,var(--accent-color),transparent 96%);">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control"
+                                                value="{{ $school->city?->name ?? '' }}" readonly
+                                                style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);background:color-mix(in srgb,var(--accent-color),transparent 96%);">
+                                        </div>
+                                        <div class="col-12">
+                                            <textarea name="message" class="form-control" rows="3"
+                                                placeholder="Any special requirements or questions? (Optional)"
+                                                style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);resize:vertical;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Total price (shown only for paid) --}}
+                                @if ($school->fees > 0)
+                                    <div id="totalPriceBadge">
+                                        <span>Total Amount (<span id="childCountLabel">1</span> child ×
+                                            ₹{{ number_format($school->fees) }})</span>
+                                        <strong>₹<span id="totalAmount">{{ number_format($school->fees) }}</span></strong>
+                                    </div>
+                                @endif
+
+                                {{-- Terms --}}
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="termsCheck">
+                                        <label class="form-check-label" for="termsCheck" style="font-size:0.95rem;">
+                                            I agree to the <a href="#"
+                                                style="color:var(--accent-color);text-decoration:none;">terms and
+                                                conditions</a> and understand the refund policy
+                                        </label>
+                                    </div>
+                                    <div class="field-error" id="err_terms">You must agree to the terms and conditions.
+                                    </div>
+                                </div>
+
+                                {{-- Status messages --}}
+                                <div id="regLoading"
+                                    style="display:none;text-align:center;color:var(--accent-color);margin-bottom:16px;">
+                                    <span class="spinner-border spinner-border-sm me-2"></span>Processing your
+                                    registration…
+                                </div>
+                                <div id="regError"
+                                    style="display:none;background:#fee2e2;color:#b91c1c;padding:14px 18px;border-radius:8px;margin-bottom:16px;font-size:0.925rem;border-left:4px solid #dc2626;">
+                                </div>
+
+                                {{-- Submit --}}
+                                <div class="text-center">
+                                    <button type="submit" id="regSubmitBtn"
+                                        style="background:var(--accent-color);color:white;border:none;padding:16px 48px;border-radius:50px;font-size:1.1rem;font-weight:600;cursor:pointer;min-width:240px;">
+                                        @if ($school->fees > 0)
+                                            <i class="bi bi-lock-fill me-2"></i>Proceed to Payment
+                                        @else
+                                            <i class="bi bi-check-circle me-2"></i>Submit Registration
+                                        @endif
+                                    </button>
+                                </div>
+
+                            </form>
+
+                            <div class="mt-4 text-center"
+                                style="padding:20px;background:color-mix(in srgb,var(--accent-color),transparent 95%);border-radius:12px;">
+                                <p style="margin:0;font-size:0.95rem;">
+                                    <i class="bi bi-info-circle-fill me-2" style="color:var(--accent-color);"></i>
+                                    Need help? Call <strong style="color:var(--accent-color);">+91 90241 64323</strong>
+                                    (Mon-Sat: 11 AM - 7 PM)
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- ── Related Workshops ── --}}
+        @if ($relatedSchools->isNotEmpty())
+            <section class="section light-background" style="padding: 80px 0;">
+                <div class="container">
+                    <div class="text-center mb-5" data-aos="fade-up">
+                        <h2 style="font-size:2.5rem;font-weight:300;margin-bottom:16px;">Other Workshops in
+                            {{ $school->city?->name }}</h2>
+                    </div>
+                    <div class="row g-4">
+                        @foreach ($relatedSchools as $rel)
+                            <div class="col-md-4" data-aos="fade-up">
+                                <a href="{{ route('workshops.show', $rel) }}"
+                                    style="text-decoration:none;color:inherit;">
+                                    <div style="background:var(--surface-color);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);transition:transform 0.3s;"
+                                        onmouseover="this.style.transform='translateY(-4px)'"
+                                        onmouseout="this.style.transform='translateY(0)'">
+                                        <div style="height:180px;overflow:hidden;background:#e8e0d8;">
+                                            @if ($rel->image_url)
+                                                <img src="{{ $rel->image_url }}" alt="{{ $rel->name }}"
+                                                    class="w-100 h-100" style="object-fit:cover;">
+                                            @else
+                                                <div class="w-100 h-100 d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-building"
+                                                        style="font-size:3rem;color:var(--accent-color);opacity:0.3;"></i>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div style="padding:20px;">
+                                            <h5 style="font-weight:600;margin-bottom:6px;">{{ $rel->name }}</h5>
+                                            @if ($rel->timings)
+                                                <p
+                                                    style="margin:0;font-size:0.9rem;color:color-mix(in srgb,var(--default-color),transparent 30%);">
+                                                    <i class="bi bi-clock me-1"
+                                                        style="color:var(--accent-color);"></i>{{ $rel->timings }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- ══════════════════════════════════════
+             CONFIRMATION OVERLAY
+        ══════════════════════════════════════ --}}
+        <div id="confirmationOverlay">
+            <div class="confirmation-box">
+                <div class="confirmation-icon">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#16a34a"
+                        stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                </div>
+                <h3 id="confTitle">Registration Confirmed!</h3>
+                <p id="confSubtitle">Your spot has been secured.</p>
+                <div class="confirmation-detail" id="confDetail"></div>
+                <p style="font-size:0.85rem;color:#9ca3af;margin-top:12px;">A confirmation will be sent to your email. For
+                    any queries call <strong>+91 90241 64323</strong>.</p>
+                <button class="btn-confirm-close" onclick="closeConfirmation()">Done</button>
+            </div>
+        </div>
+
+        {{-- ══════════════════════════════════════
+             SCRIPTS
+        ══════════════════════════════════════ --}}
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            var WS_SUBMIT_URL = '{{ route('frontend.summercamp.register.submit', $school) }}';
+            var WS_VERIFY_URL = '{{ route('frontend.summercamp.register.verify', ['registration' => '__ID__']) }}';
+            var WS_RZP_KEY = '{{ config('services.razorpay.key') }}';
+            var WS_FEE = {{ (float) $school->fees }};
+            var WS_IS_FREE = {{ $school->fees == 0 ? 'true' : 'false' }};
+            var WS_CSRF = '{{ csrf_token() }}';
+            var WS_WORKSHOP = '{{ addslashes($school->name) }}';
+            var WS_CITY = '{{ addslashes($school->city?->name ?? '') }}';
+            var WS_AGEGROUP = '{{ addslashes($school->ageGroup?->name ?? '') }}';
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+                var form = document.getElementById('workshopRegForm');
+                var submitBtn = document.getElementById('regSubmitBtn');
+                var loadingEl = document.getElementById('regLoading');
+                var errorEl = document.getElementById('regError');
+                var childCount = 0;
+
+                if (!form) {
+                    console.error('workshopRegForm not found');
+                    return;
+                }
+
+                /* ══════════════════════════════════
+                   CHILD CARD BUILDER
+                ══════════════════════════════════ */
+                function addChild() {
+                    if (childCount >= 5) return;
+                    childCount++;
+                    var idx = childCount - 1;
+
+                    var card = document.createElement('div');
+                    card.className = 'child-card';
+                    card.id = 'child_' + idx;
+                    card.innerHTML =
+                        '<div class="child-card-header">' +
+                        '<span><i class="bi bi-person-badge me-2" style="color:var(--accent-color);"></i>Child ' +
+                        childCount + '</span>' +
+                        (idx > 0 ? '<button type="button" class="btn-remove-child" onclick="removeChild(' + idx +
+                            ')">✕ Remove</button>' : '') +
+                        '</div>' +
+                        '<div class="row g-3">' +
+                        '<div class="col-md-6">' +
+                        '<input type="text" name="children[' + idx +
+                        '][student_name]" class="form-control child-student-name" placeholder="Student Name *" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '<div class="field-error child-err-name">Please enter the student\'s name.</div>' +
+                        '</div>' +
+                        '<div class="col-md-6">' +
+                        '<input type="date" name="children[' + idx +
+                        '][dob]" class="form-control" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '</div>' +
+                        '<div class="col-md-6">' +
+                        '<input type="text" class="form-control" value="' + WS_AGEGROUP +
+                        '" readonly style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);background:color-mix(in srgb,var(--accent-color),transparent 96%);">' +
+                        '</div>' +
+                        '<div class="col-md-6">' +
+                        '<input type="text" name="children[' + idx +
+                        '][school_name]" class="form-control" placeholder="School Name (optional)" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '</div>' +
+                        '<div class="col-12">' +
+                        '<select name="children[' + idx +
+                        '][experience]" class="form-select" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '<option value="">Previous Acting Experience (Optional)</option>' +
+                        '<option value="none">No prior experience</option>' +
+                        '<option value="beginner">Beginner (less than 1 year)</option>' +
+                        '<option value="intermediate">Intermediate (1-2 years)</option>' +
+                        '<option value="advanced">Advanced (2+ years)</option>' +
+                        '</select>' +
+                        '</div>' +
+                        '</div>';
+
+                    document.getElementById('childrenContainer').appendChild(card);
+                    document.getElementById('btnAddChild').style.display = childCount >= 5 ? 'none' : 'flex';
+                    updateTotal();
+                }
+
+                window.removeChild = function(idx) {
+                    var card = document.getElementById('child_' + idx);
+                    if (card) card.remove();
+                    childCount--;
+                    // Re-number remaining cards
+                    var cards = document.querySelectorAll('.child-card');
+                    cards.forEach(function(c, i) {
+                        c.id = 'child_' + i;
+                        c.querySelector('.child-card-header span').innerHTML =
+                            '<i class="bi bi-person-badge me-2" style="color:var(--accent-color);"></i>Child ' +
+                            (i + 1);
+                        // Re-index input names
+                        c.querySelectorAll('input[name], select[name]').forEach(function(el) {
+                            el.name = el.name.replace(/children\[\d+\]/, 'children[' + i + ']');
+                        });
+                        // Show remove on all except first
+                        var btn = c.querySelector('.btn-remove-child');
+                        if (i === 0 && btn) btn.remove();
+                    });
+                    childCount = cards.length;
+                    document.getElementById('btnAddChild').style.display = childCount >= 5 ? 'none' : 'flex';
+                    updateTotal();
+                };
+
+                function updateTotal() {
+                    var countEl = document.getElementById('childCountLabel');
+                    var totalEl = document.getElementById('totalAmount');
+                    if (countEl) countEl.textContent = childCount;
+                    if (totalEl) totalEl.textContent = (WS_FEE * childCount).toLocaleString('en-IN');
+                }
+
+                document.getElementById('btnAddChild').addEventListener('click', addChild);
+
+                // Render first child immediately
+                addChild();
+
+                /* ══════════════════════════════════
+                   VALIDATION
+                ══════════════════════════════════ */
+                var parentRules = {
+                    parent_name: {
+                        el: 'f_parent_name',
+                        err: 'err_parent_name',
+                        test: function(v) {
+                            return v.trim().length >= 2;
+                        }
+                    },
+                    email: {
+                        el: 'f_email',
+                        err: 'err_email',
+                        test: function(v) {
+                            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+                        }
+                    },
+                    phone: {
+                        el: 'f_phone',
+                        err: 'err_phone',
+                        test: function(v) {
+                            return /^[6-9]\d{9}$/.test(v.replace(/\D/g, ''));
+                        }
+                    },
+                    whatsapp: {
+                        el: 'f_whatsapp',
+                        err: 'err_whatsapp',
+                        test: function(v) {
+                            return v === '' || /^[6-9]\d{9}$/.test(v.replace(/\D/g, ''));
+                        }
+                    },
+                };
+
+                function validateParent() {
+                    var ok = true;
+                    Object.keys(parentRules).forEach(function(name) {
+                        var rule = parentRules[name];
+                        var input = document.getElementById(rule.el);
+                        var errEl = document.getElementById(rule.err);
+                        var val = input ? input.value : '';
+                        var valid = rule.test(val);
+                        if (input) {
+                            input.classList.toggle('is-invalid', !valid);
+                            input.classList.toggle('is-valid', valid);
+                        }
+                        if (errEl) {
+                            errEl.classList.toggle('show', !valid);
+                        }
+                        if (!valid) ok = false;
+                    });
+                    return ok;
+                }
+
+                function validateChildren() {
+                    var ok = true;
+                    document.querySelectorAll('.child-card').forEach(function(card) {
+                        var nameInput = card.querySelector('.child-student-name');
+                        var errEl = card.querySelector('.child-err-name');
+                        var valid = nameInput && nameInput.value.trim().length >= 2;
+                        if (nameInput) {
+                            nameInput.classList.toggle('is-invalid', !valid);
+                            nameInput.classList.toggle('is-valid', valid);
+                        }
+                        if (errEl) {
+                            errEl.classList.toggle('show', !valid);
+                        }
+                        if (!valid) ok = false;
+                    });
+                    return ok;
+                }
+
+                // Live blur on parent fields
+                Object.keys(parentRules).forEach(function(name) {
+                    var input = document.getElementById(parentRules[name].el);
+                    if (!input) return;
+                    input.addEventListener('blur', function() {
+                        validateParent();
+                    });
+                    input.addEventListener('input', function() {
+                        if (input.classList.contains('is-invalid')) validateParent();
+                    });
+                });
+
+                /* ══════════════════════════════════
+                   UI HELPERS
+                ══════════════════════════════════ */
+                function setLoading(yes) {
+                    submitBtn.disabled = yes;
+                    loadingEl.style.display = yes ? 'block' : 'none';
+                    submitBtn.style.opacity = yes ? '0.7' : '1';
+                    submitBtn.style.cursor = yes ? 'not-allowed' : 'pointer';
+                }
+
+                function showError(msg) {
+                    // Only show friendly messages — never stack traces
+                    var safe = (typeof msg === 'string' && msg.length < 300) ? msg :
+                        'Something went wrong. Please try again or call +91 90241 64323.';
+                    errorEl.innerHTML = '<i class="bi bi-exclamation-circle-fill me-2"></i>' + safe;
+                    errorEl.style.display = 'block';
+                    errorEl.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+
+                function activateStep(n) {
+                    var el = document.getElementById('step' + n + 'Icon');
+                    if (el) {
+                        el.style.background = 'var(--accent-color)';
+                        el.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                    }
+                }
+
+                function clearValidation() {
+                    form.querySelectorAll('.is-valid,.is-invalid').forEach(function(el) {
+                        el.classList.remove('is-valid', 'is-invalid');
+                    });
+                }
+
+                function handleServerErrors(errors) {
+                    // Map to friendly messages only — ignore field names user shouldn't see
+                    var fieldMap = {
+                        parent_name: 'err_parent_name',
+                        email: 'err_email',
+                        phone: 'err_phone'
+                    };
+                    var first = null;
+                    Object.keys(errors).forEach(function(field) {
+                        var errEl = document.getElementById('err_' + field);
+                        var input = document.getElementById('f_' + field);
+                        if (errEl) {
+                            errEl.textContent = errors[field][0];
+                            errEl.classList.add('show');
+                        }
+                        if (input) {
+                            input.classList.add('is-invalid');
+                            if (!first) first = input;
+                        }
+                    });
+                    if (first) first.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+
+                /* ══════════════════════════════════
+                   CONFIRMATION OVERLAY
+                ══════════════════════════════════ */
+                function showConfirmation(parentName, email, childNames, workshopName, isPaid) {
+                    document.getElementById('confTitle').textContent =
+                        isPaid ? 'Payment Successful! 🎉' : 'Registration Confirmed! 🎉';
+                    document.getElementById('confSubtitle').textContent =
+                        childNames.length > 1 ?
+                        childNames.length + ' children have been registered.' :
+                        'Your child\'s spot has been secured.';
+
+                    var detail = '';
+                    detail += '<div><span class="key">Parent</span><span class="val">' + parentName + '</span></div>';
+                    detail += '<div><span class="key">Email</span><span class="val">' + email + '</span></div>';
+                    detail += '<div><span class="key">Workshop</span><span class="val">' + workshopName +
+                        '</span></div>';
+                    childNames.forEach(function(name, i) {
+                        detail += '<div><span class="key">Child ' + (i + 1) + '</span><span class="val">' +
+                            name + '</span></div>';
+                    });
+                    document.getElementById('confDetail').innerHTML = detail;
+                    document.getElementById('confirmationOverlay').classList.add('show');
+                }
+
+                window.closeConfirmation = function() {
+                    document.getElementById('confirmationOverlay').classList.remove('show');
+                    form.reset();
+                    clearValidation();
+                    // Re-render first child
+                    document.getElementById('childrenContainer').innerHTML = '';
+                    childCount = 0;
+                    addChild();
+                    updateTotal();
+                };
+
+                /* ══════════════════════════════════
+                   FORM SUBMIT
+                ══════════════════════════════════ */
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var parentOk = validateParent();
+                    var childrenOk = validateChildren();
+                    var terms = document.getElementById('termsCheck');
+                    var termsErr = document.getElementById('err_terms');
+
+                    if (!terms.checked) {
+                        termsErr.classList.add('show');
+                    } else {
+                        termsErr.classList.remove('show');
+                    }
+
+                    if (!parentOk || !childrenOk || !terms.checked) {
+                        var bad = form.querySelector('.is-invalid, .field-error.show');
+                        if (bad) bad.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        return;
+                    }
+
+                    errorEl.style.display = 'none';
+                    setLoading(true);
+
+                    // Collect child names for the confirmation overlay
+                    var childNames = [];
+                    document.querySelectorAll('.child-student-name').forEach(function(el) {
+                        childNames.push(el.value.trim());
+                    });
+
+                    var parentName = document.getElementById('f_parent_name').value.trim();
+                    var email = document.getElementById('f_email').value.trim();
+                    var phone = document.getElementById('f_phone').value.trim();
+
+                    fetch(WS_SUBMIT_URL, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': WS_CSRF,
+                                'Accept': 'application/json'
+                            },
+                            body: new FormData(form),
+                        })
+                        .then(function(res) {
+                            return res.json().then(function(data) {
+                                return {
+                                    status: res.status,
+                                    data: data
+                                };
+                            });
+                        })
+                        .then(function(result) {
+                            var status = result.status;
+                            var data = result.data;
+
+                            if (status === 422 && data.errors) {
+                                handleServerErrors(data.errors);
+                                setLoading(false);
+                                return;
+                            }
+
+                            if (status >= 400) {
+                                // Show only the safe error message from the server, never raw traces
+                                showError(data.error || data.message || null);
+                                setLoading(false);
+                                return;
+                            }
+
+                            // ── Free workshop ──────────────────────────────────────
+                            if (data.is_free) {
+                                activateStep(2);
+                                setLoading(false);
+                                showConfirmation(parentName, email, childNames, WS_WORKSHOP, false);
+                                return;
+                            }
+
+                            // ── Paid — open Razorpay ───────────────────────────────
+                            activateStep(3);
+                            setLoading(false);
+
+                            var verifyUrl = WS_VERIFY_URL.replace('__ID__', data.registration_id);
+
+                            var rzp = new Razorpay({
+                                key: WS_RZP_KEY,
+                                amount: data.amount,
+                                currency: data.currency || 'INR',
+                                name: 'Act To Action',
+                                description: data.workshop_name + (childNames.length > 1 ? ' (' +
+                                    childNames.length + ' children)' : ''),
+                                order_id: data.order_id,
+                                prefill: {
+                                    name: parentName,
+                                    email: email,
+                                    contact: phone
+                                },
+                                theme: {
+                                    color: '#175cdd'
+                                },
+                                modal: {
+                                    ondismiss: function() {
+                                        showError(
+                                            'Payment cancelled. You can try again anytime.');
+                                    }
+                                },
+
+                                handler: function(rzpResponse) {
+                                    setLoading(true);
+                                    fetch(verifyUrl, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': WS_CSRF,
+                                                'Accept': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                razorpay_order_id: rzpResponse
+                                                    .razorpay_order_id,
+                                                razorpay_payment_id: rzpResponse
+                                                    .razorpay_payment_id,
+                                                razorpay_signature: rzpResponse
+                                                    .razorpay_signature,
+                                            }),
+                                        })
+                                        .then(function(r) {
+                                            return r.json();
+                                        })
+                                        .then(function(vData) {
+                                            if (vData.success) {
+                                                activateStep(2);
+                                                showConfirmation(parentName, email,
+                                                    childNames, WS_WORKSHOP, true);
+                                            } else {
+                                                showError(vData.message || null);
+                                            }
+                                        })
+                                        .catch(function() {
+                                            showError(
+                                                'Network error. Please save payment ID: <strong>' +
+                                                rzpResponse.razorpay_payment_id +
+                                                '</strong> and call us.');
+                                        })
+                                        .finally(function() {
+                                            setLoading(false);
+                                        });
+                                },
+                            });
+
+                            rzp.on('payment.failed', function(resp) {
+                                showError(
+                                    'Payment failed. Please try again or call us on +91 90241 64323.'
+                                    );
+                                setLoading(false);
+                            });
+
+                            rzp.open();
+                        })
+                        .catch(function() {
+                            showError(null); // generic safe message
+                            setLoading(false);
+                        });
+                });
+
+            }); // end DOMContentLoaded
+        </script>
+
+    </main>
+@endsection

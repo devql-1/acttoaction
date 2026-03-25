@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-
     protected $fillable = [
         'category_id',
-        'author_id',          // ← NEW
+        'author_id', // ← NEW
         'title',
         'slug',
         'short_description',
@@ -25,5 +24,9 @@ class Blog extends Model
     {
         return $this->belongsTo(BlogAuthor::class, 'author_id');
     }
-
-}   
+    // app/Models/Blog.php
+    public function tags()
+    {
+        return $this->belongsToMany(BlogTag::class, 'blog_tag', 'blog_id', 'blog_tag_id');
+    }
+}

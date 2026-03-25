@@ -1114,7 +1114,7 @@
                                                             <div class="{{ $subDot }}"></div>{{ $subStatus }}
                                                         </div>
                                                         @if ($subDot !== 'dot-closed')
-                                                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"
+                                                            <a href="{{ route('frontend.events.register', $sub->id) }}"
                                                                 class="btn-register">
                                                                 Register <i class="bi bi-arrow-right"></i>
                                                             </a>

@@ -14,7 +14,9 @@ class BlogController extends Controller
     // List all blog posts
     public function index()
     {
-        $blogs = Blog::with(['category', 'author'])->latest()->get();  // ← eager-load author
+        $blogs = Blog::with(['category', 'author'])
+            ->latest()
+            ->get(); // ← eager-load author
         return view('backend.blog_system.blog.index', compact('blogs'));
     }
 
@@ -22,8 +24,10 @@ class BlogController extends Controller
     public function create()
     {
         $blog_categories = BlogCategory::where('status', 1)->get();
-        $blog_authors = BlogAuthor::where('status', 1)->get();   // ← NEW
-        return view('backend.blog_system.blog.create', compact('blog_categories', 'blog_authors'));
+        $blog_authors = BlogAuthor::where('status', 1)->get();
+        $tags = \App\Models\BlogTag::orderBy('name')->get(); // ← add this
+        // ← NEW
+        return view('backend.blog_system.blog.create', compact('blog_categories', 'blog_authors', 'tags'));
     }
 
     // Store new blog post
@@ -36,7 +40,7 @@ class BlogController extends Controller
         if ($validator->passes()) {
             $create = new Blog();
             $create->category_id = $request->category_id;
-            $create->author_id = $request->author_id ?: null;  // ← NEW
+            $create->author_id = $request->author_id ?: null; // ← NEW
             $create->title = $request->title;
             $create->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
             $create->short_description = $request->short_description;
@@ -61,8 +65,9 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         $blog_categories = BlogCategory::where('status', 1)->get();
-        $blog_authors = BlogAuthor::where('status', 1)->get();   // ← NEW
-        return view('backend.blog_system.blog.edit', compact('blog', 'blog_categories', 'blog_authors'));
+        $blog_authors = BlogAuthor::where('status', 1)->get();
+        $tags = \App\Models\BlogTag::orderBy('name')->get(); // ← NEW
+        return view('backend.blog_system.blog.edit', compact('blog', 'blog_categories', 'blog_authors', 'tags'));
     }
 
     // Update existing blog post
@@ -76,7 +81,7 @@ class BlogController extends Controller
             $update = Blog::find($id);
             $update->title = $request->title;
             $update->category_id = $request->category_id;
-            $update->author_id = $request->author_id ?: null;  // ← NEW
+            $update->author_id = $request->author_id ?: null; // ← NEW
             $update->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
             $update->short_description = $request->short_description;
             $update->description = $request->description;
@@ -99,6 +104,9 @@ class BlogController extends Controller
             }
 
             $update->save();
+
+            // Sync tags — detaches old, attaches new
+            $update->tags()->sync($request->input('tags', []));
 
             return redirect()->route('admin.blog')->with('success', 'Blogs Data Updated Successfully');
         }

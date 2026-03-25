@@ -1,8 +1,6 @@
 @extends('frontend.course.layout')
 @section('content')
     <style>
-        /* ===== CLINIC CSS VARIABLES ===== */
-
         a {
             color: var(--accent-color);
             text-decoration: none;
@@ -22,305 +20,6 @@
         h6 {
             color: var(--heading-color);
             font-family: var(--heading-font);
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            --background-color: rgba(255, 255, 255, 0);
-            color: var(--default-color);
-            transition: all .5s;
-            z-index: 997;
-            background-color: var(--background-color);
-            box-shadow: 0 0 18px rgba(0, 0, 0, .1);
-        }
-
-        .header .topbar {
-            background-color: var(--accent-color);
-            height: 40px;
-            padding: 0;
-            font-size: 14px;
-            transition: all .5s;
-        }
-
-        .header .topbar .contact-info i {
-            font-style: normal;
-            color: var(--contrast-color);
-        }
-
-        .header .topbar .contact-info i a,
-        .header .topbar .contact-info i span {
-            padding-left: 5px;
-            color: var(--contrast-color);
-        }
-
-        .header .topbar .contact-info i a {
-            line-height: 0;
-            transition: .3s;
-        }
-
-        .header .topbar .contact-info i a:hover {
-            color: var(--contrast-color);
-            text-decoration: underline;
-        }
-
-        .header .topbar .social-links a {
-            color: color-mix(in srgb, var(--contrast-color), transparent 40%);
-            line-height: 0;
-            transition: .3s;
-            margin-left: 20px;
-        }
-
-        .header .topbar .social-links a:hover {
-            color: var(--contrast-color);
-        }
-
-        .header .branding {
-            min-height: 60px;
-            padding: 10px 0;
-        }
-
-        .header .logo {
-            line-height: 1;
-        }
-
-        .header .logo h1 {
-            font-size: 28px;
-            margin: 0;
-            font-weight: 700;
-            color: var(--heading-color);
-            letter-spacing: -0.5px;
-        }
-
-        .header .logo h1 span {
-            color: var(--accent-color);
-        }
-
-        .scrolled .header .topbar {
-            height: 0;
-            visibility: hidden;
-            overflow: hidden;
-        }
-
-        .scrolled .header {
-            --background-color: #ffffff;
-        }
-
-        /* ===== NAVMENU ===== */
-        @media(min-width:1200px) {
-            .navmenu {
-                padding: 0;
-            }
-
-            .navmenu ul {
-                margin: 0;
-                padding: 0;
-                display: flex;
-                list-style: none;
-                align-items: center;
-            }
-
-            .navmenu li {
-                position: relative;
-            }
-
-            .navmenu>ul>li {
-                white-space: nowrap;
-                padding: 15px 14px;
-            }
-
-            .navmenu>ul>li:last-child {
-                padding-right: 0;
-            }
-
-            .navmenu a,
-            .navmenu a:focus {
-                color: var(--nav-color);
-                font-size: 15px;
-                padding: 0 2px;
-                font-family: var(--nav-font);
-                font-weight: 500;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                white-space: nowrap;
-                transition: .3s;
-                position: relative;
-            }
-
-            .navmenu>ul>li>a:before {
-                content: "";
-                position: absolute;
-                width: 100%;
-                height: 2px;
-                bottom: -6px;
-                left: 0;
-                background-color: var(--accent-color);
-                visibility: hidden;
-                width: 0;
-                transition: all .3s ease-in-out 0s;
-            }
-
-            .navmenu a:hover:before,
-            .navmenu li:hover>a:before,
-            .navmenu .active:before {
-                visibility: visible;
-                width: 100%;
-            }
-
-            .navmenu li:hover>a,
-            .navmenu .active,
-            .navmenu .active:focus {
-                color: var(--nav-hover-color);
-            }
-
-            .nav-cta-btn {
-                background: var(--accent-color);
-                color: var(--contrast-color) !important;
-                padding: 8px 20px !important;
-                border-radius: 50px;
-                font-weight: 600 !important;
-                transition: all .3s ease !important;
-            }
-
-            .nav-cta-btn:hover {
-                background: color-mix(in srgb, var(--accent-color), black 10%) !important;
-                transform: translateY(-1px);
-            }
-
-            .nav-cta-btn::before {
-                display: none !important;
-            }
-        }
-
-        @media(max-width:1199px) {
-            .mobile-nav-toggle {
-                color: var(--nav-color);
-                font-size: 28px;
-                line-height: 0;
-                margin-right: 10px;
-                cursor: pointer;
-                transition: color .3s;
-            }
-
-            .navmenu {
-                padding: 0;
-                z-index: 9997;
-            }
-
-            .navmenu ul {
-                display: none;
-                list-style: none;
-                position: absolute;
-                inset: 60px 20px 20px 20px;
-                padding: 10px 0;
-                margin: 0;
-                border-radius: 6px;
-                background-color: var(--nav-mobile-background-color);
-                border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
-                overflow-y: auto;
-                transition: .3s;
-                z-index: 9998;
-            }
-
-            .navmenu a,
-            .navmenu a:focus {
-                color: var(--nav-dropdown-color);
-                padding: 10px 20px;
-                font-family: var(--nav-font);
-                font-size: 17px;
-                font-weight: 500;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                white-space: nowrap;
-                transition: .3s;
-            }
-
-            .navmenu a:hover,
-            .navmenu .active,
-            .navmenu .active:focus {
-                color: var(--nav-dropdown-hover-color);
-            }
-
-            .mobile-nav-active {
-                overflow: hidden;
-            }
-
-            .mobile-nav-active .mobile-nav-toggle {
-                color: #fff;
-                position: absolute;
-                font-size: 32px;
-                top: 15px;
-                right: 15px;
-                margin-right: 0;
-                z-index: 9999;
-            }
-
-            .mobile-nav-active .navmenu {
-                position: fixed;
-                overflow: hidden;
-                inset: 0;
-                background: rgba(33, 37, 41, .8);
-                transition: .3s;
-            }
-
-            .mobile-nav-active .navmenu>ul {
-                display: block;
-            }
-        }
-
-        /* ===== SECTIONS ===== */
-        section,
-        .section {
-            color: var(--default-color);
-            background-color: var(--background-color);
-            padding: 60px 0;
-            scroll-margin-top: 90px;
-            overflow: clip;
-        }
-
-        .section-title {
-            text-align: center;
-            padding-bottom: 60px;
-            position: relative;
-        }
-
-        .section-title h2 {
-            font-size: 32px;
-            font-weight: 500;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            position: relative;
-        }
-
-        .section-title h2:before {
-            content: "";
-            position: absolute;
-            display: block;
-            width: 160px;
-            height: 1px;
-            background: color-mix(in srgb, var(--default-color), transparent 60%);
-            left: 0;
-            right: 0;
-            bottom: 1px;
-            margin: auto;
-        }
-
-        .section-title h2::after {
-            content: "";
-            position: absolute;
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--accent-color);
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-        }
-
-        .section-title p {
-            margin-bottom: 0;
         }
 
         /* ===== SCROLL TOP ===== */
@@ -443,7 +142,7 @@
             display: block;
         }
 
-        /* Category Filter Tabs */
+        /* Category Filter Bar */
         .blog-hero .category-bar {
             background: rgba(255, 255, 255, .07);
             border-top: 1px solid rgba(255, 255, 255, .1);
@@ -759,26 +458,6 @@
             color: #fff;
         }
 
-        .bc .bc-cat.cat-media {
-            background: #e63946;
-        }
-
-        .bc .bc-cat.cat-casting {
-            background: #f4a261;
-        }
-
-        .bc .bc-cat.cat-workshop {
-            background: #2a9d8f;
-        }
-
-        .bc .bc-cat.cat-dramata {
-            background: #7209b7;
-        }
-
-        .bc .bc-cat.cat-story {
-            background: #175cdd;
-        }
-
         .bc .bc-body {
             padding: 22px 24px 24px;
             flex: 1;
@@ -813,7 +492,6 @@
             color: var(--heading-color);
             margin-bottom: 10px;
             line-height: 1.45;
-            flex: 1;
         }
 
         .bc p {
@@ -875,6 +553,96 @@
         .bc .bc-link:hover {
             gap: 8px;
             color: color-mix(in srgb, var(--accent-color), black 10%);
+        }
+
+        /* Tag pills on blog cards */
+        .bc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .bc-tag {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 50px;
+            background: color-mix(in srgb, var(--accent-color), transparent 88%);
+            color: var(--accent-color);
+            font-weight: 600;
+            transition: all .2s;
+            text-decoration: none;
+        }
+
+        .bc-tag:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        /* ===== LOAD MORE BUTTON ===== */
+        .load-more-wrap {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .load-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 40px;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 15px;
+            background: transparent;
+            cursor: pointer;
+            transition: all .3s;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .load-more-btn:hover {
+            background: var(--accent-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .load-more-btn.loading {
+            pointer-events: none;
+            opacity: .7;
+        }
+
+        .load-more-btn .lm-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            display: none;
+        }
+
+        .load-more-btn.loading .lm-spinner {
+            display: inline-block;
+        }
+
+        .load-more-btn.loading .lm-text {
+            display: none;
+        }
+
+        .load-more-count {
+            display: inline-block;
+            font-size: 13px;
+            color: color-mix(in srgb, var(--default-color), transparent 40%);
+            margin-top: 14px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* ===== BLOG SIDEBAR ===== */
@@ -1001,7 +769,7 @@
             color: var(--accent-color);
         }
 
-        /* Tags */
+        /* Tag cloud */
         .tag-cloud {
             display: flex;
             flex-wrap: wrap;
@@ -1021,6 +789,12 @@
         .tag-cloud a:hover {
             background: var(--accent-color);
             color: #fff;
+        }
+
+        .tag-cloud .tag-count {
+            opacity: .5;
+            font-size: 10px;
+            margin-left: 2px;
         }
 
         /* Newsletter sidebar */
@@ -1084,29 +858,7 @@
             background: color-mix(in srgb, var(--accent-color), black 10%);
         }
 
-        /* ===== LOAD MORE ===== */
-        .load-more-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 36px;
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 15px;
-            background: transparent;
-            cursor: pointer;
-            transition: all .3s;
-        }
-
-        .load-more-btn:hover {
-            background: var(--accent-color);
-            color: #fff;
-            transform: translateY(-2px);
-        }
-
-        /* ===== NEWSLETTER SECTION ===== */
+        /* ===== NEWSLETTER CTA ===== */
         .newsletter-cta {
             background: linear-gradient(135deg, var(--heading-color) 0%, color-mix(in srgb, var(--accent-color), #112344 40%) 100%);
             padding: 80px 0;
@@ -1187,196 +939,23 @@
             transform: translateY(-2px);
         }
 
-        /* ===== FOOTER-16 ===== */
-        .footer-16 {
-            background: var(--background-color);
-            color: var(--default-color);
-            font-size: 15px;
-            padding: 100px 0 0;
-            border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 92%);
-        }
-
-        .footer-16 .footer-main {
-            margin-bottom: 80px;
-        }
-
-        .footer-16 .brand-section .logo {
-            text-decoration: none;
-        }
-
-        .footer-16 .brand-section .logo .sitename {
-            font-family: var(--heading-font);
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--heading-color);
-            letter-spacing: -0.5px;
-        }
-
-        .footer-16 .brand-section .logo .sitename span {
-            color: var(--accent-color);
-        }
-
-        .footer-16 .brand-section .brand-description {
-            font-size: 16px;
-            line-height: 1.7;
-            color: color-mix(in srgb, var(--default-color), transparent 25%);
-            font-weight: 300;
-            max-width: 340px;
-            margin: 16px 0 0;
-        }
-
-        .footer-16 .brand-section .contact-info {
-            margin-top: 24px;
-        }
-
-        .footer-16 .brand-section .contact-info .contact-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 14px;
-            font-size: 14px;
-            color: color-mix(in srgb, var(--default-color), transparent 20%);
-        }
-
-        .footer-16 .brand-section .contact-info .contact-item i {
-            font-size: 15px;
-            color: var(--accent-color);
-            margin-right: 10px;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-
-        .footer-16 .footer-nav-wrapper {
-            padding-left: 60px;
-        }
-
-        @media(max-width:991px) {
-            .footer-16 .footer-nav-wrapper {
-                padding-left: 0;
-                margin-top: 50px;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-        }
 
-        .footer-16 .nav-column {
-            margin-bottom: 40px;
-        }
-
-        .footer-16 .nav-column h6 {
-            font-family: var(--heading-font);
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--heading-color);
-            margin-bottom: 20px;
-            letter-spacing: .3px;
-        }
-
-        .footer-16 .nav-column .footer-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-16 .nav-column .footer-nav a {
-            color: color-mix(in srgb, var(--default-color), transparent 30%);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 300;
-            transition: all .3s ease;
-            line-height: 1.4;
-        }
-
-        .footer-16 .nav-column .footer-nav a:hover {
-            color: var(--accent-color);
-            transform: translateX(4px);
-        }
-
-        .footer-16 .footer-social {
-            padding: 40px 0;
-            border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 94%);
-            border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 94%);
-        }
-
-        .footer-16 .footer-social .social-links {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .footer-16 .footer-social .social-links .social-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: color-mix(in srgb, var(--default-color), transparent 40%);
-            font-size: 13px;
-            font-weight: 400;
-            transition: all .3s ease;
-        }
-
-        .footer-16 .footer-social .social-links .social-link i {
-            font-size: 18px;
-        }
-
-        .footer-16 .footer-social .social-links .social-link:hover {
-            color: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .footer-16 .footer-bottom {
-            padding: 24px 0;
-        }
-
-        .footer-16 .footer-bottom .copyright p {
-            margin: 0;
-            font-size: 13px;
-            color: color-mix(in srgb, var(--default-color), transparent 45%);
-            font-weight: 300;
-        }
-
-        .footer-16 .footer-bottom .legal-links {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        @media(max-width:991px) {
-            .footer-16 .footer-bottom .legal-links {
-                justify-content: flex-start;
-                margin-top: 14px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-        }
-
-        .footer-16 .footer-bottom .legal-links a {
-            font-size: 12px;
-            color: color-mix(in srgb, var(--default-color), transparent 50%);
-            text-decoration: none;
-            font-weight: 300;
-            transition: color .3s ease;
-        }
-
-        .footer-16 .footer-bottom .legal-links a:hover {
-            color: var(--accent-color);
-        }
-
-        @media(max-width:768px) {
-            .footer-16 {
-                padding: 60px 0 0;
-            }
-        }
-
-        /* ===== HIDDEN POSTS for JS filter ===== */
-        .bc[data-cat]:not([data-cat="all"]) {
-            display: flex;
         }
     </style>
 
-
-    <!-- ===== SCROLL TOP ===== -->
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center" id="scrollTop">
         <i class="bi bi-arrow-up-short"></i>
     </a>
+
     <main class="main">
 
         {{-- ===== BLOG HERO ===== --}}
@@ -1386,8 +965,8 @@
                     <div class="col-lg-7">
                         <div class="eyebrow"><i class="bi bi-journal-richtext"></i> Our Stories</div>
                         <h1>Behind the <em>Curtain</em> &<br>Beyond the Stage</h1>
-                        <p>Casting wins, workshops, student spotlights, and behind-the-scenes from Jaipur's #1 screen
-                            acting school for kids.</p>
+                        <p>Casting wins, workshops, student spotlights, and behind-the-scenes from Jaipur's #1 screen acting
+                            school for kids.</p>
                         <div class="hero-stats">
                             <div class="hs">
                                 <span class="num">{{ $totalBlogs }}+</span>
@@ -1404,7 +983,6 @@
                         </div>
                     </div>
                     <div class="col-lg-5 d-none d-lg-flex justify-content-end">
-                        {{-- Decorative mosaic - show recent blog images --}}
                         @php $mosaicBlogs = \App\Models\Blog::where('status',1)->whereNotNull('image')->latest()->limit(4)->get(); @endphp
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:380px;opacity:.85;">
                             @foreach ($mosaicBlogs as $mi => $mb)
@@ -1412,7 +990,6 @@
                                     style="border-radius:16px;height:{{ $mi % 2 === 0 ? '180' : '140' }}px;object-fit:cover;width:100%;{{ $mi === 1 ? 'margin-top:30px;' : ($mi === 2 ? 'margin-top:-30px;' : '') }}"
                                     alt="{{ $mb->title }}">
                             @endforeach
-                            {{-- Fallback placeholders if fewer than 4 images --}}
                             @for ($fi = $mosaicBlogs->count(); $fi < 4; $fi++)
                                 <div
                                     style="border-radius:16px;height:{{ $fi % 2 === 0 ? '180' : '140' }}px;background:linear-gradient(135deg,#175cdd22,#175cdd44);width:100%;">
@@ -1427,15 +1004,15 @@
             <div class="category-bar">
                 <div class="container">
                     <div class="cat-tabs">
-                        <button class="cat-tab {{ !request('category') ? 'active' : '' }}"
-                            onclick="filterPosts('all',this)">
+                        <button class="cat-tab {{ !request('category') && !request('tag') ? 'active' : '' }}"
+                            onclick="window.location='{{ route('blog') }}'">
                             All Posts <span class="cat-count">{{ $totalBlogs }}</span>
                         </button>
                         @foreach ($categories as $cat)
                             <button class="cat-tab {{ request('category') === $cat->slug ? 'active' : '' }}"
-                                onclick="filterPosts('{{ $cat->slug }}',this)" data-slug="{{ $cat->slug }}">
+                                onclick="window.location='{{ route('blog', ['category' => $cat->slug]) }}'">
                                 {{ $cat->category_name }}
-                                <span class="cat-count">{{ $cat->blogs_count }}</span>
+                                <span class="cat-count">{{ $cat->blogs_count ?? 0 }}</span>
                             </button>
                         @endforeach
                     </div>
@@ -1529,15 +1106,13 @@
                                             <img src="{{ asset('img/' . $blog->image) }}" alt="{{ $blog->title }}" />
                                         @else
                                             <div
-                                                style="height:220px;background:linear-gradient(135deg,#175cdd22,#175cdd55);display:flex;align-items:center;justify-content:center;">
+                                                style="height:210px;background:linear-gradient(135deg,#175cdd22,#175cdd55);display:flex;align-items:center;justify-content:center;">
                                                 <i class="bi bi-journal-richtext"
                                                     style="font-size:3rem;color:#175cdd44;"></i>
                                             </div>
                                         @endif
                                         @if ($blog->category)
-                                            <span class="bc-cat" style="background:var(--accent-color);">
-                                                {{ $blog->category->category_name }}
-                                            </span>
+                                            <span class="bc-cat">{{ $blog->category->category_name }}</span>
                                         @endif
                                     </div>
                                     <div class="bc-body">
@@ -1546,12 +1121,22 @@
                                                 {{ $blog->created_at->format('M j, Y') }}</span>
                                             <span><i class="bi bi-clock"></i>
                                                 {{ max(1, (int) (str_word_count(strip_tags($blog->description ?? '')) / 200)) }}
-                                                min read
-                                            </span>
+                                                min read</span>
                                         </div>
                                         <h3>{{ $blog->title }}</h3>
+
+                                        {{-- Tag pills --}}
+                                        @if ($blog->tags->count())
+                                            <div class="bc-tags">
+                                                @foreach ($blog->tags as $tag)
+                                                    <a href="#" class="bc-tag">#{{ $tag->name }}</a>
+                                                @endforeach
+                                            </div>
+                                        @endif
+
                                         <p>{{ Str::limit(strip_tags($blog->short_description ?? $blog->description), 120) }}
                                         </p>
+
                                         <div class="bc-footer">
                                             <div class="bc-author">
                                                 @if ($blog->author)
@@ -1584,35 +1169,30 @@
                             @endforelse
                         </div>
 
-                        {{-- Pagination --}}
-                        @if ($blogs->hasPages())
-                            <div class="text-center mt-5">
-                                <div class="d-flex justify-content-center gap-2 flex-wrap">
-                                    {{-- Previous --}}
-                                    @if ($blogs->onFirstPage())
-                                        <span class="blog-page-btn disabled">&laquo;</span>
-                                    @else
-                                        <a href="{{ $blogs->previousPageUrl() }}" class="blog-page-btn">&laquo;</a>
-                                    @endif
-
-                                    {{-- Page numbers --}}
-                                    @foreach ($blogs->getUrlRange(1, $blogs->lastPage()) as $page => $url)
-                                        @if ($page == $blogs->currentPage())
-                                            <span class="blog-page-btn active">{{ $page }}</span>
-                                        @else
-                                            <a href="{{ $url }}" class="blog-page-btn">{{ $page }}</a>
-                                        @endif
-                                    @endforeach
-
-                                    {{-- Next --}}
-                                    @if ($blogs->hasMorePages())
-                                        <a href="{{ $blogs->nextPageUrl() }}" class="blog-page-btn">&raquo;</a>
-                                    @else
-                                        <span class="blog-page-btn disabled">&raquo;</span>
-                                    @endif
-                                </div>
+                        {{-- ===== LOAD MORE BUTTON ===== --}}
+                        @if ($blogs->hasMorePages())
+                            <div class="load-more-wrap">
+                                <button class="load-more-btn" id="loadMoreBtn"
+                                    data-next-page="{{ $blogs->currentPage() + 1 }}"
+                                    data-base-url="{{ url()->current() }}" data-category="{{ request('category') }}"
+                                    data-tag="{{ request('tag') }}">
+                                    <span class="lm-text"><i class="bi bi-arrow-down-circle me-1"></i> Load More
+                                        Posts</span>
+                                    <span class="lm-spinner"></span>
+                                </button>
+                                <span class="load-more-count d-block">
+                                    Showing {{ $blogs->count() }} of {{ $blogs->total() }} posts
+                                </span>
                             </div>
+                        @else
+                            {{-- All posts loaded — show total --}}
+                            @if ($blogs->total() > 0)
+                                <div class="load-more-wrap">
+                                    <span class="load-more-count">All {{ $blogs->total() }} posts loaded</span>
+                                </div>
+                            @endif
                         @endif
+
                     </div>{{-- end LEFT --}}
 
                     {{-- RIGHT: SIDEBAR --}}
@@ -1620,16 +1200,19 @@
 
                         {{-- Search --}}
                         <div class="sidebar-card">
-                            <form action="#" method="GET">
+                            <form action="{{ route('blog') }}" method="GET">
+                                @if (request('category'))
+                                    <input type="hidden" name="category" value="{{ request('category') }}">
+                                @endif
                                 <div style="position:relative;">
                                     <input type="text" name="q" value="{{ request('q') }}"
                                         placeholder="Search articles…"
-                                        style="width:100%;border:1.5px solid color-mix(in srgb,#3c4049,transparent 80%);border-radius:50px;padding:12px 50px 12px 20px;font-size:14px;outline:none;color:#3c4049;transition:border-color .3s;"
-                                        onfocus="this.style.borderColor='#175cdd'"
-                                        onblur="this.style.borderColor='color-mix(in srgb,#3c4049,transparent 80%)'">
+                                        style="width:100%;border:1.5px solid color-mix(in srgb,var(--default-color),transparent 80%);border-radius:50px;padding:12px 50px 12px 20px;font-size:14px;outline:none;background:transparent;color:var(--default-color);transition:border-color .3s;"
+                                        onfocus="this.style.borderColor='var(--accent-color)'"
+                                        onblur="this.style.borderColor='color-mix(in srgb,var(--default-color),transparent 80%)'">
                                     <button type="submit"
                                         style="position:absolute;right:18px;top:50%;transform:translateY(-50%);background:none;border:none;padding:0;cursor:pointer;">
-                                        <i class="bi bi-search" style="color:#175cdd;font-size:15px;"></i>
+                                        <i class="bi bi-search" style="color:var(--accent-color);font-size:15px;"></i>
                                     </button>
                                 </div>
                             </form>
@@ -1640,16 +1223,17 @@
                             <h5>Categories</h5>
                             <ul class="cat-list">
                                 <li>
-                                    <a href="#" class="{{ !request('category') ? 'active' : '' }}">
+                                    <a href="{{ route('blog') }}"
+                                        class="{{ !request('category') && !request('tag') ? 'active' : '' }}">
                                         All Posts <span class="badge">{{ $totalBlogs }}</span>
                                     </a>
                                 </li>
                                 @foreach ($categories as $cat)
                                     <li>
-                                        <a href="{{ route('frontend.blog.category', $cat->slug) }}"
+                                        <a href="{{ route('blog', ['category' => $cat->slug]) }}"
                                             class="{{ request('category') === $cat->slug ? 'active' : '' }}">
                                             {{ $cat->category_name }}
-                                            <span class="badge">{{ $cat->blogs_count }}</span>
+                                            <span class="badge">{{ $cat->blogs_count ?? 0 }}</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -1660,13 +1244,13 @@
                         <div class="sidebar-card">
                             <h5>Recent Posts</h5>
                             @foreach ($recentPosts as $rp)
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{ route('frontend.blog.details', $rp->slug) }}" class="text-decoration-none">
                                     <div class="recent-post">
                                         @if ($rp->image)
                                             <img src="{{ asset('img/' . $rp->image) }}" alt="{{ $rp->title }}" />
                                         @else
                                             <div
-                                                style="width:70px;height:60px;border-radius:8px;background:linear-gradient(135deg,#175cdd22,#175cdd55);flex-shrink:0;">
+                                                style="width:64px;height:52px;border-radius:8px;background:linear-gradient(135deg,#175cdd22,#175cdd55);flex-shrink:0;">
                                             </div>
                                         @endif
                                         <div class="rp-info">
@@ -1678,22 +1262,27 @@
                             @endforeach
                         </div>
 
-                        {{-- Tags --}}
-                        <div class="sidebar-card">
-                            <h5>Popular Tags</h5>
-                            <div class="tag-cloud">
-                                @foreach ($tags as $tag)
-                                    <a href="#">{{ $tag }}</a>
-                                @endforeach
+                        {{-- Popular Tags — with sidebar-card wrapper --}}
+                        @if ($tags->count())
+                            <div class="sidebar-card">
+                                <h5>Popular Tags</h5>
+                                <div class="tag-cloud">
+                                    @foreach ($tags as $tag)
+                                        <a href="#">
+                                            {{ $tag->name }}
+                                            <span class="tag-count">({{ $tag->blogs_count }})</span>
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
                         {{-- About Widget --}}
                         <div class="sidebar-card">
                             <h5>About This Blog</h5>
-                            <p style="font-size:13px;line-height:1.7;color:color-mix(in srgb,#3c4049,transparent 20%);">
-                                Stories from India's first screen acting school for children (ages 3–29). Founded in
-                                2019 by
+                            <p
+                                style="font-size:13px;line-height:1.7;color:color-mix(in srgb,var(--default-color),transparent 20%);">
+                                Stories from India's first screen acting school for children (ages 3–29). Founded in 2019 by
                                 Kritesh Agarwal. Registered with Startup India &amp; iStart Rajasthan.
                             </p>
                             <a href="#enroll"
@@ -1741,41 +1330,7 @@
 
 @section('script')
     <script>
-        // ===== CATEGORY FILTER (client-side for instant feel) =====
-        function filterPosts(cat, btn) {
-            // Update tab active state
-            document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-
-            const cards = document.querySelectorAll('#blogGrid .bc');
-            let shown = 0;
-            cards.forEach(c => {
-                const cardCat = c.getAttribute('data-cat');
-                if (cat === 'all' || cardCat === cat) {
-                    c.style.display = '';
-                    c.style.animation = 'fadeInUp .4s ease';
-                    shown++;
-                } else {
-                    c.style.display = 'none';
-                }
-            });
-        }
-
         // ===== FADE IN ON SCROLL =====
-        const style = document.createElement('style');
-        style.textContent = `
-    @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-    .blog-page-btn {
-        display:inline-flex;align-items:center;justify-content:center;
-        width:40px;height:40px;border-radius:8px;border:1.5px solid #ddd;
-        color:#3c4049;text-decoration:none;font-size:14px;font-weight:600;transition:all .2s;
-    }
-    .blog-page-btn:hover { background:#175cdd;color:#fff;border-color:#175cdd; }
-    .blog-page-btn.active { background:#175cdd;color:#fff;border-color:#175cdd; }
-    .blog-page-btn.disabled { opacity:.4;pointer-events:none; }
-`;
-        document.head.appendChild(style);
-
         const observer = new IntersectionObserver(entries => {
             entries.forEach((e, i) => {
                 if (e.isIntersecting) {
@@ -1789,12 +1344,85 @@
         });
         document.querySelectorAll('.bc').forEach(c => observer.observe(c));
 
+        // ===== LOAD MORE BUTTON =====
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', async function() {
+                const btn = this;
+                const page = btn.dataset.nextPage;
+                const baseUrl = btn.dataset.baseUrl;
+                const cat = btn.dataset.category;
+                const tag = btn.dataset.tag;
+
+                // Build URL with existing filters
+                const params = new URLSearchParams();
+                params.set('page', page);
+                if (cat) params.set('category', cat);
+                if (tag) params.set('tag', tag);
+
+                btn.classList.add('loading');
+
+                try {
+                    const res = await fetch(`${baseUrl}?${params.toString()}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                    const html = await res.text();
+
+                    // Parse the returned HTML and extract new cards
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newCards = doc.querySelectorAll('#blogGrid .bc');
+                    const grid = document.getElementById('blogGrid');
+
+                    newCards.forEach(card => {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        grid.appendChild(card);
+                        // Trigger animation
+                        requestAnimationFrame(() => {
+                            card.style.transition = 'opacity .4s ease, transform .4s ease';
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        });
+                        observer.observe(card);
+                    });
+
+                    // Check if next page exists
+                    const nextBtn = doc.getElementById('loadMoreBtn');
+                    if (nextBtn) {
+                        btn.dataset.nextPage = nextBtn.dataset.nextPage;
+                        // Update count text
+                        const countEl = document.querySelector('.load-more-count');
+                        const newCountEl = doc.querySelector('.load-more-count');
+                        if (countEl && newCountEl) countEl.textContent = newCountEl.textContent;
+                    } else {
+                        // No more pages — replace button with "all loaded" message
+                        const wrap = btn.closest('.load-more-wrap');
+                        wrap.innerHTML = '<span class="load-more-count">All posts loaded</span>';
+                    }
+
+                } catch (err) {
+                    console.error('Load more failed:', err);
+                } finally {
+                    btn.classList.remove('loading');
+                }
+            });
+        }
+
         // ===== MOBILE NAV =====
         const mnt = document.querySelector('.mobile-nav-toggle');
         if (mnt) mnt.addEventListener('click', () => {
             document.body.classList.toggle('mobile-nav-active');
             mnt.classList.toggle('bi-list');
             mnt.classList.toggle('bi-x');
+        });
+
+        // ===== SCROLL TOP =====
+        window.addEventListener('scroll', () => {
+            const st = document.getElementById('scrollTop');
+            if (st) st.classList.toggle('active', window.scrollY > 300);
         });
     </script>
 @endsection
