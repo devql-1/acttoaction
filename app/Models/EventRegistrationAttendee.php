@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventRegistrationAttendee extends Model
 {
-    protected $fillable = ['registration_id', 'ticket_number', 'is_primary', 'name', 'phone', 'email', 'dob', 'age', 'gender', 'institution'];
+    protected $fillable = ['registration_id', 'ticket_number', 'is_primary', 'name', 'phone', 'email', 'dob', 'age', 'gender', 'institution', 'type'];
 
     protected $casts = [
         'is_primary' => 'boolean',

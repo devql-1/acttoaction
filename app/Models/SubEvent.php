@@ -9,7 +9,7 @@ class SubEvent extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['event_id', 'title', 'description', 'event_date', 'start_time', 'end_time', 'fees', 'age_group', 'mode', 'max_seats', 'status', 'banner_image'];
+    protected $fillable = ['event_id', 'title', 'description', 'event_date', 'start_time', 'end_time', 'fees', 'age_group', 'mode', 'max_seats', 'status', 'banner_image', 'type'];
 
     protected $casts = [
         'event_date' => 'date',

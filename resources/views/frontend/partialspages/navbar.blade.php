@@ -60,6 +60,8 @@
                         </a>
                     </li>
 
+
+
                     <!-- Dropdown -->
                     {{-- <li class="dropdown">
                         <a href="#"><span>More Pages</span><i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -79,6 +81,25 @@
                     <li>
                         <a href="contact.html" class="{{ request()->is('contact.html') ? 'active' : '' }}">
                             Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('summercamp') }}"
+                            class="{{ request()->routeIs('summercamp') ? 'active' : '' }}"
+                            style="
+            background: var(--accent-color);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+       ">
+                            Summer-Camp
+                            <i class="bi bi-arrow-right"></i>
                         </a>
                     </li>
                 </ul>

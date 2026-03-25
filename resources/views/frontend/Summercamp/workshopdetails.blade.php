@@ -3,283 +3,383 @@
 
 @section('title', $school->name . ' – Act To Action')
 
-@push('styles')
-    <style>
-        .price-highlight {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
+
+<style>
+    .btn-add-child {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 32px;
+        border-radius: 50px;
+        background: linear-gradient(135deg, #ff7a18, #ffb347);
+        color: #fff;
+        font-size: 1.05rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(255, 122, 24, 0.3);
+    }
+
+    .btn-add-child i {
+        font-size: 1.3rem;
+    }
+
+    .btn-add-child:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 12px 25px rgba(255, 122, 24, 0.4);
+    }
+
+    .btn-add-child:active {
+        transform: scale(0.97);
+    }
+
+    .btn-add-child:focus {
+        outline: none;
+    }
+
+    /* ── Price highlight ── */
+    .price-highlight {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+    }
+
+    .price-highlight small {
+        font-size: 1rem;
+        color: var(--default-color);
+        font-weight: 400;
+    }
+
+    /* ── Schedule / feature boxes ── */
+    .schedule-table {
+        background: var(--surface-color);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .schedule-table table {
+        width: 100%;
+    }
+
+    .schedule-table th {
+        color: var(--heading-color);
+        font-weight: 600;
+        padding: 1rem;
+        border-bottom: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    }
+
+    .schedule-table td {
+        padding: 1rem;
+        border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 95%);
+    }
+
+    .feature-box {
+        background: var(--surface-color);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid var(--accent-color);
+    }
+
+    .feature-box h5 {
+        color: var(--heading-color);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .feature-box p {
+        margin: 0;
+        color: color-mix(in srgb, var(--default-color), transparent 20%);
+    }
+
+    /* ── Inline validation ── */
+    .form-control.is-invalid,
+    .form-select.is-invalid {
+        border-color: #dc2626 !important;
+        background-image: none;
+    }
+
+    .form-control.is-valid,
+    .form-select.is-valid {
+        border-color: #16a34a !important;
+        background-image: none;
+    }
+
+    /* field-error: hidden by default, shown via .show */
+    .field-error {
+        display: none;
+        color: #dc2626;
+        font-size: 0.8rem;
+        margin-top: 4px;
+    }
+
+    .field-error.show {
+        display: block;
+    }
+
+    /* ── Submit button ── */
+    #regSubmitBtn {
+        transition: all 0.3s;
+    }
+
+    #regSubmitBtn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    #regSubmitBtn:not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+    }
+
+    /* ── Child cards ── */
+    .child-card {
+        background: color-mix(in srgb, var(--accent-color), transparent 96%);
+        border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        position: relative;
+    }
+
+    .child-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        font-weight: 600;
+        color: var(--heading-color);
+        font-size: 0.95rem;
+    }
+
+    .btn-remove-child {
+        background: #fee2e2;
+        color: #dc2626;
+        border: none;
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        line-height: 1.5;
+    }
+
+    .btn-remove-child:hover {
+        background: #dc2626;
+        color: white;
+    }
+
+    /* ── Add-child button — FIXED ── */
+    .btn-add-child {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin-top: 8px;
+        padding: 12px 16px;
+        background: transparent;
+        border: 2px dashed color-mix(in srgb, var(--accent-color), transparent 45%);
+        border-radius: 10px;
+        color: var(--accent-color);
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.25s, border-style 0.25s, box-shadow 0.25s;
+        /* prevent browser UA button styles from overriding */
+        -webkit-appearance: none;
+        appearance: none;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .btn-add-child:hover {
+        background: color-mix(in srgb, var(--accent-color), transparent 90%);
+        border-style: solid;
+        box-shadow: 0 2px 8px color-mix(in srgb, var(--accent-color), transparent 75%);
+    }
+
+    .btn-add-child i {
+        font-size: 1rem;
+    }
+
+    /* ── Total price badge ── */
+    #totalPriceBadge {
+        background: linear-gradient(135deg, var(--accent-color), #1e40af);
+        color: white;
+        border-radius: 10px;
+        padding: 14px 20px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.95rem;
+    }
+
+    #totalPriceBadge strong {
+        font-size: 1.3rem;
+    }
+
+    /* ══════════════════════════════════════
+                                       CONFIRMATION / FAILURE OVERLAY — FIXED
+                                    ══════════════════════════════════════ */
+    #confirmationOverlay {
+        display: none;
+        /* hidden by default */
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        /* use flex only when .show is added */
+    }
+
+    #confirmationOverlay.show {
+        display: flex;
+    }
+
+    .confirmation-box {
+        background: white;
+        border-radius: 20px;
+        padding: 48px 40px;
+        max-width: 480px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        /* prevent re-animation on re-show if overlay was never hidden */
+        animation-fill-mode: both;
+    }
+
+    @keyframes popIn {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
         }
 
-        .price-highlight small {
-            font-size: 1rem;
-            color: var(--default-color);
-            font-weight: 400;
+        to {
+            transform: scale(1);
+            opacity: 1;
         }
+    }
 
-        .schedule-table {
-            background: var(--surface-color);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
+    /* Force re-animation each time overlay is shown */
+    #confirmationOverlay.show .confirmation-box {
+        animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
 
-        .schedule-table table {
-            width: 100%;
-        }
+    /* ── Success icon ── */
+    .confirmation-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
 
-        .schedule-table th {
-            color: var(--heading-color);
-            font-weight: 600;
-            padding: 1rem;
-            border-bottom: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
-        }
+    .confirmation-icon.success {
+        background: #dcfce7;
+    }
 
-        .schedule-table td {
-            padding: 1rem;
-            border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 95%);
-        }
+    .confirmation-icon.failure {
+        background: #fee2e2;
+    }
 
-        .feature-box {
-            background: var(--surface-color);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--accent-color);
-        }
+    .confirmation-box h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--heading-color);
+        margin-bottom: 8px;
+    }
 
-        .feature-box h5 {
-            color: var(--heading-color);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
+    .confirmation-box p {
+        color: #6b7280;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+    }
 
-        .feature-box p {
-            margin: 0;
-            color: color-mix(in srgb, var(--default-color), transparent 20%);
-        }
+    .confirmation-detail {
+        background: #f9fafb;
+        border-radius: 10px;
+        padding: 16px;
+        margin: 16px 0;
+        text-align: left;
+    }
 
-        /* Validation */
-        .form-control.is-invalid,
-        .form-select.is-invalid {
-            border-color: #dc2626 !important;
-            background-image: none;
-        }
+    .confirmation-detail div {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        font-size: 0.9rem;
+    }
 
-        .form-control.is-valid,
-        .form-select.is-valid {
-            border-color: #16a34a !important;
-            background-image: none;
-        }
+    .confirmation-detail .key {
+        color: #6b7280;
+    }
 
-        .field-error {
-            display: none;
-            color: #dc2626;
-            font-size: 0.8rem;
-            margin-top: 4px;
-        }
+    .confirmation-detail .val {
+        font-weight: 600;
+        color: var(--heading-color);
+    }
 
-        .field-error.show {
-            display: block;
-        }
+    .btn-confirm-close {
+        border: none;
+        padding: 14px 36px;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 8px;
+        width: 100%;
+        transition: all 0.3s;
+        color: white;
+    }
 
-        #regSubmitBtn {
-            transition: all 0.3s;
-        }
+    .btn-confirm-close.success {
+        background: var(--accent-color);
+    }
 
-        #regSubmitBtn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
+    .btn-confirm-close.failure {
+        background: #dc2626;
+    }
 
-        #regSubmitBtn:not(:disabled):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
+    .btn-confirm-close:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+    }
 
-        /* ── Child cards ── */
-        .child-card {
-            background: color-mix(in srgb, var(--accent-color), transparent 96%);
-            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 80%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 16px;
-            position: relative;
-        }
+    /* ── Payment-failed inline banner (inside form) ── */
+    #paymentFailedBanner {
+        display: none;
+        background: #fee2e2;
+        border: 1px solid #fca5a5;
+        border-left: 4px solid #dc2626;
+        border-radius: 8px;
+        padding: 14px 18px;
+        margin-bottom: 16px;
+        font-size: 0.925rem;
+        color: #b91c1c;
+    }
 
-        .child-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            font-weight: 600;
-            color: var(--heading-color);
-            font-size: 0.95rem;
-        }
+    #paymentFailedBanner.show {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
 
-        .btn-remove-child {
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            border-radius: 8px;
-            padding: 4px 10px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+    #paymentFailedBanner i {
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-size: 1rem;
+    }
+</style>
 
-        .btn-remove-child:hover {
-            background: #dc2626;
-            color: white;
-        }
-
-        .btn-add-child {
-            background: transparent;
-            border: 2px dashed color-mix(in srgb, var(--accent-color), transparent 50%);
-            color: var(--accent-color);
-            border-radius: 10px;
-            padding: 12px;
-            width: 100%;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .btn-add-child:hover {
-            background: color-mix(in srgb, var(--accent-color), transparent 90%);
-            border-style: solid;
-        }
-
-        /* ── Total price badge ── */
-        #totalPriceBadge {
-            background: linear-gradient(135deg, var(--accent-color), #1e40af);
-            color: white;
-            border-radius: 10px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.95rem;
-        }
-
-        #totalPriceBadge strong {
-            font-size: 1.3rem;
-        }
-
-        /* ── Confirmation overlay ── */
-        #confirmationOverlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #confirmationOverlay.show {
-            display: flex;
-        }
-
-        .confirmation-box {
-            background: white;
-            border-radius: 20px;
-            padding: 48px 40px;
-            max-width: 480px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .confirmation-icon {
-            width: 80px;
-            height: 80px;
-            background: #dcfce7;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-        }
-
-        .confirmation-box h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--heading-color);
-            margin-bottom: 8px;
-        }
-
-        .confirmation-box p {
-            color: #6b7280;
-            margin-bottom: 6px;
-            font-size: 0.95rem;
-        }
-
-        .confirmation-detail {
-            background: #f9fafb;
-            border-radius: 10px;
-            padding: 16px;
-            margin: 16px 0;
-            text-align: left;
-        }
-
-        .confirmation-detail div {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 0.9rem;
-        }
-
-        .confirmation-detail .key {
-            color: #6b7280;
-        }
-
-        .confirmation-detail .val {
-            font-weight: 600;
-            color: var(--heading-color);
-        }
-
-        .btn-confirm-close {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 14px 36px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 8px;
-            width: 100%;
-            transition: all 0.3s;
-        }
-
-        .btn-confirm-close:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-    </style>
-@endpush
 
 @section('content')
     <main class="main">
@@ -289,10 +389,13 @@
             <div class="container">
                 <nav aria-label="breadcrumb" data-aos="fade-up">
                     <ol class="breadcrumb" style="background: none; padding: 0; margin-bottom: 30px;">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}"
-                                style="color: var(--accent-color); text-decoration: none;">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('workshops') }}"
-                                style="color: var(--accent-color); text-decoration: none;">Workshops</a></li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}" style="color: var(--accent-color); text-decoration: none;">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('workshops') }}"
+                                style="color: var(--accent-color); text-decoration: none;">Workshops</a>
+                        </li>
                         @if ($school->ageGroup && $school->city)
                             <li class="breadcrumb-item">
                                 <a href="{{ route('workshops', ['age_group_id' => $school->age_group_id, 'city_id' => $school->city_id]) }}"
@@ -309,15 +412,15 @@
                     {{-- Left --}}
                     <div class="col-lg-8" data-aos="fade-up">
                         <div class="mb-5">
-                            <div style="border-radius: 16px; overflow: hidden; height: 450px;">
+                            <div style="border-radius:16px;overflow:hidden;height:450px;">
                                 @if ($school->image_url)
                                     <img src="{{ $school->image_url }}" alt="{{ $school->name }}"
-                                        class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                        class="img-fluid w-100 h-100" style="object-fit:cover;">
                                 @else
                                     <div class="w-100 h-100 d-flex align-items-center justify-content-center"
-                                        style="background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 80%), color-mix(in srgb, var(--accent-color), transparent 60%));">
+                                        style="background:linear-gradient(135deg,color-mix(in srgb,var(--accent-color),transparent 80%),color-mix(in srgb,var(--accent-color),transparent 60%));">
                                         <i class="bi bi-building"
-                                            style="font-size: 5rem; color: var(--accent-color); opacity: 0.3;"></i>
+                                            style="font-size:5rem;color:var(--accent-color);opacity:0.3;"></i>
                                     </div>
                                 @endif
                             </div>
@@ -325,12 +428,14 @@
                         <div class="department-hero">
                             <div class="badge-wrap">
                                 @if ($school->ageGroup)
-                                    <span class="specialty-badge"><i
-                                            class="bi bi-people-fill me-2"></i>{{ $school->ageGroup->name }}</span>
+                                    <span class="specialty-badge">
+                                        <i class="bi bi-people-fill me-2"></i>{{ $school->ageGroup->name }}
+                                    </span>
                                 @endif
                                 @if ($school->city?->name)
-                                    <span class="specialty-badge"><i
-                                            class="bi bi-building me-2"></i>{{ $school->city->name }}</span>
+                                    <span class="specialty-badge">
+                                        <i class="bi bi-building me-2"></i>{{ $school->city->name }}
+                                    </span>
                                 @endif
                             </div>
                             <h1 class="department-title">{{ $school->name }}</h1>
@@ -344,48 +449,52 @@
                     <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
                         @if ($school->timings)
                             <div
-                                style="background: var(--surface-color); padding: 20px; border-radius: 12px; margin-bottom: 16px; border-left: 4px solid var(--accent-color);">
-                                <h5
-                                    style="color: var(--heading-color); font-weight: 600; margin-bottom: 8px; font-size: 1rem;">
-                                    <i class="bi bi-calendar-week me-2" style="color: var(--accent-color);"></i>Class
-                                    Schedule</h5>
-                                <p style="margin: 0; font-size: 0.9rem;">{{ $school->timings }}</p>
+                                style="background:var(--surface-color);padding:20px;border-radius:12px;margin-bottom:16px;border-left:4px solid var(--accent-color);">
+                                <h5 style="color:var(--heading-color);font-weight:600;margin-bottom:8px;font-size:1rem;">
+                                    <i class="bi bi-calendar-week me-2" style="color:var(--accent-color);"></i>Class
+                                    Schedule
+                                </h5>
+                                <p style="margin:0;font-size:0.9rem;">{{ $school->timings }}</p>
                             </div>
                         @endif
                         @if ($school->city)
                             <div
-                                style="background: var(--surface-color); padding: 20px; border-radius: 12px; margin-bottom: 16px; border-left: 4px solid var(--accent-color);">
-                                <h5
-                                    style="color: var(--heading-color); font-weight: 600; margin-bottom: 8px; font-size: 1rem;">
-                                    <i class="bi bi-geo-alt-fill me-2" style="color: var(--accent-color);"></i>City</h5>
-                                <p style="margin: 0; font-size: 0.9rem;">{{ $school->city->name }}</p>
+                                style="background:var(--surface-color);padding:20px;border-radius:12px;margin-bottom:16px;border-left:4px solid var(--accent-color);">
+                                <h5 style="color:var(--heading-color);font-weight:600;margin-bottom:8px;font-size:1rem;">
+                                    <i class="bi bi-geo-alt-fill me-2" style="color:var(--accent-color);"></i>City
+                                </h5>
+                                <p style="margin:0;font-size:0.9rem;">{{ $school->city->name }}</p>
                             </div>
                         @endif
                         @if ($school->fees)
                             <div
-                                style="background: var(--surface-color); padding: 20px; border-radius: 12px; margin-bottom: 16px; border-left: 4px solid var(--accent-color);">
-                                <h5
-                                    style="color: var(--heading-color); font-weight: 600; margin-bottom: 8px; font-size: 1rem;">
-                                    <i class="bi bi-currency-rupee me-2" style="color: var(--accent-color);"></i>Fees</h5>
-                                <p style="margin: 0; font-size: 1.2rem; font-weight: 600; color: var(--accent-color);">₹
-                                    {{ number_format($school->fees) }} <small style="font-size:0.8rem;color:#6b7280;">per
-                                        child</small></p>
+                                style="background:var(--surface-color);padding:20px;border-radius:12px;margin-bottom:16px;border-left:4px solid var(--accent-color);">
+                                <h5 style="color:var(--heading-color);font-weight:600;margin-bottom:8px;font-size:1rem;">
+                                    <i class="bi bi-currency-rupee me-2" style="color:var(--accent-color);"></i>Fees
+                                </h5>
+                                <p style="margin:0;font-size:1.2rem;font-weight:600;color:var(--accent-color);">
+                                    ₹ {{ number_format($school->fees) }}
+                                    <small style="font-size:0.8rem;color:#6b7280;">per child</small>
+                                </p>
                             </div>
                         @endif
                         <div
-                            style="background: color-mix(in srgb, var(--accent-color), transparent 95%); padding: 24px; border-radius: 12px; text-align: center;">
+                            style="background:color-mix(in srgb,var(--accent-color),transparent 95%);padding:24px;border-radius:12px;text-align:center;">
                             <i class="bi bi-telephone-fill"
-                                style="font-size: 2rem; color: var(--accent-color); margin-bottom: 12px; display: block;"></i>
-                            <h5 style="font-size: 1.1rem; margin-bottom: 8px;">Have Questions?</h5>
+                                style="font-size:2rem;color:var(--accent-color);margin-bottom:12px;display:block;"></i>
+                            <h5 style="font-size:1.1rem;margin-bottom:8px;">Have Questions?</h5>
                             <p
-                                style="font-size: 0.9rem; margin-bottom: 16px; color: color-mix(in srgb, var(--default-color), transparent 20%);">
-                                Call us for any queries</p>
+                                style="font-size:0.9rem;margin-bottom:16px;color:color-mix(in srgb,var(--default-color),transparent 20%);">
+                                Call us for any queries
+                            </p>
                             <a href="tel:+919024164323"
-                                style="display: inline-block; background: var(--accent-color); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">Call:
-                                +91 90241 64323</a>
+                                style="display:inline-block;background:var(--accent-color);color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:500;">
+                                Call: +91 90241 64323
+                            </a>
                             <p
-                                style="font-size: 0.85rem; margin-top: 12px; margin-bottom: 0; color: color-mix(in srgb, var(--default-color), transparent 40%);">
-                                Mon-Sat: 11 AM - 7 PM</p>
+                                style="font-size:0.85rem;margin-top:12px;margin-bottom:0;color:color-mix(in srgb,var(--default-color),transparent 40%);">
+                                Mon-Sat: 11 AM – 7 PM
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -394,34 +503,37 @@
 
         {{-- ── Location ── --}}
         @if ($school->address)
-            <section class="section" style="padding: 80px 0;">
+            <section class="section" style="padding:80px 0;">
                 <div class="container">
                     <div class="row align-items-center gy-4">
                         <div class="col-lg-8" data-aos="fade-up">
-                            <h3 style="font-size: 2rem; font-weight: 300; margin-bottom: 24px;">Workshop Location</h3>
-                            <div style="border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                            <h3 style="font-size:2rem;font-weight:300;margin-bottom:24px;">Workshop Location</h3>
+                            <div style="border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
                                 <iframe src="https://maps.google.com/maps?q={{ urlencode($school->address) }}&output=embed"
-                                    width="100%" height="400" style="border:0;" allowfullscreen=""
-                                    loading="lazy"></iframe>
+                                    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
                             </div>
                         </div>
                         <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                            <div style="background: var(--surface-color); padding: 32px; border-radius: 16px;">
+                            <div style="background:var(--surface-color);padding:32px;border-radius:16px;">
                                 <div class="mb-4">
                                     <div
                                         style="width:50px;height:50px;background:color-mix(in srgb,var(--accent-color),transparent 90%);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
                                         <i class="bi bi-geo-alt-fill"
-                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i>
+                                    </div>
                                     <h5 style="font-size:1.1rem;margin-bottom:8px;">Address</h5>
                                     <p
                                         style="margin:0;line-height:1.6;color:color-mix(in srgb,var(--default-color),transparent 20%);">
-                                        {{ $school->address }}</p>
+                                        {{ $school->address }}
+                                    </p>
                                 </div>
                                 <div class="mb-4">
                                     <div
                                         style="width:50px;height:50px;background:color-mix(in srgb,var(--accent-color),transparent 90%);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
                                         <i class="bi bi-telephone-fill"
-                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i>
+                                    </div>
                                     <h5 style="font-size:1.1rem;margin-bottom:8px;">Phone</h5>
                                     <p style="margin:0;">+91 90241 64323</p>
                                 </div>
@@ -429,7 +541,8 @@
                                     <div
                                         style="width:50px;height:50px;background:color-mix(in srgb,var(--accent-color),transparent 90%);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
                                         <i class="bi bi-envelope-fill"
-                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i>
+                                    </div>
                                     <h5 style="font-size:1.1rem;margin-bottom:8px;">Email</h5>
                                     <p style="margin:0;">info@acttoaction.com</p>
                                 </div>
@@ -442,18 +555,17 @@
 
         {{-- ── Registration Form ── --}}
         <section class="section" id="registration"
-            style="padding: 80px 0; background: linear-gradient(135deg, color-mix(in srgb, var(--accent-color), transparent 97%) 0%, var(--surface-color) 100%);">
+            style="padding:80px 0;background:linear-gradient(135deg,color-mix(in srgb,var(--accent-color),transparent 97%) 0%,var(--surface-color) 100%);">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
 
                         <div class="text-center mb-5" data-aos="fade-up">
-                            <h2 style="font-size: 2.5rem; font-weight: 300; margin-bottom: 16px;">Register for the Workshop
-                            </h2>
+                            <h2 style="font-size:2.5rem;font-weight:300;margin-bottom:16px;">Register for the Workshop</h2>
                             <p class="lead">Fill out the form below to secure your spot.</p>
                         </div>
 
-                        <div style="background: var(--surface-color); padding: 48px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06);"
+                        <div style="background:var(--surface-color);padding:48px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.06);"
                             data-aos="fade-up" data-aos-delay="100">
 
                             {{-- Progress Steps --}}
@@ -461,7 +573,8 @@
                                 <div class="col-md-4 mb-3 mb-md-0 text-center">
                                     <div
                                         style="width:60px;height:60px;background:var(--accent-color);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-                                        <i class="bi bi-person-fill" style="font-size:1.5rem;color:white;"></i></div>
+                                        <i class="bi bi-person-fill" style="font-size:1.5rem;color:white;"></i>
+                                    </div>
                                     <h6 style="margin-bottom:4px;font-weight:500;">Fill Details</h6>
                                     <small style="color:color-mix(in srgb,var(--default-color),transparent 40%);">Provide
                                         information</small>
@@ -470,7 +583,8 @@
                                     <div id="step2Icon"
                                         style="width:60px;height:60px;background:color-mix(in srgb,var(--accent-color),transparent 80%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;transition:all 0.4s;">
                                         <i class="bi bi-check-circle-fill"
-                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i>
+                                    </div>
                                     <h6 style="margin-bottom:4px;font-weight:500;">Confirmation</h6>
                                     <small style="color:color-mix(in srgb,var(--default-color),transparent 40%);">Receive
                                         confirmation</small>
@@ -479,7 +593,8 @@
                                     <div id="step3Icon"
                                         style="width:60px;height:60px;background:color-mix(in srgb,var(--accent-color),transparent 80%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;transition:all 0.4s;">
                                         <i class="bi bi-credit-card-fill"
-                                            style="font-size:1.5rem;color:var(--accent-color);"></i></div>
+                                            style="font-size:1.5rem;color:var(--accent-color);"></i>
+                                    </div>
                                     <h6 style="margin-bottom:4px;font-weight:500;">Payment</h6>
                                     <small style="color:color-mix(in srgb,var(--default-color),transparent 40%);">Complete
                                         payment</small>
@@ -538,16 +653,15 @@
                                             can add multiple children</small>
                                     </h5>
 
-                                    <div id="childrenContainer">
-                                        {{-- First child rendered by JS below --}}
-                                    </div>
+                                    <div id="childrenContainer"></div>
 
                                     <button type="button" class="btn-add-child" id="btnAddChild">
-                                        <i class="bi bi-plus-circle"></i> Add Another Child
+                                        <i class="bi bi-plus-circle"></i>
+                                        <span>Add Another Child</span>
                                     </button>
                                 </div>
 
-                                {{-- Workshop --}}
+                                {{-- Workshop Details --}}
                                 <div class="mb-4">
                                     <h5
                                         style="margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid color-mix(in srgb,var(--default-color),transparent 95%);">
@@ -573,7 +687,7 @@
                                     </div>
                                 </div>
 
-                                {{-- Total price (shown only for paid) --}}
+                                {{-- Total price badge (paid only) --}}
                                 @if ($school->fees > 0)
                                     <div id="totalPriceBadge">
                                         <span>Total Amount (<span id="childCountLabel">1</span> child ×
@@ -587,16 +701,24 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="termsCheck">
                                         <label class="form-check-label" for="termsCheck" style="font-size:0.95rem;">
-                                            I agree to the <a href="#"
+                                            I agree to the
+                                            <a href="#"
                                                 style="color:var(--accent-color);text-decoration:none;">terms and
-                                                conditions</a> and understand the refund policy
+                                                conditions</a>
+                                            and understand the refund policy
                                         </label>
                                     </div>
                                     <div class="field-error" id="err_terms">You must agree to the terms and conditions.
                                     </div>
                                 </div>
 
-                                {{-- Status messages --}}
+                                {{-- Payment failed inline banner --}}
+                                <div id="paymentFailedBanner">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    <div id="paymentFailedMsg"></div>
+                                </div>
+
+                                {{-- Generic loading / error feedback --}}
                                 <div id="regLoading"
                                     style="display:none;text-align:center;color:var(--accent-color);margin-bottom:16px;">
                                     <span class="spinner-border spinner-border-sm me-2"></span>Processing your
@@ -625,7 +747,7 @@
                                 <p style="margin:0;font-size:0.95rem;">
                                     <i class="bi bi-info-circle-fill me-2" style="color:var(--accent-color);"></i>
                                     Need help? Call <strong style="color:var(--accent-color);">+91 90241 64323</strong>
-                                    (Mon-Sat: 11 AM - 7 PM)
+                                    (Mon-Sat: 11 AM – 7 PM)
                                 </p>
                             </div>
 
@@ -637,11 +759,12 @@
 
         {{-- ── Related Workshops ── --}}
         @if ($relatedSchools->isNotEmpty())
-            <section class="section light-background" style="padding: 80px 0;">
+            <section class="section light-background" style="padding:80px 0;">
                 <div class="container">
                     <div class="text-center mb-5" data-aos="fade-up">
-                        <h2 style="font-size:2.5rem;font-weight:300;margin-bottom:16px;">Other Workshops in
-                            {{ $school->city?->name }}</h2>
+                        <h2 style="font-size:2.5rem;font-weight:300;margin-bottom:16px;">
+                            Other Workshops in {{ $school->city?->name }}
+                        </h2>
                     </div>
                     <div class="row g-4">
                         @foreach ($relatedSchools as $rel)
@@ -668,7 +791,8 @@
                                                 <p
                                                     style="margin:0;font-size:0.9rem;color:color-mix(in srgb,var(--default-color),transparent 30%);">
                                                     <i class="bi bi-clock me-1"
-                                                        style="color:var(--accent-color);"></i>{{ $rel->timings }}</p>
+                                                        style="color:var(--accent-color);"></i>{{ $rel->timings }}
+                                                </p>
                                             @endif
                                         </div>
                                     </div>
@@ -681,22 +805,22 @@
         @endif
 
         {{-- ══════════════════════════════════════
-             CONFIRMATION OVERLAY
+             CONFIRMATION / FAILURE OVERLAY
         ══════════════════════════════════════ --}}
-        <div id="confirmationOverlay">
+        <div id="confirmationOverlay" role="dialog" aria-modal="true" aria-labelledby="confTitle">
             <div class="confirmation-box">
-                <div class="confirmation-icon">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#16a34a"
-                        stroke-width="2.5">
-                        <polyline points="20 6 9 17 4 12" />
-                    </svg>
+                {{-- Icon injected by JS --}}
+                <div class="confirmation-icon success" id="confIconWrap">
+                    {{-- SVG swapped by JS --}}
                 </div>
                 <h3 id="confTitle">Registration Confirmed!</h3>
                 <p id="confSubtitle">Your spot has been secured.</p>
                 <div class="confirmation-detail" id="confDetail"></div>
-                <p style="font-size:0.85rem;color:#9ca3af;margin-top:12px;">A confirmation will be sent to your email. For
-                    any queries call <strong>+91 90241 64323</strong>.</p>
-                <button class="btn-confirm-close" onclick="closeConfirmation()">Done</button>
+                <p id="confFooter" style="font-size:0.85rem;color:#9ca3af;margin-top:12px;">
+                    A confirmation will be sent to your email. For queries call
+                    <strong>+91 90241 64323</strong>.
+                </p>
+                <button class="btn-confirm-close success" id="confCloseBtn" onclick="closeConfirmation()">Done</button>
             </div>
         </div>
 
@@ -705,6 +829,7 @@
         ══════════════════════════════════════ --}}
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
         <script>
+            // All server-side values exposed as JS constants ─ no raw PHP in logic below
             var WS_SUBMIT_URL = '{{ route('frontend.summercamp.register.submit', $school) }}';
             var WS_VERIFY_URL = '{{ route('frontend.summercamp.register.verify', ['registration' => '__ID__']) }}';
             var WS_RZP_KEY = '{{ config('services.razorpay.key') }}';
@@ -730,45 +855,49 @@
                     return;
                 }
 
-                /* ══════════════════════════════════
+                /* ══════════════════════════════════════
                    CHILD CARD BUILDER
-                ══════════════════════════════════ */
-                function addChild() {
-                    if (childCount >= 5) return;
-                    childCount++;
-                    var idx = childCount - 1;
-
+                ══════════════════════════════════════ */
+                function buildChildCard(idx, num) {
                     var card = document.createElement('div');
                     card.className = 'child-card';
                     card.id = 'child_' + idx;
+
+                    var removeBtn = idx > 0 ?
+                        '<button type="button" class="btn-remove-child" data-idx="' + idx + '">✕ Remove</button>' :
+                        '';
+
                     card.innerHTML =
                         '<div class="child-card-header">' +
-                        '<span><i class="bi bi-person-badge me-2" style="color:var(--accent-color);"></i>Child ' +
-                        childCount + '</span>' +
-                        (idx > 0 ? '<button type="button" class="btn-remove-child" onclick="removeChild(' + idx +
-                            ')">✕ Remove</button>' : '') +
+                        '<span><i class="bi bi-person-badge me-2" style="color:var(--accent-color);"></i>Child ' + num +
+                        '</span>' +
+                        removeBtn +
                         '</div>' +
                         '<div class="row g-3">' +
                         '<div class="col-md-6">' +
-                        '<input type="text" name="children[' + idx +
-                        '][student_name]" class="form-control child-student-name" placeholder="Student Name *" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '<input type="text" name="children[' + idx + '][student_name]" ' +
+                        'class="form-control child-student-name" ' +
+                        'placeholder="Student Name *" ' +
+                        'style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
                         '<div class="field-error child-err-name">Please enter the student\'s name.</div>' +
                         '</div>' +
                         '<div class="col-md-6">' +
-                        '<input type="date" name="children[' + idx +
-                        '][dob]" class="form-control" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '<input type="date" name="children[' + idx + '][dob]" ' +
+                        'class="form-control" ' +
+                        'style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
                         '</div>' +
                         '<div class="col-md-6">' +
-                        '<input type="text" class="form-control" value="' + WS_AGEGROUP +
-                        '" readonly style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);background:color-mix(in srgb,var(--accent-color),transparent 96%);">' +
+                        '<input type="text" class="form-control" value="' + escapeHtml(WS_AGEGROUP) + '" readonly ' +
+                        'style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);background:color-mix(in srgb,var(--accent-color),transparent 96%);">' +
                         '</div>' +
                         '<div class="col-md-6">' +
-                        '<input type="text" name="children[' + idx +
-                        '][school_name]" class="form-control" placeholder="School Name (optional)" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '<input type="text" name="children[' + idx + '][school_name]" ' +
+                        'class="form-control" placeholder="School Name (optional)" ' +
+                        'style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
                         '</div>' +
                         '<div class="col-12">' +
-                        '<select name="children[' + idx +
-                        '][experience]" class="form-select" style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
+                        '<select name="children[' + idx + '][experience]" class="form-select" ' +
+                        'style="padding:14px;border-radius:8px;border:1px solid color-mix(in srgb,var(--default-color),transparent 85%);">' +
                         '<option value="">Previous Acting Experience (Optional)</option>' +
                         '<option value="none">No prior experience</option>' +
                         '<option value="beginner">Beginner (less than 1 year)</option>' +
@@ -778,34 +907,57 @@
                         '</div>' +
                         '</div>';
 
+                    return card;
+                }
+
+                // Safe HTML escape — prevents XSS from WS_* variables injected into innerHTML
+                function escapeHtml(str) {
+                    var d = document.createElement('div');
+                    d.appendChild(document.createTextNode(str));
+                    return d.innerHTML;
+                }
+
+                function addChild() {
+                    if (childCount >= 5) return;
+                    var idx = childCount; // 0-based index
+                    childCount++;
+                    var card = buildChildCard(idx, childCount);
                     document.getElementById('childrenContainer').appendChild(card);
                     document.getElementById('btnAddChild').style.display = childCount >= 5 ? 'none' : 'flex';
                     updateTotal();
                 }
 
-                window.removeChild = function(idx) {
-                    var card = document.getElementById('child_' + idx);
+                // Delegated remove handler (avoids window pollution / onclick in HTML)
+                document.getElementById('childrenContainer').addEventListener('click', function(e) {
+                    var btn = e.target.closest('.btn-remove-child');
+                    if (!btn) return;
+
+                    var card = btn.closest('.child-card');
                     if (card) card.remove();
                     childCount--;
-                    // Re-number remaining cards
-                    var cards = document.querySelectorAll('.child-card');
-                    cards.forEach(function(c, i) {
+
+                    // Re-number remaining cards & fix input names
+                    document.querySelectorAll('.child-card').forEach(function(c, i) {
                         c.id = 'child_' + i;
                         c.querySelector('.child-card-header span').innerHTML =
                             '<i class="bi bi-person-badge me-2" style="color:var(--accent-color);"></i>Child ' +
                             (i + 1);
-                        // Re-index input names
+
                         c.querySelectorAll('input[name], select[name]').forEach(function(el) {
                             el.name = el.name.replace(/children\[\d+\]/, 'children[' + i + ']');
                         });
-                        // Show remove on all except first
-                        var btn = c.querySelector('.btn-remove-child');
-                        if (i === 0 && btn) btn.remove();
+
+                        // First card must never have a remove button
+                        if (i === 0) {
+                            var rb = c.querySelector('.btn-remove-child');
+                            if (rb) rb.remove();
+                        }
                     });
-                    childCount = cards.length;
+
+                    childCount = document.querySelectorAll('.child-card').length;
                     document.getElementById('btnAddChild').style.display = childCount >= 5 ? 'none' : 'flex';
                     updateTotal();
-                };
+                });
 
                 function updateTotal() {
                     var countEl = document.getElementById('childCountLabel');
@@ -819,9 +971,9 @@
                 // Render first child immediately
                 addChild();
 
-                /* ══════════════════════════════════
+                /* ══════════════════════════════════════
                    VALIDATION
-                ══════════════════════════════════ */
+                ══════════════════════════════════════ */
                 var parentRules = {
                     parent_name: {
                         el: 'f_parent_name',
@@ -850,7 +1002,7 @@
                         test: function(v) {
                             return v === '' || /^[6-9]\d{9}$/.test(v.replace(/\D/g, ''));
                         }
-                    },
+                    }
                 };
 
                 function validateParent() {
@@ -859,15 +1011,12 @@
                         var rule = parentRules[name];
                         var input = document.getElementById(rule.el);
                         var errEl = document.getElementById(rule.err);
-                        var val = input ? input.value : '';
-                        var valid = rule.test(val);
+                        var valid = rule.test(input ? input.value : '');
                         if (input) {
                             input.classList.toggle('is-invalid', !valid);
                             input.classList.toggle('is-valid', valid);
                         }
-                        if (errEl) {
-                            errEl.classList.toggle('show', !valid);
-                        }
+                        if (errEl) errEl.classList.toggle('show', !valid);
                         if (!valid) ok = false;
                     });
                     return ok;
@@ -883,15 +1032,13 @@
                             nameInput.classList.toggle('is-invalid', !valid);
                             nameInput.classList.toggle('is-valid', valid);
                         }
-                        if (errEl) {
-                            errEl.classList.toggle('show', !valid);
-                        }
+                        if (errEl) errEl.classList.toggle('show', !valid);
                         if (!valid) ok = false;
                     });
                     return ok;
                 }
 
-                // Live blur on parent fields
+                // Live blur / input on parent fields
                 Object.keys(parentRules).forEach(function(name) {
                     var input = document.getElementById(parentRules[name].el);
                     if (!input) return;
@@ -903,9 +1050,9 @@
                     });
                 });
 
-                /* ══════════════════════════════════
+                /* ══════════════════════════════════════
                    UI HELPERS
-                ══════════════════════════════════ */
+                ══════════════════════════════════════ */
                 function setLoading(yes) {
                     submitBtn.disabled = yes;
                     loadingEl.style.display = yes ? 'block' : 'none';
@@ -914,8 +1061,7 @@
                 }
 
                 function showError(msg) {
-                    // Only show friendly messages — never stack traces
-                    var safe = (typeof msg === 'string' && msg.length < 300) ? msg :
+                    var safe = (typeof msg === 'string' && msg.length < 400) ? msg :
                         'Something went wrong. Please try again or call +91 90241 64323.';
                     errorEl.innerHTML = '<i class="bi bi-exclamation-circle-fill me-2"></i>' + safe;
                     errorEl.style.display = 'block';
@@ -923,6 +1069,24 @@
                         behavior: 'smooth',
                         block: 'center'
                     });
+                }
+
+                function showPaymentFailed(msg) {
+                    var safe = (typeof msg === 'string' && msg.length < 400) ? msg :
+                        'Payment failed. Please try again or call +91 90241 64323.';
+                    var banner = document.getElementById('paymentFailedBanner');
+                    document.getElementById('paymentFailedMsg').innerHTML = safe;
+                    banner.classList.add('show');
+                    banner.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+
+                function clearPaymentFailed() {
+                    var banner = document.getElementById('paymentFailedBanner');
+                    banner.classList.remove('show');
+                    document.getElementById('paymentFailedMsg').innerHTML = '';
                 }
 
                 function activateStep(n) {
@@ -937,15 +1101,12 @@
                     form.querySelectorAll('.is-valid,.is-invalid').forEach(function(el) {
                         el.classList.remove('is-valid', 'is-invalid');
                     });
+                    form.querySelectorAll('.field-error.show').forEach(function(el) {
+                        el.classList.remove('show');
+                    });
                 }
 
                 function handleServerErrors(errors) {
-                    // Map to friendly messages only — ignore field names user shouldn't see
-                    var fieldMap = {
-                        parent_name: 'err_parent_name',
-                        email: 'err_email',
-                        phone: 'err_phone'
-                    };
                     var first = null;
                     Object.keys(errors).forEach(function(field) {
                         var errEl = document.getElementById('err_' + field);
@@ -965,44 +1126,122 @@
                     });
                 }
 
-                /* ══════════════════════════════════
-                   CONFIRMATION OVERLAY
-                ══════════════════════════════════ */
+                /* ══════════════════════════════════════
+                   CONFIRMATION / FAILURE OVERLAY
+                ══════════════════════════════════════ */
+                var SUCCESS_SVG =
+                    '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" ' +
+                    'stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+
+                var FAILURE_SVG =
+                    '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" ' +
+                    'stroke="#dc2626" stroke-width="2.5">' +
+                    '<line x1="18" y1="6" x2="6" y2="18"/>' +
+                    '<line x1="6"  y1="6" x2="18" y2="18"/></svg>';
+
                 function showConfirmation(parentName, email, childNames, workshopName, isPaid) {
+                    var overlay = document.getElementById('confirmationOverlay');
+                    var iconWrap = document.getElementById('confIconWrap');
+                    var closeBtn = document.getElementById('confCloseBtn');
+
+                    // Swap icon & colour scheme
+                    iconWrap.className = 'confirmation-icon success';
+                    iconWrap.innerHTML = SUCCESS_SVG;
+                    closeBtn.className = 'btn-confirm-close success';
+
                     document.getElementById('confTitle').textContent =
                         isPaid ? 'Payment Successful! 🎉' : 'Registration Confirmed! 🎉';
                     document.getElementById('confSubtitle').textContent =
                         childNames.length > 1 ?
                         childNames.length + ' children have been registered.' :
                         'Your child\'s spot has been secured.';
+                    document.getElementById('confFooter').style.display = '';
 
                     var detail = '';
-                    detail += '<div><span class="key">Parent</span><span class="val">' + parentName + '</span></div>';
-                    detail += '<div><span class="key">Email</span><span class="val">' + email + '</span></div>';
-                    detail += '<div><span class="key">Workshop</span><span class="val">' + workshopName +
+                    detail += '<div><span class="key">Parent</span><span class="val">' + escapeHtml(parentName) +
+                        '</span></div>';
+                    detail += '<div><span class="key">Email</span><span class="val">' + escapeHtml(email) +
+                        '</span></div>';
+                    detail += '<div><span class="key">Workshop</span><span class="val">' + escapeHtml(workshopName) +
                         '</span></div>';
                     childNames.forEach(function(name, i) {
                         detail += '<div><span class="key">Child ' + (i + 1) + '</span><span class="val">' +
-                            name + '</span></div>';
+                            escapeHtml(name) + '</span></div>';
                     });
                     document.getElementById('confDetail').innerHTML = detail;
-                    document.getElementById('confirmationOverlay').classList.add('show');
+
+                    // Force re-animation by removing then re-adding .show
+                    overlay.classList.remove('show');
+                    requestAnimationFrame(function() {
+                        requestAnimationFrame(function() {
+                            overlay.classList.add('show');
+                        });
+                    });
+                }
+
+                function showPaymentFailureOverlay(paymentId) {
+                    var overlay = document.getElementById('confirmationOverlay');
+                    var iconWrap = document.getElementById('confIconWrap');
+                    var closeBtn = document.getElementById('confCloseBtn');
+
+                    iconWrap.className = 'confirmation-icon failure';
+                    iconWrap.innerHTML = FAILURE_SVG;
+                    closeBtn.className = 'btn-confirm-close failure';
+
+                    document.getElementById('confTitle').textContent = 'Payment Failed';
+                    document.getElementById('confSubtitle').textContent = 'Your payment could not be processed.';
+                    document.getElementById('confFooter').style.display = 'none';
+
+                    var detail =
+                        '<div><span class="key">Status</span><span class="val" style="color:#dc2626;">Failed / Cancelled</span></div>';
+                    if (paymentId) {
+                        detail += '<div><span class="key">Payment ID</span><span class="val">' + escapeHtml(paymentId) +
+                            '</span></div>';
+                    }
+                    detail +=
+                        '<div style="margin-top:8px;font-size:0.85rem;color:#6b7280;display:block;">Please try again or call <strong>+91 90241 64323</strong>.</div>';
+                    document.getElementById('confDetail').innerHTML = detail;
+
+                    overlay.classList.remove('show');
+                    requestAnimationFrame(function() {
+                        requestAnimationFrame(function() {
+                            overlay.classList.add('show');
+                        });
+                    });
                 }
 
                 window.closeConfirmation = function() {
                     document.getElementById('confirmationOverlay').classList.remove('show');
-                    form.reset();
-                    clearValidation();
-                    // Re-render first child
-                    document.getElementById('childrenContainer').innerHTML = '';
-                    childCount = 0;
-                    addChild();
-                    updateTotal();
+                    // Reset form only on success (if still loading or failed, keep data)
+                    var title = document.getElementById('confTitle').textContent;
+                    if (title.indexOf('Failed') === -1) {
+                        form.reset();
+                        clearValidation();
+                        clearPaymentFailed();
+                        document.getElementById('childrenContainer').innerHTML = '';
+                        childCount = 0;
+                        addChild();
+                        updateTotal();
+                        // Reset step icons
+                        ['step2Icon', 'step3Icon'].forEach(function(id) {
+                            var el = document.getElementById(id);
+                            if (el) {
+                                el.style.background =
+                                    'color-mix(in srgb, var(--accent-color), transparent 80%)';
+                                el.style.boxShadow = '';
+                            }
+                        });
+                    }
                 };
 
-                /* ══════════════════════════════════
+                // Close overlay on backdrop click
+                document.getElementById('confirmationOverlay').addEventListener('click', function(e) {
+                    if (e.target === this) window.closeConfirmation();
+                });
+
+                /* ══════════════════════════════════════
                    FORM SUBMIT
-                ══════════════════════════════════ */
+                ══════════════════════════════════════ */
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -1012,11 +1251,7 @@
                     var terms = document.getElementById('termsCheck');
                     var termsErr = document.getElementById('err_terms');
 
-                    if (!terms.checked) {
-                        termsErr.classList.add('show');
-                    } else {
-                        termsErr.classList.remove('show');
-                    }
+                    termsErr.classList.toggle('show', !terms.checked);
 
                     if (!parentOk || !childrenOk || !terms.checked) {
                         var bad = form.querySelector('.is-invalid, .field-error.show');
@@ -1028,9 +1263,10 @@
                     }
 
                     errorEl.style.display = 'none';
+                    clearPaymentFailed();
                     setLoading(true);
 
-                    // Collect child names for the confirmation overlay
+                    // Collect child names for confirmation overlay
                     var childNames = [];
                     document.querySelectorAll('.child-student-name').forEach(function(el) {
                         childNames.push(el.value.trim());
@@ -1067,13 +1303,12 @@
                             }
 
                             if (status >= 400) {
-                                // Show only the safe error message from the server, never raw traces
                                 showError(data.error || data.message || null);
                                 setLoading(false);
                                 return;
                             }
 
-                            // ── Free workshop ──────────────────────────────────────
+                            // ── Free workshop ─────────────────────────────────
                             if (data.is_free) {
                                 activateStep(2);
                                 setLoading(false);
@@ -1081,7 +1316,7 @@
                                 return;
                             }
 
-                            // ── Paid — open Razorpay ───────────────────────────────
+                            // ── Paid — open Razorpay ──────────────────────────
                             activateStep(3);
                             setLoading(false);
 
@@ -1103,10 +1338,13 @@
                                 theme: {
                                     color: '#175cdd'
                                 },
+
                                 modal: {
                                     ondismiss: function() {
-                                        showError(
-                                            'Payment cancelled. You can try again anytime.');
+                                        // User closed the Razorpay modal without paying
+                                        showPaymentFailed(
+                                            'Payment was cancelled. You can try again below.'
+                                        );
                                     }
                                 },
 
@@ -1137,14 +1375,24 @@
                                                 showConfirmation(parentName, email,
                                                     childNames, WS_WORKSHOP, true);
                                             } else {
-                                                showError(vData.message || null);
+                                                // Verification failed (signature mismatch etc.)
+                                                showPaymentFailureOverlay(rzpResponse
+                                                    .razorpay_payment_id);
+                                                showPaymentFailed(vData.message ||
+                                                    'Payment verification failed. Please contact support.'
+                                                );
                                             }
                                         })
                                         .catch(function() {
-                                            showError(
-                                                'Network error. Please save payment ID: <strong>' +
-                                                rzpResponse.razorpay_payment_id +
-                                                '</strong> and call us.');
+                                            // Network error during verify — give user the payment ID
+                                            showPaymentFailureOverlay(rzpResponse
+                                                .razorpay_payment_id);
+                                            showPaymentFailed(
+                                                'Network error during verification. Please save your Payment ID: <strong>' +
+                                                escapeHtml(rzpResponse
+                                                    .razorpay_payment_id) +
+                                                '</strong> and call us on +91 90241 64323.'
+                                            );
                                         })
                                         .finally(function() {
                                             setLoading(false);
@@ -1153,16 +1401,21 @@
                             });
 
                             rzp.on('payment.failed', function(resp) {
-                                showError(
+                                // Razorpay SDK reports a hard failure (card declined etc.)
+                                var reason = (resp.error && resp.error.description) ? resp.error
+                                    .description : null;
+                                showPaymentFailureOverlay(resp.error && resp.error.metadata && resp
+                                    .error.metadata.payment_id);
+                                showPaymentFailed(reason ||
                                     'Payment failed. Please try again or call us on +91 90241 64323.'
-                                    );
+                                );
                                 setLoading(false);
                             });
 
                             rzp.open();
                         })
                         .catch(function() {
-                            showError(null); // generic safe message
+                            showError(null);
                             setLoading(false);
                         });
                 });

@@ -1,23 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin\Summercamp;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Illuminate\Support\Facades\Storage;
 
-class EventController extends Controller
+class SummerEventController extends Controller
 {
+    private $type = 'summer-event';
+
     public function index()
     {
-        $events = Event::whereNull('type')->withCount('subEvents')->latest()->get();
+        $events = Event::where('type', $this->type)->withCount('subEvents')->latest()->get();
 
-        return view('backend.events.index', compact('events'));
+        return view('backend.Summercamp.events.index', compact('events'));
     }
+
     public function create()
     {
-        return view('backend.events.create');
+        return view('backend.Summercamp.events.create');
     }
 
     public function store(Request $request)
@@ -32,7 +35,6 @@ class EventController extends Controller
             'highlights_link' => 'nullable|url',
         ]);
 
-        // Upload banner image
         $bannerPath = null;
 
         if ($request->hasFile('banner_image')) {
@@ -40,6 +42,7 @@ class EventController extends Controller
             $request->banner_image->move(public_path('img/event_banners'), $filename);
             $bannerPath = 'img/event_banners/' . $filename;
         }
+
         $event = Event::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -49,21 +52,26 @@ class EventController extends Controller
             'instagram_link' => $request->instagram_link,
             'highlights_link' => $request->highlights_link,
             'status' => 1,
+            'type' => $this->type,
         ]);
 
-        return redirect()->route('events-index', $event->id)->with('success', 'Event created successfully. Now add sub events below.');
+        return redirect()->route('summer-events.index', $event->id)->with('success', 'Event created successfully. Now add sub events below.');
     }
 
     public function show($id)
     {
-        $event = Event::with(['subEvents.centers.state'])->findOrFail($id);
-        return view('backend.events.show', compact('event'));
+        $event = Event::where('type', $this->type)
+            ->with(['subEvents.centers.state'])
+            ->findOrFail($id);
+
+        return view('backend.Summercamp.events.index', compact('event'));
     }
 
     public function edit($id)
     {
-        $event = Event::findOrFail($id);
-        return view('backend.events.edit', compact('event'));
+        $event = Event::where('type', $this->type)->findOrFail($id);
+
+        return view('backend.Summercamp.events.edit', compact('event'));
     }
 
     public function update(Request $request, $id)
@@ -78,18 +86,15 @@ class EventController extends Controller
             'highlights_link' => 'nullable|url',
         ]);
 
-        $event = Event::findOrFail($id);
+        $event = Event::where('type', $this->type)->findOrFail($id);
 
-        // Handle banner image update
         $bannerPath = $event->banner_image;
 
         if ($request->hasFile('banner_image')) {
-            // Delete old image
             if ($bannerPath && file_exists(public_path($bannerPath))) {
                 unlink(public_path($bannerPath));
             }
 
-            // Upload new image
             $filename = time() . '.' . $request->banner_image->extension();
             $request->banner_image->move(public_path('img/event_banners'), $filename);
 
@@ -106,26 +111,27 @@ class EventController extends Controller
             'highlights_link' => $request->highlights_link,
         ]);
 
-        return redirect()->route('events-index')->with('success', 'Event updated successfully');
+        return redirect()->route('summer-events.index')->with('success', 'Event updated successfully');
     }
 
     public function status(Request $request)
     {
-        $event = Event::findOrFail($request->id);
+        $event = Event::where('type', $this->type)->findOrFail($request->id);
+
         $event->update(['status' => $request->status]);
+
         return response()->json(['success' => true]);
     }
 
     public function destroy($id)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::where('type', $this->type)->findOrFail($id);
 
-        // Delete banner image from storage
-        if ($event->banner_image) {
-            Storage::disk('public')->delete($event->banner_image);
+        if ($event->banner_image && file_exists(public_path($event->banner_image))) {
+            unlink(public_path($event->banner_image));
         }
 
-        $event->delete(); // cascades to sub_events and sub_event_centers
+        $event->delete();
 
         return redirect()->back()->with('success', 'Event deleted successfully');
     }

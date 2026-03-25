@@ -363,6 +363,122 @@
                 </li>
 
                 {{-- ══════════════════════════════════════════
+                     SECTION: SUMMER CAMP
+                ══════════════════════════════════════════ --}}
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
+                    <h4 class="text-section">Summer Camp</h4>
+                </li>
+
+                {{-- Summer Camp Main Menu --}}
+                <li
+                    class="nav-item {{ request()->routeIs('people-*', 'workshop-*', 'gallery-*', 'stats-*', 'about-section-*', 'themes.*', 'summer-events.*', 'summer-sub-events.*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#summercamp"
+                        class="{{ request()->routeIs('people-*', 'workshop-*', 'gallery-*', 'stats-*', 'about-section-*', 'themes.*', 'summer-events.*', 'summer-sub-events.*') ? '' : 'collapsed' }}">
+                        <i class="fas fa-sun"></i>
+                        <p>Camp Management</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ request()->routeIs('people-*', 'workshop-*', 'gallery-*', 'stats-*', 'about-section-*', 'themes.*', 'summer-events.*', 'summer-sub-events.*') ? 'show' : '' }}"
+                        id="summercamp">
+                        <ul class="nav nav-collapse">
+
+                            {{-- Events & Sub Events --}}
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#summerEvents"
+                                    class="{{ request()->routeIs('summer-events.*', 'summer-sub-events.*') ? '' : 'collapsed' }}">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <span class="sub-item">Events</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse {{ request()->routeIs('summer-events.*', 'summer-sub-events.*') ? 'show' : '' }}"
+                                    id="summerEvents">
+                                    <ul class="nav nav-collapse">
+                                        <li><a href="{{ route('summer-events.index') }}"><span class="sub-item">All
+                                                    Events</span></a></li>
+                                        <li><a href="{{ route('summer-events.create') }}"><span class="sub-item">Add
+                                                    New Event</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            {{-- Workshop Configuration --}}
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#workshopConfig"
+                                    class="{{ request()->routeIs('workshop-*') ? '' : 'collapsed' }}">
+                                    <i class="fas fa-tools"></i>
+                                    <span class="sub-item">Workshop Config</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse {{ request()->routeIs('workshop-*') ? 'show' : '' }}"
+                                    id="workshopConfig">
+                                    <ul class="nav nav-collapse">
+                                        <li><a href="{{ route('workshop-age-groups-index') }}"><span
+                                                    class="sub-item">Age Groups</span></a></li>
+                                        <li><a href="{{ route('workshop-cities-index') }}"><span
+                                                    class="sub-item">Cities</span></a></li>
+                                        <li><a href="{{ route('workshop-schools-index') }}"><span
+                                                    class="sub-item">Schools</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            {{-- People --}}
+                            <li class="nav-item {{ request()->routeIs('people-*') ? 'active' : '' }}">
+                                <a href="{{ route('people-index') }}">
+                                    <i class="fas fa-user-circle"></i>
+                                    <span class="sub-item">People</span>
+                                </a>
+                            </li>
+
+                            {{-- Gallery --}}
+                            <li class="nav-item">
+                                <a data-bs-toggle="collapse" href="#summerGallery"
+                                    class="{{ request()->routeIs('gallery-*') ? '' : 'collapsed' }}">
+                                    <i class="fas fa-images"></i>
+                                    <span class="sub-item">Gallery</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse {{ request()->routeIs('gallery-*') ? 'show' : '' }}"
+                                    id="summerGallery">
+                                    <ul class="nav nav-collapse">
+                                        <li><a href="{{ route('gallery-categories-index') }}"><span
+                                                    class="sub-item">Categories</span></a></li>
+                                        <li><a href="{{ route('gallery-images-index') }}"><span
+                                                    class="sub-item">Images</span></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            {{-- Statistics --}}
+                            <li class="nav-item {{ request()->routeIs('stats-*') ? 'active' : '' }}">
+                                <a href="{{ route('stats-index') }}">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span class="sub-item">Statistics</span>
+                                </a>
+                            </li>
+
+                            {{-- About Section --}}
+                            <li class="nav-item {{ request()->routeIs('about-section-*') ? 'active' : '' }}">
+                                <a href="{{ route('about-section-index') }}">
+                                    <i class="fas fa-align-left"></i>
+                                    <span class="sub-item">About Section</span>
+                                </a>
+                            </li>
+
+                            {{-- Themes --}}
+                            <li class="nav-item {{ request()->routeIs('themes.*') ? 'active' : '' }}">
+                                <a href="{{ route('themes.index') }}">
+                                    <i class="fas fa-palette"></i>
+                                    <span class="sub-item">Themes</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+
+                {{-- ══════════════════════════════════════════
                      SECTION: ENQUIRIES
                 ══════════════════════════════════════════ --}}
                 <li class="nav-section">

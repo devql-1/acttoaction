@@ -12,7 +12,7 @@ use App\Models\SubEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Razorpay\Api\Api;
-
+use App\Services\EmailService;
 class EventRegistrationController extends Controller
 {
     // ── SHOW ─────────────────────────────────────────────────────────────────
@@ -250,62 +250,97 @@ class EventRegistrationController extends Controller
     {
         $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
-        try {
-            $attributes = [
-                'razorpay_order_id' => $request->razorpay_order_id,
-                'razorpay_payment_id' => $request->razorpay_payment_id,
-                'razorpay_signature' => $request->razorpay_signature,
-            ];
+        /* ── Verify signature ── */
+        $attributes = [
+            'razorpay_order_id' => $request->razorpay_order_id,
+            'razorpay_payment_id' => $request->razorpay_payment_id,
+            'razorpay_signature' => $request->razorpay_signature,
+        ];
 
-            $api->utility->verifyPaymentSignature($attributes);
+        $api->utility->verifyPaymentSignature($attributes);
 
-            $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
+        /* ── Prevent duplicate payment ── */
+        $existingPayment = Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->first();
 
-            DB::transaction(function () use ($request, $registration_id, $rzpPayment) {
-                EventRegistration::where('id', $registration_id)->update([
-                    'status' => 'confirmed',
-                ]);
-
-                Payment::create([
-                    'event_registration_id' => $registration_id,
-                    'enrollment_id' => null,
-                    'razorpay_order_id' => $request->razorpay_order_id,
-                    'razorpay_payment_id' => $request->razorpay_payment_id,
-                    'razorpay_signature' => $request->razorpay_signature,
-                    'amount' => session('rzp_amount') / 100,
-                    'currency' => 'INR',
-                    'status' => 'success',
-                    'transaction_type' => $rzpPayment->method,
-                    'type' => 'event_registration',
-                    'paid_at' => now(),
-                    'contact' => $rzpPayment->contact ?? null,
-                    'email' => $rzpPayment->email ?? null,
-                ]);
-            });
-
+        if ($existingPayment) {
             return response()->json([
                 'success' => true,
-                'message' => 'Payment successful',
+                'message' => 'Payment already processed',
             ]);
-        } catch (\Exception $e) {
+        }
+
+        $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
+
+        DB::transaction(function () use ($request, $registration_id, $rzpPayment) {
+            $registration = EventRegistration::findOrFail($registration_id);
+
+            /* ── Update status safely ── */
+            if ($registration->status !== 'confirmed') {
+                $registration->update([
+                    'status' => 'confirmed',
+                ]);
+            }
+
+            /* ── Save payment ── */
             Payment::create([
                 'event_registration_id' => $registration_id,
                 'enrollment_id' => null,
-                'razorpay_order_id' => $request->razorpay_order_id ?? '',
-                'razorpay_payment_id' => $request->razorpay_payment_id ?? '',
-                'razorpay_signature' => $request->razorpay_signature ?? '',
-                'amount' => 0,
+                'razorpay_order_id' => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'razorpay_signature' => $request->razorpay_signature,
+                'amount' => session('rzp_amount') / 100,
                 'currency' => 'INR',
-                'status' => 'failed',
-                'error_reason' => substr($e->getMessage(), 0, 1000),
-                'transaction_type' => null,
+                'status' => 'success',
+                'transaction_type' => $rzpPayment->method,
                 'type' => 'event_registration',
+                'paid_at' => now(),
+                'contact' => $rzpPayment->contact ?? null,
+                'email' => $rzpPayment->email ?? null,
             ]);
 
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-            ]);
-        }
+            $registration = EventRegistrationAttendee::findOrFail($registration_id);
+
+            // Use email from DB
+            $recipientEmail = $registration->email ?? null;
+
+            // Only proceed if email exists
+            if ($recipientEmail) {
+                // Build tickets HTML for email
+                $ticketsHtml = '';
+                foreach ($registration->attendees as $attendee) {
+                    $ticketsHtml .= "
+            <tr>
+                <td style='padding:8px;border:1px solid #ddd;'>{$attendee->ticket_number}</td>
+                <td style='padding:8px;border:1px solid #ddd;'>{$attendee->name}</td>
+                <td style='padding:8px;border:1px solid #ddd;'>{$attendee->phone}</td>
+            </tr>
+        ";
+                }
+
+                // Common data
+                $data = [
+                    'student_name' => $registration->name ?? 'User',
+                    'event_name' => $registration->event_name ?? 'Event',
+                    'reference_id' => $registration->id,
+                    'amount' => '₹' . number_format($registration->total_amount, 2), // use DB amount
+                    'payment_id' => $registration->payments()->latest()->first()->razorpay_payment_id ?? 'N/A', // latest payment
+                    'tickets_table' => $ticketsHtml,
+                ];
+
+                // Send Payment Confirmation Email
+                app(\App\Services\EmailService::class)->send('event-payment-confirmation', $recipientEmail, $data);
+
+                // Send Ticket Email
+                // app(\App\Services\EmailService::class)->send('event-ticket', $recipientEmail, $data);
+
+                // // Mark email sent
+                // $registration->update(['email_sent' => 1]);
+            }
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment successful',
+        ]);
     }
 }

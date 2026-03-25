@@ -30,9 +30,10 @@
             box-sizing: border-box;
         }
 
+        /* FIX: removed accidental .gallery-panel img text that was inside body {} */
         body {
             color: var(--fg);
-            .gallery-panel img background: var(--bg);
+            background: var(--bg);
             font-family: var(--ff-body);
             margin: 0;
         }
@@ -187,7 +188,6 @@
             box-shadow: 0 2px 14px rgba(0, 0, 0, .08);
             position: fixed;
             top: var(--ann-h);
-            /* sits below ann-bar */
             left: 0;
             right: 0;
             z-index: 1001;
@@ -273,7 +273,6 @@
             transform: scaleX(1);
         }
 
-        /* Dropdown */
         .navmenu .has-drop {
             position: relative;
         }
@@ -342,7 +341,6 @@
             margin: 6px 0;
         }
 
-        /* CTA button */
         .nav-register {
             background: var(--accent);
             color: #fff !important;
@@ -362,7 +360,6 @@
             transform: translateY(-1px);
         }
 
-        /* Social strip */
         .header-right {
             display: flex;
             align-items: center;
@@ -398,7 +395,6 @@
             padding: 4px;
         }
 
-        /* Mobile nav */
         @media(max-width:1099px) {
             .nav-wrap {
                 display: none;
@@ -498,7 +494,7 @@
             }
         }
 
-        /* ===== BODY OFFSET for fixed header+annbar ===== */
+        /* ===== BODY OFFSET ===== */
         body {
             padding-top: calc(var(--ann-h) + 58px);
         }
@@ -507,7 +503,7 @@
             padding-top: 58px;
         }
 
-        /* ===== HERO — PURE BANNER, NO TEXT ===== */
+        /* ===== HERO ===== */
         .hero {
             width: 100%;
             height: 92vh;
@@ -525,7 +521,6 @@
             display: block;
         }
 
-        /* Subtle dark vignette at bottom only, no text overlay */
         .hero::after {
             content: '';
             position: absolute;
@@ -1120,25 +1115,42 @@
             color: var(--accent);
         }
 
-        /* ===== GALLERY ===== */
-
-        .gallery-panel {
-            display: none;
-        }
-
-        .gallery-panel.active {
-            display: block;
-        }
-
-        .gallery-sec .gallery-panel img {
-            width: 100%;
-            display: block;
-        }
+        /* ===================================================
+           ===== GALLERY — ALL RULES SCOPED TO .gallery-sec =====
+           =================================================== */
 
         .gallery-sec {
             background: #0d0d0d;
             padding-bottom: 0;
             overflow: hidden;
+        }
+
+        /* FIX: panels use display toggle only — no opacity trick that bleeds */
+        .gallery-sec .gallery-panel {
+            display: none;
+        }
+
+        .gallery-sec .gallery-panel.active {
+            display: block;
+            animation: galFadeIn 0.3s ease;
+        }
+
+        @keyframes galFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FIX: scoped so it never hits other sections' imgs */
+        .gallery-sec .gallery-panel img {
+            width: 100%;
+            display: block;
         }
 
         .gallery-header {
@@ -1228,36 +1240,7 @@
             box-shadow: 0 4px 16px rgba(255, 106, 0, .35);
         }
 
-        .gallery-sec .gallery-panel {
-            display: none;
-        }
-
-        .gallery-sec .gallery-panel.active {
-            display: block;
-            animation: galFadeIn 0.3s ease;
-        }
-
-        @keyframes galFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .s-slide {
-            flex-shrink: 0;
-        }
-
-        .scroll-track img {
-            display: block;
-            width: 100%;
-        }
-
+        /* Scroll strips */
         .scroll-strip {
             position: relative;
             overflow: hidden;
@@ -1328,6 +1311,12 @@
             }
         }
 
+        /* FIX: scoped — was bleeding transform onto all imgs */
+        .gallery-sec .scroll-track img {
+            display: block;
+            width: 100%;
+        }
+
         .s-slide {
             flex-shrink: 0;
             border-radius: 10px;
@@ -1342,15 +1331,16 @@
             z-index: 2;
         }
 
-        .s-slide img {
+        /* FIX: scoped — was the main bleeder onto mentor/other section imgs */
+        .gallery-sec .s-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: .4s;
+            transition: transform 0.4s ease;
         }
 
-        .s-slide:hover img {
+        .gallery-sec .s-slide:hover img {
             transform: scale(1.08);
         }
 
@@ -1406,17 +1396,15 @@
             }
         }
 
+        /* Masonry */
         .g-masonry {
             columns: 4 240px;
             column-gap: 8px;
             padding: 8px 16px 16px;
             width: 100%;
-            /* ADD */
             min-height: 100px;
             overflow: visible;
-            /* ADD */
         }
-
 
         .g-masonry .gm-item {
             break-inside: avoid;
@@ -1427,15 +1415,10 @@
             position: relative;
         }
 
-        .gm-item img {
-            width: 100%;
-            height: auto;
-            /* ADD — was missing */
-            display: block;
-        }
-
+        /* FIX: scoped — was bleeding height:auto + transition globally */
         .gallery-sec .g-masonry .gm-item img {
             width: 100%;
+            height: auto;
             display: block;
             transition: transform 0.4s ease;
         }
@@ -1479,7 +1462,8 @@
             transition: .3s;
         }
 
-        .gm-item:hover .gm-label {
+        /* FIX: scoped — was bleeding label show onto other sections */
+        .gallery-sec .gm-item:hover .gm-label {
             opacity: 1;
         }
 
@@ -1489,6 +1473,7 @@
             }
         }
 
+        /* Featured grid */
         .g-featured {
             display: grid;
             gap: 8px;
@@ -1511,6 +1496,7 @@
             position: relative;
         }
 
+        /* FIX: scoped — was bleeding scale onto all imgs */
         .gallery-sec .g-featured .gf-item img {
             width: 100%;
             height: 100%;
@@ -1532,11 +1518,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .gallery-sec .scroll-track img {
-            display: block;
-            width: 100%;
         }
 
         .g-featured .gf-item:hover .gf-over {
@@ -1563,7 +1544,8 @@
             transition: .3s;
         }
 
-        .gf-item:hover .gf-caption {
+        /* FIX: scoped — was bleeding caption reveal onto other sections */
+        .gallery-sec .gf-item:hover .gf-caption {
             opacity: 1;
             transform: translateY(0);
         }
@@ -1578,7 +1560,8 @@
                 grid-row: span 1;
             }
 
-            .g-featured .gf-item img {
+            /* FIX: scoped */
+            .gallery-sec .g-featured .gf-item img {
                 height: 160px;
             }
         }
@@ -1624,6 +1607,7 @@
             max-height: 90vh;
         }
 
+        /* FIX: scoped to lightbox only — prevents transition bleed */
         .lb-inner img {
             max-width: 90vw;
             max-height: 86vh;
@@ -1631,6 +1615,8 @@
             object-fit: contain;
             display: block;
             box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
+            transition: none !important;
+            transform: none !important;
         }
 
         .lb-close {

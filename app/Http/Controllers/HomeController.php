@@ -14,11 +14,13 @@ use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\VolunteerController;
 use App\Models\PageCategory;
 use App\Models\BlogTag;
+use App\Models\ActionItem;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        $actions = ActionItem::where('status', 1)->orderBy('order')->get();
         $category = PageCategory::where('slug', 'course-page')->firstOrFail();
         $videos = $category->activeVideos()->ordered()->get();
         $tabs = $videos
@@ -39,7 +41,7 @@ class HomeController extends Controller
         // All courses
         $allCourses = Course::with('category')->latest()->get();
 
-        return view('frontend.Home.index', compact('featuredCourses', 'categories', 'allCourses', 'videos', 'tabs'));
+        return view('frontend.Home.index', compact('featuredCourses', 'categories', 'allCourses', 'videos', 'tabs', 'actions'));
     }
 
     public function course()

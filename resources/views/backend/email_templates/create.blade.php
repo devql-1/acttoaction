@@ -190,27 +190,112 @@
     </div>
 
     {{-- CKEditor --}}
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
     {{-- SweetAlert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         /* ── CKEditor ── */
-        let editor; // ← capture the instance
+        CKEDITOR.replace('bodyEditor', {
+            height: 450,
 
-        ClassicEditor.create(document.querySelector('#bodyEditor'), {
-                toolbar: [
-                    'heading', '|', 'bold', 'italic', 'underline', '|',
-                    'bulletedList', 'numberedList', '|',
-                    'link', 'blockQuote', '|', 'undo', 'redo'
-                ]
-            })
-            .then(instance => {
-                editor = instance; // ← store it
-            })
-            .catch(error => console.error(error));
+            // 🔥 IMPORTANT for email templates
+            allowedContent: true,
+            extraAllowedContent: '*(*);*{*}',
 
-        /* ── Form submit — sync CKEditor + variables ── */
+            // ✅ FULL TOOLBAR
+            toolbar: [{
+                    name: 'document',
+                    items: ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']
+                },
+
+                {
+                    name: 'clipboard',
+                    items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+                },
+
+                {
+                    name: 'editing',
+                    items: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                },
+
+                {
+                    name: 'forms',
+                    items: ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button',
+                        'ImageButton', 'HiddenField'
+                    ]
+                },
+
+                '/',
+
+                {
+                    name: 'basicstyles',
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+                        'CopyFormatting', 'RemoveFormat'
+                    ]
+                },
+
+                {
+                    name: 'paragraph',
+                    items: [
+                        'NumberedList', 'BulletedList', '-',
+                        'Outdent', 'Indent', '-',
+                        'Blockquote', 'CreateDiv', '-',
+                        'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                        'BidiLtr', 'BidiRtl', 'Language'
+                    ]
+                },
+
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink', 'Anchor']
+                },
+
+                {
+                    name: 'insert',
+                    items: [
+                        'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar',
+                        'PageBreak', 'Iframe'
+                    ]
+                },
+
+                '/',
+
+                {
+                    name: 'styles',
+                    items: ['Styles', 'Format', 'Font', 'FontSize']
+                },
+
+                {
+                    name: 'colors',
+                    items: ['TextColor', 'BGColor']
+                },
+
+                {
+                    name: 'tools',
+                    items: ['Maximize', 'ShowBlocks']
+                }
+            ],
+
+            // ✅ Font options
+            font_names: 'Arial/Arial, Helvetica, sans-serif;' +
+                'Times New Roman/Times New Roman, Times, serif;' +
+                'Verdana/Verdana, Geneva, sans-serif;' +
+                'Tahoma/Tahoma, Geneva, sans-serif;' +
+                'Courier New/Courier New, Courier, monospace;',
+
+            fontSize_sizes: '10/10px;12/12px;14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;32/32px',
+
+            // ✅ Allow inline styles
+            removeButtons: '',
+
+            // Optional: cleaner UI
+            removeDialogTabs: 'image:advanced;link:advanced',
+
+            // ✅ Better paste handling
+            pasteFromWordRemoveStyles: false,
+            pasteFromWordRemoveFontStyles: false
+        });
         document.getElementById('templateForm').addEventListener('submit', function() {
             // Push CKEditor HTML into the textarea before POST
             if (editor) {

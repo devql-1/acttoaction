@@ -1,7 +1,6 @@
 <header class="site-header" id="siteHeader">
     <div class="container">
         <div class="brand">
-
             <a href="{{ url('/') }}" class="logo">
                 <img src="https://static.wixstatic.com/media/495d44_61ec90165a4341cb9bb1dde53c1657c6~mv2.png"
                     alt="Act To Action" />
@@ -24,37 +23,14 @@
 
                             <li><a href="{{ url('/courses') }}">Courses</a></li>
 
-                            <!-- WORKSHOPS -->
-                            <li class="has-drop">
-                                <a href="{{ url('/workshops') }}">
-                                    Workshops <span class="drop-arrow">⌄</span>
-                                </a>
+                            <!-- WORKSHOPS (NOW SIMPLE LINK) -->
+                            <li>
+                                <a href="{{ url('/workshops') }}">Workshops</a>
+                            </li>
 
-                                <ul class="lvl1">
-                                    @foreach ($navAgeGroups ?? [] as $ageGroup)
-                                        <li class="has-sub">
-                                            <a class="age-row" href="#">
-                                                {{ $ageGroup->label }}
-                                                @if ($ageGroup->cities->count())
-                                                    <span class="sub-arr">›</span>
-                                                @endif
-                                            </a>
-
-                                            @if ($ageGroup->cities->count())
-                                                <ul class="lvl2">
-                                                    @foreach ($ageGroup->cities as $city)
-                                                        <li>
-                                                            <a class="city-row"
-                                                                href="{{ url('/workshops') }}?age={{ $ageGroup->range_key }}&city={{ urlencode($city->name) }}">
-                                                                {{ $city->name }}
-                                                            </a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        </li>
-                                    @endforeach
-                                </ul>
+                            <!-- NEW EVENT MENU -->
+                            <li>
+                                <a href="{{ route('event.summercamp') }}">Event</a>
                             </li>
 
                             <li><a href="{{ url('/blog') }}">Blog</a></li>
@@ -69,7 +45,6 @@
         </div>
     </div>
 </header>
-
 
 <style>
     /* ── reset ── */

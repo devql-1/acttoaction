@@ -5,7 +5,66 @@
 @section('title', 'Workshops — Act To Action')
 
 @section('content')
+    <style>
+        .service-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
 
+            padding: 16px 42px;
+            border-radius: 60px;
+
+            background: linear-gradient(135deg, #36d1dc, #5b86e5);
+            color: #fff;
+
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+
+            border: none;
+            cursor: pointer;
+
+            position: relative;
+            transition: all 0.35s ease;
+
+            box-shadow: 0 10px 25px rgba(91, 134, 229, 0.35);
+        }
+
+        /* Arrow animation */
+        .service-btn i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover effect */
+        .service-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 35px rgba(91, 134, 229, 0.45);
+        }
+
+        /* Arrow moves */
+        .service-btn:hover i {
+            transform: translateX(8px);
+        }
+
+        /* Click feel */
+        .service-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Soft glow effect */
+        .service-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #36d1dc, #5b86e5);
+            filter: blur(18px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+    </style>
     {{-- ── Page Title ── --}}
     <div class="page-title">
         <div class="heading">
@@ -191,10 +250,23 @@
                                                 </div>
                                             @endif
                                         </div>
-                                        <a href="{{ route('workshops.show', $school->id) }}" target="_blank" rel="noopener"
-                                            class="service-btn">
-                                            <button type="button" class="service-btn">
-                                                <span>Register Now</span>
+                                        <a href="{{ route('workshops.show', $school->id) }}" target="_blank"
+                                            rel="noopener">
+                                            <button type="button"
+                                                style="
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        ">
+                                                Register Now
                                                 <i class="bi bi-arrow-right"></i>
                                             </button>
                                         </a>
