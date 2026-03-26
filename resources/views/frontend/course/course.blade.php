@@ -1892,51 +1892,34 @@
                 </div>
 
                 @php
-                    // Replace VIDEO_ID_X with real YouTube IDs when available
-                    $videos = \App\Models\YoutubeVideo::with('youtubeCategory')
+                    $categoryId = \App\Models\YoutubeCategory::where('slug', 'parent-testimoial')->value('id');
+
+                    $videos = \App\Models\YoutubeVideo::where('youtube_category_id', $categoryId)
                         ->latest()
                         ->get()
                         ->map(function ($v) {
+                            // ✅ FIX thumbnail issue
+                            $cleanId = explode('?', $v->youtube_id)[0];
+
                             return [
-                                'id' => $v->youtube_id,
-                                'thumb' => 'https://img.youtube.com/vi/' . $v->youtube_id . '/mqdefault.jpg',
+                                'id' => $cleanId,
+                                'thumb' => 'https://img.youtube.com/vi/' . $cleanId . '/mqdefault.jpg',
                                 'title' => $v->name,
-                                'desc' => $v->youtubeCategory?->name ?? 'Parent testimoial',
+                                'desc' => 'Parent testimonial',
                                 'duration' => '',
                             ];
                         })
                         ->toArray();
 
-                    // Fallback placeholders if no videos yet
+                    // fallback
                     if (empty($videos)) {
                         $videos = [
                             [
                                 'id' => 'dQw4w9WgXcQ',
                                 'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-                                'title' => 'Breaking Beauty Stereotypes | Parent Feedback',
-                                'desc' => 'A parent shares the inspiring journey.',
+                                'title' => 'Fallback Video',
+                                'desc' => 'No videos found',
                                 'duration' => '2:30',
-                            ],
-                            [
-                                'id' => 'dQw4w9WgXcQ',
-                                'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-                                'title' => 'Working Mom\'s Journey | Weekend Classes Made Dreams Possible',
-                                'desc' => 'The inspiring story of a working mother.',
-                                'duration' => '2:47',
-                            ],
-                            [
-                                'id' => 'dQw4w9WgXcQ',
-                                'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-                                'title' => 'Dausa Ratna Awardee Aadvika Sharma Success Journey',
-                                'desc' => 'From Classroom to the Spotlight!',
-                                'duration' => '2:53',
-                            ],
-                            [
-                                'id' => 'dQw4w9WgXcQ',
-                                'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-                                'title' => 'First Time in Family — Pranay Malpani did TV Shows & Films',
-                                'desc' => 'Breaking Barriers, Creating Firsts!',
-                                'duration' => '2:01',
                             ],
                         ];
                     }

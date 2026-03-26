@@ -73,7 +73,9 @@ class HomeController extends Controller
     {
         $events = Event::with('subEvents')->latest('event_date')->get();
 
-        $videoData = YoutubeVideo::with('youtubeCategory')->latest()->get()->map(
+        $categoryId = \App\Models\YoutubeCategory::where('slug', 'parent-testimoial')->value('id');
+
+        $videoData = YoutubeVideo::where('youtube_category_id', $categoryId)->latest()->get()->map(
             fn($v) => [
                 'id' => $v->youtube_id,
                 'thumb' => 'https://img.youtube.com/vi/' . $v->youtube_id . '/mqdefault.jpg',

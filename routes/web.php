@@ -262,12 +262,20 @@ Route::group(['prefix' => 'admin'], function () {
         // ════════════════════════════════════════════════════════════════════════════
         // HERO BANNER MANAGEMENT
         // ════════════════════════════════════════════════════════════════════════════
-
         Route::resource('hero-banner', HeroBannerController::class)
             ->parameters(['hero-banner' => 'heroBanner'])
-            ->names('hero-banner.index');
-        Route::post('hero-banner/{heroBanner}/activate', [HeroBannerController::class, 'activate'])->name('hero-banner.activate');
+            ->names([
+                'index' => 'hero-banner.index',
+                'create' => 'hero-banner.create',
+                'store' => 'hero-banner.store',
+                'show' => 'hero-banner.show',
+                'edit' => 'hero-banner.edit',
+                'update' => 'hero-banner.update',
+                'destroy' => 'hero-banner.destroy',
+            ]);
 
+        // Custom route to activate a hero banner
+        Route::post('hero-banner/{heroBanner}/activate', [HeroBannerController::class, 'activate'])->name('hero-banner.activate');
         // ════════════════════════════════════════════════════════════════════════════
         // ABOUT MANAGEMENT
         // ════════════════════════════════════════════════════════════════════════════
