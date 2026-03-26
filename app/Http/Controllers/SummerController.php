@@ -11,7 +11,7 @@ use App\Models\GalleryCategory;
 use App\Models\HeroBanner;
 use App\Models\Person;
 use Illuminate\View\View;
-use App\Models\stat;
+use App\Models\Stat;
 use App\Models\AboutSection;
 use App\Models\SubEvent;
 use App\Models\Event;

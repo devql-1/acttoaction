@@ -1005,12 +1005,12 @@
                 <div class="container">
                     <div class="cat-tabs">
                         <button class="cat-tab {{ !request('category') && !request('tag') ? 'active' : '' }}"
-                            onclick="window.location='{{ route('blog') }}'">
+                            onclick="window.location='{{ route('frontend.blog.index') }}'">
                             All Posts <span class="cat-count">{{ $totalBlogs }}</span>
                         </button>
                         @foreach ($categories as $cat)
                             <button class="cat-tab {{ request('category') === $cat->slug ? 'active' : '' }}"
-                                onclick="window.location='{{ route('blog', ['category' => $cat->slug]) }}'">
+                                onclick="window.location='{{ route('frontend.blog.index', ['category' => $cat->slug]) }}'">
                                 {{ $cat->category_name }}
                                 <span class="cat-count">{{ $cat->blogs_count ?? 0 }}</span>
                             </button>
@@ -1200,7 +1200,7 @@
 
                         {{-- Search --}}
                         <div class="sidebar-card">
-                            <form action="{{ route('blog') }}" method="GET">
+                            <form action="{{ route('frontend.blog.index') }}" method="GET">
                                 @if (request('category'))
                                     <input type="hidden" name="category" value="{{ request('category') }}">
                                 @endif
@@ -1223,14 +1223,14 @@
                             <h5>Categories</h5>
                             <ul class="cat-list">
                                 <li>
-                                    <a href="{{ route('blog') }}"
+                                    <a href="{{ route('frontend.blog.index') }}"
                                         class="{{ !request('category') && !request('tag') ? 'active' : '' }}">
                                         All Posts <span class="badge">{{ $totalBlogs }}</span>
                                     </a>
                                 </li>
                                 @foreach ($categories as $cat)
                                     <li>
-                                        <a href="{{ route('blog', ['category' => $cat->slug]) }}"
+                                        <a href="{{ route('frontend.blog.index', ['category' => $cat->slug]) }}"
                                             class="{{ request('category') === $cat->slug ? 'active' : '' }}">
                                             {{ $cat->category_name }}
                                             <span class="badge">{{ $cat->blogs_count ?? 0 }}</span>

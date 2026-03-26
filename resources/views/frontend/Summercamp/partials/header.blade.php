@@ -21,7 +21,7 @@
 
                         <ul class="nav-ul">
 
-                            <li><a href="{{ url('/courses') }}">Courses</a></li>
+                            <li><a href="{{ route('index.course') }}">Courses</a></li>
 
                             <!-- WORKSHOPS (NOW SIMPLE LINK) -->
                             <li>
@@ -99,7 +99,7 @@
     }
 
     .site-header .brand {
-        height: 60px;
+        height: 100px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -116,11 +116,11 @@
     }
 
     .site-header .logo img {
-        height: 34px;
+        height: 50px;
     }
 
     .site-header .logo h1 {
-        font-size: 17px;
+        font-size: 30px;
         font-weight: 800;
         color: #112344;
         margin: 0;

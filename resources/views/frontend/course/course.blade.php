@@ -1901,7 +1901,7 @@
                                 'id' => $v->youtube_id,
                                 'thumb' => 'https://img.youtube.com/vi/' . $v->youtube_id . '/mqdefault.jpg',
                                 'title' => $v->name,
-                                'desc' => $v->youtubeCategory?->name ?? 'Student Testimonial',
+                                'desc' => $v->youtubeCategory?->name ?? 'Parent testimoial',
                                 'duration' => '',
                             ];
                         })

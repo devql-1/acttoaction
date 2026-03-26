@@ -1,132 +1,172 @@
 {{-- resources/views/frontend/partials/people.blade.php --}}
 {{-- Requires: $people = ['mentors'=>..., 'speakers'=>..., 'guests'=>..., 'faculty'=>...] --}}
+<style>
+    /* ===== SCOPED FIX FOR THIS PAGE ONLY ===== */
 
-{{-- ① MENTORS --}}
-@if ($people['mentors']->isNotEmpty())
-    <section class="people-section" id="mentors">
-        <div class="container">
-            <div class="row align-items-end mb-2">
-                <div class="col-md-8">
-                    <div class="ppl-label"><i class="bi bi-mortarboard-fill"></i> Mentors</div>
-                    <h2 class="ppl-heading">Our Guiding Mentors</h2>
-                    <p class="ppl-sub">The visionaries and leaders who shaped the direction of Summer Camp and inspired
-                        every child.</p>
-                </div>
-                <div class="col-md-4 d-flex justify-content-md-end">
-                    <div class="ppl-nav">
-                        <button class="ppl-arrow" id="mentorPrev"><i class="bi bi-chevron-left"></i></button>
-                        <button class="ppl-arrow" id="mentorNext"><i class="bi bi-chevron-right"></i></button>
+    .sc-people-page .sc-swiper {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .sc-people-page .swiper-wrapper {
+        display: flex !important;
+    }
+
+    .sc-people-page .swiper-slide {
+        width: auto !important;
+        /* 🔥 fixes bleeding */
+        flex-shrink: 0;
+    }
+
+    /* Fix card stretching */
+    .sc-people-page .swiper-slide>* {
+        width: 160%;
+    }
+
+    /* Optional spacing fix */
+    .sc-people-page .ppl-swiper {
+        padding-bottom: 50px;
+    }
+</style>
+<div class="sc-people-page">
+    @if ($people['mentors']->isNotEmpty())
+        <section class="people-section" id="mentors">
+            <div class="container">
+                <div class="row align-items-end mb-2">
+                    <div class="col-md-8">
+                        <div class="ppl-label"><i class="bi bi-mortarboard-fill"></i> Mentors</div>
+                        <h2 class="ppl-heading">Our Guiding Mentors</h2>
+                        <p class="ppl-sub">The visionaries and leaders who shaped the direction of Summer Camp and
+                            inspired
+                            every child.</p>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-md-end">
+                        <div class="ppl-nav">
+                            <button class="ppl-arrow" id="mentorPrev"><i class="bi bi-chevron-left"></i></button>
+                            <button class="ppl-arrow" id="mentorNext"><i class="bi bi-chevron-right"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper ppl-swiper" id="mentorSwiper">
-                <div class="swiper-wrapper">
-                    @foreach ($people['mentors'] as $person)
-                        <div class="swiper-slide">
-                            @include('frontend.Summercamp.partials._person-card', ['person' => $person])
-                        </div>
-                    @endforeach
+                <div class="swiper sc-swiper" id="mentorSwiper">
+                    <div class="swiper-wrapper">
+                        @foreach ($people['mentors'] as $person)
+                            <div class="swiper-slide">
+                                @include('frontend.Summercamp.partials._person-card', [
+                                    'person' => $person,
+                                ])
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination"></div>
             </div>
-        </div>
-    </section>
-@endif
+        </section>
+    @endif
 
-{{-- ② SPEAKERS --}}
-@if ($people['speakers']->isNotEmpty())
-    <section class="people-section bg-alt" id="speakers">
-        <div class="container">
-            <div class="row align-items-end mb-2">
-                <div class="col-md-8">
-                    <div class="ppl-label"><i class="bi bi-mic-fill"></i> Speakers</div>
-                    <h2 class="ppl-heading">Featured Speakers</h2>
-                    <p class="ppl-sub">Inspiring voices who addressed the camp — from keynote addresses to motivational
-                        masterclasses.</p>
-                </div>
-                <div class="col-md-4 d-flex justify-content-md-end">
-                    <div class="ppl-nav">
-                        <button class="ppl-arrow" id="speakerPrev"><i class="bi bi-chevron-left"></i></button>
-                        <button class="ppl-arrow" id="speakerNext"><i class="bi bi-chevron-right"></i></button>
+    {{-- ② SPEAKERS --}}
+    @if ($people['speakers']->isNotEmpty())
+        <section class="people-section bg-alt" id="speakers">
+            <div class="container">
+                <div class="row align-items-end mb-2">
+                    <div class="col-md-8">
+                        <div class="ppl-label"><i class="bi bi-mic-fill"></i> Speakers</div>
+                        <h2 class="ppl-heading">Featured Speakers</h2>
+                        <p class="ppl-sub">Inspiring voices who addressed the camp — from keynote addresses to
+                            motivational
+                            masterclasses.</p>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-md-end">
+                        <div class="ppl-nav">
+                            <button class="ppl-arrow" id="speakerPrev"><i class="bi bi-chevron-left"></i></button>
+                            <button class="ppl-arrow" id="speakerNext"><i class="bi bi-chevron-right"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper ppl-swiper" id="speakerSwiper">
-                <div class="swiper-wrapper">
-                    @foreach ($people['speakers'] as $person)
-                        <div class="swiper-slide">
-                            @include('frontend.Summercamp.partials._person-card', ['person' => $person])
-                        </div>
-                    @endforeach
+                <div class="swiper ppl-swiper" id="speakerSwiper">
+                    <div class="swiper-wrapper">
+                        @foreach ($people['speakers'] as $person)
+                            <div class="swiper-slide">
+                                @include('frontend.Summercamp.partials._person-card', [
+                                    'person' => $person,
+                                ])
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination"></div>
             </div>
-        </div>
-    </section>
-@endif
+        </section>
+    @endif
 
-{{-- ③ GUESTS --}}
-@if ($people['guests']->isNotEmpty())
-    <section class="people-section" id="guests">
-        <div class="container">
-            <div class="row align-items-end mb-2">
-                <div class="col-md-8">
-                    <div class="ppl-label"><i class="bi bi-star-fill"></i> Guests</div>
-                    <h2 class="ppl-heading">Distinguished Guests</h2>
-                    <p class="ppl-sub">Honoured guests who graced the camp — from Rajasthan's top officials to acclaimed
-                        performing artists.</p>
-                </div>
-                <div class="col-md-4 d-flex justify-content-md-end">
-                    <div class="ppl-nav">
-                        <button class="ppl-arrow" id="guestPrev"><i class="bi bi-chevron-left"></i></button>
-                        <button class="ppl-arrow" id="guestNext"><i class="bi bi-chevron-right"></i></button>
+    {{-- ③ GUESTS --}}
+    @if ($people['guests']->isNotEmpty())
+        <section class="people-section" id="guests">
+            <div class="container">
+                <div class="row align-items-end mb-2">
+                    <div class="col-md-8">
+                        <div class="ppl-label"><i class="bi bi-star-fill"></i> Guests</div>
+                        <h2 class="ppl-heading">Distinguished Guests</h2>
+                        <p class="ppl-sub">Honoured guests who graced the camp — from Rajasthan's top officials to
+                            acclaimed
+                            performing artists.</p>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-md-end">
+                        <div class="ppl-nav">
+                            <button class="ppl-arrow" id="guestPrev"><i class="bi bi-chevron-left"></i></button>
+                            <button class="ppl-arrow" id="guestNext"><i class="bi bi-chevron-right"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper ppl-swiper" id="guestSwiper">
-                <div class="swiper-wrapper">
-                    @foreach ($people['guests'] as $person)
-                        <div class="swiper-slide">
-                            @include('frontend.Summercamp.partials._person-card', ['person' => $person])
-                        </div>
-                    @endforeach
+                <div class="swiper ppl-swiper" id="guestSwiper">
+                    <div class="swiper-wrapper">
+                        @foreach ($people['guests'] as $person)
+                            <div class="swiper-slide">
+                                @include('frontend.Summercamp.partials._person-card', [
+                                    'person' => $person,
+                                ])
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination"></div>
             </div>
-        </div>
-    </section>
-@endif
+        </section>
+    @endif
 
-{{-- ④ FACULTY --}}
-@if ($people['faculty']->isNotEmpty())
-    <section class="people-section bg-alt" id="faculty">
-        <div class="container">
-            <div class="row align-items-end mb-2">
-                <div class="col-md-8">
-                    <div class="ppl-label"><i class="bi bi-people-fill"></i> Faculty</div>
-                    <h2 class="ppl-heading">Our Expert Faculty</h2>
-                    <p class="ppl-sub">The dedicated coaches who worked day-in, day-out to bring out the best in every
-                        child.</p>
-                </div>
-                <div class="col-md-4 d-flex justify-content-md-end">
-                    <div class="ppl-nav">
-                        <button class="ppl-arrow" id="facultyPrev"><i class="bi bi-chevron-left"></i></button>
-                        <button class="ppl-arrow" id="facultyNext"><i class="bi bi-chevron-right"></i></button>
+    {{-- ④ FACULTY --}}
+    @if ($people['faculty']->isNotEmpty())
+        <section class="people-section bg-alt" id="faculty">
+            <div class="container">
+                <div class="row align-items-end mb-2">
+                    <div class="col-md-8">
+                        <div class="ppl-label"><i class="bi bi-people-fill"></i> Faculty</div>
+                        <h2 class="ppl-heading">Our Expert Faculty</h2>
+                        <p class="ppl-sub">The dedicated coaches who worked day-in, day-out to bring out the best in
+                            every
+                            child.</p>
+                    </div>
+                    <div class="col-md-4 d-flex justify-content-md-end">
+                        <div class="ppl-nav">
+                            <button class="ppl-arrow" id="facultyPrev"><i class="bi bi-chevron-left"></i></button>
+                            <button class="ppl-arrow" id="facultyNext"><i class="bi bi-chevron-right"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="swiper ppl-swiper" id="facultySwiper">
-                <div class="swiper-wrapper">
-                    @foreach ($people['faculty'] as $person)
-                        <div class="swiper-slide">
-                            @include('frontend.Summercamp.partials._person-card', ['person' => $person])
-                        </div>
-                    @endforeach
+                <div class="swiper ppl-swiper" id="facultySwiper">
+                    <div class="swiper-wrapper">
+                        @foreach ($people['faculty'] as $person)
+                            <div class="swiper-slide">
+                                @include('frontend.Summercamp.partials._person-card', [
+                                    'person' => $person,
+                                ])
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination"></div>
             </div>
-        </div>
-    </section>
+        </section>
+</div>
 @endif
 
 {{-- ── Swiper init for all 4 carousels ── --}}

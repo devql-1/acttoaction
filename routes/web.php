@@ -105,7 +105,7 @@ Route::get('/project', [HomeController::class, 'project'])->name('project');
 Route::get('/projectdetails', [HomeController::class, 'projectdetails'])->name('projectdetails');
 
 // Blog
-Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blog.index');
+Route::get('/blogs', [HomeController::class, 'blog'])->name('frontend.blog.index');
 Route::get('/blog/category/{slug}', [HomeController::class, 'blog_category'])->name('frontend.blog.category');
 Route::get('/blog/{slug}', [HomeController::class, 'blog_details'])->name('frontend.blog.details');
 Route::get('blogs/filter/{id}', [HomeController::class, 'blog_filter'])->name('home.blogs_filter');

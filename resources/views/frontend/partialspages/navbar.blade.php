@@ -50,7 +50,7 @@
                     <li>
                         <a href="{{ route('frontend.tests') }}"
                             class="{{ request()->routeIs('frontend.tests') ? 'active' : '' }}">
-                            Tests
+                            Quiz-Test
                         </a>
                     </li>
                     <li>
@@ -78,11 +78,11 @@
                         </ul>
                     </li> --}}
 
-                    <li>
+                    {{-- <li>
                         <a href="contact.html" class="{{ request()->is('contact.html') ? 'active' : '' }}">
                             Contact
                         </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <a href="{{ route('summercamp') }}"
                             class="{{ request()->routeIs('summercamp') ? 'active' : '' }}"

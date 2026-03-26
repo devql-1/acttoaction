@@ -2,12 +2,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Summer Camp 2025 | Act To Action</title>
+    <link rel="icon" type="image/png" href="{{ asset('courseassets/img/faviconsdf.png') }}">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap"
         rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
+
     <style>
         /* ===== VARIABLES ===== */
         :root {
@@ -20,7 +22,7 @@
             --accent: #ff6a00;
             --surface: #ffffff;
             --white: #ffffff;
-            --ann-h: 36px;
+            /* --ann-h: 36px; */
             scroll-behavior: smooth;
         }
 
@@ -30,13 +32,17 @@
             box-sizing: border-box;
         }
 
-        /* FIX: removed accidental .gallery-panel img text that was inside body {} */
         body {
             color: var(--fg);
             background: var(--bg);
             font-family: var(--ff-body);
             margin: 0;
+            /* padding-top: calc(var(--ann-h) + 48px); */
         }
+
+        /* body.ann-gone {
+            padding-top: 58px;
+        } */
 
         a {
             color: var(--accent);
@@ -63,9 +69,11 @@
             display: block;
         }
 
+        /* FIX: was "overflow: clip" which breaks gallery scroll strip animations */
         section {
-            overflow: clip;
+            overflow: hidden;
         }
+
 
         /* ===== ANNOUNCEMENT BAR ===== */
         .ann-bar {
@@ -182,6 +190,7 @@
             }
         }
 
+
         /* ===== HEADER ===== */
         .site-header {
             background: #fff;
@@ -199,7 +208,7 @@
         }
 
         .site-header .brand {
-            height: 58px;
+            height: 100px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -213,17 +222,16 @@
         }
 
         .site-header .brand .logo img {
-            height: 30px;
+            height: 50px;
         }
 
         .site-header .brand .logo h1 {
-            font-size: 18px;
+            font-size: 30px;
             font-weight: 700;
             color: var(--head);
             margin: 0;
         }
 
-        /* NAV */
         .navmenu ul {
             list-style: none;
             margin: 0;
@@ -494,14 +502,6 @@
             }
         }
 
-        /* ===== BODY OFFSET ===== */
-        body {
-            padding-top: calc(var(--ann-h) + 58px);
-        }
-
-        body.ann-gone {
-            padding-top: 58px;
-        }
 
         /* ===== HERO ===== */
         .hero {
@@ -538,6 +538,7 @@
                 min-height: 260px;
             }
         }
+
 
         /* ===== SECTION BASE ===== */
         .sec {
@@ -591,6 +592,7 @@
             line-height: 1.7;
         }
 
+
         /* ===== PRELOADER ===== */
         #preloader {
             position: fixed;
@@ -633,6 +635,7 @@
             }
         }
 
+
         /* ===== SCROLL TOP ===== */
         .scroll-top {
             position: fixed;
@@ -661,6 +664,7 @@
             opacity: 1;
             visibility: visible;
         }
+
 
         /* ===== STATS COUNTER ===== */
         .stats-sec {
@@ -748,6 +752,7 @@
                 border: none;
             }
         }
+
 
         /* ===== ABOUT ===== */
         .about-sec {
@@ -920,6 +925,7 @@
             }
         }
 
+
         /* ===== THEMES ===== */
         .themes-sec {
             padding: 70px 0;
@@ -997,6 +1003,7 @@
             padding: 3px 10px;
             border-radius: 20px;
         }
+
 
         /* ===== ACTIVITIES ===== */
         .act-card {
@@ -1115,9 +1122,11 @@
             color: var(--accent);
         }
 
-        /* ===================================================
-           ===== GALLERY — ALL RULES SCOPED TO .gallery-sec =====
-           =================================================== */
+
+        /* =======================================================
+           GALLERY — every rule scoped under .gallery-sec
+           No unscoped img rules. No duplicate panel rules.
+           ======================================================= */
 
         .gallery-sec {
             background: #0d0d0d;
@@ -1125,14 +1134,14 @@
             overflow: hidden;
         }
 
-        /* FIX: panels use display toggle only — no opacity trick that bleeds */
+        /* ── panels ── */
         .gallery-sec .gallery-panel {
             display: none;
         }
 
         .gallery-sec .gallery-panel.active {
             display: block;
-            animation: galFadeIn 0.3s ease;
+            animation: galFadeIn .3s ease;
         }
 
         @keyframes galFadeIn {
@@ -1147,12 +1156,7 @@
             }
         }
 
-        /* FIX: scoped so it never hits other sections' imgs */
-        .gallery-sec .gallery-panel img {
-            width: 100%;
-            display: block;
-        }
-
+        /* ── header ── */
         .gallery-header {
             padding: 60px 0 32px;
             text-align: center;
@@ -1205,6 +1209,7 @@
             font-size: 14px;
         }
 
+        /* ── tabs ── */
         .gallery-tabs {
             display: flex;
             justify-content: center;
@@ -1240,7 +1245,7 @@
             box-shadow: 0 4px 16px rgba(255, 106, 0, .35);
         }
 
-        /* Scroll strips */
+        /* ── scroll strips ── */
         .scroll-strip {
             position: relative;
             overflow: hidden;
@@ -1311,12 +1316,13 @@
             }
         }
 
-        /* FIX: scoped — was bleeding transform onto all imgs */
+        /* FIX: scoped */
         .gallery-sec .scroll-track img {
             display: block;
             width: 100%;
         }
 
+        /* ── slides ── */
         .s-slide {
             flex-shrink: 0;
             border-radius: 10px;
@@ -1326,25 +1332,26 @@
             transition: .35s;
         }
 
-        .s-slide:hover {
-            transform: scale(1.03);
-            z-index: 2;
-        }
-
-        /* FIX: scoped — was the main bleeder onto mentor/other section imgs */
+        /* FIX: scoped — was the #1 bleeder */
         .gallery-sec .s-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.4s ease;
+            transition: transform .4s ease;
         }
 
         .gallery-sec .s-slide:hover img {
             transform: scale(1.08);
         }
 
-        .s-slide .s-over {
+        .gallery-sec .s-slide:hover {
+            transform: scale(1.03);
+            z-index: 2;
+        }
+
+        /* FIX: scoped overlay */
+        .gallery-sec .s-slide .s-over {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, .5);
@@ -1355,11 +1362,11 @@
             justify-content: center;
         }
 
-        .s-slide:hover .s-over {
+        .gallery-sec .s-slide:hover .s-over {
             opacity: 1;
         }
 
-        .s-slide .s-over i {
+        .gallery-sec .s-slide .s-over i {
             color: #fff;
             font-size: 22px;
         }
@@ -1396,7 +1403,7 @@
             }
         }
 
-        /* Masonry */
+        /* ── masonry ── */
         .g-masonry {
             columns: 4 240px;
             column-gap: 8px;
@@ -1415,19 +1422,20 @@
             position: relative;
         }
 
-        /* FIX: scoped — was bleeding height:auto + transition globally */
+        /* FIX: scoped */
         .gallery-sec .g-masonry .gm-item img {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.4s ease;
+            transition: transform .4s ease;
         }
 
         .gallery-sec .g-masonry .gm-item:hover img {
             transform: scale(1.05);
         }
 
-        .g-masonry .gm-item .gm-over {
+        /* FIX: scoped overlay */
+        .gallery-sec .g-masonry .gm-item .gm-over {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, .5);
@@ -1438,11 +1446,11 @@
             justify-content: center;
         }
 
-        .g-masonry .gm-item:hover .gm-over {
+        .gallery-sec .g-masonry .gm-item:hover .gm-over {
             opacity: 1;
         }
 
-        .g-masonry .gm-item .gm-over i {
+        .gallery-sec .g-masonry .gm-item .gm-over i {
             color: #fff;
             font-size: 24px;
         }
@@ -1462,7 +1470,7 @@
             transition: .3s;
         }
 
-        /* FIX: scoped — was bleeding label show onto other sections */
+        /* FIX: scoped */
         .gallery-sec .gm-item:hover .gm-label {
             opacity: 1;
         }
@@ -1473,7 +1481,7 @@
             }
         }
 
-        /* Featured grid */
+        /* ── featured grid ── */
         .g-featured {
             display: grid;
             gap: 8px;
@@ -1496,20 +1504,21 @@
             position: relative;
         }
 
-        /* FIX: scoped — was bleeding scale onto all imgs */
+        /* FIX: scoped */
         .gallery-sec .g-featured .gf-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.4s ease;
+            transition: transform .4s ease;
         }
 
         .gallery-sec .g-featured .gf-item:hover img {
             transform: scale(1.07);
         }
 
-        .g-featured .gf-item .gf-over {
+        /* FIX: scoped overlay */
+        .gallery-sec .g-featured .gf-item .gf-over {
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, .45);
@@ -1520,11 +1529,11 @@
             justify-content: center;
         }
 
-        .g-featured .gf-item:hover .gf-over {
+        .gallery-sec .g-featured .gf-item:hover .gf-over {
             opacity: 1;
         }
 
-        .g-featured .gf-item .gf-over i {
+        .gallery-sec .g-featured .gf-item .gf-over i {
             color: #fff;
             font-size: 28px;
         }
@@ -1544,7 +1553,7 @@
             transition: .3s;
         }
 
-        /* FIX: scoped — was bleeding caption reveal onto other sections */
+        /* FIX: scoped */
         .gallery-sec .gf-item:hover .gf-caption {
             opacity: 1;
             transform: translateY(0);
@@ -1566,6 +1575,7 @@
             }
         }
 
+        /* ── footer ── */
         .g-footer {
             padding: 22px 16px;
             text-align: center;
@@ -1586,7 +1596,7 @@
             color: var(--accent);
         }
 
-        /* Lightbox */
+        /* ── lightbox ── */
         .lb-back {
             display: none;
             position: fixed;
@@ -1607,7 +1617,7 @@
             max-height: 90vh;
         }
 
-        /* FIX: scoped to lightbox only — prevents transition bleed */
+        /* FIX: transition:none so gallery hover styles never apply inside lightbox */
         .lb-inner img {
             max-width: 90vw;
             max-height: 86vh;
@@ -1680,6 +1690,7 @@
             font-size: 12px;
             white-space: nowrap;
         }
+
 
         /* ===== PEOPLE SECTIONS ===== */
         .people-section {
@@ -1919,6 +1930,7 @@
             }
         }
 
+
         /* ===== DIGNITARIES ===== */
         .doc-card {
             background: #fff;
@@ -2028,6 +2040,7 @@
             color: #fff;
             transform: translateY(-2px);
         }
+
 
         /* ===== VIDEO ===== */
         .video-sec {
@@ -2155,6 +2168,7 @@
         .vid-close:hover {
             background: var(--accent);
         }
+
 
         /* ===== CTA ===== */
         .cta-sec {
@@ -2352,6 +2366,7 @@
             }
         }
 
+
         /* ===== TESTIMONIALS ===== */
         .test-sec {
             padding: 70px 0;
@@ -2421,7 +2436,8 @@
             border-radius: 4px;
         }
 
-        /* ===== PARTNERS ===== */
+
+        /* ===== PARTNERS / CONTACT ===== */
         .partner-sec {
             padding: 70px 0;
         }
@@ -2520,6 +2536,7 @@
             background: color-mix(in srgb, var(--accent), black 12%);
             transform: translateY(-2px);
         }
+
 
         /* ===== FOOTER ===== */
         .footer {
@@ -2685,6 +2702,7 @@
             padding-left: 18px;
             border-left: 1px solid #e0e0e0;
         }
+
 
         /* ===== UTILITY ===== */
         .btn-fill {

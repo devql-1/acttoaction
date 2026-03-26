@@ -1,8 +1,15 @@
 {{-- resources/views/frontend/workshops.blade.php --}}
-@extends('frontend.course.layout')
-
+@extends('frontend.course.layoutsummercamp')
 
 @section('title', 'Workshops — Act To Action')
+<style>
+    .page-title {
+        color: var(--default-color);
+        background-color: var(--background-color);
+        position: relative;
+        padding-top: 100px;
+    }
+</style>
 
 @section('content')
     <style>
@@ -66,7 +73,7 @@
         }
     </style>
     {{-- ── Page Title ── --}}
-    <div class="page-title">
+    <div class="page-title" style="padding-top:10px">
         <div class="heading">
             <div class="container">
                 <div class="row d-flex justify-content-center text-center">

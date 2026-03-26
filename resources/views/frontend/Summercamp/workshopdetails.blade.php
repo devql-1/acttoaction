@@ -1,6 +1,13 @@
 {{-- resources/views/frontend/Summercamp/workshopdetails.blade.php --}}
 @extends('frontend.course.layout')
-
+<style>
+    .page-title {
+        color: var(--default-color);
+        background-color: var(--background-color);
+        position: relative;
+        padding-top: 100px;
+    }
+</style>
 @section('title', $school->name . ' – Act To Action')
 
 
@@ -385,7 +392,7 @@
     <main class="main">
 
         {{-- ── Hero / Overview ── --}}
-        <section class="department-details section" style="padding-top: 120px; padding-bottom: 60px;">
+        <section class="department-details section" style="padding-top: 150px; padding-bottom: 60px;">
             <div class="container">
                 <nav aria-label="breadcrumb" data-aos="fade-up">
                     <ol class="breadcrumb" style="background: none; padding: 0; margin-bottom: 30px;">

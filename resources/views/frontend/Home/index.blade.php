@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('frontendassets/css/style.css') }}">
     <!-- Font Awesome Latest CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ asset('courseassets/img/faviconsdf.png') }}">
 </head>
 
 
@@ -34,7 +35,7 @@
     <!-- HEADER -->
     <header class="topbar">
         <div class="logo">ActToAction</div>
-        <button class="login-btn">Login</button>
+        {{-- <button class="login-btn">Login</button> --}}
     </header>
     <div class="container">
 
@@ -48,8 +49,10 @@
         </div>
 
         <div class="action send">
-            <div class="icon"><i class="fas fa-calendar-check"></i></div>
-            <h1>Event</h1>
+            <a href="{{ route('event') }}" class="action-link">
+                <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                <h1>Event</h1>
+            </a>
         </div>
 
         <div class="action exchange">
@@ -60,13 +63,35 @@
         </div>
 
     </div>
+    <style>
+        .bottom-nav a {
+            text-decoration: none;
+            /* removes underline */
+            color: inherit;
+            /* keeps original text color */
+            display: inline-block;
+            /* makes entire div clickable */
+        }
 
+        .bottom-nav a div {
+            cursor: pointer;
+            /* shows pointer on hover */
+        }
+    </style>
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <div>🏠 Personal</div>
-        <div>Business ↗</div>
-        <div>Company ▾</div>
-        <div>Take Quiz</div>
+        <a href="{{ route('frontend.blog.index') }}">
+            <div>Blog</div>
+        </a>
+        <a href="{{ route('service') }}">
+            <div>Service</div>
+        </a>
+        <a href="{{ route('aboutus') }}">
+            <div>About us</div>
+        </a>
+        <a href="{{ route('frontend.tests') }}">
+            <div>Take Quiz</div>
+        </a>
     </div>
 
     <div class="support">💬 Support</div>

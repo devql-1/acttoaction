@@ -37,12 +37,11 @@
                 {{-- ══════════════════════════════════════════
                      SECTION: CONTENT MANAGEMENT
                 ══════════════════════════════════════════ --}}
-                <li class="nav-section">
+                {{-- <li class="nav-section">
                     <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
                     <h4 class="text-section">Content Management</h4>
                 </li>
 
-                {{-- Slider --}}
                 <li class="nav-item {{ request()->routeIs('admin.slider') ? 'active' : '' }}">
                     <a href="{{ route('admin.slider') }}">
                         <i class="fas fa-sliders-h"></i>
@@ -50,7 +49,6 @@
                     </a>
                 </li>
 
-                {{-- About Us --}}
                 <li class="nav-item {{ request()->routeIs('admin.about*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#about"
                         class="{{ request()->routeIs('admin.about*') ? '' : 'collapsed' }}">
@@ -69,7 +67,6 @@
                     </div>
                 </li>
 
-                {{-- Services --}}
                 <li class="nav-item {{ request()->routeIs('admin.service*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#service"
                         class="{{ request()->routeIs('admin.service*') ? '' : 'collapsed' }}">
@@ -98,7 +95,6 @@
                     </div>
                 </li>
 
-                {{-- Industry --}}
                 <li class="nav-item {{ request()->routeIs('admin.industry*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#industry"
                         class="{{ request()->routeIs('admin.industry*') ? '' : 'collapsed' }}">
@@ -118,7 +114,7 @@
                                         FAQs</span></a></li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 {{-- ══════════════════════════════════════════
                      SECTION: ACADEMIC
@@ -252,7 +248,7 @@
                 </li>
 
                 {{-- Team Members --}}
-                <li class="nav-item {{ request()->routeIs('admin.team_members*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('admin.team_members*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#team"
                         class="{{ request()->routeIs('admin.team_members*') ? '' : 'collapsed' }}">
                         <i class="fas fa-user-friends"></i>
@@ -268,10 +264,10 @@
                                         New</span></a></li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 {{-- Testimonials --}}
-                <li class="nav-item {{ request()->routeIs('admin.testimonial*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('admin.testimonial*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#testimonial"
                         class="{{ request()->routeIs('admin.testimonial*') ? '' : 'collapsed' }}">
                         <i class="fas fa-quote-left"></i>
@@ -287,15 +283,15 @@
                                         New</span></a></li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 {{-- Brands --}}
-                <li class="nav-item {{ request()->routeIs('admin.brands*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('admin.brands*') ? 'active' : '' }}">
                     <a href="{{ route('admin.brands') }}">
                         <i class="fas fa-certificate"></i>
                         <p>Brands</p>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- Video Gallery --}}
                 <li
@@ -451,12 +447,12 @@
                             </li>
 
                             {{-- Statistics --}}
-                            <li class="nav-item {{ request()->routeIs('stats-*') ? 'active' : '' }}">
+                            {{-- <li class="nav-item {{ request()->routeIs('stats-*') ? 'active' : '' }}">
                                 <a href="{{ route('stats-index') }}">
                                     <i class="fas fa-chart-bar"></i>
                                     <span class="sub-item">Statistics</span>
                                 </a>
-                            </li>
+                            </li> --}}
 
                             {{-- About Section --}}
                             <li class="nav-item {{ request()->routeIs('about-section-*') ? 'active' : '' }}">
@@ -487,37 +483,37 @@
                 </li>
 
                 {{-- Admission Short Form --}}
-                <li class="nav-item {{ request()->routeIs('admin.admission_short_form*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('admin.admission_short_form*') ? 'active' : '' }}">
                     <a href="{{ route('admin.admission_short_form') }}">
                         <i class="fas fa-file-alt"></i>
                         <p>Admission Forms</p>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- Services Enquiries --}}
-                <li class="nav-item {{ request()->routeIs('admin.enquiries*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('admin.enquiries*') ? 'active' : '' }}">
                     <a href="{{ route('admin.enquiries') }}">
                         <i class="fas fa-bullhorn"></i>
                         <p>Service Enquiries</p>
                         <span id="enquiry-count" class="badge bg-danger ms-1">0</span>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- Contact Enquiries --}}
-                <li class="nav-item {{ request()->routeIs('admin.contactus_enquiry*') ? 'active' : '' }}">
+                {{-- <li class="nav-item {{ request()->routeIs('admin.contactus_enquiry*') ? 'active' : '' }}">
                     <a href="{{ route('admin.contactus_enquiry') }}">
                         <i class="fas fa-headset"></i>
                         <p>Contact Enquiries</p>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- Volunteer --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('volunteer') }}">
                         <i class="fas fa-hands-helping"></i>
                         <p>Volunteers</p>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- email --}}
                 <li class="nav-item">
@@ -538,12 +534,12 @@
                 {{-- ══════════════════════════════════════════
                      SECTION: SYSTEM SETTINGS
                 ══════════════════════════════════════════ --}}
-                <li class="nav-section">
+                {{-- <li class="nav-section">
                     <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
                     <h4 class="text-section">System Settings</h4>
                 </li>
 
-                {{-- Website Setup --}}
+               
                 <li class="nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.settings.index') }}">
                         <i class="fas fa-desktop"></i>
@@ -551,7 +547,6 @@
                     </a>
                 </li>
 
-                {{-- Contact Information --}}
                 <li class="nav-item {{ request()->routeIs('admin.contact-info.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.contact-info.edit') }}">
                         <i class="fas fa-address-book"></i>
@@ -559,13 +554,12 @@
                     </a>
                 </li>
 
-                {{-- Admin Profile --}}
                 <li class="nav-item {{ request()->routeIs('admin.profile*') ? 'active' : '' }}">
                     <a href="{{ route('admin.profile') }}">
                         <i class="fas fa-user-cog"></i>
                         <p>My Profile</p>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- Logout --}}
                 <li class="nav-item">

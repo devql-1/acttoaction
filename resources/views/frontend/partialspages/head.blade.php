@@ -9,7 +9,7 @@
     <meta name="keywords" content="" />
 
     <!-- Favicons -->
-    <link href="{{ asset('courseassets/img/favicon.png') }}" rel="icon" />
+    <link href="{{ asset('courseassets/img/faviconsdf.png') }}" rel="icon" />
     <link href="{{ asset('courseassets/img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
 
     <!-- Fonts -->
@@ -30,29 +30,5 @@
     <!-- Main CSS File -->
     <link href="{{ asset('courseassets/css/main.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.css" />
-    <style>
-        .nav-btn {
-            background: var(--accent-color);
-            color: #fff !important;
-            padding: 8px 18px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: 0.2s ease;
-        }
 
-        .nav-btn:hover {
-            background: #000;
-            color: #fff !important;
-            transform: translateY(-1px);
-        }
-
-        .nav-btn i {
-            font-size: 0.9rem;
-        }
-    </style>
 </head>
