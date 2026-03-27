@@ -9,11 +9,14 @@ use Carbon\Carbon;
 use App\Models\Course;
 use Razorpay\Api\Api;
 use App\Models\Payment;
-use App\Services\EmailService; // ← this must be here
+use App\Services\EmailService;
+use Illuminate\Support\Facades\DB;
 
 class EnrollmentController extends Controller
 {
-    /** Show the multi-step enrollment form */
+    /**
+     * Show the multi-step enrollment form
+     */
     public function enroll($id)
     {
         $course = Course::with([
@@ -23,7 +26,6 @@ class EnrollmentController extends Controller
             },
         ])->findOrFail($id);
 
-        // Build state => centers map for JS dropdown
         $centresByState = [];
         foreach ($course->centers as $center) {
             $stateName = $center->state ? $center->state->name : 'Other';
@@ -40,16 +42,15 @@ class EnrollmentController extends Controller
             ];
         }
 
-        // Unique states that have centres for this course
         $courseStates = array_keys($centresByState);
-
-        // Other courses for step 5
         $otherCourses = Course::with('category')->where('id', '!=', $id)->latest()->take(5)->get();
 
         return view('frontend.enrollment.create', compact('course', 'otherCourses', 'centresByState', 'courseStates'));
     }
-    /** Handle form submission */
 
+    /**
+     * Handle form submission
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -74,19 +75,19 @@ class EnrollmentController extends Controller
         $course = Course::where('title', $validated['course'])->first();
         $fee = $course ? $course->fees : 0;
 
-        // ── If enrollment_id is passed, UPDATE existing lead record ──
+        // Update existing enrollment if upgrading from lead
         if ($request->filled('enrollment_id') && !$isLead) {
             $enrollment = Enrollment::find($request->enrollment_id);
             if ($enrollment) {
                 $enrollment->update([
                     'course' => $validated['course'],
                     'fee' => $fee,
-                    'status' => 'pending', // upgrade from lead → pending (awaiting payment)
+                    'status' => 'pending',
                 ]);
             }
         }
 
-        // ── Otherwise create fresh ──
+        // Create new enrollment if not exists
         if (!isset($enrollment) || !$enrollment) {
             $enrollment = Enrollment::create([
                 'first_name' => $validated['first_name'],
@@ -109,7 +110,7 @@ class EnrollmentController extends Controller
             ]);
         }
 
-        // ── If this is just a lead save, return early (no Razorpay order) ──
+        // Return early if saving as lead only
         if ($isLead) {
             return response()->json([
                 'success' => true,
@@ -117,46 +118,69 @@ class EnrollmentController extends Controller
             ]);
         }
 
-        // ── Create Razorpay order ──
-        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
-        $order = $api->order->create([
-            'receipt' => $enrollment->reference_id,
-            'amount' => $fee * 100,
-            'currency' => 'INR',
-        ]);
+        // Validate fee is configured
+        if ($fee <= 0) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Course fee not configured properly',
+                ],
+                422,
+            );
+        }
 
-        return response()->json([
-            'success' => true,
-            'order_id' => $order['id'],
-            'amount' => $fee * 100,
-            'enrollment_id' => $enrollment->id,
-            'razorpay_key' => config('services.razorpay.key'),
-        ]);
+        // Create Razorpay order
+        try {
+            $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+
+            $order = $api->order->create([
+                'receipt' => $enrollment->reference_id,
+                'amount' => $fee * 100,
+                'currency' => 'INR',
+            ]);
+
+            session(['rzp_amount' => $fee * 100]);
+
+            return response()->json([
+                'success' => true,
+                'order_id' => $order['id'],
+                'amount' => $fee * 100,
+                'enrollment_id' => $enrollment->id,
+                'razorpay_key' => config('services.razorpay.key'),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Failed to create payment order. Please try again.',
+                ],
+                500,
+            );
+        }
     }
 
-    /** Admin: list all enrollments */
+    /**
+     * Admin: List all enrollments with search & filters
+     */
     public function index(Request $request)
     {
         $query = Enrollment::with('latestPayment')->latest();
 
-        // Search
         if ($request->filled('search')) {
-            $s = $request->search;
-            $query->where(function ($q) use ($s) {
-                $q->where('first_name', 'like', "%$s%")
-                    ->orWhere('last_name', 'like', "%$s%")
-                    ->orWhere('phone', 'like', "%$s%")
-                    ->orWhere('email', 'like', "%$s%")
-                    ->orWhere('reference_id', 'like', "%$s%");
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', "%$search%")
+                    ->orWhere('last_name', 'like', "%$search%")
+                    ->orWhere('phone', 'like', "%$search%")
+                    ->orWhere('email', 'like', "%$search%")
+                    ->orWhere('reference_id', 'like', "%$search%");
             });
         }
 
-        // Filter by status
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        // Filter by course
         if ($request->filled('course')) {
             $query->where('course', 'like', '%' . $request->course . '%');
         }
@@ -165,7 +189,7 @@ class EnrollmentController extends Controller
 
         $stats = [
             'total' => Enrollment::count(),
-            'paid' => Enrollment::where('status', 'paid')->count(),
+            'confirmed' => Enrollment::where('status', 'confirmed')->count(),
             'lead' => Enrollment::where('status', 'lead')->count(),
             'pending' => Enrollment::where('status', 'pending')->count(),
         ];
@@ -173,36 +197,45 @@ class EnrollmentController extends Controller
         return view('backend.enrollments.index', compact('enrollments', 'stats'));
     }
 
-    /** Admin: view single enrollment */
+    /**
+     * Admin: View single enrollment
+     */
     public function show($id)
     {
         $enrollment = Enrollment::findOrFail($id);
         return view('backend.enrollments.show', compact('enrollment'));
     }
 
-    /** Admin: update status */
+    /**
+     * Admin: Update enrollment status
+     */
     public function updateStatus(Request $request, $id)
     {
         $request->validate(['status' => 'required|in:pending,confirmed,cancelled']);
 
         Enrollment::findOrFail($id)->update(['status' => $request->status]);
 
-        return back()->with('success', 'Status updated successfully.');
+        return back()->with('success', 'Enrollment status updated.');
     }
 
-    /** Admin: delete */
+    /**
+     * Admin: Delete enrollment
+     */
     public function destroy($id)
     {
         Enrollment::findOrFail($id)->delete();
         return back()->with('success', 'Enrollment deleted.');
     }
+
+    /**
+     * Verify Razorpay payment and confirm enrollment
+     */
     public function verifyPayment(Request $request)
     {
-        \Log::info('Razorpay verify — incoming payload', $request->all());
-
         $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         try {
+            // Verify payment signature
             $attributes = [
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
@@ -211,89 +244,101 @@ class EnrollmentController extends Controller
 
             $api->utility->verifyPaymentSignature($attributes);
 
-            $enrollment = Enrollment::find($request->enrollment_id);
-
-            if (!$enrollment) {
-                return response()->json(['success' => false, 'message' => 'Enrollment not found']);
+            // Check if payment already processed
+            $existingPayment = Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->first();
+            if ($existingPayment) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Payment already processed',
+                ]);
             }
 
-            // ── Save to payments table ──
-            // Check if payment already exists
-            $payment = Payment::firstOrCreate(
-                ['razorpay_payment_id' => $request->razorpay_payment_id],
-                [
+            // Fetch payment details from Razorpay
+            $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
+
+            // Process payment atomically
+            DB::transaction(function () use ($request, $rzpPayment) {
+                $enrollment = Enrollment::findOrFail($request->enrollment_id);
+
+                // Update enrollment status
+                if ($enrollment->status !== 'confirmed') {
+                    $enrollment->update(['status' => 'confirmed']);
+                }
+
+                // Create payment record
+                Payment::create([
                     'enrollment_id' => $enrollment->id,
                     'razorpay_order_id' => $request->razorpay_order_id,
+                    'razorpay_payment_id' => $request->razorpay_payment_id,
                     'razorpay_signature' => $request->razorpay_signature,
-                    'amount' => $enrollment->fee,
+                    'amount' => session('rzp_amount') ? session('rzp_amount') / 100 : $enrollment->fee,
                     'currency' => 'INR',
-                    'status' => 'paid',
-                    'email' => $enrollment->email,
-                    'contact' => $enrollment->phone,
+                    'status' => 'success',
+                    'transaction_type' => $rzpPayment->method,
+                    'type' => 'course_enrollment',
                     'paid_at' => now(),
-                ],
-            );
+                    'contact' => $rzpPayment->contact ?? $enrollment->phone,
+                    'email' => $rzpPayment->email ?? $enrollment->email,
+                ]);
 
-            // Update enrollment status safely
-            $enrollment->status = 'confirmed';
-            $enrollment->save();
+                // Send confirmation email
+                try {
+                    app(EmailService::class)->send(
+                        'enrollment-confirmation',
+                        $enrollment->email,
+                        [
+                            'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
+                            'course_name' => $enrollment->course,
+                            'centre' => $enrollment->centre,
+                            'reference_id' => $enrollment->reference_id,
+                            'amount' => '₹' . number_format($enrollment->fee),
+                            'payment_id' => $request->razorpay_payment_id,
+                        ],
+                        $enrollment->first_name,
+                    );
+                } catch (\Exception $e) {
+                    // Email failure doesn't fail the payment
+                }
+            });
 
             return response()->json([
                 'success' => true,
                 'message' => 'Payment successful',
-                'reference_id' => $enrollment->reference_id,
-                'payment_id' => $payment->id,
             ]);
-        } catch (\Exception $e) {
-            \Log::error('Razorpay verify exception', [
-                'error' => $e->getMessage(),
-                'line' => $e->getLine(),
+        } catch (\Razorpay\Api\Errors\SignatureVerificationError $e) {
+            Payment::create([
                 'enrollment_id' => $request->enrollment_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id ?? '',
+                'amount' => 0,
+                'status' => 'failed',
+                'error_code' => 'SIGNATURE_MISMATCH',
+                'error_reason' => $e->getMessage(),
             ]);
 
-            // ── Save failed payment record too ──
-            if ($request->enrollment_id) {
-                Payment::create([
-                    'enrollment_id' => $request->enrollment_id,
-                    'razorpay_order_id' => $request->razorpay_order_id ?? '',
-                    'razorpay_payment_id' => $request->razorpay_payment_id ?? '',
-                    'razorpay_signature' => $request->razorpay_signature ?? '',
-                    'amount' => 0,
-                    'status' => 'failed',
-                    'error_code' => 'VERIFY_EXCEPTION',
-                    'error_reason' => $e->getMessage(),
-                ]);
-            }
-            app(EmailService::class)->send(
-                'enrollment-confirmation',
-                $enrollment->email,
+            return response()->json(
                 [
-                    'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
-                    'course_name' => $enrollment->course,
-                    'centre' => $enrollment->centre,
-                    'reference_id' => $enrollment->reference_id,
-                    'amount' => '₹' . number_format($enrollment->fee),
-                    'payment_id' => $request->razorpay_payment_id,
+                    'success' => false,
+                    'message' => 'Payment verification failed',
                 ],
-                $enrollment->first_name,
+                422,
             );
-
-            // ── Send to parent if available ──
-            if (!empty($enrollment->parent_email)) {
-                app(EmailService::class)->send('enrollment-confirmation', $enrollment->parent_email, [
-                    'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
-                    'course_name' => $enrollment->course,
-                    'centre' => $enrollment->centre,
-                    'reference_id' => $enrollment->reference_id,
-                    'amount' => '₹' . number_format($enrollment->fee),
-                    'payment_id' => $request->razorpay_payment_id,
-                ]);
-            }
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
+        } catch (\Exception $e) {
+            Payment::create([
+                'enrollment_id' => $request->enrollment_id ?? null,
+                'razorpay_payment_id' => $request->razorpay_payment_id ?? '',
+                'amount' => 0,
+                'status' => 'failed',
+                'error_code' => class_basename($e),
+                'error_reason' => $e->getMessage(),
             ]);
+
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Payment verification failed',
+                ],
+                500,
+            );
         }
     }
 }

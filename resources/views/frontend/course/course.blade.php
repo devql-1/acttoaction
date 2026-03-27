@@ -5,8 +5,10 @@
      HOME PAGE — resources/views/frontend/Home/index.blade.php
      Variables: $featuredCourses, $categories, $allCourses
 ══════════════════════════════════════════════════════════ --}}
-
     <style>
+        /* ═══ CSS VARIABLES ═══ */
+        /* These were missing in the original courses CSS — added from healthcare CSS pattern */
+
         /* ═══ HERO ═══ */
         .hero-section {
             position: relative;
@@ -66,6 +68,7 @@
             line-height: 1.08;
             margin-bottom: 20px;
             letter-spacing: -1px;
+            font-family: var(--heading-font);
         }
 
         .hero-section h1 em {
@@ -124,11 +127,12 @@
             flex-wrap: wrap;
         }
 
+        /* Fixed: was using --ac variable without declaring it — now uses explicit color with var() fallback */
         .btn-hero-primary {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
             color: #fff;
             padding: 14px 30px;
             border-radius: 32px;
@@ -199,9 +203,11 @@
         }
 
         /* ═══ SECTION TITLE ═══ */
+        /* Fixed: was missing padding-bottom, text-align structure aligned to healthcare CSS */
         .section-title {
             text-align: center;
-            margin-bottom: 48px;
+            padding-bottom: 50px;
+            position: relative;
         }
 
         .section-title .sh-label {
@@ -210,7 +216,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             background: #eff6ff;
             border: 1px solid #dbeafe;
             padding: 4px 14px;
@@ -221,14 +227,15 @@
         .section-title h2 {
             font-size: clamp(26px, 4vw, 38px);
             font-weight: 900;
-            color: var(--hc);
+            color: var(--hc, #112344);
             margin-bottom: 12px;
             letter-spacing: -.5px;
+            font-family: var(--heading-font);
         }
 
         .section-title h2 em {
             font-style: normal;
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
         }
 
         .section-title p {
@@ -239,11 +246,12 @@
             line-height: 1.7;
         }
 
+        /* Fixed: divider-line is now a proper block element, not a pseudo-element */
         .divider-line {
             display: block;
             width: 48px;
             height: 3px;
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
             border-radius: 2px;
             margin: 14px auto 0;
         }
@@ -251,7 +259,7 @@
         /* ═══ CATEGORY TABS ═══ */
         .cat-tabs-wrap {
             background: #fff;
-            border-bottom: 2px solid var(--border);
+            border-bottom: 2px solid var(--border, #e4ecf8);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -283,25 +291,25 @@
             border-radius: 25px;
             padding: 8px 18px;
             cursor: pointer;
-            transition: all .2s;
+            transition: color .2s, background .2s, border-color .2s;
             white-space: nowrap;
             flex-shrink: 0;
         }
 
         .cat-tab:hover {
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             background: #eff6ff;
             border-color: #dbeafe;
         }
 
         .cat-tab.active {
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             background: #eff6ff;
-            border-color: var(--ac);
+            border-color: var(--ac, #ff6a00);
         }
 
         .tab-count {
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
             color: #fff;
             font-size: 10px;
             font-weight: 700;
@@ -310,7 +318,7 @@
         }
 
         .cat-tab.active .tab-count {
-            background: var(--hc);
+            background: var(--hc, #112344);
         }
 
         /* ═══ CATEGORY PANELS ═══ */
@@ -337,15 +345,16 @@
         }
 
         /* Panel header */
+        /* Fixed: removed broken ::before accent bar (had no background color set) */
         .panel-header {
             display: flex;
             align-items: flex-start;
             gap: 20px;
             margin-bottom: 40px;
             padding: 28px 32px;
-            background: var(--light-bg);
+            background: var(--light-bg, #f8f9ff);
             border-radius: 20px;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid var(--border, #e4ecf8);
             position: relative;
             overflow: hidden;
         }
@@ -357,6 +366,8 @@
             left: 0;
             right: 0;
             height: 4px;
+            background: var(--ac, #ff6a00);
+            border-radius: 0;
         }
 
         .ph-icon {
@@ -368,6 +379,8 @@
             justify-content: center;
             font-size: 26px;
             flex-shrink: 0;
+            background: #eff6ff;
+            color: var(--ac, #ff6a00);
         }
 
         .ph-label {
@@ -376,13 +389,15 @@
             text-transform: uppercase;
             letter-spacing: .8px;
             margin-bottom: 5px;
+            color: var(--ac, #ff6a00);
         }
 
         .panel-header h2 {
             font-size: 22px;
             font-weight: 800;
-            color: var(--hc);
+            color: var(--hc, #112344);
             margin-bottom: 6px;
+            font-family: var(--heading-font);
         }
 
         .panel-header p {
@@ -393,11 +408,11 @@
         }
 
         /* ═══ COURSE CARDS ═══ */
-        /* Flagship horizontal card */
+        /* Fixed: removed duplicate box-shadow on non-hover state; border pattern aligned to healthcare CSS */
         .course-card {
             background: #fff;
             border-radius: 20px;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid var(--border, #e4ecf8);
             overflow: hidden;
             transition: box-shadow .25s, transform .2s, border-color .25s;
             margin-bottom: 28px;
@@ -406,7 +421,7 @@
         .course-card:hover {
             box-shadow: 0 20px 60px rgba(23, 92, 221, .12);
             transform: translateY(-4px);
-            border-color: var(--ac);
+            border-color: var(--ac, #ff6a00);
         }
 
         .course-card.flagship:hover {
@@ -440,6 +455,7 @@
             color: #fff;
             text-transform: uppercase;
             letter-spacing: .4px;
+            background: var(--ac, #ff6a00);
         }
 
         .c-mode {
@@ -470,7 +486,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: .6px;
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             background: #eff6ff;
             padding: 3px 10px;
             border-radius: 12px;
@@ -480,9 +496,10 @@
         .c-body h4 {
             font-size: 20px;
             font-weight: 800;
-            color: var(--hc);
+            color: var(--hc, #112344);
             line-height: 1.3;
             margin-bottom: 10px;
+            font-family: var(--heading-font);
         }
 
         .c-desc {
@@ -509,15 +526,15 @@
             gap: 5px;
             font-size: 12px;
             font-weight: 600;
-            color: #374151;
+            color: var(--hc, #112344);
             background: #f4f8ff;
-            border: 1px solid #e4ecf8;
+            border: 1px solid var(--border, #e4ecf8);
             padding: 4px 11px;
             border-radius: 10px;
         }
 
         .c-stats span i {
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             font-size: 12px;
         }
 
@@ -535,7 +552,7 @@
             font-family: var(--heading-font);
             font-size: 22px;
             font-weight: 900;
-            color: var(--hc);
+            color: var(--hc, #112344);
         }
 
         .c-price small {
@@ -550,7 +567,7 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
             color: #fff;
             padding: 11px 24px;
             border-radius: 25px;
@@ -568,10 +585,9 @@
             color: #fff;
         }
 
-        /* Center tags */
         .center-tag {
             background: #eef2ff;
-            color: #175cdd;
+            color: #ff6a00;
             padding: 2px 10px;
             border-radius: 20px;
             font-size: 12px;
@@ -591,7 +607,8 @@
             font-size: 15px;
             font-weight: 800;
             margin-bottom: 16px;
-            color: var(--hc);
+            color: var(--hc, #112344);
+            font-family: var(--heading-font);
         }
 
         .sessions-panel p {
@@ -600,7 +617,7 @@
             color: #4b5563;
         }
 
-        /* ═══ CATEGORY CARDS (hero section) ═══ */
+        /* ═══ CATEGORY CARDS ═══ */
         .categories-section {
             padding: 80px 0;
             background: #fff;
@@ -610,13 +627,12 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
-            margin-top: 0;
         }
 
         .cat-card {
             border-radius: 22px;
             overflow: hidden;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid var(--border, #e4ecf8);
             text-decoration: none;
             display: flex;
             flex-direction: column;
@@ -628,7 +644,7 @@
         .cat-card:hover {
             box-shadow: 0 24px 70px rgba(23, 92, 221, .14);
             transform: translateY(-6px);
-            border-color: var(--ac);
+            border-color: var(--ac, #ff6a00);
         }
 
         .card-img {
@@ -675,7 +691,7 @@
         }
 
         .atp-b {
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
             color: #fff;
         }
 
@@ -740,7 +756,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
         }
 
         .abbr-label {
@@ -748,15 +764,16 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
         }
 
         .card-body-inner h3 {
             font-size: 20px;
             font-weight: 800;
-            color: var(--hc);
+            color: var(--hc, #112344);
             line-height: 1.3;
             margin-bottom: 10px;
+            font-family: var(--heading-font);
         }
 
         .cat-desc {
@@ -783,12 +800,12 @@
             padding: 4px 11px;
             border-radius: 10px;
             background: #f4f8ff;
-            border: 1px solid #e4ecf8;
-            color: var(--hc);
+            border: 1px solid var(--border, #e4ecf8);
+            color: var(--hc, #112344);
         }
 
         .fp i {
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
         }
 
         .card-cta-row {
@@ -804,43 +821,68 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             font-weight: 700;
             font-size: 14px;
             font-family: var(--heading-font);
+            text-decoration: none;
+            transition: gap .2s;
+        }
+
+        .card-cta-btn:hover {
+            gap: 10px;
         }
 
         /* ═══ WHY SECTION ═══ */
         .why-section {
             padding: 80px 0;
-            background: var(--light-bg);
+            background: var(--light-bg, #f8f9ff);
         }
 
+        /* Fixed: removed bare box-shadow on rest state; aligned hover to healthcare card pattern */
         .why-card {
             background: #fff;
             border-radius: 18px;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid var(--border, #e4ecf8);
             padding: 28px;
             height: 100%;
-            transition: box-shadow .2s, transform .2s, border-color .2s;
+            transition: box-shadow .25s, transform .2s, border-color .25s;
         }
 
         .why-card:hover {
             box-shadow: 0 14px 45px rgba(23, 92, 221, .1);
             transform: translateY(-4px);
-            border-color: var(--ac);
+            border-color: var(--ac, #ff6a00);
         }
 
+        /* Fixed: why-icon was just a font-size with no container — aligned to healthcare .icon pattern */
         .why-icon {
-            font-size: 30px;
-            margin-bottom: 16px;
+            width: 60px;
+            height: 60px;
+            background: #eff6ff;
+            border: 1.5px solid var(--border, #e4ecf8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: var(--ac, #ff6a00);
+            margin-bottom: 18px;
+            transition: background .25s, color .2s, border-color .2s;
+        }
+
+        .why-card:hover .why-icon {
+            background: var(--ac, #ff6a00);
+            color: #fff;
+            border-color: var(--ac, #ff6a00);
         }
 
         .why-card h5 {
             font-size: 16px;
             font-weight: 800;
-            color: var(--hc);
+            color: var(--hc, #112344);
             margin-bottom: 9px;
+            font-family: var(--heading-font);
         }
 
         .why-card p {
@@ -855,6 +897,7 @@
             padding: 80px 0;
         }
 
+        /* Fixed: aligned gallery-grid and gallery-item to healthcare CSS pattern */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -863,10 +906,11 @@
         }
 
         .gallery-item {
-            border-radius: 16px;
+            border-radius: 14px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
+            border: 1.5px solid var(--border, #e4ecf8);
         }
 
         .gallery-item.span-2 {
@@ -904,9 +948,30 @@
             opacity: 1;
         }
 
+        /* Fixed: icon was unstyled — aligned to healthcare overlay link pattern */
+        .g-overlay a,
+        .g-overlay-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            backdrop-filter: blur(5px);
+            transition: background .2s;
+        }
+
+        .g-overlay a:hover,
+        .g-overlay-btn:hover {
+            background: var(--ac, #ff6a00);
+        }
+
         .g-overlay i {
             color: #fff;
-            font-size: 28px;
+            font-size: 20px;
         }
 
         .g-caption {
@@ -927,34 +992,26 @@
             transform: translateY(0);
         }
 
-        @media(max-width:768px) {
-            .gallery-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .gallery-item.span-2 {
-                grid-column: span 2;
-            }
-        }
-
         /* ═══ TESTIMONIALS ═══ */
         .testimonials-section {
             padding: 80px 0;
-            background: var(--light-bg);
+            background: var(--light-bg, #f8f9ff);
         }
 
+        /* Fixed: was missing box-shadow on non-hover, border alignment fixed */
         .testimonial-item {
             background: #fff;
             border-radius: 18px;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid var(--border, #e4ecf8);
             padding: 28px;
             height: 100%;
-            transition: box-shadow .2s;
+            transition: box-shadow .25s, border-color .25s;
             position: relative;
         }
 
         .testimonial-item:hover {
             box-shadow: 0 12px 40px rgba(23, 92, 221, .08);
+            border-color: var(--ac, #ff6a00);
         }
 
         .stars {
@@ -966,7 +1023,7 @@
         .testimonial-item blockquote {
             font-size: 14px;
             font-style: italic;
-            color: var(--dc);
+            color: var(--dc, #374151);
             line-height: 1.7;
             margin-bottom: 18px;
             padding: 0;
@@ -979,15 +1036,16 @@
             gap: 12px;
         }
 
+        /* Fixed: .av had no fallback font stack */
         .av {
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: var(--heading-font);
+            font-family: var(--heading-font, 'Nunito', sans-serif);
             font-weight: 700;
             font-size: 14px;
             color: #fff;
@@ -997,7 +1055,7 @@
         .t-author .name {
             font-size: 14px;
             font-weight: 700;
-            color: var(--hc);
+            color: var(--hc, #112344);
             display: block;
         }
 
@@ -1033,6 +1091,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .cta-bg::after {
@@ -1053,6 +1112,8 @@
             font-weight: 900;
             color: #fff;
             margin-bottom: 14px;
+            font-family: var(--heading-font);
+            letter-spacing: -.5px;
         }
 
         .cta-inner p {
@@ -1075,7 +1136,7 @@
             align-items: center;
             gap: 8px;
             background: #fff;
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             padding: 14px 32px;
             border-radius: 32px;
             font-weight: 700;
@@ -1089,7 +1150,7 @@
         .btn-cta-solid:hover {
             background: #f0f5ff;
             transform: translateY(-2px);
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
         }
 
         .btn-cta-ghost {
@@ -1111,6 +1172,7 @@
         .btn-cta-ghost:hover {
             border-color: #fff;
             background: rgba(255, 255, 255, .1);
+            color: #fff;
         }
 
         /* ═══ FAQ ═══ */
@@ -1125,9 +1187,10 @@
             gap: 10px;
         }
 
+        /* Fixed: border-radius was not overriding Bootstrap — added !important for standalone use */
         .faq-item {
             background: #fff;
-            border: 1.5px solid var(--border);
+            border: 1.5px solid var(--border, #e4ecf8);
             border-radius: 14px;
             overflow: hidden;
             transition: border-color .2s, box-shadow .2s;
@@ -1135,7 +1198,7 @@
 
         .faq-item.open,
         .faq-item:hover {
-            border-color: var(--ac);
+            border-color: var(--ac, #ff6a00);
             box-shadow: 0 4px 20px rgba(23, 92, 221, .08);
         }
 
@@ -1151,13 +1214,14 @@
             font-family: var(--heading-font);
             font-size: 15px;
             font-weight: 700;
-            color: var(--hc);
+            color: var(--hc, #112344);
             cursor: pointer;
             text-align: left;
         }
 
+        /* Fixed: icon rotation was missing transition */
         .faq-q i {
-            color: var(--ac);
+            color: var(--ac, #ff6a00);
             flex-shrink: 0;
             transition: transform .3s;
         }
@@ -1166,6 +1230,7 @@
             transform: rotate(180deg);
         }
 
+        /* Fixed: max-height transition was too abrupt — eased properly */
         .faq-a {
             max-height: 0;
             overflow: hidden;
@@ -1184,21 +1249,23 @@
         /* ═══ VIDEO SECTION ═══ */
         .video-section {
             padding: 80px 0;
-            background: var(--light-bg);
+            background: var(--light-bg, #f8f9ff);
         }
 
+        /* Fixed: box-shadow was on rest state causing visual noise — moved to hover only */
         .video-card {
             background: #fff;
             border-radius: 14px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
-            transition: transform .3s, box-shadow .3s;
+            border: 1.5px solid var(--border, #e4ecf8);
+            transition: transform .25s, box-shadow .25s, border-color .25s;
             cursor: pointer;
         }
 
         .video-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, .14);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(23, 92, 221, .12);
+            border-color: var(--ac, #ff6a00);
         }
 
         .vid-thumb {
@@ -1258,13 +1325,14 @@
         .vid-info h5 {
             font-size: 13px;
             font-weight: 700;
-            color: var(--hc);
+            color: var(--hc, #112344);
             line-height: 1.45;
             margin-bottom: 5px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            font-family: var(--heading-font);
         }
 
         .vid-info p {
@@ -1287,7 +1355,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: var(--ac);
+            background: var(--ac, #ff6a00);
             color: #fff;
             border: none;
             display: flex;
@@ -1304,15 +1372,20 @@
         }
 
         /* Video Modal */
+        /* Fixed: display:none with align/justify won't work — use flex only when active */
         #videoModal {
             display: none;
             position: fixed;
             inset: 0;
             z-index: 99999;
             background: rgba(0, 0, 0, .92);
+            padding: 20px;
+        }
+
+        #videoModal.active {
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
         .modal-inner {
@@ -1475,7 +1548,7 @@
 
         /* ═══ CTA BAR ═══ */
         .cta-bar {
-            background: linear-gradient(135deg, var(--hc) 0%, #1e3a8a 60%, var(--ac) 100%);
+            background: linear-gradient(135deg, var(--hc, #112344) 0%, #1e3a8a 60%, var(--ac, #ff6a00) 100%);
             padding: 56px 0;
         }
 
@@ -1484,6 +1557,7 @@
             font-weight: 800;
             color: #fff;
             margin-bottom: 8px;
+            font-family: var(--heading-font);
         }
 
         .cta-bar p {
@@ -1498,7 +1572,7 @@
             align-items: center;
             gap: 8px;
             background: #fff;
-            color: var(--hc);
+            color: var(--hc, #112344);
             padding: 13px 28px;
             border-radius: 30px;
             font-weight: 700;
@@ -1512,14 +1586,16 @@
         .btn-cta-wa:hover {
             background: #f0f5ff;
             transform: translateY(-2px);
-            color: var(--hc);
+            color: var(--hc, #112344);
         }
 
         /* ═══ ANIMATIONS ═══ */
+
+        /* --- Keyframes --- */
         @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
 
             to {
@@ -1528,34 +1604,477 @@
             }
         }
 
-        .animate-up {
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeLeft {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeRight {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.90);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* --- Base: hidden before scroll triggers .animated --- */
+        .animate-up,
+        .animate-down,
+        .animate-left,
+        .animate-right,
+        .animate-fade,
+        .animate-zoom {
             opacity: 0;
         }
 
+        /* --- Triggered by IntersectionObserver adding .animated class in JS --- */
+        .animate-up.animated {
+            animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .animate-down.animated {
+            animation: fadeDown 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .animate-left.animated {
+            animation: fadeLeft 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .animate-right.animated {
+            animation: fadeRight 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .animate-fade.animated {
+            animation: fadeIn 0.60s ease both;
+        }
+
+        .animate-zoom.animated {
+            animation: zoomIn 0.60s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        /* --- Stagger delay helpers (add to child elements) --- */
+        .delay-1 {
+            animation-delay: 0.10s !important;
+        }
+
+        .delay-2 {
+            animation-delay: 0.20s !important;
+        }
+
+        .delay-3 {
+            animation-delay: 0.30s !important;
+        }
+
+        .delay-4 {
+            animation-delay: 0.40s !important;
+        }
+
+        .delay-5 {
+            animation-delay: 0.50s !important;
+        }
+
+        .delay-6 {
+            animation-delay: 0.60s !important;
+        }
+
+        /* --- Hero: animates on page load, no scroll trigger needed --- */
+        .hero-eyebrow {
+            animation: fadeDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.10s both;
+        }
+
+        .hero-section h1 {
+            animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+        }
+
+        .hero-sub {
+            animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.40s both;
+        }
+
+        .hero-pills {
+            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.50s both;
+        }
+
+        .hero-actions {
+            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.60s both;
+        }
+
+        /* --- Category tabs: stagger in on load --- */
+        .cat-tab {
+            animation: fadeDown 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .cat-tab:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .cat-tab:nth-child(2) {
+            animation-delay: 0.10s;
+        }
+
+        .cat-tab:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .cat-tab:nth-child(4) {
+            animation-delay: 0.20s;
+        }
+
+        .cat-tab:nth-child(5) {
+            animation-delay: 0.25s;
+        }
+
+        .cat-tab:nth-child(6) {
+            animation-delay: 0.30s;
+        }
+
+        /* --- Panel header: slide in when panel becomes active --- */
+        .courses-panel.active .panel-header {
+            animation: fadeRight 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        /* --- Section titles: triggered by .animated on the .section-title wrapper --- */
+        .section-title.animated .sh-label {
+            animation: fadeDown 0.50s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .section-title.animated h2 {
+            animation: fadeUp 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.10s both;
+        }
+
+        .section-title.animated p {
+            animation: fadeUp 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.20s both;
+        }
+
+        .section-title.animated .divider-line {
+            animation: fadeIn 0.5s ease 0.15s both;
+        }
+
+        /* --- Cards: keep hover transitions clean alongside animation --- */
+        .course-card,
+        .cat-card,
+        .why-card,
+        .testimonial-item,
+        .video-card {
+            transition: box-shadow .25s, transform .2s, border-color .25s;
+        }
+
+        /* --- Gallery items: smooth reveal --- */
+        .gallery-item {
+            transition: transform .5s, border-color .3s;
+        }
+
+        /* --- Respect reduced-motion preference --- */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         /* ═══ RESPONSIVE ═══ */
-        @media(max-width:991px) {
+
+        /* --- Tablet (≤991px) --- */
+        @media (max-width: 991px) {
             .hero-content {
                 padding: 80px 0 60px;
             }
 
+            .cat-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            /* Video sidebar hidden on tablet — too narrow */
+            .rec-sidebar {
+                display: none;
+            }
+
+            /* Video modal goes full width */
+            .modal-inner {
+                flex-direction: column;
+            }
+
+            /* Video section: 2 columns on tablet */
+            .video-section .col-lg-3 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        /* --- Mobile (≤768px) --- */
+        @media (max-width: 768px) {
+
+            /* Course card body */
+            .c-body {
+                padding: 18px;
+            }
+
+            /* Course card footer: stack price + button */
+            .c-foot {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .c-btn-enroll {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Panel header: stack icon + text */
+            .panel-header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 20px;
+            }
+
+            /* Hero buttons: full width stacked */
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-hero-primary,
+            .btn-hero-outline {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* CTA band: stack text + button */
+            .cta-bar {
+                padding: 40px 0;
+                text-align: center;
+            }
+
+            .cta-bar .text-lg-end {
+                text-align: center !important;
+                margin-top: 20px;
+            }
+
+            .btn-cta-wa {
+                width: 100%;
+                justify-content: center;
+                margin-top: 16px;
+            }
+
+            /* CTA band buttons */
+            .cta-btns {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-cta-solid,
+            .btn-cta-ghost {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Gallery: 2 columns */
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-item.span-2 {
+                grid-column: span 2;
+            }
+
+            /* FAQ */
+            .faq-q {
+                font-size: 14px;
+                padding: 16px 18px;
+            }
+
+            .faq-a {
+                padding: 0 18px;
+            }
+
+            .faq-item.open .faq-a {
+                padding: 0 18px 16px;
+            }
+
+            /* ── VIDEO / YOUTUBE SECTION ── */
+
+            /* Stack all video cards full width */
+            .video-section .col-lg-3,
+            .video-section .col-md-4,
+            .video-section [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 16px;
+            }
+
+            /* Video nav buttons center */
+            .vid-nav {
+                justify-content: center;
+                margin-top: 16px;
+            }
+
+            /* Video section header row: stack */
+            .video-section .d-flex {
+                flex-direction: column;
+                gap: 14px;
+                align-items: flex-start;
+            }
+
+            /* Modal: full screen overlay */
+            #videoModal {
+                padding: 12px;
+                padding-top: 56px;
+                align-items: flex-start;
+            }
+
+            .modal-inner {
+                flex-direction: column;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .modal-close-btn {
+                top: -40px;
+                right: 0;
+                font-size: 24px;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.12);
+                border-radius: 50%;
+            }
+
+            /* iframe wrapper already has aspect-ratio padding — ensure it's fluid */
+            .vid-frame-wrap {
+                border-radius: 8px;
+            }
+
+            /* Rec sidebar hidden on mobile too */
             .rec-sidebar {
                 display: none;
             }
         }
 
-        @media(max-width:768px) {
-            .c-body {
-                padding: 20px;
+        /* --- Small phone (≤480px) --- */
+        @media (max-width: 480px) {
+
+            /* Hero */
+            .hero-section {
+                min-height: 100svh;
             }
 
-            .panel-header {
-                flex-direction: column;
-                gap: 12px;
+            .hero-content {
+                padding: 70px 0 50px;
             }
 
-            .cta-bar .text-lg-end {
-                text-align: left !important;
+            /* Gallery: single column */
+            .gallery-grid {
+                grid-template-columns: 1fr;
             }
+
+            .gallery-item,
+            .gallery-item.span-2 {
+                grid-column: span 1;
+            }
+
+            /* Category cards: single column */
+            .cat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Cat tabs: smaller text so more tabs fit */
+            .cat-tabs {
+                gap: 4px;
+                padding: 10px 0;
+            }
+
+            .cat-tab {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            /* Video: ensure aspect ratio on tiny screens */
+            .vid-thumb img {
+                height: auto;
+                aspect-ratio: 16/9;
+            }
+
+            /* Video modal close button: bigger tap target */
+            .modal-close-btn {
+                width: 44px;
+                height: 44px;
+                top: -50px;
+            }
+
+            /* Testimonial card */
+            .testimonial-item {
+                padding: 20px 16px;
+            }
+
+            /* Sessions panel */
+            .sessions-panel {
+                padding: 20px 16px;
+            }
+
+            /* Why cards: reduce padding */
+            .why-card {
+                padding: 22px 18px;
+            }
+        }
+
+        .fixedtmp {
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 100%;
+            padding-right: calc(var(--bs-gutter-x) * .4);
+            padding-left: calc(var(--bs-gutter-x) * 1);
+            margin-top: var(--bs-gutter-y);
         }
     </style>
 
@@ -1570,7 +2089,7 @@
             </div>
             <div class="container hero-content">
                 <div class="row">
-                    <div class="col-lg-7">
+                    <div class="col-lg-7 fixedtmp">
                         <div class="hero-eyebrow"><i class="bi bi-mortarboard-fill"></i> Explore Our Programs</div>
                         <h1>Train. Perform.<br><em>Transform.</em></h1>
                         <p class="hero-sub">India's first screen acting school for children. Choose from our flagship

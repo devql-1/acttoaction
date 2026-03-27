@@ -301,41 +301,6 @@ class EventRegistrationController extends Controller
             $registration = EventRegistrationAttendee::findOrFail($registration_id);
 
             // Use email from DB
-            $recipientEmail = $registration->email ?? null;
-
-            // Only proceed if email exists
-            if ($recipientEmail) {
-                // Build tickets HTML for email
-                $ticketsHtml = '';
-                foreach ($registration->attendees as $attendee) {
-                    $ticketsHtml .= "
-            <tr>
-                <td style='padding:8px;border:1px solid #ddd;'>{$attendee->ticket_number}</td>
-                <td style='padding:8px;border:1px solid #ddd;'>{$attendee->name}</td>
-                <td style='padding:8px;border:1px solid #ddd;'>{$attendee->phone}</td>
-            </tr>
-        ";
-                }
-
-                // Common data
-                $data = [
-                    'student_name' => $registration->name ?? 'User',
-                    'event_name' => $registration->event_name ?? 'Event',
-                    'reference_id' => $registration->id,
-                    'amount' => '₹' . number_format($registration->total_amount, 2), // use DB amount
-                    'payment_id' => $registration->payments()->latest()->first()->razorpay_payment_id ?? 'N/A', // latest payment
-                    'tickets_table' => $ticketsHtml,
-                ];
-
-                // Send Payment Confirmation Email
-                app(\App\Services\EmailService::class)->send('event-payment-confirmation', $recipientEmail, $data);
-
-                // Send Ticket Email
-                // app(\App\Services\EmailService::class)->send('event-ticket', $recipientEmail, $data);
-
-                // // Mark email sent
-                // $registration->update(['email_sent' => 1]);
-            }
         });
 
         return response()->json([
