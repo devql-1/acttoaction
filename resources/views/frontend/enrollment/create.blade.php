@@ -1156,110 +1156,10 @@
     </style>
 
     @php
-        /*
-    |--------------------------------------------------------------------------
-    | Variables from controller:
-    |   $course         — Course (with category, centers.state)
-    |   $otherCourses   — Collection of other courses
-    |   $centresByState — [ 'Rajasthan' => [ ['id','name','address','phone','email','map'], ... ] ]
-    |   $courseStates   — [ 'Rajasthan', 'Delhi', ... ]
-    |--------------------------------------------------------------------------
-    */
+        $centresByState = $centresByState ?? [];
+        $courseStates = $courseStates ?? [];
+        $otherCourses = $otherCourses ?? collect();
 
-        // Null-safe defaults — prevents count() errors if controller didn't pass these
-$centresByState = $centresByState ?? [];
-$courseStates = $courseStates ?? [];
-$otherCourses = $otherCourses ?? collect();
-
-// If centresByState wasn't built by controller, build it now from the loaded relationship
-        if (empty($centresByState) && $course->relationLoaded('centers')) {
-            foreach ($course->centers as $center) {
-                $stateName = $center->state && $center->state->name ? $center->state->name : 'Other';
-                if (!isset($centresByState[$stateName])) {
-                    $centresByState[$stateName] = [];
-                }
-                $centresByState[$stateName][] = [
-                    'id' => $center->id,
-                    'name' => $center->name,
-                    'address' => $center->address ?? '',
-                    'phone' => $center->phone ?? '',
-                    'email' => $center->email ?? '',
-                    'map' => $center->map_link ?? '',
-                ];
-            }
-            $courseStates = array_keys($centresByState);
-        }
-
-        $modeMap = [
-            'Online' => ['icon' => '💻', 'label' => 'Online — Live Classes', 'id' => 'm-online'],
-            'Offline' => ['icon' => '🏫', 'label' => 'Offline — At Centre', 'id' => 'm-offline'],
-            'Hybrid' => ['icon' => '🔄', 'label' => 'Hybrid — Online + Centre', 'id' => 'm-hybrid'],
-        ];
-        $courseMode = $course->mode ?? 'Offline';
-        $modeMeta = $modeMap[$courseMode] ?? $modeMap['Offline'];
-    @endphp
-
-    @php
-        /*
-    |--------------------------------------------------------------------------
-    | Variables from controller:
-    |   $course         — Course (with category, centers.state)
-    |   $otherCourses   — Collection of other courses
-    |   $centresByState — [ 'Rajasthan' => [ ['id','name','address','phone','email','map'], ... ] ]
-    |   $courseStates   — [ 'Rajasthan', 'Delhi', ... ]
-    |--------------------------------------------------------------------------
-    */
-
-        // Null-safe defaults — prevents count() errors if controller didn't pass these
-$centresByState = $centresByState ?? [];
-$courseStates = $courseStates ?? [];
-$otherCourses = $otherCourses ?? collect();
-
-// If centresByState wasn't built by controller, build it now from the loaded relationship
-        if (empty($centresByState) && $course->relationLoaded('centers')) {
-            foreach ($course->centers as $center) {
-                $stateName = $center->state && $center->state->name ? $center->state->name : 'Other';
-                if (!isset($centresByState[$stateName])) {
-                    $centresByState[$stateName] = [];
-                }
-                $centresByState[$stateName][] = [
-                    'id' => $center->id,
-                    'name' => $center->name,
-                    'address' => $center->address ?? '',
-                    'phone' => $center->phone ?? '',
-                    'email' => $center->email ?? '',
-                    'map' => $center->map_link ?? '',
-                ];
-            }
-            $courseStates = array_keys($centresByState);
-        }
-
-        $modeMap = [
-            'Online' => ['icon' => '💻', 'label' => 'Online — Live Classes', 'id' => 'm-online'],
-            'Offline' => ['icon' => '🏫', 'label' => 'Offline — At Centre', 'id' => 'm-offline'],
-            'Hybrid' => ['icon' => '🔄', 'label' => 'Hybrid — Online + Centre', 'id' => 'm-hybrid'],
-        ];
-        $courseMode = $course->mode ?? 'Offline';
-        $modeMeta = $modeMap[$courseMode] ?? $modeMap['Offline'];
-    @endphp
-
-    @php
-        /*
-    |--------------------------------------------------------------------------
-    | Variables from controller:
-    |   $course         — Course (with category, centers.state)
-    |   $otherCourses   — Collection of other courses
-    |   $centresByState — [ 'Rajasthan' => [ ['id','name','address','phone','email','map'], ... ] ]
-    |   $courseStates   — [ 'Rajasthan', 'Delhi', ... ]
-    |--------------------------------------------------------------------------
-    */
-
-        // Null-safe defaults — prevents count() errors if controller didn't pass these
-$centresByState = $centresByState ?? [];
-$courseStates = $courseStates ?? [];
-$otherCourses = $otherCourses ?? collect();
-
-// If centresByState wasn't built by controller, build it now from the loaded relationship
         if (empty($centresByState) && $course->relationLoaded('centers')) {
             foreach ($course->centers as $center) {
                 $stateName = $center->state && $center->state->name ? $center->state->name : 'Other';
@@ -1349,11 +1249,11 @@ $otherCourses = $otherCourses ?? collect();
         <div class="form-wrap">
             <div class="form-panel">
 
-                {{-- ══ STEP 1 ══ --}}
                 <div class="step-content active" data-step="0">
                     <div class="panel-head">
-                        <div class="ph-icon" style="background:#eff6ff;color:var(--blue);"><i class="bi bi-person-fill"
-                                style="font-size:22px;"></i></div>
+                        <div class="ph-icon" style="background:#eff6ff;color:var(--blue);">
+                            <i class="bi bi-person-fill" style="font-size:22px;"></i>
+                        </div>
                         <div>
                             <div class="ph-step">Step 1 of 6</div>
                             <h2 class="ph-title">Student Personal Details</h2>
@@ -1382,7 +1282,8 @@ $otherCourses = $otherCourses ?? collect();
                                 <label>Date of Birth <span class="req">*</span></label>
                                 <input class="fi" type="date" id="dob" />
                                 <div class="field-hint">Age group for this course:
-                                    <strong>{{ $course->age_group ?? '3–29 years' }}</strong></div>
+                                    <strong>{{ $course->age_group ?? '3–29 years' }}</strong>
+                                </div>
                                 <div class="field-error" id="err-dob"><i class="bi bi-exclamation-circle"></i> Please
                                     enter a valid date of birth</div>
                             </div>
@@ -1395,15 +1296,21 @@ $otherCourses = $otherCourses ?? collect();
                         <div class="field-group">
                             <label>Gender <span class="req">*</span></label>
                             <div class="radio-group">
-                                <div class="radio-card"><input type="radio" name="gender" id="g-male"
-                                        value="Male" /><label class="radio-label" for="g-male"><span
-                                            class="radio-dot"></span> Male</label></div>
-                                <div class="radio-card"><input type="radio" name="gender" id="g-female"
-                                        value="Female" /><label class="radio-label" for="g-female"><span
-                                            class="radio-dot"></span> Female</label></div>
-                                <div class="radio-card"><input type="radio" name="gender" id="g-other"
-                                        value="Other" /><label class="radio-label" for="g-other"><span
-                                            class="radio-dot"></span> Other</label></div>
+                                <div class="radio-card">
+                                    <input type="radio" name="gender" id="g-male" value="Male" />
+                                    <label class="radio-label" for="g-male"><span class="radio-dot"></span>
+                                        Male</label>
+                                </div>
+                                <div class="radio-card">
+                                    <input type="radio" name="gender" id="g-female" value="Female" />
+                                    <label class="radio-label" for="g-female"><span class="radio-dot"></span>
+                                        Female</label>
+                                </div>
+                                <div class="radio-card">
+                                    <input type="radio" name="gender" id="g-other" value="Other" />
+                                    <label class="radio-label" for="g-other"><span class="radio-dot"></span>
+                                        Other</label>
+                                </div>
                             </div>
                             <div class="field-error" id="err-gender"><i class="bi bi-exclamation-circle"></i> Please
                                 select a gender</div>
@@ -1419,11 +1326,11 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 2 ══ --}}
                 <div class="step-content" data-step="1">
                     <div class="panel-head">
-                        <div class="ph-icon" style="background:#fdf2f8;color:#db2777;"><i class="bi bi-people-fill"
-                                style="font-size:22px;"></i></div>
+                        <div class="ph-icon" style="background:#fdf2f8;color:#db2777;">
+                            <i class="bi bi-people-fill" style="font-size:22px;"></i>
+                        </div>
                         <div>
                             <div class="ph-step">Step 2 of 6</div>
                             <h2 class="ph-title">Parent / Guardian Details</h2>
@@ -1470,11 +1377,11 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 3 ══ --}}
                 <div class="step-content" data-step="2">
                     <div class="panel-head">
-                        <div class="ph-icon" style="background:#ecfdf5;color:#059669;"><i class="bi bi-telephone-fill"
-                                style="font-size:22px;"></i></div>
+                        <div class="ph-icon" style="background:#ecfdf5;color:#059669;">
+                            <i class="bi bi-telephone-fill" style="font-size:22px;"></i>
+                        </div>
                         <div>
                             <div class="ph-step">Step 3 of 6</div>
                             <h2 class="ph-title">Contact & Academic Details</h2>
@@ -1486,17 +1393,27 @@ $otherCourses = $otherCourses ?? collect();
                         <div class="row-2">
                             <div class="field-group">
                                 <label>Phone Number <span class="req">*</span></label>
-                                <input class="fi" type="tel" id="phone" placeholder="e.g. 93520 23276"
-                                    maxlength="15" />
+                                <div style="position:relative;">
+                                    <input class="fi" type="tel" id="phone" placeholder="e.g. 93520 23276"
+                                        maxlength="15" />
+                                    <span class="ajax-indicator" id="ajax-phone"></span>
+                                </div>
                                 <div class="field-error" id="err-phone"><i class="bi bi-exclamation-circle"></i> A valid
                                     10-digit phone number is required</div>
+                                <div class="field-success" id="succ-phone" style="display:none;"><i
+                                        class="bi bi-check-circle-fill"></i> Phone number looks good</div>
                             </div>
                             <div class="field-group">
                                 <label>Email Address <span class="req">*</span></label>
-                                <input class="fi" type="email" id="email"
-                                    placeholder="e.g. aryan@email.com" />
+                                <div style="position:relative;">
+                                    <input class="fi" type="email" id="email"
+                                        placeholder="e.g. aryan@email.com" />
+                                    <span class="ajax-indicator" id="ajax-email"></span>
+                                </div>
                                 <div class="field-error" id="err-email"><i class="bi bi-exclamation-circle"></i> A valid
                                     email address is required</div>
+                                <div class="field-success" id="succ-email" style="display:none;"><i
+                                        class="bi bi-check-circle-fill"></i> Email looks good</div>
                             </div>
                         </div>
                         <div class="field-group">
@@ -1547,11 +1464,11 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 4 ══ --}}
                 <div class="step-content" data-step="3">
                     <div class="panel-head">
-                        <div class="ph-icon" style="background:#fff7ed;color:#d97706;"><i class="bi bi-geo-alt-fill"
-                                style="font-size:22px;"></i></div>
+                        <div class="ph-icon" style="background:#fff7ed;color:#d97706;">
+                            <i class="bi bi-geo-alt-fill" style="font-size:22px;"></i>
+                        </div>
                         <div>
                             <div class="ph-step">Step 4 of 6</div>
                             <h2 class="ph-title">Location & Centre Selection</h2>
@@ -1602,14 +1519,17 @@ $otherCourses = $otherCourses ?? collect();
                                             —</div>
                                         <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
                                             <span id="ci-phone-wrap"
-                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#059669;font-weight:600;"><i
-                                                    class="bi bi-telephone-fill"></i> <span id="ci-phone"></span></span>
+                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#059669;font-weight:600;">
+                                                <i class="bi bi-telephone-fill"></i> <span id="ci-phone"></span>
+                                            </span>
                                             <span id="ci-email-wrap"
-                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#175cdd;font-weight:600;"><i
-                                                    class="bi bi-envelope-fill"></i> <span id="ci-email"></span></span>
+                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#175cdd;font-weight:600;">
+                                                <i class="bi bi-envelope-fill"></i> <span id="ci-email"></span>
+                                            </span>
                                             <a id="ci-map" href="#" target="_blank"
-                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#d97706;font-weight:600;text-decoration:none;"><i
-                                                    class="bi bi-map-fill"></i> View on Map</a>
+                                                style="display:none;align-items:center;gap:4px;font-size:12px;color:#d97706;font-weight:600;text-decoration:none;">
+                                                <i class="bi bi-map-fill"></i> View on Map
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -1624,7 +1544,8 @@ $otherCourses = $otherCourses ?? collect();
                                     <div style="font-size:14px;font-weight:700;color:#166534;">{{ $modeMeta['label'] }}
                                     </div>
                                     <div style="font-size:12px;color:#4ade80;margin-top:2px;">Pre-set for
-                                        <strong>{{ $course->title }}</strong> — cannot be changed</div>
+                                        <strong>{{ $course->title }}</strong> — cannot be changed
+                                    </div>
                                 </div>
                                 <i class="bi bi-lock-fill ms-auto" style="color:#16a34a;font-size:16px;"></i>
                             </div>
@@ -1643,11 +1564,11 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 5 ══ --}}
                 <div class="step-content" data-step="4">
                     <div class="panel-head">
-                        <div class="ph-icon" style="background:#f5f3ff;color:#7c3aed;"><i class="bi bi-mortarboard-fill"
-                                style="font-size:22px;"></i></div>
+                        <div class="ph-icon" style="background:#f5f3ff;color:#7c3aed;">
+                            <i class="bi bi-mortarboard-fill" style="font-size:22px;"></i>
+                        </div>
                         <div>
                             <div class="ph-step">Step 5 of 6</div>
                             <h2 class="ph-title">Course & Enrollment Details</h2>
@@ -1660,7 +1581,8 @@ $otherCourses = $otherCourses ?? collect();
                             style="background:linear-gradient(135deg,#eff6ff,#f5f3ff);border:2px solid #bfdbfe;border-radius:18px;padding:22px 24px;margin-bottom:24px;position:relative;overflow:hidden;">
                             <div
                                 style="position:absolute;top:16px;right:16px;background:#175cdd;color:#fff;font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:.5px;">
-                                ✓ SELECTED</div>
+                                ✓ SELECTED
+                            </div>
                             <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;">
                                 <div style="font-size:48px;line-height:1;margin-top:2px;">🎭</div>
                                 <div style="flex:1;min-width:180px;">
@@ -1669,28 +1591,33 @@ $otherCourses = $otherCourses ?? collect();
                                     @if ($course->category)
                                         <div
                                             style="font-size:12px;font-weight:700;color:#7c3aed;margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px;">
-                                            {{ $course->category->name }}</div>
+                                            {{ $course->category->name }}
+                                        </div>
                                     @endif
                                     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
                                         @if ($course->age_group)
                                             <span
-                                                style="background:#eff6ff;color:#175cdd;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;"><i
-                                                    class="bi bi-people-fill me-1"></i>Age {{ $course->age_group }}</span>
+                                                style="background:#eff6ff;color:#175cdd;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
+                                                <i class="bi bi-people-fill me-1"></i>Age {{ $course->age_group }}
+                                            </span>
                                         @endif
                                         @if ($course->duration)
                                             <span
-                                                style="background:#f5f3ff;color:#7c3aed;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;"><i
-                                                    class="bi bi-clock-fill me-1"></i>{{ $course->duration }}</span>
+                                                style="background:#f5f3ff;color:#7c3aed;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
+                                                <i class="bi bi-clock-fill me-1"></i>{{ $course->duration }}
+                                            </span>
                                         @endif
                                         @if ($course->sessions)
                                             <span
-                                                style="background:#ecfdf5;color:#059669;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;"><i
-                                                    class="bi bi-calendar-check-fill me-1"></i>{{ $course->sessions }}
-                                                Sessions</span>
+                                                style="background:#ecfdf5;color:#059669;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
+                                                <i class="bi bi-calendar-check-fill me-1"></i>{{ $course->sessions }}
+                                                Sessions
+                                            </span>
                                         @endif
                                         <span
-                                            style="background:#fff7ed;color:#d97706;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">{{ $modeMeta['icon'] }}
-                                            {{ $course->mode }}</span>
+                                            style="background:#fff7ed;color:#d97706;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
+                                            {{ $modeMeta['icon'] }} {{ $course->mode }}
+                                        </span>
                                     </div>
                                     @if ($course->description)
                                         <p style="font-size:13px;color:#6b7280;line-height:1.6;margin:0;">
@@ -1762,8 +1689,9 @@ $otherCourses = $otherCourses ?? collect();
                                     style="text-transform:uppercase;" />
                                 <button class="btn-apply" onclick="applyCoupon()">Apply</button>
                             </div>
-                            <div class="coupon-badge" id="couponBadge" style="display:none;"><i
-                                    class="bi bi-check-circle-fill"></i> Coupon applied! ₹200 off</div>
+                            <div class="coupon-badge" id="couponBadge" style="display:none;">
+                                <i class="bi bi-check-circle-fill"></i> Coupon applied! ₹200 off
+                            </div>
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -1777,11 +1705,11 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ STEP 6 ══ --}}
                 <div class="step-content" data-step="5">
                     <div class="panel-head">
-                        <div class="ph-icon" style="background:#ecfdf5;color:#059669;"><i
-                                class="bi bi-clipboard2-check-fill" style="font-size:22px;"></i></div>
+                        <div class="ph-icon" style="background:#ecfdf5;color:#059669;">
+                            <i class="bi bi-clipboard2-check-fill" style="font-size:22px;"></i>
+                        </div>
                         <div>
                             <div class="ph-step">Step 6 of 6</div>
                             <h2 class="ph-title">Review &amp; Confirm Enrollment</h2>
@@ -1808,13 +1736,15 @@ $otherCourses = $otherCourses ?? collect();
                                 <div class="check-box" id="chk-terms"></div>
                                 <div class="check-text">
                                     <strong>I agree to the Terms &amp; Conditions <span class="check-req">*</span></strong>
-                                    <span>I have read and accept the <a
-                                            href="https://www.acttoaction.com/terms-and-conditions" target="_blank"
+                                    <span>I have read and accept the
+                                        <a href="https://www.acttoaction.com/terms-and-conditions" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
-                                            onclick="event.stopPropagation()">Terms &amp; Conditions</a> and <a
-                                            href="https://www.acttoaction.com/refund-policy" target="_blank"
+                                            onclick="event.stopPropagation()">Terms &amp; Conditions</a>
+                                        and
+                                        <a href="https://www.acttoaction.com/refund-policy" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
-                                            onclick="event.stopPropagation()">Refund Policy</a>.</span>
+                                            onclick="event.stopPropagation()">Refund Policy</a>.
+                                    </span>
                                 </div>
                             </label>
                             <label class="check-card" id="chk-newsletter-card" onclick="toggleCheck('newsletter')">
@@ -1841,7 +1771,6 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ SUCCESS ══ --}}
                 <div class="success-screen" id="successScreen" style="display:none;">
                     <div class="success-anim">🎉</div>
                     <div class="success-title">Payment Successful!</div>
@@ -1865,513 +1794,654 @@ $otherCourses = $otherCourses ?? collect();
                     </div>
                 </div>
 
-                {{-- ══ FAILED ══ --}}
                 <div class="success-screen" id="failedScreen" style="display:none;">
                     <div class="success-anim">❌</div>
-                    <div class="success-title" style="color:#dc2626;">Payment Failed</di>
-                        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-                        <script>
-                            /* ── DB data ── */
-                            var CENTRE_DATA = @json($centresByState);
-                            var COURSE_STATES = @json($courseStates);
+                    <div class="success-title" style="color:#dc2626;">Payment Failed</div>
+                    <p class="success-sub">Your enrollment details have been saved. Please try the payment again or contact
+                        us on WhatsApp.</p>
+                    <div id="failedPaymentId"
+                        style="display:none;background:#fff1f2;border:1.5px solid #fecdd3;border-radius:12px;padding:12px 16px;font-size:13px;color:#be123c;margin-bottom:16px;">
+                        <strong>Payment ID:</strong> <span id="failedPidText"></span>
+                    </div>
+                    <div
+                        style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:14px;padding:16px 20px;margin:16px 0;text-align:left;">
+                        <div style="font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px;"><i
+                                class="bi bi-info-circle-fill"></i> What to do next?</div>
+                        <ul style="font-size:13px;color:#92400e;margin:0;padding-left:18px;line-height:2;">
+                            <li>Click "Retry Payment" to try again with your saved details</li>
+                            <li>Contact us on WhatsApp for instant assistance</li>
+                            <li>Redirecting to course page in <strong id="failedCountdown">10</strong> seconds…</li>
+                        </ul>
+                    </div>
+                    <div class="success-actions">
+                        <button onclick="retryPayment()" class="btn-wa"
+                            style="background:#dc2626;border:none;cursor:pointer;"><i class="bi bi-arrow-repeat"></i>
+                            Retry Payment</button>
+                        <a href="https://wa.me/919352023276" target="_blank" class="btn-home"><i
+                                class="bi bi-whatsapp"></i> WhatsApp Us</a>
+                    </div>
+                </div>
 
-                            /* ── Silent save state ── */
-                            var _enrollmentId = null;
-                            var _silentSaveDone = false;
+            </div>
+        </div>
+    </main>
 
-                            /* ── Centre dropdown ── */
-                            function updateCentres() {
-                                var state = document.getElementById('state').value;
-                                var sel = document.getElementById('centre');
-                                var wrap = document.getElementById('centre-info-wrap');
+    <style>
+        .field-success {
+            font-size: 12px;
+            color: #059669;
+            font-weight: 600;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-                                sel.innerHTML = '<option value="">— Select a Centre —</option>';
-                                wrap.style.display = 'none';
-                                if (!state) return;
+        .ajax-indicator {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            pointer-events: none;
+        }
 
-                                var list = CENTRE_DATA[state];
-                                if (list && list.length > 0) {
-                                    for (var i = 0; i < list.length; i++) {
-                                        var o = document.createElement('option');
-                                        o.value = list[i].name;
-                                        o.textContent = list[i].name;
-                                        o.dataset.address = list[i].address || '';
-                                        o.dataset.phone = list[i].phone || '';
-                                        o.dataset.email = list[i].email || '';
-                                        o.dataset.map = list[i].map || '';
-                                        sel.appendChild(o);
-                                    }
-                                }
-                            }
+        .ajax-indicator.checking::after {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #175cdd;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+        }
 
-                            /* ── Centre detail card ── */
-                            function showCentreInfo() {
-                                var sel = document.getElementById('centre');
-                                var wrap = document.getElementById('centre-info-wrap');
-                                var opt = sel.options[sel.selectedIndex];
+        .ajax-indicator.ok::after {
+            content: '✓';
+            color: #059669;
+            font-weight: 700;
+        }
 
-                                if (!opt || !opt.value) {
-                                    wrap.style.display = 'none';
-                                    return;
-                                }
+        .ajax-indicator.bad::after {
+            content: '✕';
+            color: #dc2626;
+            font-weight: 700;
+        }
 
-                                document.getElementById('ci-name').textContent = opt.value;
-                                document.getElementById('ci-address').textContent = opt.dataset.address || '—';
+        @keyframes spin {
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+    </style>
 
-                                var phoneWrap = document.getElementById('ci-phone-wrap');
-                                var emailWrap = document.getElementById('ci-email-wrap');
-                                var mapLink = document.getElementById('ci-map');
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var CENTRE_DATA = @json($centresByState);
+        var COURSE_STATES = @json($courseStates);
 
-                                if (opt.dataset.phone) {
-                                    document.getElementById('ci-phone').textContent = opt.dataset.phone;
-                                    phoneWrap.style.display = 'inline-flex';
-                                } else {
-                                    phoneWrap.style.display = 'none';
-                                }
+        var _enrollmentId = null;
+        var _silentSaveDone = false;
 
-                                if (opt.dataset.email) {
-                                    document.getElementById('ci-email').textContent = opt.dataset.email;
-                                    emailWrap.style.display = 'inline-flex';
-                                } else {
-                                    emailWrap.style.display = 'none';
-                                }
+        var _ajaxTimers = {};
+        var _ajaxCache = {};
 
-                                if (opt.dataset.map) {
-                                    mapLink.href = opt.dataset.map;
-                                    mapLink.style.display = 'inline-flex';
-                                } else {
-                                    mapLink.style.display = 'none';
-                                }
+        function ajaxValidateField(fieldId, value, rules) {
+            var indicator = document.getElementById('ajax-' + fieldId);
+            var errEl = document.getElementById('err-' + fieldId);
+            var succEl = document.getElementById('succ-' + fieldId);
 
-                                wrap.style.display = 'block';
-                            }
+            if (!indicator) return;
 
-                            /* ── Coupon ── */
-                            function applyCoupon() {
-                                var code = document.getElementById('coupon').value.trim().toUpperCase();
-                                var badge = document.getElementById('couponBadge');
-                                var valid = ['WELCOME20', 'ATA100', 'TRYACT', 'FREE50'];
-                                if (valid.indexOf(code) !== -1) {
-                                    badge.style.display = 'inline-flex';
-                                } else {
-                                    badge.style.display = 'none';
-                                    if (code) alert('Invalid coupon code. Try WELCOME20 for \u20b9200 off.');
-                                }
-                            }
+            var cacheKey = fieldId + ':' + value;
+            if (_ajaxCache[cacheKey] !== undefined) {
+                applyAjaxResult(fieldId, _ajaxCache[cacheKey]);
+                return;
+            }
 
-                            /* ── Auto age ── */
-                            document.getElementById('dob').addEventListener('change', function() {
-                                var dob = new Date(this.value);
-                                if (isNaN(dob.getTime())) return;
-                                var today = new Date();
-                                var age = today.getFullYear() - dob.getFullYear();
-                                var m = today.getMonth() - dob.getMonth();
-                                if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-                                document.getElementById('ageDisplay').value = age >= 0 ? age + ' years old' : '';
-                            });
+            clearTimeout(_ajaxTimers[fieldId]);
+            indicator.className = 'ajax-indicator checking';
+            if (errEl) errEl.classList.remove('show');
+            if (succEl) succEl.style.display = 'none';
 
-                            /* ── Checkbox ── */
-                            function toggleCheck(id) {
-                                var card = document.getElementById('chk-' + id + '-card');
-                                var inp = document.getElementById(id);
-                                inp.checked = !inp.checked;
-                                card.classList.toggle('checked', inp.checked);
-                                if (id === 'terms') document.getElementById('err-terms').classList.remove('show');
-                            }
+            _ajaxTimers[fieldId] = setTimeout(function() {
+                fetch('{{ route('enrollment.validate') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            field: fieldId,
+                            value: value
+                        })
+                    })
+                    .then(function(res) {
+                        return res.json();
+                    })
+                    .then(function(data) {
+                        var ok = data.valid === true;
+                        _ajaxCache[cacheKey] = {
+                            ok: ok,
+                            message: data.message || ''
+                        };
+                        applyAjaxResult(fieldId, _ajaxCache[cacheKey]);
+                    })
+                    .catch(function() {
+                        indicator.className = 'ajax-indicator';
+                    });
+            }, 550);
+        }
 
-                            /* ── Stepper ── */
-                            var currentStep = 0;
-                            var TOTAL_STEPS = 6;
+        function applyAjaxResult(fieldId, result) {
+            var indicator = document.getElementById('ajax-' + fieldId);
+            var errEl = document.getElementById('err-' + fieldId);
+            var succEl = document.getElementById('succ-' + fieldId);
+            var inputEl = document.getElementById(fieldId);
 
-                            function updateStepper(step, goingBack) {
-                                for (var i = 0; i < TOTAL_STEPS; i++) {
-                                    var si = document.getElementById('si-' + i);
-                                    var circle = si.querySelector('.step-circle');
-                                    si.className = 'step-item' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
-                                    circle.textContent = i < step ? '\u2713' : String(i + 1);
-                                }
-                                var pct = step === 0 ? 0 : (step / (TOTAL_STEPS - 1)) * 100;
-                                document.getElementById('stepperProgress').style.width = pct + '%';
-                                document.getElementById('miniBar').style.width = ((step + 1) / TOTAL_STEPS * 100) + '%';
-                                document.querySelectorAll('.step-content').forEach(function(el, idx) {
-                                    el.classList.remove('active', 'back-anim');
-                                    if (idx === step) {
-                                        el.classList.add('active');
-                                        if (goingBack) el.classList.add('back-anim');
-                                    }
-                                });
-                                window.scrollTo({
-                                    top: 0,
-                                    behavior: 'smooth'
-                                });
-                            }
+            if (result.ok) {
+                if (indicator) indicator.className = 'ajax-indicator ok';
+                if (errEl) errEl.classList.remove('show');
+                if (inputEl) inputEl.classList.remove('has-error');
+                if (succEl) succEl.style.display = 'flex';
+            } else {
+                if (indicator) indicator.className = 'ajax-indicator bad';
+                if (errEl) {
+                    if (result.message) errEl.innerHTML = '<i class="bi bi-exclamation-circle"></i> ' + result.message;
+                    errEl.classList.add('show');
+                }
+                if (inputEl) inputEl.classList.add('has-error');
+                if (succEl) succEl.style.display = 'none';
+            }
+        }
 
-                            /* ── Validation ── */
-                            function showErr(id, show) {
-                                var el = document.getElementById('err-' + id);
-                                if (el) el.classList.toggle('show', show);
-                                var fi = document.getElementById(id);
-                                if (fi) fi.classList.toggle('has-error', show);
-                            }
+        document.getElementById('phone').addEventListener('blur', function() {
+            var val = this.value.replace(/\D/g, '');
+            if (val.length >= 10) ajaxValidateField('phone', this.value, {});
+        });
 
-                            function validateStep(step) {
-                                var ok = true;
+        document.getElementById('phone').addEventListener('input', function() {
+            var indicator = document.getElementById('ajax-phone');
+            var succEl = document.getElementById('succ-phone');
+            if (indicator) indicator.className = 'ajax-indicator';
+            if (succEl) succEl.style.display = 'none';
+            _ajaxCache = Object.fromEntries(Object.entries(_ajaxCache).filter(function(e) {
+                return !e[0].startsWith('phone:');
+            }));
+        });
 
-                                function req(id, cond) {
-                                    showErr(id, !cond);
-                                    if (!cond) ok = false;
-                                }
+        document.getElementById('email').addEventListener('blur', function() {
+            var val = this.value.trim();
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) ajaxValidateField('email', val, {});
+        });
 
-                                if (step === 0) {
-                                    req('firstName', document.getElementById('firstName').value.trim() !== '');
-                                    req('lastName', document.getElementById('lastName').value.trim() !== '');
-                                    var dobVal = document.getElementById('dob').value;
-                                    var dobOk = false;
-                                    if (dobVal) {
-                                        var d = new Date(dobVal),
-                                            now = new Date();
-                                        var age = now.getFullYear() - d.getFullYear();
-                                        var mo = now.getMonth() - d.getMonth();
-                                        if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
-                                        dobOk = (age >= 3 && age <= 29);
-                                    }
-                                    req('dob', dobOk);
-                                    req('gender', document.querySelector('input[name="gender"]:checked') !== null);
+        document.getElementById('email').addEventListener('input', function() {
+            var indicator = document.getElementById('ajax-email');
+            var succEl = document.getElementById('succ-email');
+            if (indicator) indicator.className = 'ajax-indicator';
+            if (succEl) succEl.style.display = 'none';
+            _ajaxCache = Object.fromEntries(Object.entries(_ajaxCache).filter(function(e) {
+                return !e[0].startsWith('email:');
+            }));
+        });
 
-                                } else if (step === 1) {
-                                    req('fatherName', document.getElementById('fatherName').value.trim() !== '');
-                                    req('motherName', document.getElementById('motherName').value.trim() !== '');
+        function updateCentres() {
+            var state = document.getElementById('state').value;
+            var sel = document.getElementById('centre');
+            var wrap = document.getElementById('centre-info-wrap');
 
-                                } else if (step === 2) {
-                                    var ph = document.getElementById('phone').value.replace(/\D/g, '');
-                                    req('phone', ph.length >= 10);
-                                    req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
-                                    req('school', document.getElementById('school').value.trim() !== '');
-                                    req('grade', document.getElementById('grade').value !== '');
+            sel.innerHTML = '<option value="">— Select a Centre —</option>';
+            wrap.style.display = 'none';
+            if (!state) return;
 
-                                } else if (step === 3) {
-                                    req('state', document.getElementById('state').value !== '');
-                                    req('centre', document.getElementById('centre').value !== '');
+            var list = CENTRE_DATA[state];
+            if (list && list.length > 0) {
+                for (var i = 0; i < list.length; i++) {
+                    var o = document.createElement('option');
+                    o.value = list[i].name;
+                    o.textContent = list[i].name;
+                    o.dataset.address = list[i].address || '';
+                    o.dataset.phone = list[i].phone || '';
+                    o.dataset.email = list[i].email || '';
+                    o.dataset.map = list[i].map || '';
+                    sel.appendChild(o);
+                }
+            }
+        }
 
-                                } else if (step === 4) {
-                                    req('course', document.querySelector('input[name="course"]:checked') !== null);
+        function showCentreInfo() {
+            var sel = document.getElementById('centre');
+            var wrap = document.getElementById('centre-info-wrap');
+            var opt = sel.options[sel.selectedIndex];
 
-                                } else if (step === 5) {
-                                    var terms = document.getElementById('terms').checked;
-                                    showErr('terms', !terms);
-                                    if (!terms) ok = false;
-                                }
-                                return ok;
-                            }
+            if (!opt || !opt.value) {
+                wrap.style.display = 'none';
+                return;
+            }
 
-                            /* ── Nav ── */
-                            function nextStep(step) {
-                                if (!validateStep(step)) return;
-                                if (step === 3 && !_silentSaveDone) silentSave();
-                                if (step === 4) buildSummary();
-                                currentStep = step + 1;
-                                updateStepper(currentStep, false);
-                            }
+            document.getElementById('ci-name').textContent = opt.value;
+            document.getElementById('ci-address').textContent = opt.dataset.address || '—';
 
-                            function prevStep(step) {
-                                currentStep = step - 1;
-                                updateStepper(currentStep, true);
-                            }
+            var phoneWrap = document.getElementById('ci-phone-wrap');
+            var emailWrap = document.getElementById('ci-email-wrap');
+            var mapLink = document.getElementById('ci-map');
 
-                            /* ── Silent lead save (after Step 4) ── */
-                            function silentSave() {
-                                function getVal(id) {
-                                    var el = document.getElementById(id);
-                                    return (el && el.value) ? el.value : '';
-                                }
+            if (opt.dataset.phone) {
+                document.getElementById('ci-phone').textContent = opt.dataset.phone;
+                phoneWrap.style.display = 'inline-flex';
+            } else {
+                phoneWrap.style.display = 'none';
+            }
 
-                                function radioVal(name) {
-                                    var el = document.querySelector('input[name="' + name + '"]:checked');
-                                    return el ? el.value : '';
-                                }
+            if (opt.dataset.email) {
+                document.getElementById('ci-email').textContent = opt.dataset.email;
+                emailWrap.style.display = 'inline-flex';
+            } else {
+                emailWrap.style.display = 'none';
+            }
 
-                                fetch('{{ route('enrollment.store') }}', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json',
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                        },
-                                        body: JSON.stringify({
-                                            _token: '{{ csrf_token() }}',
-                                            course_id: '{{ $course->id }}',
-                                            first_name: getVal('firstName'),
-                                            last_name: getVal('lastName'),
-                                            dob: getVal('dob'),
-                                            gender: radioVal('gender'),
-                                            father_name: getVal('fatherName'),
-                                            mother_name: getVal('motherName'),
-                                            parent_phone: getVal('parentPhone'),
-                                            parent_email: getVal('parentEmail'),
-                                            phone: getVal('phone'),
-                                            email: getVal('email'),
-                                            address: getVal('address'),
-                                            school: getVal('school'),
-                                            grade: getVal('grade'),
-                                            achievements: getVal('achievements'),
-                                            state: getVal('state'),
-                                            city: getVal('city'),
-                                            centre: getVal('centre'),
-                                            mode: radioVal('mode'),
-                                            course: '{{ $course->title }}',
-                                            is_lead: 1,
-                                        }),
-                                    })
-                                    .then(function(res) {
-                                        return res.ok ? res.json() : null;
-                                    })
-                                    .then(function(data) {
-                                        if (data && data.enrollment_id) {
-                                            _enrollmentId = data.enrollment_id;
-                                            _silentSaveDone = true;
-                                        }
-                                    })
-                                    .catch(function() {});
-                            }
+            if (opt.dataset.map) {
+                mapLink.href = opt.dataset.map;
+                mapLink.style.display = 'inline-flex';
+            } else {
+                mapLink.style.display = 'none';
+            }
 
-                            /* ── Summary ── */
-                            function buildSummary() {
-                                function getVal(id) {
-                                    var el = document.getElementById(id);
-                                    return (el && el.value) ? el.value : '\u2014';
-                                }
+            wrap.style.display = 'block';
+        }
 
-                                function radioVal(name) {
-                                    var el = document.querySelector('input[name="' + name + '"]:checked');
-                                    return el ? el.value : '\u2014';
-                                }
+        function applyCoupon() {
+            var code = document.getElementById('coupon').value.trim().toUpperCase();
+            var badge = document.getElementById('couponBadge');
+            var valid = ['WELCOME20', 'ATA100', 'TRYACT', 'FREE50'];
+            if (valid.indexOf(code) !== -1) {
+                badge.style.display = 'inline-flex';
+            } else {
+                badge.style.display = 'none';
+                if (code) alert('Invalid coupon code. Try WELCOME20 for \u20b9200 off.');
+            }
+        }
 
-                                var items = [
-                                    ['Student Name', getVal('firstName') + ' ' + getVal('lastName')],
-                                    ['Date of Birth', getVal('dob')],
-                                    ['Gender', radioVal('gender')],
-                                    ["Father's Name", getVal('fatherName')],
-                                    ["Mother's Name", getVal('motherName')],
-                                    ['Phone', getVal('phone')],
-                                    ['Email', getVal('email')],
-                                    ['School', getVal('school')],
-                                    ['Class', getVal('grade')],
-                                    ['State', getVal('state')],
-                                    ['Centre', getVal('centre')],
-                                    ['Mode', radioVal('mode')],
-                                    ['Course', radioVal('course')],
-                                    ['Coupon', (getVal('coupon') && getVal('coupon') !== '\u2014') ? getVal('coupon') : 'None'],
-                                ];
-                                var grid = document.getElementById('summary-grid');
-                                grid.innerHTML = '';
-                                for (var i = 0; i < items.length; i++) {
-                                    var div = document.createElement('div');
-                                    div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
-                                    div.innerHTML =
-                                        '<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;">' +
-                                        items[i][0] + '</div>' +
-                                        '<div style="font-size:14px;font-weight:600;color:var(--ink);">' + items[i][1] + '</div>';
-                                    grid.appendChild(div);
-                                }
-                            }
+        document.getElementById('dob').addEventListener('change', function() {
+            var dob = new Date(this.value);
+            if (isNaN(dob.getTime())) return;
+            var today = new Date();
+            var age = today.getFullYear() - dob.getFullYear();
+            var m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+            document.getElementById('ageDisplay').value = age >= 0 ? age + ' years old' : '';
+        });
 
-                            /* ── Helper: hide all steps, show a result screen ── */
-                            function showResultScreen(screenId) {
-                                document.querySelectorAll('.step-content').forEach(function(el) {
-                                    el.style.display = 'none';
-                                });
-                                document.getElementById(screenId).style.display = 'block';
-                                window.scrollTo({
-                                    top: 0,
-                                    behavior: 'smooth'
-                                });
-                            }
+        function toggleCheck(id) {
+            var card = document.getElementById('chk-' + id + '-card');
+            var inp = document.getElementById(id);
+            inp.checked = !inp.checked;
+            card.classList.toggle('checked', inp.checked);
+            if (id === 'terms') document.getElementById('err-terms').classList.remove('show');
+        }
 
-                            /* ── Helper: start countdown then redirect ── */
-                            function startFailedCountdown() {
-                                var countdown = 10;
-                                var courseUrl = '{{ url('/courses/' . $course->id) }}';
-                                var timer = setInterval(function() {
-                                    countdown--;
-                                    var el = document.getElementById('failedCountdown');
-                                    if (el) el.textContent = countdown;
-                                    if (countdown <= 0) {
-                                        clearInterval(timer);
-                                        window.location.href = courseUrl;
-                                    }
-                                }, 1000);
-                            }
+        var currentStep = 0;
+        var TOTAL_STEPS = 6;
 
-                            /* ── Final submit ── */
-                            function submitForm() {
-                                if (!validateStep(5)) return;
+        function updateStepper(step, goingBack) {
+            for (var i = 0; i < TOTAL_STEPS; i++) {
+                var si = document.getElementById('si-' + i);
+                var circle = si.querySelector('.step-circle');
+                si.className = 'step-item' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
+                circle.textContent = i < step ? '\u2713' : String(i + 1);
+            }
+            var pct = step === 0 ? 0 : (step / (TOTAL_STEPS - 1)) * 100;
+            document.getElementById('stepperProgress').style.width = pct + '%';
+            document.getElementById('miniBar').style.width = ((step + 1) / TOTAL_STEPS * 100) + '%';
 
-                                function getVal(id) {
-                                    var el = document.getElementById(id);
-                                    return (el && el.value) ? el.value : '';
-                                }
+            document.querySelectorAll('.step-content').forEach(function(el, idx) {
+                el.classList.remove('active', 'back-anim');
+                if (idx === step) {
+                    el.classList.add('active');
+                    if (goingBack) el.classList.add('back-anim');
+                }
+            });
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
 
-                                function radioVal(name) {
-                                    var el = document.querySelector('input[name="' + name + '"]:checked');
-                                    return el ? el.value : '';
-                                }
+        function showErr(id, show) {
+            var el = document.getElementById('err-' + id);
+            if (el) el.classList.toggle('show', show);
+            var fi = document.getElementById(id);
+            if (fi) fi.classList.toggle('has-error', show);
+        }
 
-                                var payload = {
-                                    _token: '{{ csrf_token() }}',
-                                    course_id: '{{ $course->id }}',
-                                    first_name: getVal('firstName'),
-                                    last_name: getVal('lastName'),
-                                    dob: getVal('dob'),
-                                    gender: radioVal('gender'),
-                                    father_name: getVal('fatherName'),
-                                    mother_name: getVal('motherName'),
-                                    parent_phone: getVal('parentPhone'),
-                                    parent_email: getVal('parentEmail'),
-                                    phone: getVal('phone'),
-                                    email: getVal('email'),
-                                    address: getVal('address'),
-                                    school: getVal('school'),
-                                    grade: getVal('grade'),
-                                    achievements: getVal('achievements'),
-                                    state: getVal('state'),
-                                    city: getVal('city'),
-                                    centre: getVal('centre'),
-                                    mode: radioVal('mode'),
-                                    course: radioVal('course'),
-                                    coupon: getVal('coupon'),
-                                    newsletter: document.getElementById('newsletter').checked ? 1 : 0,
-                                    enrollment_id: _enrollmentId,
-                                };
+        function validateStep(step) {
+            var ok = true;
 
-                                var btn = document.querySelector('.submit-btn');
-                                btn.disabled = true;
-                                btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting…';
+            function req(id, cond) {
+                showErr(id, !cond);
+                if (!cond) ok = false;
+            }
 
-                                fetch('{{ route('enrollment.store') }}', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json',
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                        },
-                                        body: JSON.stringify(payload),
-                                    })
-                                    .then(function(res) {
-                                        if (res.status === 422) {
-                                            return res.json().then(function(data) {
-                                                var msgs = data.errors ? Object.values(data.errors).flat().join('\n') :
-                                                    'Validation failed.';
-                                                alert('Please fix the following:\n\n' + msgs);
-                                                btn.disabled = false;
-                                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                                            });
-                                        }
-                                        if (!res.ok) {
-                                            return res.text().then(function(text) {
-                                                alert('Server error (' + res.status + '). Please try again.');
-                                                btn.disabled = false;
-                                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                                            });
-                                        }
-                                        return res.json();
-                                    })
-                                    .then(function(data) {
-                                        if (!data || !data.success) return;
+            if (step === 0) {
+                req('firstName', document.getElementById('firstName').value.trim() !== '');
+                req('lastName', document.getElementById('lastName').value.trim() !== '');
+                var dobVal = document.getElementById('dob').value;
+                var dobOk = false;
+                if (dobVal) {
+                    var d = new Date(dobVal),
+                        now = new Date();
+                    var age = now.getFullYear() - d.getFullYear();
+                    var mo = now.getMonth() - d.getMonth();
+                    if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
+                    dobOk = (age >= 3 && age <= 29);
+                }
+                req('dob', dobOk);
+                req('gender', document.querySelector('input[name="gender"]:checked') !== null);
 
-                                        var rzp = new Razorpay({
-                                            key: data.razorpay_key,
-                                            amount: data.amount,
-                                            currency: 'INR',
-                                            name: 'Act To Action',
-                                            description: 'Course Enrollment',
-                                            order_id: data.order_id,
-                                            handler: function(response) {
-                                                verifyPayment(response, data.enrollment_id);
-                                            },
-                                            prefill: {
-                                                name: payload.first_name + ' ' + payload.last_name,
-                                                email: payload.email,
-                                                contact: payload.phone,
-                                            },
-                                            theme: {
-                                                color: '#175cdd'
-                                            },
-                                            modal: {
-                                                ondismiss: function() {
-                                                    btn.disabled = false;
-                                                    btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                                                }
-                                            }
-                                        });
-                                        rzp.open();
-                                    })
-                                    .catch(function() {
-                                        alert('Network error. Please check your connection and try again.');
-                                        btn.disabled = false;
-                                        btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                                    });
-                            }
+            } else if (step === 1) {
+                req('fatherName', document.getElementById('fatherName').value.trim() !== '');
+                req('motherName', document.getElementById('motherName').value.trim() !== '');
 
-                            /* ── Verify payment ── */
-                            function verifyPayment(response, enrollmentId) {
-                                fetch('{{ route('enrollment.verify') }}', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json',
-                                            'Accept': 'application/json',
-                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                        },
-                                        body: JSON.stringify({
-                                            razorpay_order_id: response.razorpay_order_id,
-                                            razorpay_payment_id: response.razorpay_payment_id,
-                                            razorpay_signature: response.razorpay_signature,
-                                            enrollment_id: enrollmentId,
-                                        }),
-                                    })
-                                    .then(function(res) {
-                                        return res.json();
-                                    })
-                                    .then(function(data) {
-                                        if (data.success) {
-                                            document.getElementById('refId').textContent = data.reference_id || ('ATA-' + enrollmentId);
-                                            showResultScreen('successScreen');
-                                        } else {
-                                            showResultScreen('failedScreen');
-                                            if (response.razorpay_payment_id) {
-                                                document.getElementById('failedPidText').textContent = response.razorpay_payment_id;
-                                                document.getElementById('failedPaymentId').style.display = 'block';
-                                            }
-                                            startFailedCountdown();
-                                        }
-                                    })
-                                    .catch(function() {
-                                        showResultScreen('failedScreen');
-                                        startFailedCountdown();
-                                    });
-                            }
+            } else if (step === 2) {
+                var ph = document.getElementById('phone').value.replace(/\D/g, '');
+                req('phone', ph.length >= 10);
+                req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
+                req('school', document.getElementById('school').value.trim() !== '');
+                req('grade', document.getElementById('grade').value !== '');
 
-                            /* ── Retry payment ── */
-                            function retryPayment() {
-                                document.getElementById('failedScreen').style.display = 'none';
+            } else if (step === 3) {
+                req('state', document.getElementById('state').value !== '');
+                req('centre', document.getElementById('centre').value !== '');
 
-                                /* Restore step-content display so stepper works again */
-                                document.querySelectorAll('.step-content').forEach(function(el) {
-                                    el.style.display = '';
-                                });
+            } else if (step === 4) {
+                req('course', document.querySelector('input[name="course"]:checked') !== null);
 
-                                var btn = document.querySelector('.submit-btn');
+            } else if (step === 5) {
+                var terms = document.getElementById('terms').checked;
+                showErr('terms', !terms);
+                if (!terms) ok = false;
+            }
+            return ok;
+        }
+
+        function nextStep(step) {
+            if (!validateStep(step)) return;
+            if (step === 3 && !_silentSaveDone) silentSave();
+            if (step === 4) buildSummary();
+            currentStep = step + 1;
+            updateStepper(currentStep, false);
+        }
+
+        function prevStep(step) {
+            currentStep = step - 1;
+            updateStepper(currentStep, true);
+        }
+
+        function getVal(id) {
+            var el = document.getElementById(id);
+            return (el && el.value) ? el.value : '';
+        }
+
+        function radioVal(name) {
+            var el = document.querySelector('input[name="' + name + '"]:checked');
+            return el ? el.value : '';
+        }
+
+        function silentSave() {
+            fetch('{{ route('enrollment.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        _token: '{{ csrf_token() }}',
+                        course_id: '{{ $course->id }}',
+                        first_name: getVal('firstName'),
+                        last_name: getVal('lastName'),
+                        dob: getVal('dob'),
+                        gender: radioVal('gender'),
+                        father_name: getVal('fatherName'),
+                        mother_name: getVal('motherName'),
+                        parent_phone: getVal('parentPhone'),
+                        parent_email: getVal('parentEmail'),
+                        phone: getVal('phone'),
+                        email: getVal('email'),
+                        address: getVal('address'),
+                        school: getVal('school'),
+                        grade: getVal('grade'),
+                        achievements: getVal('achievements'),
+                        state: getVal('state'),
+                        city: getVal('city'),
+                        centre: getVal('centre'),
+                        mode: radioVal('mode'),
+                        course: '{{ $course->title }}',
+                        is_lead: 1,
+                    }),
+                })
+                .then(function(res) {
+                    return res.ok ? res.json() : null;
+                })
+                .then(function(data) {
+                    if (data && data.enrollment_id) {
+                        _enrollmentId = data.enrollment_id;
+                        _silentSaveDone = true;
+                    }
+                })
+                .catch(function() {});
+        }
+
+        function buildSummary() {
+            var items = [
+                ['Student Name', getVal('firstName') + ' ' + getVal('lastName')],
+                ['Date of Birth', getVal('dob')],
+                ['Gender', radioVal('gender')],
+                ["Father's Name", getVal('fatherName')],
+                ["Mother's Name", getVal('motherName')],
+                ['Phone', getVal('phone')],
+                ['Email', getVal('email')],
+                ['School', getVal('school')],
+                ['Class', getVal('grade')],
+                ['State', getVal('state')],
+                ['Centre', getVal('centre')],
+                ['Mode', radioVal('mode')],
+                ['Course', radioVal('course')],
+                ['Coupon', (getVal('coupon') && getVal('coupon') !== '\u2014') ? getVal('coupon') : 'None'],
+            ];
+            var grid = document.getElementById('summary-grid');
+            grid.innerHTML = '';
+            for (var i = 0; i < items.length; i++) {
+                var div = document.createElement('div');
+                div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
+                div.innerHTML =
+                    '<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;">' +
+                    items[i][0] + '</div>' +
+                    '<div style="font-size:14px;font-weight:600;color:var(--ink);">' + items[i][1] + '</div>';
+                grid.appendChild(div);
+            }
+        }
+
+        function showResultScreen(screenId) {
+            document.querySelectorAll('.step-content').forEach(function(el) {
+                el.style.display = 'none';
+            });
+            document.getElementById(screenId).style.display = 'block';
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function startFailedCountdown() {
+            var countdown = 10;
+            var courseUrl = '{{ url('/courses/' . $course->id) }}';
+            var timer = setInterval(function() {
+                countdown--;
+                var el = document.getElementById('failedCountdown');
+                if (el) el.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    window.location.href = courseUrl;
+                }
+            }, 1000);
+        }
+
+        function submitForm() {
+            if (!validateStep(5)) return;
+
+            var payload = {
+                _token: '{{ csrf_token() }}',
+                course_id: '{{ $course->id }}',
+                first_name: getVal('firstName'),
+                last_name: getVal('lastName'),
+                dob: getVal('dob'),
+                gender: radioVal('gender'),
+                father_name: getVal('fatherName'),
+                mother_name: getVal('motherName'),
+                parent_phone: getVal('parentPhone'),
+                parent_email: getVal('parentEmail'),
+                phone: getVal('phone'),
+                email: getVal('email'),
+                address: getVal('address'),
+                school: getVal('school'),
+                grade: getVal('grade'),
+                achievements: getVal('achievements'),
+                state: getVal('state'),
+                city: getVal('city'),
+                centre: getVal('centre'),
+                mode: radioVal('mode'),
+                course: radioVal('course'),
+                coupon: getVal('coupon'),
+                newsletter: document.getElementById('newsletter').checked ? 1 : 0,
+                enrollment_id: _enrollmentId,
+            };
+
+            var btn = document.querySelector('.submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting…';
+
+            fetch('{{ route('enrollment.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then(function(res) {
+                    if (res.status === 422) {
+                        return res.json().then(function(data) {
+                            var msgs = data.errors ? Object.values(data.errors).flat().join('\n') :
+                                'Validation failed.';
+                            alert('Please fix the following:\n\n' + msgs);
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                        });
+                    }
+                    if (!res.ok) {
+                        return res.text().then(function() {
+                            alert('Server error (' + res.status + '). Please try again.');
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                        });
+                    }
+                    return res.json();
+                })
+                .then(function(data) {
+                    if (!data || !data.success) return;
+
+                    var rzp = new Razorpay({
+                        key: data.razorpay_key,
+                        amount: data.amount,
+                        currency: 'INR',
+                        name: 'Act To Action',
+                        description: 'Course Enrollment',
+                        order_id: data.order_id,
+                        handler: function(response) {
+                            verifyPayment(response, data.enrollment_id);
+                        },
+                        prefill: {
+                            name: payload.first_name + ' ' + payload.last_name,
+                            email: payload.email,
+                            contact: payload.phone,
+                        },
+                        theme: {
+                            color: '#175cdd'
+                        },
+                        modal: {
+                            ondismiss: function() {
                                 btn.disabled = false;
                                 btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-
-                                currentStep = 5;
-                                updateStepper(5, false);
-                                window.scrollTo({
-                                    top: 0,
-                                    behavior: 'smooth'
-                                });
                             }
+                        }
+                    });
+                    rzp.open();
+                })
+                .catch(function() {
+                    alert('Network error. Please check your connection and try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                });
+        }
 
-                            /* INIT */
-                            updateStepper(0, false);
-                        </script>
-                    @endsection
+        function verifyPayment(response, enrollmentId) {
+            fetch('{{ route('enrollment.verify') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_signature: response.razorpay_signature,
+                        enrollment_id: enrollmentId,
+                    }),
+                })
+                .then(function(res) {
+                    return res.json();
+                })
+                .then(function(data) {
+                    if (data.success) {
+                        document.getElementById('refId').textContent = data.reference_id || ('ATA-' + enrollmentId);
+                        showResultScreen('successScreen');
+                    } else {
+                        showResultScreen('failedScreen');
+                        if (response.razorpay_payment_id) {
+                            document.getElementById('failedPidText').textContent = response.razorpay_payment_id;
+                            document.getElementById('failedPaymentId').style.display = 'block';
+                        }
+                        startFailedCountdown();
+                    }
+                })
+                .catch(function() {
+                    showResultScreen('failedScreen');
+                    startFailedCountdown();
+                });
+        }
+
+        function retryPayment() {
+            document.getElementById('failedScreen').style.display = 'none';
+            document.querySelectorAll('.step-content').forEach(function(el) {
+                el.style.display = '';
+            });
+            var btn = document.querySelector('.submit-btn');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+            currentStep = 5;
+            updateStepper(5, false);
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        updateStepper(0, false);
+    </script>
+@endsection

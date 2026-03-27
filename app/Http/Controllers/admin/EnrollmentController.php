@@ -158,7 +158,33 @@ class EnrollmentController extends Controller
             );
         }
     }
+    public function validateField(Request $request)
+    {
+        $field = $request->input('field');
+        $value = $request->input('value');
 
+        if ($field === 'phone') {
+            $digits = preg_replace('/\D/', '', $value);
+            $exists = Enrollment::where('phone', $value)->where('status', '!=', 'lead')->exists();
+            if (strlen($digits) < 10) {
+                return response()->json(['valid' => false, 'message' => 'Enter a valid 10-digit phone number']);
+            }
+            if ($exists) {
+                return response()->json(['valid' => false, 'message' => 'This phone is already enrolled']);
+            }
+            return response()->json(['valid' => true]);
+        }
+
+        if ($field === 'email') {
+            $exists = Enrollment::where('email', $value)->where('status', '!=', 'lead')->exists();
+            if ($exists) {
+                return response()->json(['valid' => false, 'message' => 'This email is already enrolled']);
+            }
+            return response()->json(['valid' => true]);
+        }
+
+        return response()->json(['valid' => true]);
+    }
     /**
      * Admin: List all enrollments with search & filters
      */

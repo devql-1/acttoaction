@@ -160,6 +160,7 @@ Route::get('/test/{id}/result', [HomeController::class, 'result'])->name('test.r
 Route::get('/enrollment/{id}', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
 Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->name('enrollment.store');
 Route::post('/verify-payment', [EnrollmentController::class, 'verifyPayment'])->name('enrollment.verify');
+Route::post('/enrollment/validate', [EnrollmentController::class, 'validateField'])->name('enrollment.validate');
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                           SUMMER CAMP ROUTES                              ║
