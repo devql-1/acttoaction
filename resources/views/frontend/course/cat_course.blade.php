@@ -1242,7 +1242,7 @@
                             </div>
 
                             <div class="fc-actions">
-                                <a href="{{ route('course.details', $course->id) }}" class="btn-card-primary atp-btn">
+                                <a href="{{ route('course.details', $course->slug) }}" class="btn-card-primary atp-btn">
                                     <i class="bi bi-person-plus-fill"></i> Enroll Now
                                 </a>
                                 @if ($course->highlights_link)

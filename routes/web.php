@@ -757,6 +757,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('action-items/{id}', [ActionItemController::class, 'update'])->name('action-items.update');
         Route::delete('action-items/{id}', [ActionItemController::class, 'destroy'])->name('action-items.destroy');
         Route::post('action-items/status', [ActionItemController::class, 'status'])->name('action-items.status');
+
+        //Gallerycategories
+        Route::resource('galleryCategories', \App\Http\Controllers\admin\GalleryCategoryController::class);
+
+        Route::resource('galleries', \App\Http\Controllers\admin\GalleryController::class);
     });
 });
 use App\Services\EmailService;

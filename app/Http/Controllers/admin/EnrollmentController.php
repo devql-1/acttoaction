@@ -32,9 +32,14 @@ class EnrollmentController extends Controller
             if (!isset($centresByState[$stateName])) {
                 $centresByState[$stateName] = [];
             }
+
+            // Debug: dump pivot to confirm column name
+            // dd($center->pivot->toArray());
+
             $centresByState[$stateName][] = [
                 'id' => $center->id,
                 'name' => $center->name,
+                'fees' => (float) ($center->pivot->fees ?? ($center->pivot->fee ?? 0)),
                 'address' => $center->address ?? '',
                 'phone' => $center->phone ?? '',
                 'email' => $center->email ?? '',
@@ -54,6 +59,7 @@ class EnrollmentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'centre_id' => 'required|integer|exists:centers,id',
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'dob' => 'required|date',
@@ -72,8 +78,18 @@ class EnrollmentController extends Controller
 
         $isLead = $request->boolean('is_lead');
         $age = Carbon::parse($validated['dob'])->age;
+
         $course = Course::where('title', $validated['course'])->first();
-        $fee = $course ? $course->fees : 0;
+
+        // Fetch fee from pivot table using course + centre
+        $centreId = $request->input('centre_id'); // add this hidden field to your form
+        $fee = 0;
+
+        if ($course && $centreId) {
+            $pivotFee = $course->centers()->where('centers.id', $centreId)->first()?->pivot?->fees;
+
+            $fee = $pivotFee ?? 0;
+        }
 
         // Update existing enrollment if upgrading from lead
         if ($request->filled('enrollment_id') && !$isLead) {

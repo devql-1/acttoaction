@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
@@ -29,15 +29,16 @@ class CourseController extends Controller
     {
         $request->validate([
             'category_id' => 'required|exists:course_categories,id',
-            'title' => 'required',
+            'title' => 'required|unique:courses,title',
             'duration' => 'required',
-            'fees' => 'required|numeric',
             'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'instagram_link' => 'nullable|url',
             'highlights_link' => 'nullable|url',
             'documents.*' => 'nullable|mimes:pdf|max:10240',
-            'center_ids' => 'nullable|array',
+            'center_ids' => 'required|array|min:1',
             'center_ids.*' => 'exists:centers,id',
+            'center_fees' => 'required|array',
+            'center_fees.*' => 'required|numeric|min:0',
         ]);
 
         $bannerPath = null;
@@ -49,25 +50,33 @@ class CourseController extends Controller
             $bannerPath = 'img/course_images/' . $filename;
         }
 
-        // Create Course
+        // Generate slug from title
+        $slug = Str::slug($request->title);
+
+        // Create Course (slug is auto-generated in boot, but we can set it explicitly too)
         $course = Course::create([
             'category_id' => $request->category_id,
             'title' => $request->title,
+            'slug' => $slug,
             'banner_image' => $bannerPath,
             'description' => $request->description,
             'duration' => $request->duration,
             'sessions' => $request->total_sessions,
             'mode' => $request->mode,
             'age_group' => $request->age_group,
-            'fees' => $request->fees,
             'instagram_link' => $request->instagram_link ?? null,
             'highlights_link' => $request->highlights_link ?? null,
         ]);
 
-        // Sync Centers (Pivot Table)
-        if ($request->filled('center_ids')) {
-            $course->centers()->sync($request->center_ids);
+        // Sync Centers with Fees
+        $centerFeesData = [];
+        foreach ($request->center_ids as $centerId) {
+            $fee = $request->center_fees[$centerId] ?? null;
+            if ($fee !== null) {
+                $centerFeesData[$centerId] = ['fees' => $fee];
+            }
         }
+        $course->centers()->sync($centerFeesData);
 
         // Upload PDF Documents
         if ($request->hasFile('documents')) {
@@ -83,7 +92,6 @@ class CourseController extends Controller
 
         return redirect()->route('courses')->with('success', 'Course created successfully');
     }
-
     public function show($id)
     {
         $course = Course::with('sessions', 'documents', 'centers.state')->findOrFail($id);
@@ -95,7 +103,19 @@ class CourseController extends Controller
         $course = Course::with('sessions', 'documents', 'centers')->findOrFail($id);
         $states = State::where('status', 1)->get();
         $categories = CourseCategory::where('status', 1)->get();
-        $selectedCenters = $course->centers->pluck('id')->toArray();
+
+        // Get current center fees
+        $selectedCenters = $course->centers
+            ->map(function ($center) {
+                return [
+                    'id' => $center->id,
+                    'name' => $center->name,
+                    'address' => $center->address,
+                    'phone' => $center->phone,
+                    'fees' => $center->pivot->fees,
+                ];
+            })
+            ->toArray();
 
         return view('backend.courses.edit', compact('course', 'states', 'categories', 'selectedCenters'));
     }
@@ -106,12 +126,13 @@ class CourseController extends Controller
             'category_id' => 'required|exists:course_categories,id',
             'title' => 'required',
             'duration' => 'required',
-            'fees' => 'required|numeric',
             'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'instagram_link' => 'nullable|url',
             'highlights_link' => 'nullable|url',
-            'center_ids' => 'nullable|array',
+            'center_ids' => 'required|array|min:1',
             'center_ids.*' => 'exists:centers,id',
+            'center_fees' => 'required|array',
+            'center_fees.*' => 'required|numeric|min:0',
         ]);
 
         $course = Course::findOrFail($id);
@@ -119,7 +140,6 @@ class CourseController extends Controller
 
         // Upload New Banner Image
         if ($request->hasFile('banner_image')) {
-            // Delete old image
             if ($bannerPath && file_exists(public_path($bannerPath))) {
                 unlink(public_path($bannerPath));
             }
@@ -139,13 +159,19 @@ class CourseController extends Controller
             'sessions' => $request->total_sessions,
             'mode' => $request->mode,
             'age_group' => $request->age_group,
-            'fees' => $request->fees,
             'instagram_link' => $request->instagram_link ?? null,
             'highlights_link' => $request->highlights_link ?? null,
         ]);
 
-        // Sync Centers (Pivot Table)
-        $course->centers()->sync($request->center_ids ?? []);
+        // Sync Centers with Fees
+        $centerFeesData = [];
+        foreach ($request->center_ids as $centerId) {
+            $fee = $request->center_fees[$centerId] ?? null;
+            if ($fee !== null) {
+                $centerFeesData[$centerId] = ['fees' => $fee];
+            }
+        }
+        $course->centers()->sync($centerFeesData);
 
         return redirect()->route('courses')->with('success', 'Course updated successfully');
     }
@@ -174,7 +200,7 @@ class CourseController extends Controller
             $doc->delete();
         }
 
-        // Detach centers (pivot)
+        // Detach centers
         $course->centers()->detach();
 
         $course->delete();

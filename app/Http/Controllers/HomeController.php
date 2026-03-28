@@ -46,46 +46,154 @@ class HomeController extends Controller
 
     public function course()
     {
-        $featuredCourses = Course::with('category')->latest()->take(6)->get();
+        $galleryImages = \App\Models\Gallery::with('galleryCategory')
+            ->latest()
+            ->get()
+            ->map(function ($g) {
+                return [
+                    'id' => $g->id,
+                    'title' => $g->title,
+                    'image' => asset('storage/' . $g->image),
+                    'category' => $g->galleryCategory->name ?? '',
+                    'slug' => $g->galleryCategory->slug ?? '',
+                ];
+            })
+            ->toArray();
 
-        $categories = CourseCategory::withCount('courses')->with('courses')->where('status', 1)->get();
+        $galleryCategories = \App\Models\Gallerycat::withCount('galleries')->get();
+        $categoryId = \App\Models\YoutubeCategory::where('slug', 'parent-testimoial')->value('id');
+
+        $videos = YoutubeVideo::where('youtube_category_id', $categoryId)
+            ->latest()
+            ->get()
+            ->map(function ($v) {
+                $cleanId = explode('?', $v->youtube_id)[0];
+                return [
+                    'id' => $cleanId,
+                    'thumb' => 'https://img.youtube.com/vi/' . $cleanId . '/mqdefault.jpg',
+                    'title' => $v->name,
+                    'desc' => 'Parent testimonial',
+                    'duration' => '',
+                ];
+            })
+            ->toArray();
+
+        if (empty($videos)) {
+            $videos = [
+                [
+                    'id' => 'dQw4w9WgXcQ',
+                    'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
+                    'title' => 'Fallback Video',
+                    'desc' => 'No videos found',
+                    'duration' => '2:30',
+                ],
+            ];
+        }
+
+        $featuredCourses = Course::with('category', 'centers')->latest()->take(6)->get();
+
+        $categories = CourseCategory::withCount('courses')->with('courses')->get();
 
         $allCourses = Course::with(['category', 'centers.state'])
             ->latest()
             ->get();
 
-        return view('frontend.course.course', compact('featuredCourses', 'categories', 'allCourses'));
+        return view(
+            'frontend.course.course',
+            compact(
+                'featuredCourses',
+                'categories',
+                'allCourses',
+                'videos', // ← don't forget to pass videos to the view
+                'galleryImages',
+                'galleryCategories',
+            ),
+        );
     }
+    /**
+     * Show courses by category
+     */
     public function cat_course($id)
     {
         $currentCategory = CourseCategory::with([
             'courses' => function ($q) {
-                $q->with(['sessions', 'documents'])->latest();
+                $q->with(['sessions', 'documents', 'centers'])->latest();
             },
-        ])->findOrFail($id);
+        ])
+            ->where('id', $id)
+            ->firstOrFail();
 
         // All categories for the switcher bar (with course count)
         $allCategories = CourseCategory::with('courses')->where('status', 1)->get();
 
         return view('frontend.course.cat_course', compact('currentCategory', 'allCategories'));
     }
+
+    /**
+     * Show single course detail by slug
+     */
+    // public function course_detail($slug)
+    // {
+    //     dd($slug);
+    //     $course = Course::with(['category', 'centers.state', 'sessions', 'documents'])
+    //         ->where('slug', $slug)
+    //         ->firstOrFail();
+
+    //     // Get related courses (same category)
+    //     $relatedCourses = Course::with('category', 'centers')->where('category_id', $course->category_id)->where('id', '!=', $course->id)->latest()->take(3)->get();
+
+    //     return view('frontend.course.course-detail', compact('course', 'relatedCourses'));
+    // }
+
     public function event()
     {
-        $events = Event::with('subEvents')->latest('event_date')->get();
+        $galleryImages = \App\Models\Gallery::with('galleryCategory')
+            ->latest()
+            ->get()
+            ->map(function ($g) {
+                return [
+                    'id' => $g->id,
+                    'title' => $g->title,
+                    'image' => asset('storage/' . $g->image),
+                    'category' => $g->galleryCategory->name ?? '',
+                    'slug' => $g->galleryCategory->slug ?? '',
+                ];
+            })
+            ->toArray();
 
+        $galleryCategories = \App\Models\Gallerycat::withCount('galleries')->get();
         $categoryId = \App\Models\YoutubeCategory::where('slug', 'parent-testimoial')->value('id');
 
-        $videoData = YoutubeVideo::where('youtube_category_id', $categoryId)->latest()->get()->map(
-            fn($v) => [
-                'id' => $v->youtube_id,
-                'thumb' => 'https://img.youtube.com/vi/' . $v->youtube_id . '/mqdefault.jpg',
-                'title' => $v->name,
-                'desc' => $v->youtubeCategory?->name ?? '',
-                'duration' => '',
-            ],
-        );
+        $videos = YoutubeVideo::where('youtube_category_id', $categoryId)
+            ->latest()
+            ->get()
+            ->map(function ($v) {
+                $cleanId = explode('?', $v->youtube_id)[0];
+                return [
+                    'id' => $cleanId,
+                    'thumb' => 'https://img.youtube.com/vi/' . $cleanId . '/mqdefault.jpg',
+                    'title' => $v->name,
+                    'desc' => 'Parent testimonial',
+                    'duration' => '',
+                ];
+            })
+            ->toArray();
 
-        return view('frontend.event.event', compact('events', 'videoData'));
+        if (empty($videos)) {
+            $videos = [
+                [
+                    'id' => 'dQw4w9WgXcQ',
+                    'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
+                    'title' => 'Fallback Video',
+                    'desc' => 'No videos found',
+                    'duration' => '2:30',
+                ],
+            ];
+        }
+
+        $events = Event::with('subEvents')->latest('event_date')->get();
+
+        return view('frontend.event.event', compact('events', 'videos', 'galleryImages', 'galleryCategories'));
     }
     public function subevent($id)
     {
@@ -335,11 +443,15 @@ class HomeController extends Controller
     {
         return view('frontend.volunteer.volunteer');
     }
-    public function course_details($id)
+    public function course_details($slug)
     {
-        $course = Course::with(['category', 'centers.state'])->findOrFail($id);
+        // dd($slug);
+        $course = Course::with(['category', 'centers.state', 'sessions', 'documents'])
+            ->where('slug', $slug)
+            ->firstOrFail();
 
-        $otherCourses = Course::with('category')->where('id', '!=', $id)->latest()->take(4)->get();
+        // Get related courses (same category)
+        $otherCourses = Course::with('category', 'centers')->where('category_id', $course->category_id)->where('id', '!=', $course->id)->latest()->take(3)->get();
 
         return view('frontend.course.coursedetails', compact('course', 'otherCourses'));
     }

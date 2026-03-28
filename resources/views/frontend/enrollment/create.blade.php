@@ -1187,6 +1187,39 @@
         $modeMeta = $modeMap[$courseMode] ?? $modeMap['Offline'];
     @endphp
 
+    @php
+        $centresByState = $centresByState ?? [];
+        $courseStates = $courseStates ?? [];
+        $otherCourses = $otherCourses ?? collect();
+
+        if (empty($centresByState) && $course->relationLoaded('centers')) {
+            foreach ($course->centers as $center) {
+                $stateName = $center->state && $center->state->name ? $center->state->name : 'Other';
+                if (!isset($centresByState[$stateName])) {
+                    $centresByState[$stateName] = [];
+                }
+                $centresByState[$stateName][] = [
+                    'id' => $center->id,
+                    'name' => $center->name,
+                    'fees' => $center->pivot->fees ?? 0,
+                    'address' => $center->address ?? '',
+                    'phone' => $center->phone ?? '',
+                    'email' => $center->email ?? '',
+                    'map' => $center->map_link ?? '',
+                ];
+            }
+            $courseStates = array_keys($centresByState);
+        }
+
+        $modeMap = [
+            'Online' => ['icon' => '💻', 'label' => 'Online — Live Classes', 'id' => 'm-online'],
+            'Offline' => ['icon' => '🏫', 'label' => 'Offline — At Centre', 'id' => 'm-offline'],
+            'Hybrid' => ['icon' => '🔄', 'label' => 'Hybrid — Online + Centre', 'id' => 'm-hybrid'],
+        ];
+        $courseMode = $course->mode ?? 'Offline';
+        $modeMeta = $modeMap[$courseMode] ?? $modeMap['Offline'];
+    @endphp
+
     <main class="main">
         <div class="page-title"></div>
 
@@ -1249,6 +1282,7 @@
         <div class="form-wrap">
             <div class="form-panel">
 
+                {{-- ===================== STEP 1: Personal ===================== --}}
                 <div class="step-content active" data-step="0">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#eff6ff;color:var(--blue);">
@@ -1326,6 +1360,7 @@
                     </div>
                 </div>
 
+                {{-- ===================== STEP 2: Parents ===================== --}}
                 <div class="step-content" data-step="1">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#fdf2f8;color:#db2777;">
@@ -1354,15 +1389,19 @@
                         </div>
                         <div class="row-2">
                             <div class="field-group">
-                                <label>Parent Phone <span class="opt">(optional)</span></label>
+                                <label>Parent Phone <span class="req">*</span></label>
                                 <input class="fi" type="tel" id="parentPhone" placeholder="e.g. 98765 43210"
                                     maxlength="15" />
                                 <div class="field-hint">We'll send updates via WhatsApp</div>
+                                <div class="field-error" id="err-parentPhone"><i class="bi bi-exclamation-circle"></i> A
+                                    valid 10-digit phone number is required</div>
                             </div>
                             <div class="field-group">
-                                <label>Parent Email <span class="opt">(optional)</span></label>
+                                <label>Parent Email <span class="req">*</span></label>
                                 <input class="fi" type="email" id="parentEmail"
                                     placeholder="e.g. rajesh@email.com" />
+                                <div class="field-error" id="err-parentEmail"><i class="bi bi-exclamation-circle"></i> A
+                                    valid email address is required</div>
                             </div>
                         </div>
                     </div>
@@ -1377,6 +1416,7 @@
                     </div>
                 </div>
 
+                {{-- ===================== STEP 3: Contact ===================== --}}
                 <div class="step-content" data-step="2">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#ecfdf5;color:#059669;">
@@ -1417,8 +1457,10 @@
                             </div>
                         </div>
                         <div class="field-group">
-                            <label>Full Address <span class="opt">(optional)</span></label>
+                            <label>Full Address <span class="req">*</span></label>
                             <textarea class="fi" id="address" placeholder="House no., Street, Area…" style="min-height:80px;"></textarea>
+                            <div class="field-error" id="err-address"><i class="bi bi-exclamation-circle"></i> Address is
+                                required</div>
                         </div>
                         <div class="form-divider"><span>Academic Details</span></div>
                         <div class="row-2">
@@ -1448,9 +1490,11 @@
                             </div>
                         </div>
                         <div class="field-group">
-                            <label>Achievements / Additional Notes <span class="opt">(optional)</span></label>
+                            <label>Achievements / Additional Notes <span class="req">*</span></label>
                             <textarea class="fi" id="achievements" placeholder="Any prior acting experience, awards, special skills…"
                                 style="min-height:90px;"></textarea>
+                            <div class="field-error" id="err-achievements"><i class="bi bi-exclamation-circle"></i>
+                                Please enter your achievements or write N/A</div>
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -1464,6 +1508,7 @@
                     </div>
                 </div>
 
+                {{-- ===================== STEP 4: Location ===================== --}}
                 <div class="step-content" data-step="3">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#fff7ed;color:#d97706;">
@@ -1495,8 +1540,10 @@
                                     select your state</div>
                             </div>
                             <div class="field-group">
-                                <label>Preferred City <span class="opt">(optional)</span></label>
+                                <label>Preferred City <span class="req">*</span></label>
                                 <input class="fi" type="text" id="city" placeholder="Your city name" />
+                                <div class="field-error" id="err-city"><i class="bi bi-exclamation-circle"></i> Please
+                                    enter your city</div>
                             </div>
                         </div>
                         <div class="field-group">
@@ -1507,6 +1554,7 @@
                             <div class="field-error" id="err-centre"><i class="bi bi-exclamation-circle"></i> Please
                                 select a centre</div>
                         </div>
+
                         <div id="centre-info-wrap" style="display:none;margin-top:8px;">
                             <div
                                 style="background:#f0f5ff;border:1.5px solid #dbeafe;border-radius:14px;padding:18px 20px;">
@@ -1530,11 +1578,17 @@
                                                 style="display:none;align-items:center;gap:4px;font-size:12px;color:#d97706;font-weight:600;text-decoration:none;">
                                                 <i class="bi bi-map-fill"></i> View on Map
                                             </a>
+                                            {{-- Fee badge --}}
+                                            <span id="ci-fee-wrap"
+                                                style="display:none;align-items:center;gap:6px;font-size:13px;color:#7c3aed;font-weight:700;background:#f5f3ff;padding:5px 14px;border-radius:20px;border:1.5px solid #ede9fe;">
+                                                <i class="bi bi-tag-fill"></i> Course Fee: <span id="ci-fee"></span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="field-group" style="margin-top:22px;">
                             <label>Class Mode</label>
                             <div
@@ -1564,6 +1618,7 @@
                     </div>
                 </div>
 
+                {{-- ===================== STEP 5: Course ===================== --}}
                 <div class="step-content" data-step="4">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#f5f3ff;color:#7c3aed;">
@@ -1624,17 +1679,20 @@
                                             {{ Str::limit($course->description, 120) }}</p>
                                     @endif
                                 </div>
-                                @if ($course->fees)
+                                {{-- Dynamic fee box — updated by JS when centre is chosen --}}
+                                <div
+                                    style="text-align:center;min-width:110px;background:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 2px 12px rgba(23,92,221,.08);">
                                     <div
-                                        style="text-align:center;min-width:110px;background:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 2px 12px rgba(23,92,221,.08);">
-                                        <div
-                                            style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">
-                                            Course Fee</div>
-                                        <div style="font-size:28px;font-weight:900;color:#175cdd;line-height:1;">
-                                            ₹{{ number_format($course->fees) }}</div>
-                                        <div style="font-size:10px;color:#9ca3af;margin-top:3px;">Incl. of taxes</div>
+                                        style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">
+                                        Course Fee</div>
+                                    <div id="course-fee-display"
+                                        style="font-size:28px;font-weight:900;color:#175cdd;line-height:1;">
+                                        {{ $course->fees ? '₹' . number_format($course->fees) : '—' }}
                                     </div>
-                                @endif
+                                    <div style="font-size:10px;color:#9ca3af;margin-top:3px;" id="course-fee-note">
+                                        {{ $course->fees ? 'Incl. of taxes' : 'Select a centre first' }}
+                                    </div>
+                                </div>
                             </div>
                             <input type="radio" name="course" id="c-main" value="{{ $course->title }}" checked
                                 style="display:none;" />
@@ -1705,6 +1763,7 @@
                     </div>
                 </div>
 
+                {{-- ===================== STEP 6: Confirm ===================== --}}
                 <div class="step-content" data-step="5">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#ecfdf5;color:#059669;">
@@ -1771,6 +1830,7 @@
                     </div>
                 </div>
 
+                {{-- ===================== Success Screen ===================== --}}
                 <div class="success-screen" id="successScreen" style="display:none;">
                     <div class="success-anim">🎉</div>
                     <div class="success-title">Payment Successful!</div>
@@ -1794,6 +1854,7 @@
                     </div>
                 </div>
 
+                {{-- ===================== Failed Screen ===================== --}}
                 <div class="success-screen" id="failedScreen" style="display:none;">
                     <div class="success-anim">❌</div>
                     <div class="success-title" style="color:#dc2626;">Payment Failed</div>
@@ -1825,6 +1886,626 @@
             </div>
         </div>
     </main>
+
+    {{-- ===================== Scripts ===================== --}}
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var CENTRE_DATA = @json($centresByState);
+        var COURSE_STATES = @json($courseStates);
+
+        var _enrollmentId = null;
+        var _silentSaveDone = false;
+        var _ajaxTimers = {};
+        var _ajaxCache = {};
+
+        // ── Ajax field validation ──────────────────────────────────────────────
+        function ajaxValidateField(fieldId, value) {
+            var indicator = document.getElementById('ajax-' + fieldId);
+            var errEl = document.getElementById('err-' + fieldId);
+            var succEl = document.getElementById('succ-' + fieldId);
+            if (!indicator) return;
+
+            var cacheKey = fieldId + ':' + value;
+            if (_ajaxCache[cacheKey] !== undefined) {
+                applyAjaxResult(fieldId, _ajaxCache[cacheKey]);
+                return;
+            }
+
+            clearTimeout(_ajaxTimers[fieldId]);
+            indicator.className = 'ajax-indicator checking';
+            if (errEl) errEl.classList.remove('show');
+            if (succEl) succEl.style.display = 'none';
+
+            _ajaxTimers[fieldId] = setTimeout(function() {
+                fetch('{{ route('enrollment.validate') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            field: fieldId,
+                            value: value
+                        })
+                    })
+                    .then(function(res) {
+                        return res.json();
+                    })
+                    .then(function(data) {
+                        var result = {
+                            ok: data.valid === true,
+                            message: data.message || ''
+                        };
+                        _ajaxCache[cacheKey] = result;
+                        applyAjaxResult(fieldId, result);
+                    })
+                    .catch(function() {
+                        indicator.className = 'ajax-indicator';
+                    });
+            }, 550);
+        }
+
+        function applyAjaxResult(fieldId, result) {
+            var indicator = document.getElementById('ajax-' + fieldId);
+            var errEl = document.getElementById('err-' + fieldId);
+            var succEl = document.getElementById('succ-' + fieldId);
+            var inputEl = document.getElementById(fieldId);
+
+            if (result.ok) {
+                if (indicator) indicator.className = 'ajax-indicator ok';
+                if (errEl) errEl.classList.remove('show');
+                if (inputEl) inputEl.classList.remove('has-error');
+                if (succEl) succEl.style.display = 'flex';
+            } else {
+                if (indicator) indicator.className = 'ajax-indicator bad';
+                if (errEl) {
+                    if (result.message) errEl.innerHTML = '<i class="bi bi-exclamation-circle"></i> ' + result.message;
+                    errEl.classList.add('show');
+                }
+                if (inputEl) inputEl.classList.add('has-error');
+                if (succEl) succEl.style.display = 'none';
+            }
+        }
+
+        document.getElementById('phone').addEventListener('blur', function() {
+            if (this.value.replace(/\D/g, '').length >= 10) ajaxValidateField('phone', this.value);
+        });
+        document.getElementById('phone').addEventListener('input', function() {
+            var ind = document.getElementById('ajax-phone');
+            var suc = document.getElementById('succ-phone');
+            if (ind) ind.className = 'ajax-indicator';
+            if (suc) suc.style.display = 'none';
+            _ajaxCache = Object.fromEntries(Object.entries(_ajaxCache).filter(function(e) {
+                return !e[0].startsWith('phone:');
+            }));
+        });
+
+        document.getElementById('email').addEventListener('blur', function() {
+            var val = this.value.trim();
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) ajaxValidateField('email', val);
+        });
+        document.getElementById('email').addEventListener('input', function() {
+            var ind = document.getElementById('ajax-email');
+            var suc = document.getElementById('succ-email');
+            if (ind) ind.className = 'ajax-indicator';
+            if (suc) suc.style.display = 'none';
+            _ajaxCache = Object.fromEntries(Object.entries(_ajaxCache).filter(function(e) {
+                return !e[0].startsWith('email:');
+            }));
+        });
+
+        // ── Centre helpers ─────────────────────────────────────────────────────
+        function updateCentres() {
+            var state = document.getElementById('state').value;
+            var sel = document.getElementById('centre');
+            var wrap = document.getElementById('centre-info-wrap');
+
+            sel.innerHTML = '<option value="">— Select a Centre —</option>';
+            wrap.style.display = 'none';
+            if (!state) return;
+
+            var list = CENTRE_DATA[state];
+            if (list && list.length > 0) {
+                for (var i = 0; i < list.length; i++) {
+                    var o = document.createElement('option');
+                    o.value = list[i].name;
+                    o.textContent = list[i].name;
+                    o.dataset.id = list[i].id || '';
+                    o.dataset.fees = list[i].fees || '';
+                    o.dataset.address = list[i].address || '';
+                    o.dataset.phone = list[i].phone || '';
+                    o.dataset.email = list[i].email || '';
+                    o.dataset.map = list[i].map || '';
+                    sel.appendChild(o);
+                }
+            }
+        }
+
+        function showCentreInfo() {
+            var sel = document.getElementById('centre');
+            var wrap = document.getElementById('centre-info-wrap');
+            var opt = sel.options[sel.selectedIndex];
+
+            if (!opt || !opt.value) {
+                wrap.style.display = 'none';
+                return;
+            }
+
+            document.getElementById('ci-name').textContent = opt.value;
+            document.getElementById('ci-address').textContent = opt.dataset.address || '—';
+
+            var phoneWrap = document.getElementById('ci-phone-wrap');
+            var emailWrap = document.getElementById('ci-email-wrap');
+            var mapLink = document.getElementById('ci-map');
+            var feeWrap = document.getElementById('ci-fee-wrap');
+            var feeEl = document.getElementById('ci-fee');
+
+            phoneWrap.style.display = opt.dataset.phone ? 'inline-flex' : 'none';
+            if (opt.dataset.phone) document.getElementById('ci-phone').textContent = opt.dataset.phone;
+
+            emailWrap.style.display = opt.dataset.email ? 'inline-flex' : 'none';
+            if (opt.dataset.email) document.getElementById('ci-email').textContent = opt.dataset.email;
+
+            if (opt.dataset.map) {
+                mapLink.href = opt.dataset.map;
+                mapLink.style.display = 'inline-flex';
+            } else {
+                mapLink.style.display = 'none';
+            }
+
+            // Show fee and also update the Step-5 fee box
+            var fee = parseFloat(opt.dataset.fees || 0);
+            if (fee > 0) {
+                var formatted = '₹' + fee.toLocaleString('en-IN');
+                feeEl.textContent = formatted;
+                feeWrap.style.display = 'inline-flex';
+
+                // Keep Step-5 fee box in sync
+                document.getElementById('course-fee-display').textContent = formatted;
+                document.getElementById('course-fee-note').textContent = 'Incl. of taxes';
+            } else {
+                feeWrap.style.display = 'none';
+                document.getElementById('course-fee-display').textContent = '—';
+                document.getElementById('course-fee-note').textContent = 'Select a centre first';
+            }
+
+            wrap.style.display = 'block';
+        }
+
+        function getSelectedCentre() {
+            var sel = document.getElementById('centre');
+            var opt = sel.options[sel.selectedIndex];
+            return {
+                id: (opt && opt.dataset.id) ? opt.dataset.id : '',
+                fees: (opt && opt.dataset.fees) ? opt.dataset.fees : '',
+            };
+        }
+
+        // ── Coupon ─────────────────────────────────────────────────────────────
+        function applyCoupon() {
+            var code = document.getElementById('coupon').value.trim().toUpperCase();
+            var badge = document.getElementById('couponBadge');
+            var valid = ['WELCOME20', 'ATA100', 'TRYACT', 'FREE50'];
+            if (valid.indexOf(code) !== -1) {
+                badge.style.display = 'inline-flex';
+            } else {
+                badge.style.display = 'none';
+                if (code) alert('Invalid coupon code. Try WELCOME20 for ₹200 off.');
+            }
+        }
+
+        // ── DOB auto-age ───────────────────────────────────────────────────────
+        document.getElementById('dob').addEventListener('change', function() {
+            var dob = new Date(this.value);
+            if (isNaN(dob.getTime())) return;
+            var today = new Date();
+            var age = today.getFullYear() - dob.getFullYear();
+            var m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+            document.getElementById('ageDisplay').value = age >= 0 ? age + ' years old' : '';
+        });
+
+        // ── Checkboxes ─────────────────────────────────────────────────────────
+        function toggleCheck(id) {
+            var inp = document.getElementById(id);
+            var card = document.getElementById('chk-' + id + '-card');
+            inp.checked = !inp.checked;
+            card.classList.toggle('checked', inp.checked);
+            if (id === 'terms') document.getElementById('err-terms').classList.remove('show');
+        }
+
+        // ── Stepper ────────────────────────────────────────────────────────────
+        var currentStep = 0;
+        var TOTAL_STEPS = 6;
+
+        function updateStepper(step, goingBack) {
+            for (var i = 0; i < TOTAL_STEPS; i++) {
+                var si = document.getElementById('si-' + i);
+                var circle = si.querySelector('.step-circle');
+                si.className = 'step-item' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
+                circle.textContent = i < step ? '✓' : String(i + 1);
+            }
+            var pct = step === 0 ? 0 : (step / (TOTAL_STEPS - 1)) * 100;
+            document.getElementById('stepperProgress').style.width = pct + '%';
+            document.getElementById('miniBar').style.width = ((step + 1) / TOTAL_STEPS * 100) + '%';
+
+            document.querySelectorAll('.step-content').forEach(function(el, idx) {
+                el.classList.remove('active', 'back-anim');
+                if (idx === step) {
+                    el.classList.add('active');
+                    if (goingBack) el.classList.add('back-anim');
+                }
+            });
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function showErr(id, show) {
+            var el = document.getElementById('err-' + id);
+            if (el) el.classList.toggle('show', show);
+            var fi = document.getElementById(id);
+            if (fi) fi.classList.toggle('has-error', show);
+        }
+
+        // ── Validation ─────────────────────────────────────────────────────────
+        function validateStep(step) {
+            var ok = true;
+
+            function req(id, cond) {
+                showErr(id, !cond);
+                if (!cond) ok = false;
+            }
+
+            if (step === 0) {
+                req('firstName', document.getElementById('firstName').value.trim() !== '');
+                req('lastName', document.getElementById('lastName').value.trim() !== '');
+                var dobVal = document.getElementById('dob').value;
+                var dobOk = false;
+                if (dobVal) {
+                    var d = new Date(dobVal),
+                        now = new Date();
+                    var age = now.getFullYear() - d.getFullYear();
+                    var mo = now.getMonth() - d.getMonth();
+                    if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
+                    dobOk = (age >= 3 && age <= 29);
+                }
+                req('dob', dobOk);
+                req('gender', document.querySelector('input[name="gender"]:checked') !== null);
+
+            } else if (step === 1) {
+                req('fatherName', document.getElementById('fatherName').value.trim() !== '');
+                req('motherName', document.getElementById('motherName').value.trim() !== '');
+                req('parentPhone', document.getElementById('parentPhone').value.replace(/\D/g, '').length >= 10);
+                req('parentEmail', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('parentEmail').value.trim()));
+
+            } else if (step === 2) {
+                var ph = document.getElementById('phone').value.replace(/\D/g, '');
+                req('phone', ph.length >= 10);
+                req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
+                req('address', document.getElementById('address').value.trim() !== '');
+                req('school', document.getElementById('school').value.trim() !== '');
+                req('grade', document.getElementById('grade').value !== '');
+                req('achievements', document.getElementById('achievements').value.trim() !== '');
+
+            } else if (step === 3) {
+                req('state', document.getElementById('state').value !== '');
+                req('centre', document.getElementById('centre').value !== '');
+                req('city', document.getElementById('city').value.trim() !== '');
+
+            } else if (step === 4) {
+                req('course', document.querySelector('input[name="course"]:checked') !== null);
+
+            } else if (step === 5) {
+                var terms = document.getElementById('terms').checked;
+                showErr('terms', !terms);
+                if (!terms) ok = false;
+            }
+            return ok;
+        }
+
+        function nextStep(step) {
+            if (!validateStep(step)) return;
+            if (step === 3 && !_silentSaveDone) silentSave();
+            if (step === 4) buildSummary();
+            currentStep = step + 1;
+            updateStepper(currentStep, false);
+        }
+
+        function prevStep(step) {
+            currentStep = step - 1;
+            updateStepper(currentStep, true);
+        }
+
+        // ── Helpers ────────────────────────────────────────────────────────────
+        function getVal(id) {
+            var el = document.getElementById(id);
+            return (el && el.value) ? el.value : '';
+        }
+
+        function radioVal(name) {
+            var el = document.querySelector('input[name="' + name + '"]:checked');
+            return el ? el.value : '';
+        }
+
+        // ── Silent save (lead) ─────────────────────────────────────────────────
+        function silentSave() {
+            var centre = getSelectedCentre();
+            fetch('{{ route('enrollment.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        _token: '{{ csrf_token() }}',
+                        course_id: '{{ $course->id }}',
+                        first_name: getVal('firstName'),
+                        last_name: getVal('lastName'),
+                        dob: getVal('dob'),
+                        gender: radioVal('gender'),
+                        father_name: getVal('fatherName'),
+                        mother_name: getVal('motherName'),
+                        parent_phone: getVal('parentPhone'),
+                        parent_email: getVal('parentEmail'),
+                        phone: getVal('phone'),
+                        email: getVal('email'),
+                        address: getVal('address'),
+                        school: getVal('school'),
+                        grade: getVal('grade'),
+                        achievements: getVal('achievements'),
+                        state: getVal('state'),
+                        city: getVal('city'),
+                        centre: getVal('centre'),
+                        centre_id: centre.id,
+                        centre_fees: centre.fees,
+                        mode: radioVal('mode'),
+                        course: '{{ $course->title }}',
+                        is_lead: 1,
+                    }),
+                })
+                .then(function(res) {
+                    return res.ok ? res.json() : null;
+                })
+                .then(function(data) {
+                    if (data && data.enrollment_id) {
+                        _enrollmentId = data.enrollment_id;
+                        _silentSaveDone = true;
+                    }
+                })
+                .catch(function() {});
+        }
+
+        // ── Summary builder ────────────────────────────────────────────────────
+        function buildSummary() {
+            var centre = getSelectedCentre();
+            var fee = parseFloat(centre.fees || 0);
+            var feeText = fee > 0 ? '₹' + fee.toLocaleString('en-IN') : '—';
+
+            var items = [
+                ['Student Name', getVal('firstName') + ' ' + getVal('lastName')],
+                ['Date of Birth', getVal('dob')],
+                ['Gender', radioVal('gender')],
+                ["Father's Name", getVal('fatherName')],
+                ["Mother's Name", getVal('motherName')],
+                ['Parent Phone', getVal('parentPhone')],
+                ['Parent Email', getVal('parentEmail')],
+                ['Phone', getVal('phone')],
+                ['Email', getVal('email')],
+                ['Address', getVal('address')],
+                ['School', getVal('school')],
+                ['Class', getVal('grade')],
+                ['Achievements', getVal('achievements')],
+                ['State', getVal('state')],
+                ['City', getVal('city')],
+                ['Centre', getVal('centre')],
+                ['Mode', radioVal('mode')],
+                ['Course', radioVal('course')],
+                ['Course Fee', feeText],
+                ['Coupon', (getVal('coupon') && getVal('coupon') !== '—') ? getVal('coupon') : 'None'],
+            ];
+
+            var grid = document.getElementById('summary-grid');
+            grid.innerHTML = '';
+            for (var i = 0; i < items.length; i++) {
+                var div = document.createElement('div');
+                div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
+                div.innerHTML =
+                    '<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;">' +
+                    items[i][0] + '</div>' +
+                    '<div style="font-size:14px;font-weight:600;color:var(--ink);">' + items[i][1] + '</div>';
+                grid.appendChild(div);
+            }
+        }
+
+        // ── Result screens ─────────────────────────────────────────────────────
+        function showResultScreen(screenId) {
+            document.querySelectorAll('.step-content').forEach(function(el) {
+                el.style.display = 'none';
+            });
+            document.getElementById(screenId).style.display = 'block';
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function startFailedCountdown() {
+            var countdown = 10;
+            var courseUrl = '{{ url('/courses/' . $course->id) }}';
+            var timer = setInterval(function() {
+                countdown--;
+                var el = document.getElementById('failedCountdown');
+                if (el) el.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    window.location.href = courseUrl;
+                }
+            }, 1000);
+        }
+
+        // ── Submit ─────────────────────────────────────────────────────────────
+        function submitForm() {
+            if (!validateStep(5)) return;
+
+            var centre = getSelectedCentre();
+            var payload = {
+                _token: '{{ csrf_token() }}',
+                course_id: '{{ $course->id }}',
+                first_name: getVal('firstName'),
+                last_name: getVal('lastName'),
+                dob: getVal('dob'),
+                gender: radioVal('gender'),
+                father_name: getVal('fatherName'),
+                mother_name: getVal('motherName'),
+                parent_phone: getVal('parentPhone'),
+                parent_email: getVal('parentEmail'),
+                phone: getVal('phone'),
+                email: getVal('email'),
+                address: getVal('address'),
+                school: getVal('school'),
+                grade: getVal('grade'),
+                achievements: getVal('achievements'),
+                state: getVal('state'),
+                city: getVal('city'),
+                centre: getVal('centre'),
+                centre_id: centre.id,
+                centre_fees: centre.fees,
+                mode: radioVal('mode'),
+                course: radioVal('course'),
+                coupon: getVal('coupon'),
+                newsletter: document.getElementById('newsletter').checked ? 1 : 0,
+                enrollment_id: _enrollmentId,
+            };
+
+            var btn = document.querySelector('.submit-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting…';
+
+            fetch('{{ route('enrollment.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(payload),
+                })
+                .then(function(res) {
+                    if (res.status === 422) {
+                        return res.json().then(function(data) {
+                            var msgs = data.errors ? Object.values(data.errors).flat().join('\n') :
+                                'Validation failed.';
+                            alert('Please fix the following:\n\n' + msgs);
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                        });
+                    }
+                    if (!res.ok) {
+                        return res.text().then(function() {
+                            alert('Server error (' + res.status + '). Please try again.');
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                        });
+                    }
+                    return res.json();
+                })
+                .then(function(data) {
+                    if (!data || !data.success) return;
+                    var rzp = new Razorpay({
+                        key: data.razorpay_key,
+                        amount: data.amount,
+                        currency: 'INR',
+                        name: 'Act To Action',
+                        description: 'Course Enrollment',
+                        order_id: data.order_id,
+                        handler: function(response) {
+                            verifyPayment(response, data.enrollment_id);
+                        },
+                        prefill: {
+                            name: payload.first_name + ' ' + payload.last_name,
+                            email: payload.email,
+                            contact: payload.phone,
+                        },
+                        theme: {
+                            color: '#175cdd'
+                        },
+                        modal: {
+                            ondismiss: function() {
+                                btn.disabled = false;
+                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                            }
+                        }
+                    });
+                    rzp.open();
+                })
+                .catch(function() {
+                    alert('Network error. Please check your connection and try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+                });
+        }
+
+        // ── Verify payment ─────────────────────────────────────────────────────
+        function verifyPayment(response, enrollmentId) {
+            fetch('{{ route('enrollment.verify') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_signature: response.razorpay_signature,
+                        enrollment_id: enrollmentId,
+                    }),
+                })
+                .then(function(res) {
+                    return res.json();
+                })
+                .then(function(data) {
+                    if (data.success) {
+                        document.getElementById('refId').textContent = data.reference_id || ('ATA-' + enrollmentId);
+                        showResultScreen('successScreen');
+                    } else {
+                        showResultScreen('failedScreen');
+                        if (response.razorpay_payment_id) {
+                            document.getElementById('failedPidText').textContent = response.razorpay_payment_id;
+                            document.getElementById('failedPaymentId').style.display = 'block';
+                        }
+                        startFailedCountdown();
+                    }
+                })
+                .catch(function() {
+                    showResultScreen('failedScreen');
+                    startFailedCountdown();
+                });
+        }
+
+        // ── Retry ──────────────────────────────────────────────────────────────
+        function retryPayment() {
+            document.getElementById('failedScreen').style.display = 'none';
+            document.querySelectorAll('.step-content').forEach(function(el) {
+                el.style.display = '';
+            });
+            var btn = document.querySelector('.submit-btn');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
+            currentStep = 5;
+            updateStepper(5, false);
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        updateStepper(0, false);
+    </script>
 
     <style>
         .field-success {
@@ -1877,7 +2558,7 @@
         }
     </style>
 
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    {{-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         var CENTRE_DATA = @json($centresByState);
         var COURSE_STATES = @json($courseStates);
@@ -2443,5 +3124,5 @@
         }
 
         updateStepper(0, false);
-    </script>
+    </script> --}}
 @endsection

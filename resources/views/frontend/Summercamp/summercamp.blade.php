@@ -679,81 +679,16 @@
     <!-- ===== VIDEOS ===== -->
     <section class="video-sec" id="videos">
         <div class="container">
-            <div class="sec-title">
+            <div class="sec-title" style="padding-bottom: 0%;">
                 <h2>Videos &amp; Media Coverage</h2>
                 <p>Watch highlights from Summer Camp 2025 — performances, moments and media features.</p>
             </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="vid-card" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')"><img
-                            src="https://static.wixstatic.com/media/495d44_64b07e4b9b3d48b4836d731743282713~mv2.jpg/v1/fill/w_980,h_550,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/495d44_64b07e4b9b3d48b4836d731743282713~mv2.jpg"
-                            alt="" />
-                        <div class="vid-overlay">
-                            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
-                        </div>
-                        <div class="vid-title">🎭 Grand Finale — Summer Camp 2025</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="vid-card" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')"><img
-                            src="https://static.wixstatic.com/media/495d44_42fb48ae47be4e809a3015afee67e25d~mv2.jpg/v1/fill/w_980,h_652,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/495d44_42fb48ae47be4e809a3015afee67e25d~mv2.jpg"
-                            alt="" />
-                        <div class="vid-overlay">
-                            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
-                        </div>
-                        <div class="vid-title">🌟 Camp Highlights Reel</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="vid-card" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')"><img
-                            src="https://static.wixstatic.com/media/495d44_3d0904880d89405289048b015862cffc~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/495d44_3d0904880d89405289048b015862cffc~mv2.jpg"
-                            alt="" />
-                        <div class="vid-overlay">
-                            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
-                        </div>
-                        <div class="vid-title">🏛️ Official Inauguration</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="vid-card" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')"><img
-                            src="https://static.wixstatic.com/media/495d44_7877122106294e939374eb66c14cc5c9~mv2.jpg"
-                            alt="" />
-                        <div class="vid-overlay">
-                            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
-                        </div>
-                        <div class="vid-title">💃 Dance Showcase 2025</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="vid-card" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')"><img
-                            src="https://static.wixstatic.com/media/495d44_870cf27ca182402086d7d842a45c2c40~mv2.jpg"
-                            alt="" />
-                        <div class="vid-overlay">
-                            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
-                        </div>
-                        <div class="vid-title">🎭 Drama Performance</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="vid-card" onclick="openVid('https://www.youtube.com/embed/dQw4w9WgXcQ')"><img
-                            src="https://static.wixstatic.com/media/495d44_48c11cecdbed42e1a85e9ca816c84a7e~mv2.jpg"
-                            alt="" />
-                        <div class="vid-overlay">
-                            <div class="play-btn"><i class="bi bi-play-fill"></i></div>
-                        </div>
-                        <div class="vid-title">📺 Dainik Bhaskar Coverage</div>
-                    </div>
-                </div>
-            </div>
+            @include('frontend.partialspages.youtube', ['videos' => $videos])
             {{-- <p class="text-center mt-3" style="font-size:13px;color:#aaa;">Replace the YouTube embed URLs in each
                 <code>onclick="openVid(...)"</code> with your actual video IDs.</p> --}}
         </div>
     </section>
-    <div class="vid-modal-bg" id="vidModal" onclick="if(event.target===this)closeVid()">
-        <div class="vid-modal"><button class="vid-close" onclick="closeVid()"><i
-                    class="bi bi-x-lg"></i></button><iframe id="vidFrame" src="" allowfullscreen
-                allow="autoplay"></iframe></div>
-    </div>
+
 
     <!-- ===== CTA ===== -->
     <section class="cta-sec" id="register">

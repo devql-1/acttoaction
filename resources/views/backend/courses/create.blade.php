@@ -22,7 +22,8 @@
                             <div class="card-title">Create Course</div>
                         </div>
 
-                        <form action="{{ route('courses.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('courses.store') }}" method="POST" enctype="multipart/form-data"
+                            id="courseForm">
                             @csrf
 
                             <div class="card-body">
@@ -119,21 +120,6 @@
                                     </div>
                                 </div>
 
-                                {{-- FEES --}}
-                                <div class="form-group row">
-                                    <div class="col-md-3">
-                                        <label>Fees (₹) <span class="text-danger">*</span></label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="number" name="fees"
-                                            class="form-control @error('fees') is-invalid @enderror"
-                                            value="{{ old('fees') }}" min="0" required>
-                                        @error('fees')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
                                 {{-- INSTAGRAM (optional) --}}
                                 <div class="form-group row">
                                     <div class="col-md-3">
@@ -162,9 +148,9 @@
 
                                 <hr>
 
-                                {{-- MULTI STATE + CENTER SELECTION --}}
+                                {{-- MULTI STATE + CENTER SELECTION WITH FEES --}}
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="mb-0">Available Centers</h5>
+                                    <h5 class="mb-0">Available Centers & Fees</h5>
                                     <button type="button" class="btn btn-outline-primary btn-sm"
                                         onclick="addStateRow()">
                                         <i class="fa fa-plus me-1"></i> Add State
@@ -246,6 +232,7 @@
         const allStates = @json($states);
 
         let rowCount = 0;
+        let centerFeesData = {}; // Store center fees
 
         function addStateRow() {
             rowCount++;
@@ -258,20 +245,20 @@
             });
 
             const html = `
-                                                                <div class="border rounded p-3 mb-3 bg-light" id="${rowId}">
-                                                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                                                        <select class="form-control w-50" onchange="loadCenters(this, '${rowId}')">
-                                                                            ${options}
-                                                                        </select>
-                                                                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                                                            onclick="removeStateRow('${rowId}')">
-                                                                            <i class="fa fa-times me-1"></i> Remove
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="centers-container" id="centers_${rowId}">
-                                                                        <small class="text-muted">Select a state to see centers.</small>
-                                                                    </div>
-                                                                </div>`;
+                <div class="border rounded p-3 mb-3 bg-light" id="${rowId}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <select class="form-control w-50" onchange="loadCenters(this, '${rowId}')">
+                            ${options}
+                        </select>
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                            onclick="removeStateRow('${rowId}')">
+                            <i class="fa fa-times me-1"></i> Remove
+                        </button>
+                    </div>
+                    <div class="centers-container" id="centers_${rowId}">
+                        <small class="text-muted">Select a state to see centers.</small>
+                    </div>
+                </div>`;
 
             document.getElementById('stateRowsContainer').insertAdjacentHTML('beforeend', html);
             document.getElementById('noStateMsg').style.display = 'none';
@@ -309,23 +296,41 @@
                     let html = '<div class="row">';
                     centers.forEach(center => {
                         html += `
-                                                                            <div class="col-md-6 mb-2">
-                                                                                <div class="form-check border rounded p-2 bg-white">
-                                                                                    <input class="form-check-input" type="checkbox"
-                                                                                        name="center_ids[]"
-                                                                                        value="${center.id}"
-                                                                                        id="center_${center.id}_${rowId}">
-                                                                                    <label class="form-check-label w-100" for="center_${center.id}_${rowId}">
-                                                                                        <strong>${center.name}</strong>
-                                                                                        <small class="text-muted d-block">
-                                                                                            <i class="fa fa-map-marker me-1"></i>${center.address ?? 'No address provided'}
-                                                                                        </small>
-                                                                                        ${center.phone
-                                ? `<small class="text-muted"><i class="fa fa-phone me-1"></i>${center.phone}</small>`
-                                : ''}
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>`;
+                            <div class="col-md-6 mb-3">
+                                <div class="border rounded p-3 bg-white">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input center-checkbox" type="checkbox"
+                                            name="center_ids[]"
+                                            value="${center.id}"
+                                            data-center-id="${center.id}"
+                                            id="center_${center.id}_${rowId}"
+                                            onchange="toggleFeeInput(${center.id}, this.checked)">
+                                        <label class="form-check-label" for="center_${center.id}_${rowId}">
+                                            <strong>${center.name}</strong>
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mb-2">
+                                        <i class="fa fa-map-marker me-1"></i>${center.address ?? 'No address provided'}
+                                    </small>
+                                    ${center.phone
+                            ? `<small class="text-muted d-block mb-2"><i class="fa fa-phone me-1"></i>${center.phone}</small>`
+                            : ''}
+                                    
+                                    <div class="fee-input-group" id="fee_${center.id}" style="display: none;">
+                                        <label class="form-label mb-2">
+                                            <small class="text-muted">Course Fees (₹)</small>
+                                        </label>
+                                        <input type="number" 
+                                            class="form-control form-control-sm"
+                                            name="center_fees[${center.id}]"
+                                            placeholder="Enter fees"
+                                            min="0"
+                                            step="0.01"
+                                            data-center-id="${center.id}"
+                                            onchange="updateFeeData(${center.id}, this.value)">
+                                    </div>
+                                </div>
+                            </div>`;
                     });
                     html += '</div>';
 
@@ -336,5 +341,59 @@
                         '<small class="text-danger"><i class="fa fa-times-circle me-1"></i> Failed to load centers. Please try again.</small>';
                 });
         }
+
+        function toggleFeeInput(centerId, isChecked) {
+            const feeDiv = document.getElementById(`fee_${centerId}`);
+            const feeInput = document.querySelector(`input[data-center-id="${centerId}"][name*="center_fees"]`);
+
+            if (isChecked) {
+                feeDiv.style.display = 'block';
+                feeInput.required = true;
+            } else {
+                feeDiv.style.display = 'none';
+                feeInput.required = false;
+                feeInput.value = '';
+                // Remove from centerFeesData
+                delete centerFeesData[centerId];
+            }
+        }
+
+        function updateFeeData(centerId, fee) {
+            if (fee) {
+                centerFeesData[centerId] = parseFloat(fee);
+            } else {
+                delete centerFeesData[centerId];
+            }
+        }
+
+        // Form validation
+        document.getElementById('courseForm').addEventListener('submit', function(e) {
+            const selectedCenters = document.querySelectorAll('.center-checkbox:checked');
+
+            if (selectedCenters.length === 0) {
+                e.preventDefault();
+                alert('Please select at least one center.');
+                return false;
+            }
+
+            // Validate that all selected centers have fees
+            let allFeesProvided = true;
+            selectedCenters.forEach(checkbox => {
+                const centerId = checkbox.dataset.centerId;
+                const feeInput = document.querySelector(
+                    `input[data-center-id="${centerId}"][name*="center_fees"]`);
+
+                if (!feeInput || !feeInput.value || parseFloat(feeInput.value) <= 0) {
+                    allFeesProvided = false;
+                    feeInput.classList.add('is-invalid');
+                }
+            });
+
+            if (!allFeesProvided) {
+                e.preventDefault();
+                alert('Please enter fees for all selected centers.');
+                return false;
+            }
+        });
     </script>
 @endsection

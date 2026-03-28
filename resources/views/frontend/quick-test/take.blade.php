@@ -1,6 +1,5 @@
 @extends('frontend.course.layout')
 @section('content')
-
     <style>
         *,
         *::before,
@@ -19,6 +18,7 @@
         a {
             text-decoration: none;
             color: inherit;
+            transition: 0.3s;
         }
 
         h1,
@@ -42,14 +42,12 @@
 
         .topbar a {
             color: rgba(255, 255, 255, .85);
-            transition: color .2s;
+            transition: color 0.3s;
         }
 
         .topbar a:hover {
             color: #fff;
         }
-
-
 
         /* ─── TEST HERO ─── */
         .test-hero {
@@ -71,6 +69,7 @@
             margin-bottom: 16px;
             text-transform: uppercase;
             letter-spacing: .6px;
+            animation: fadeUp 0.5s ease both;
         }
 
         .test-hero h1 {
@@ -79,6 +78,7 @@
             color: var(--heading-color);
             line-height: 1.18;
             margin-bottom: 12px;
+            animation: fadeUp 0.5s ease 0.1s both;
         }
 
         .test-hero h1 span {
@@ -98,6 +98,7 @@
             color: var(--heading-color);
             margin-bottom: 18px;
             box-shadow: 0 2px 12px rgba(23, 92, 221, .07);
+            animation: fadeUp 0.5s ease 0.2s both;
         }
 
         .test-count-badge .dot {
@@ -113,12 +114,108 @@
             0%,
             100% {
                 transform: scale(1);
-                opacity: 1
+                opacity: 1;
             }
 
             50% {
                 transform: scale(1.4);
-                opacity: .7
+                opacity: .7;
+            }
+        }
+
+        /* ── Fade up — cards, hero elements entering view ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Fade in — result panel, overlays ── */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ── Slide in right — next question transition ── */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ── Slide in left — prev question transition ── */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ── Scale pop — result badge, confetti ── */
+        @keyframes scalePop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+
+            70% {
+                transform: scale(1.08);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ── Shimmer — progress bar fill ── */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* ── Bounce in — scroll-top button ── */
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
             }
         }
 
@@ -128,6 +225,7 @@
             line-height: 1.7;
             margin-bottom: 20px;
             max-width: 540px;
+            animation: fadeUp 0.5s ease 0.3s both;
         }
 
         .reviewer-badge {
@@ -160,13 +258,20 @@
             color: var(--heading-color);
         }
 
-        /* Hero visual — floating test card preview */
+        /* Hero visual */
         .hero-test-visual {
             background: var(--surface-color);
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(17, 35, 68, .13);
             border: 1.5px solid #e4ecf8;
             overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeUp 0.6s ease 0.2s both;
+        }
+
+        .hero-test-visual:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 28px 70px rgba(17, 35, 68, .18);
         }
 
         .htv-header {
@@ -207,10 +312,12 @@
 
         .htv-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-color), #60a5fa);
+            background: linear-gradient(90deg, var(--accent-color), #60a5fa, var(--accent-color));
+            background-size: 200% auto;
             border-radius: 4px;
             width: 27%;
-            transition: width .5s;
+            transition: width 0.5s cubic-bezier(.4, 0, .2, 1);
+            animation: shimmer 2.5s linear infinite;
         }
 
         .htv-question {
@@ -254,19 +361,21 @@
             font-weight: 600;
             color: #9ca3af;
             background: #fafcff;
-            transition: all .15s;
+            transition: all 0.3s;
         }
 
         .htv-scale-btn:hover {
             border-color: var(--accent-color);
             color: var(--accent-color);
             background: #eff6ff;
+            transform: translateY(-2px);
         }
 
         .htv-scale-btn.selected {
             background: var(--accent-color);
             color: #fff;
             border-color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(23, 92, 221, .3);
         }
 
         .htv-scale-label {
@@ -297,11 +406,13 @@
             display: flex;
             align-items: center;
             gap: 7px;
-            transition: background .2s;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 4px 15px rgba(23, 92, 221, .3);
         }
 
         .htv-next-btn:hover {
             background: #112344;
+            transform: translateY(-2px);
         }
 
         /* ─── MEDIA LOGOS ─── */
@@ -337,12 +448,13 @@
             font-size: 12px;
             font-weight: 700;
             color: #6b7280;
-            transition: border-color .2s;
+            transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
         }
 
         .media-logo:hover {
             border-color: var(--accent-color);
             color: var(--heading-color);
+            box-shadow: 0 4px 15px rgba(23, 92, 221, .1);
         }
 
         /* ─── MAIN QUIZ AREA ─── */
@@ -362,6 +474,11 @@
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 18px;
+            transition: box-shadow 0.3s;
+        }
+
+        .sidebar-card:hover {
+            box-shadow: 0 8px 25px rgba(23, 92, 221, .1);
         }
 
         .sidebar-card h6 {
@@ -402,7 +519,7 @@
             font-size: 13px;
             color: var(--default-color);
             cursor: pointer;
-            transition: color .15s;
+            transition: color 0.3s;
         }
 
         .type-chip:last-child {
@@ -426,6 +543,12 @@
             font-weight: 800;
             color: var(--accent-color);
             flex-shrink: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .type-chip:hover .tc-num {
+            background: var(--accent-color);
+            color: #fff;
         }
 
         .type-chip .tc-name {
@@ -507,8 +630,10 @@
         .progress-fill {
             height: 100%;
             border-radius: 6px;
-            background: linear-gradient(90deg, var(--accent-color) 0%, #60a5fa 100%);
-            transition: width .5s cubic-bezier(.4, 0, .2, 1);
+            background: linear-gradient(90deg, var(--accent-color) 0%, #60a5fa 50%, var(--accent-color) 100%);
+            background-size: 200% auto;
+            transition: width 0.5s cubic-bezier(.4, 0, .2, 1);
+            animation: shimmer 2.5s linear infinite;
         }
 
         /* Step labels */
@@ -535,7 +660,7 @@
             height: 10px;
             border-radius: 50%;
             background: #e8edf5;
-            transition: background .3s;
+            transition: background 0.3s;
         }
 
         .step-dot.done .sd {
@@ -550,6 +675,7 @@
         /* Question pane */
         .quiz-body {
             padding: 32px 36px 28px;
+            animation: slideInRight 0.35s ease both;
         }
 
         .q-section-label {
@@ -585,10 +711,11 @@
             margin-bottom: 32px;
         }
 
-        /* ── 5-question-per-step Inaccurate/Neutral/Accurate layout ── */
+        /* ── Inaccurate/Neutral/Accurate layout ── */
         .step-q-row {
             padding: 22px 0;
             border-bottom: 1px solid #f0f4fb;
+            animation: fadeUp 0.4s ease both;
         }
 
         .step-q-row:last-child {
@@ -630,7 +757,7 @@
             font-weight: 700;
             color: #9ca3af;
             background: #fafcff;
-            transition: all .18s;
+            transition: all 0.3s;
             user-select: none;
             line-height: 1.3;
         }
@@ -646,6 +773,7 @@
             color: var(--accent-color);
             background: #eff6ff;
             transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(23, 92, 221, .1);
         }
 
         .ina-btn.sel-inaccurate {
@@ -653,6 +781,7 @@
             color: #dc2626;
             border-color: #fca5a5;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, .15);
         }
 
         .ina-btn.sel-neutral {
@@ -660,6 +789,7 @@
             color: #d97706;
             border-color: #fcd34d;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(217, 119, 6, .15);
         }
 
         .ina-btn.sel-accurate {
@@ -667,6 +797,7 @@
             color: #16a34a;
             border-color: #86efac;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(22, 163, 74, .15);
         }
 
         .unanswered-hint {
@@ -704,12 +835,13 @@
             display: flex;
             align-items: center;
             gap: 7px;
-            transition: all .18s;
+            transition: all 0.3s;
         }
 
         .btn-quiz-prev:hover {
             border-color: var(--accent-color);
             color: var(--accent-color);
+            background: #eff6ff;
         }
 
         .btn-quiz-prev:disabled {
@@ -730,8 +862,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: background .2s, transform .15s;
-            box-shadow: 0 4px 18px rgba(23, 92, 221, .3);
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 6px 20px rgba(23, 92, 221, .35);
         }
 
         .btn-quiz-next:hover {
@@ -749,6 +881,7 @@
         /* ─── RESULTS PANEL ─── */
         #result-panel {
             display: none;
+            animation: fadeIn 0.4s ease both;
         }
 
         .result-header {
@@ -771,6 +904,7 @@
         .result-header .confetti {
             font-size: 40px;
             margin-bottom: 8px;
+            animation: scalePop 0.6s ease 0.2s both;
         }
 
         .result-header h2 {
@@ -778,11 +912,13 @@
             font-weight: 900;
             color: #fff;
             margin-bottom: 6px;
+            animation: fadeUp 0.5s ease 0.3s both;
         }
 
         .result-header p {
             color: rgba(255, 255, 255, .75);
             font-size: 15px;
+            animation: fadeUp 0.5s ease 0.4s both;
         }
 
         .result-type-badge {
@@ -797,6 +933,7 @@
             padding: 8px 20px;
             border-radius: 20px;
             margin-top: 14px;
+            animation: scalePop 0.5s ease 0.5s both;
         }
 
         .result-body {
@@ -844,6 +981,12 @@
             font-weight: 600;
             padding: 5px 14px;
             border-radius: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .result-tag:hover {
+            background: var(--accent-color);
+            color: #fff;
         }
 
         .result-cta-box {
@@ -853,6 +996,11 @@
             padding: 28px;
             text-align: center;
             margin-top: 24px;
+            transition: box-shadow 0.3s;
+        }
+
+        .result-cta-box:hover {
+            box-shadow: 0 10px 30px rgba(23, 92, 221, .1);
         }
 
         .result-cta-box h4 {
@@ -881,8 +1029,8 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: background .2s, transform .15s;
-            box-shadow: 0 4px 18px rgba(23, 92, 221, .3);
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 6px 20px rgba(23, 92, 221, .35);
         }
 
         .btn-result-primary:hover {
@@ -903,12 +1051,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all .2s;
+            transition: all 0.3s;
         }
 
         .btn-result-outline:hover {
             background: var(--accent-color);
             color: #fff;
+            box-shadow: 0 6px 20px rgba(23, 92, 221, .35);
         }
 
         /* Share row */
@@ -931,7 +1080,7 @@
             font-weight: 600;
             cursor: pointer;
             border: none;
-            transition: transform .15s, opacity .2s;
+            transition: transform 0.3s, opacity 0.3s;
         }
 
         .share-btn:hover {
@@ -985,6 +1134,7 @@
             color: #6b7280;
             max-width: 540px;
             margin: 0 auto;
+            line-height: 1.7;
         }
 
         .talent-type-card {
@@ -993,12 +1143,12 @@
             padding: 26px 22px;
             border: 1.5px solid #e0e8f5;
             height: 100%;
-            transition: box-shadow .2s, transform .2s, border-color .2s;
+            transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
         }
 
         .talent-type-card:hover {
             box-shadow: 0 12px 40px rgba(23, 92, 221, .1);
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             border-color: var(--accent-color);
         }
 
@@ -1051,6 +1201,12 @@
             font-weight: 600;
             padding: 3px 10px;
             border-radius: 10px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .tt-trait:hover {
+            background: var(--accent-color);
+            color: #fff;
         }
 
         /* ─── FAQ ─── */
@@ -1065,6 +1221,7 @@
             font-size: 15px;
             color: var(--heading-color);
             background: var(--surface-color);
+            transition: background 0.3s, color 0.3s;
         }
 
         .accordion-button:not(.collapsed) {
@@ -1082,44 +1239,55 @@
             border-radius: 12px !important;
             margin-bottom: 10px;
             overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 4px 20px rgba(23, 92, 221, .08);
         }
 
         .accordion-body {
             font-size: 14px;
             color: var(--default-color);
-            line-height: 1.7;
+            line-height: 1.8;
+            background: var(--surface-color);
         }
 
+        /* ─── SCROLL TOP ─── */
         .scroll-top {
             position: fixed;
-            bottom: 28px;
-            right: 28px;
-            width: 44px;
-            height: 44px;
+            bottom: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
             background: var(--accent-color);
             color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 20px rgba(23, 92, 221, .35);
+            font-size: 18px;
+            box-shadow: 0 4px 15px rgba(23, 92, 221, .35);
             cursor: pointer;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity .3s, transform .3s;
-            z-index: 999;
+            visibility: hidden;
+            transition: all 0.4s;
+            z-index: 99999;
         }
 
         .scroll-top.active {
             opacity: 1;
-            pointer-events: auto;
+            visibility: visible;
         }
 
         .scroll-top:hover {
+            background: #112344;
             transform: translateY(-3px);
         }
 
+        /* =====================================================
+               RESPONSIVE — TABLET & MOBILE  (max-width: 768px)
+               ===================================================== */
         @media (max-width: 768px) {
 
             .quiz-top-bar,
@@ -1130,18 +1298,202 @@
                 padding-right: 20px;
             }
 
-            .scale-btns {
-                gap: 5px;
+            .quiz-top-bar {
+                padding-top: 18px;
+                padding-bottom: 18px;
             }
 
-            .scale-btn {
-                padding: 10px 3px;
-                font-size: 10px;
+            .quiz-top-bar h3 {
+                font-size: 15px;
+            }
+
+            .q-text {
+                font-size: 17px;
+                margin-bottom: 24px;
+            }
+
+            .ina-row {
+                gap: 7px;
+            }
+
+            .ina-btn {
+                font-size: 12px;
+                padding: 10px 4px;
+            }
+
+            .ina-btn .ina-icon {
+                font-size: 17px;
             }
 
             .result-body,
             .result-header {
                 padding: 24px 20px;
+            }
+
+            .result-header h2 {
+                font-size: 22px;
+            }
+
+            .result-cta-box {
+                padding: 22px 16px;
+            }
+
+            .share-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .quiz-sidebar {
+                position: static;
+                margin-bottom: 28px;
+            }
+
+            .test-hero {
+                padding: 44px 0 36px;
+                text-align: center;
+            }
+
+            .test-hero-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .section-title h2 {
+                font-size: 26px;
+            }
+
+            .talent-type-card {
+                padding: 20px 16px;
+            }
+
+            .btn-quiz-prev,
+            .btn-quiz-next {
+                padding: 11px 20px;
+                font-size: 13px;
+            }
+
+            .htv-scale-btn {
+                padding: 8px 3px;
+                font-size: 10px;
+            }
+        }
+
+        /* =====================================================
+               RESPONSIVE — SMALL PHONES  (max-width: 480px)
+               ===================================================== */
+        @media (max-width: 480px) {
+
+            .test-hero {
+                padding: 32px 0 28px;
+            }
+
+            .test-hero h1 {
+                font-size: 24px;
+            }
+
+            .test-hero-desc {
+                font-size: 14px;
+            }
+
+            .section-title h2 {
+                font-size: 22px;
+            }
+
+            .quiz-body {
+                padding-top: 22px;
+                padding-bottom: 18px;
+            }
+
+            .q-text {
+                font-size: 15px;
+                margin-bottom: 18px;
+            }
+
+            .step-q-text {
+                font-size: 14px;
+            }
+
+            .ina-row {
+                gap: 5px;
+            }
+
+            .ina-btn {
+                font-size: 11px;
+                padding: 8px 3px;
+                border-radius: 8px;
+            }
+
+            .ina-btn .ina-icon {
+                font-size: 15px;
+            }
+
+            .quiz-nav {
+                flex-direction: column;
+                padding-bottom: 20px;
+            }
+
+            .btn-quiz-prev,
+            .btn-quiz-next {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .result-header {
+                padding: 22px 16px;
+            }
+
+            .result-header h2 {
+                font-size: 20px;
+            }
+
+            .result-body {
+                padding: 20px 16px;
+            }
+
+            .result-cta-box {
+                padding: 18px 14px;
+            }
+
+            .result-cta-box h4 {
+                font-size: 16px;
+            }
+
+            .btn-result-primary,
+            .btn-result-outline {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .share-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .share-btn {
+                justify-content: center;
+            }
+
+            .talent-type-card {
+                padding: 18px 14px;
+            }
+
+            .tt-name {
+                font-size: 15px;
+            }
+
+            .faq-section {
+                padding: 52px 0;
+            }
+
+            .media-logo {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+
+            .scroll-top {
+                width: 36px;
+                height: 36px;
+                font-size: 15px;
             }
         }
     </style>
@@ -1163,9 +1515,10 @@
                         <p class="test-hero-desc">
                             {{ $test->description ?? 'This free test will reveal your child\'s natural performance strengths — from emotional expression to stage confidence and camera presence. Discover which course is the perfect match.' }}
                         </p>
-                        @if($test->age)
+                        @if ($test->age)
                             <p style="font-size:14px;color:#6b7280;margin-bottom:12px;">
-                                <i class="bi bi-people-fill me-1"></i> Recommended for age: <strong>{{ $test->age }}</strong>
+                                <i class="bi bi-people-fill me-1"></i> Recommended for age:
+                                <strong>{{ $test->age }}</strong>
                             </p>
                         @endif
                         <div class="reviewer-badge">
@@ -1193,7 +1546,7 @@
                             </div>
                             <div class="htv-question">
                                 <div class="htv-q-num">Question 1 of {{ $totalQuestions }}</div>
-                                @if($allQuestions->first())
+                                @if ($allQuestions->first())
                                     <div class="htv-q-text">{{ $allQuestions->first()->question_text }}</div>
                                 @endif
                                 <div class="htv-scale">
@@ -1242,14 +1595,16 @@
                             <div class="sidebar-card">
                                 <h6><i class="bi bi-info-circle-fill me-2" style="color:var(--accent-color)"></i>About This
                                     Test</h6>
-                                @if($test->duration)
-                                    <div class="sidebar-info-row"><i class="bi bi-clock"></i> Takes about {{ $test->duration }}
+                                @if ($test->duration)
+                                    <div class="sidebar-info-row"><i class="bi bi-clock"></i> Takes about
+                                        {{ $test->duration }}
                                         minutes</div>
                                 @endif
                                 <div class="sidebar-info-row"><i class="bi bi-list-check"></i> {{ $totalQuestions }} quick
                                     questions</div>
-                                @if($test->age)
-                                    <div class="sidebar-info-row"><i class="bi bi-people"></i> Best for age {{ $test->age }}
+                                @if ($test->age)
+                                    <div class="sidebar-info-row"><i class="bi bi-people"></i> Best for age
+                                        {{ $test->age }}
                                     </div>
                                 @endif
                                 <div class="sidebar-info-row"><i class="bi bi-shield-check"></i> 100% Free, no sign-up
@@ -1319,7 +1674,8 @@
                             </div>
                             <div class="quiz-progress-wrap">
                                 <div class="progress-meta">
-                                    <span id="q-progress-label">Question <strong>1</strong> of {{ $totalQuestions }}</span>
+                                    <span id="q-progress-label">Question <strong>1</strong> of
+                                        {{ $totalQuestions }}</span>
                                     <span><strong id="pct-label">0%</strong> complete</span>
                                 </div>
                                 <div class="progress-track">
@@ -1369,15 +1725,63 @@
                 <div class="row g-4">
                     @php
                         $talentCards = [
-                            ['icon' => '🎭', 'num' => 'Type 1', 'name' => 'The Performer', 'tagline' => 'Natural On-Screen Magnetism', 'desc' => 'Performers have natural charisma and camera presence. They light up on stage and on screen, captivating audiences effortlessly. Their energy is infectious and their confidence instinctive.', 'traits' => ['Charismatic', 'Energetic', 'Camera-Ready']],
-                            ['icon' => '💙', 'num' => 'Type 2', 'name' => 'The Empath', 'tagline' => 'Deep Emotional Expression', 'desc' => 'Empaths feel emotions deeply and express them powerfully. They connect with characters on a profound level and bring genuine feeling to every scene — making audiences truly believe.', 'traits' => ['Sensitive', 'Expressive', 'Deeply Feeling']],
-                            ['icon' => '✨', 'num' => 'Type 3', 'name' => 'The Creator', 'tagline' => 'Storytelling & Imagination', 'desc' => 'Creators have boundless imagination and a natural gift for storytelling. They invent characters, build worlds, and bring unique perspectives to their performances that surprise and delight.', 'traits' => ['Imaginative', 'Inventive', 'Storyteller']],
-                            ['icon' => '👑', 'num' => 'Type 4', 'name' => 'The Leader', 'tagline' => 'Stage Presence & Command', 'desc' => 'Leaders naturally command attention the moment they walk on stage. They have powerful presence, clear voice, and the ability to guide an audience through a performance with confidence.', 'traits' => ['Confident', 'Authoritative', 'Commanding']],
-                            ['icon' => '🎤', 'num' => 'Type 5', 'name' => 'The Voice', 'tagline' => 'Powerful Speech & Expression', 'desc' => 'Voices have extraordinary command of language, tone, and speech. They excel in public speaking, dialogue delivery, and voice modulation — making every word they speak memorable.', 'traits' => ['Articulate', 'Persuasive', 'Expressive']],
-                            ['icon' => '🎬', 'num' => 'Type 6', 'name' => 'The Director', 'tagline' => 'Vision, Craft & Filmmaking', 'desc' => 'Directors see the bigger picture. They notice composition, rhythm, and narrative. Their talent lies behind the camera — in storytelling, directing others, and crafting complete cinematic experiences.', 'traits' => ['Visionary', 'Strategic', 'Detail-Oriented']],
+                            [
+                                'icon' => '🎭',
+                                'num' => 'Type 1',
+                                'name' => 'The Performer',
+                                'tagline' => 'Natural On-Screen Magnetism',
+                                'desc' =>
+                                    'Performers have natural charisma and camera presence. They light up on stage and on screen, captivating audiences effortlessly. Their energy is infectious and their confidence instinctive.',
+                                'traits' => ['Charismatic', 'Energetic', 'Camera-Ready'],
+                            ],
+                            [
+                                'icon' => '💙',
+                                'num' => 'Type 2',
+                                'name' => 'The Empath',
+                                'tagline' => 'Deep Emotional Expression',
+                                'desc' =>
+                                    'Empaths feel emotions deeply and express them powerfully. They connect with characters on a profound level and bring genuine feeling to every scene — making audiences truly believe.',
+                                'traits' => ['Sensitive', 'Expressive', 'Deeply Feeling'],
+                            ],
+                            [
+                                'icon' => '✨',
+                                'num' => 'Type 3',
+                                'name' => 'The Creator',
+                                'tagline' => 'Storytelling & Imagination',
+                                'desc' =>
+                                    'Creators have boundless imagination and a natural gift for storytelling. They invent characters, build worlds, and bring unique perspectives to their performances that surprise and delight.',
+                                'traits' => ['Imaginative', 'Inventive', 'Storyteller'],
+                            ],
+                            [
+                                'icon' => '👑',
+                                'num' => 'Type 4',
+                                'name' => 'The Leader',
+                                'tagline' => 'Stage Presence & Command',
+                                'desc' =>
+                                    'Leaders naturally command attention the moment they walk on stage. They have powerful presence, clear voice, and the ability to guide an audience through a performance with confidence.',
+                                'traits' => ['Confident', 'Authoritative', 'Commanding'],
+                            ],
+                            [
+                                'icon' => '🎤',
+                                'num' => 'Type 5',
+                                'name' => 'The Voice',
+                                'tagline' => 'Powerful Speech & Expression',
+                                'desc' =>
+                                    'Voices have extraordinary command of language, tone, and speech. They excel in public speaking, dialogue delivery, and voice modulation — making every word they speak memorable.',
+                                'traits' => ['Articulate', 'Persuasive', 'Expressive'],
+                            ],
+                            [
+                                'icon' => '🎬',
+                                'num' => 'Type 6',
+                                'name' => 'The Director',
+                                'tagline' => 'Vision, Craft & Filmmaking',
+                                'desc' =>
+                                    'Directors see the bigger picture. They notice composition, rhythm, and narrative. Their talent lies behind the camera — in storytelling, directing others, and crafting complete cinematic experiences.',
+                                'traits' => ['Visionary', 'Strategic', 'Detail-Oriented'],
+                            ],
                         ];
                     @endphp
-                    @foreach($talentCards as $tc)
+                    @foreach ($talentCards as $tc)
                         <div class="col-sm-6 col-lg-4">
                             <div class="talent-type-card">
                                 <div class="tt-icon">{{ $tc['icon'] }}</div>
@@ -1386,7 +1790,7 @@
                                 <div class="tt-tagline">{{ $tc['tagline'] }}</div>
                                 <p class="tt-desc">{{ $tc['desc'] }}</p>
                                 <div class="tt-traits">
-                                    @foreach($tc['traits'] as $trait)
+                                    @foreach ($tc['traits'] as $trait)
                                         <span class="tt-trait">{{ $trait }}</span>
                                     @endforeach
                                 </div>
@@ -1409,16 +1813,54 @@
                         <div class="accordion" id="faqAccordion">
                             @php
                                 $faqs = [
-                                    ['q' => 'What is this test based on?', 'a' => 'This test is co-developed by Kritesh Agarwal (Filmmaker & Acting Coach), Dr. Bhumika Soni (Child Neuro Therapist), and child development experts at Act to Action. It combines performing arts science, neuro-psychology, and 6+ years of practical coaching data to accurately identify a child\'s natural talent type.'],
-                                    ['q' => 'How long does the test take?', 'a' => 'The test consists of ' . $totalQuestions . ' questions across ' . $categories->count() . ' sections and takes approximately ' . ($test->duration ?? '8–10') . ' minutes to complete. Questions are simple and fun — parents can complete it with their child together.'],
-                                    ['q' => 'Is this a free test?', 'a' => 'Yes, this test is completely free to take and receive your full results. There are no hidden fees, no credit card required, and no account needed. We believe every child deserves to discover their potential.'],
-                                    ['q' => 'What will my results look like?', 'a' => 'After completing the test, you will instantly receive your child\'s Talent Type (e.g., The Performer, The Empath), a score breakdown across 6 dimensions, key strength tags, a detailed description, and a personalised course recommendation from Act to Action\'s skill programmes.'],
-                                    ['q' => 'What age group is this test for?', 'a' => 'This test is designed for ' . ($test->age ? 'children aged ' . $test->age : 'children and young adults aged 5 to 29') . '. For children under 10, we recommend that parents complete the test on behalf of their child or together with them.'],
-                                    ['q' => 'Can I have my school or group take this test?', 'a' => 'Yes! Act to Action offers group assessments for schools, NGOs, and organisations. Contact us via WhatsApp to arrange a batch assessment session. We have partnered with 25+ top educational institutes across India.'],
-                                    ['q' => 'Will you sell my data?', 'a' => 'We do not sell your email or personal data to any third parties and have a zero-spam policy. We are registered with Startup India and iStart Rajasthan and comply with applicable privacy laws.'],
+                                    [
+                                        'q' => 'What is this test based on?',
+                                        'a' =>
+                                            'This test is co-developed by Kritesh Agarwal (Filmmaker & Acting Coach), Dr. Bhumika Soni (Child Neuro Therapist), and child development experts at Act to Action. It combines performing arts science, neuro-psychology, and 6+ years of practical coaching data to accurately identify a child\'s natural talent type.',
+                                    ],
+                                    [
+                                        'q' => 'How long does the test take?',
+                                        'a' =>
+                                            'The test consists of ' .
+                                            $totalQuestions .
+                                            ' questions across ' .
+                                            $categories->count() .
+                                            ' sections and takes approximately ' .
+                                            ($test->duration ?? '8–10') .
+                                            ' minutes to complete. Questions are simple and fun — parents can complete it with their child together.',
+                                    ],
+                                    [
+                                        'q' => 'Is this a free test?',
+                                        'a' =>
+                                            'Yes, this test is completely free to take and receive your full results. There are no hidden fees, no credit card required, and no account needed. We believe every child deserves to discover their potential.',
+                                    ],
+                                    [
+                                        'q' => 'What will my results look like?',
+                                        'a' =>
+                                            'After completing the test, you will instantly receive your child\'s Talent Type (e.g., The Performer, The Empath), a score breakdown across 6 dimensions, key strength tags, a detailed description, and a personalised course recommendation from Act to Action\'s skill programmes.',
+                                    ],
+                                    [
+                                        'q' => 'What age group is this test for?',
+                                        'a' =>
+                                            'This test is designed for ' .
+                                            ($test->age
+                                                ? 'children aged ' . $test->age
+                                                : 'children and young adults aged 5 to 29') .
+                                            '. For children under 10, we recommend that parents complete the test on behalf of their child or together with them.',
+                                    ],
+                                    [
+                                        'q' => 'Can I have my school or group take this test?',
+                                        'a' =>
+                                            'Yes! Act to Action offers group assessments for schools, NGOs, and organisations. Contact us via WhatsApp to arrange a batch assessment session. We have partnered with 25+ top educational institutes across India.',
+                                    ],
+                                    [
+                                        'q' => 'Will you sell my data?',
+                                        'a' =>
+                                            'We do not sell your email or personal data to any third parties and have a zero-spam policy. We are registered with Startup India and iStart Rajasthan and comply with applicable privacy laws.',
+                                    ],
                                 ];
                             @endphp
-                            @foreach($faqs as $i => $faq)
+                            @foreach ($faqs as $i => $faq)
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button"
@@ -1426,7 +1868,8 @@
                                             {{ $faq['q'] }}
                                         </button>
                                     </h2>
-                                    <div id="faq{{ $i }}" class="accordion-collapse collapse {{ $i === 0 ? 'show' : '' }}"
+                                    <div id="faq{{ $i }}"
+                                        class="accordion-collapse collapse {{ $i === 0 ? 'show' : '' }}"
                                         data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">{{ $faq['a'] }}</div>
                                     </div>
@@ -1448,15 +1891,15 @@
 
     <script>
         const ALL_QUESTIONS = {!! json_encode(
-        $allQuestions->values()->map(function ($q) {
-            return [
-                'id' => $q->id,
-                'text' => $q->question_text,
-                'min' => $q->scale_min ?? 1,
-                'max' => $q->scale_max ?? 5,
-            ];
-        })->values()
-    ) !!};
+            $allQuestions->values()->map(function ($q) {
+                    return [
+                        'id' => $q->id,
+                        'text' => $q->question_text,
+                        'min' => $q->scale_min ?? 1,
+                        'max' => $q->scale_max ?? 5,
+                    ];
+                })->values(),
+        ) !!};
 
         const TOTAL_Q = {{ $totalQuestions }};
         const Q_PER_STEP = 6;
@@ -1470,12 +1913,31 @@
         let answers = steps.map(s => new Array(s.length).fill(null));
         let currentStep = 0;
 
-        const SCALE = [
-            { val: 1, emoji: '😟', label: 'Never' },
-            { val: 2, emoji: '😐', label: 'Rarely' },
-            { val: 3, emoji: '🙂', label: 'Sometimes' },
-            { val: 4, emoji: '😊', label: 'Often' },
-            { val: 5, emoji: '🤩', label: 'Always' },
+        const SCALE = [{
+                val: 1,
+                emoji: '😟',
+                label: 'Never'
+            },
+            {
+                val: 2,
+                emoji: '😐',
+                label: 'Rarely'
+            },
+            {
+                val: 3,
+                emoji: '🙂',
+                label: 'Sometimes'
+            },
+            {
+                val: 4,
+                emoji: '😊',
+                label: 'Often'
+            },
+            {
+                val: 5,
+                emoji: '🤩',
+                label: 'Always'
+            },
         ];
 
         function renderStep(stepIdx) {
@@ -1498,9 +1960,9 @@
             dotWrap.innerHTML = '';
             steps.forEach((_, i) => {
                 const d = document.createElement('div');
-                d.className = 'step-dot'
-                    + (answers[i].every(a => a !== null) ? ' done' : '')
-                    + (i === stepIdx ? ' active' : '');
+                d.className = 'step-dot' +
+                    (answers[i].every(a => a !== null) ? ' done' : '') +
+                    (i === stepIdx ? ' active' : '');
                 d.innerHTML = '<div class="sd"></div>';
                 dotWrap.appendChild(d);
             });
@@ -1551,9 +2013,9 @@
             document.getElementById('btn-prev').disabled =
                 (stepIdx === 0);
             document.getElementById('btn-next').innerHTML =
-                stepIdx === TOTAL_STEPS - 1
-                    ? 'See Results 📊'
-                    : 'Next Step ➜';
+                stepIdx === TOTAL_STEPS - 1 ?
+                'See Results 📊' :
+                'Next Step ➜';
         }
 
         function scaleClass(val) {

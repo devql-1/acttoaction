@@ -20,6 +20,34 @@ class SummerController extends Controller
 {
     public function index(): View
     {
+        $categoryId = \App\Models\YoutubeCategory::where('slug', 'parent-testimoial')->value('id');
+
+        $videos = YoutubeVideo::where('youtube_category_id', $categoryId)
+            ->latest()
+            ->get()
+            ->map(function ($v) {
+                $cleanId = explode('?', $v->youtube_id)[0];
+                return [
+                    'id' => $cleanId,
+                    'thumb' => 'https://img.youtube.com/vi/' . $cleanId . '/mqdefault.jpg',
+                    'title' => $v->name,
+                    'desc' => 'Parent testimonial',
+                    'duration' => '',
+                ];
+            })
+            ->toArray();
+
+        if (empty($videos)) {
+            $videos = [
+                [
+                    'id' => 'dQw4w9WgXcQ',
+                    'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
+                    'title' => 'Fallback Video',
+                    'desc' => 'No videos found',
+                    'duration' => '2:30',
+                ],
+            ];
+        }
         $heroBanner = HeroBanner::getActive();
         $stats = Stat::getActive();
         $people = Person::getBySection();
@@ -33,7 +61,7 @@ class SummerController extends Controller
             ])
             ->get();
 
-        return view('frontend.Summercamp.summercamp', compact('heroBanner', 'people', 'galleryCategories', 'stats', 'about'));
+        return view('frontend.Summercamp.summercamp', compact('heroBanner', 'people', 'galleryCategories', 'stats', 'about', 'videos'));
     }
     public function event()
     {

@@ -2080,9 +2080,7 @@
 
     <main class="main">
 
-        {{-- ══════════════════════════════════
-     HERO
-══════════════════════════════════ --}}
+
         <section class="hero-section">
             <div class="hero-bg">
                 <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=85" alt="Act to Action" />
@@ -2116,9 +2114,6 @@
             </div>
         </section>
 
-        {{-- ══════════════════════════════════
-     CATEGORY OVERVIEW CARDS
-══════════════════════════════════ --}}
         <section class="categories-section" id="categories">
             <div class="container">
                 <div class="section-title">
@@ -2126,7 +2121,7 @@
                     <h2>Choose Your <em>Program</em></h2>
                     <p>{{ $categories->count() }} distinct learning track{{ $categories->count() != 1 ? 's' : '' }} built
                         for different goals, age groups, and commitment levels.</p>
-                    <span class="divider-line"></span>
+
                 </div>
 
                 <div class="cat-grid">
@@ -2204,7 +2199,7 @@
                     <div class="sh-label">Why Act to Action</div>
                     <h2>Why Choose <em>Us?</em></h2>
                     <p>Trusted by 1000+ students and parents across Jaipur since 2019.</p>
-                    <span class="divider-line"></span>
+
                 </div>
                 <div class="row g-4">
                     <div class="col-sm-6 col-lg-3">
@@ -2239,11 +2234,24 @@
                 </div>
             </div>
         </section>
+        <section class="gallery-section" data-aos="fade-up">
+            <div class="container">
 
-        {{-- ══════════════════════════════════
-     GALLERY
-══════════════════════════════════ --}}
-        <section class="gallery-section">
+                <div class="section-title text-center">
+                    <div class="sh-label">Our Memories</div>
+                    <h2>Event <em>Gallery</em></h2>
+
+                    <p>Moments & highlights from our students, events and performances</p>
+                </div>
+                @include('frontend.partialspages.Gallery', [
+                    'images' => $galleryImages,
+                    'sectionTitle' => 'Event Highlights Gallery',
+                    'sectionDesc' =>
+                        'A glimpse into the magic of our past events — the smiles, the performances, and the unforgettable moments captured in every frame.',
+                ])
+            </div>
+        </section>
+        {{-- <section class="gallery-section">
             <div class="container">
                 <div class="section-title">
                     <div class="sh-label">Behind the Scenes</div>
@@ -2289,18 +2297,16 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
-        {{-- ══════════════════════════════════
-     TESTIMONIALS
-══════════════════════════════════ --}}
+
         <section class="testimonials-section">
             <div class="container">
                 <div class="section-title">
                     <div class="sh-label">Parent Stories</div>
                     <h2>What <em>Parents Say</em></h2>
                     <p>Stories from families whose children trained with us.</p>
-                    <span class="divider-line"></span>
+
                 </div>
                 <div class="row g-4">
                     @php
@@ -2379,16 +2385,15 @@
             </div>
         </section>
 
-        {{-- ══════════════════════════════════
-     CTA BAND
-══════════════════════════════════ --}}
+
         <div class="cta-band">
             <div class="cta-bg">
                 <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=1400&q=60" alt="CTA" />
             </div>
             <div class="container cta-inner">
                 <h2>Ready to Start the Journey?</h2>
-                <p>Join 1000+ students already performing, growing and shining across Jaipur's biggest stages and screens.
+                <p>Join 1000+ students already performing, growing and shining across Jaipur's biggest stages and
+                    screens.
                 </p>
                 <div class="cta-btns">
                     <a href="#" class="btn-cta-solid"><i class="bi bi-person-plus-fill"></i> Enroll Now</a>
@@ -2398,100 +2403,30 @@
             </div>
         </div>
 
-        {{-- ══════════════════════════════════
-     VIDEO TESTIMONIALS
-══════════════════════════════════ --}}
+
         <section class="video-section">
             <div class="container">
                 <div class="section-title">
                     <div class="sh-label">Student Stories</div>
                     <h2>Course <em>Testimonials</em></h2>
                     <p>Real stories from our students and parents — straight from the heart.</p>
-                    <span class="divider-line"></span>
+
                 </div>
 
-                @php
-                    $categoryId = \App\Models\YoutubeCategory::where('slug', 'parent-testimoial')->value('id');
-
-                    $videos = \App\Models\YoutubeVideo::where('youtube_category_id', $categoryId)
-                        ->latest()
-                        ->get()
-                        ->map(function ($v) {
-                            // ✅ FIX thumbnail issue
-                            $cleanId = explode('?', $v->youtube_id)[0];
-
-                            return [
-                                'id' => $cleanId,
-                                'thumb' => 'https://img.youtube.com/vi/' . $cleanId . '/mqdefault.jpg',
-                                'title' => $v->name,
-                                'desc' => 'Parent testimonial',
-                                'duration' => '',
-                            ];
-                        })
-                        ->toArray();
-
-                    // fallback
-                    if (empty($videos)) {
-                        $videos = [
-                            [
-                                'id' => 'dQw4w9WgXcQ',
-                                'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
-                                'title' => 'Fallback Video',
-                                'desc' => 'No videos found',
-                                'duration' => '2:30',
-                            ],
-                        ];
-                    }
-                @endphp
-
-                {{-- Nav controls --}}
-                <div class="d-flex justify-content-end align-items-center gap-3 mb-3">
-                    <div class="vid-nav">
-                        <button class="vid-nav-btn" id="vidPrev"><i class="bi bi-chevron-left"></i></button>
-                        <button class="vid-nav-btn" id="vidNext"><i class="bi bi-chevron-right"></i></button>
-                    </div>
-                </div>
-
-                {{-- Track --}}
-                <div style="overflow:hidden;">
-                    <div id="vidTrack"
-                        style="display:flex;gap:16px;transition:transform .5s cubic-bezier(.25,.46,.45,.94);">
-                        @foreach ($videos as $video)
-                            <div style="flex:0 0 calc(25% - 12px);min-width:0;">
-                                <div class="video-card" onclick="openVideo('{{ $video['id'] }}')">
-                                    <div class="vid-thumb">
-                                        <img src="{{ $video['thumb'] }}" alt="{{ $video['title'] }}" loading="lazy" />
-                                        <div class="vid-play">
-                                            <div class="vid-play-btn"><i class="bi bi-play-fill"
-                                                    style="color:#ff0000;font-size:15px;margin-left:2px;"></i></div>
-                                        </div>
-                                        @if ($video['duration'])
-                                            <div class="vid-duration">{{ $video['duration'] }}</div>
-                                        @endif
-                                    </div>
-                                    <div class="vid-info">
-                                        <h5>{{ $video['title'] }}</h5>
-                                        <p>{{ $video['desc'] }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center gap-2 mt-3" id="vidDots"></div>
+                @include('frontend.partialspages.youtube', ['videos' => $videos])
             </div>
         </section>
 
-        {{-- ══════════════════════════════════
-     FAQ
-══════════════════════════════════ --}}
+        {{-- Modal --}}
+
+
         <div class="faq-section">
             <div class="container">
                 <div class="section-title">
                     <div class="sh-label">Got Questions?</div>
                     <h2>Frequently Asked <em>Questions</em></h2>
                     <p>Everything you need to know before enrolling your child.</p>
-                    <span class="divider-line"></span>
+
                 </div>
                 <div class="row justify-content-center mt-4">
                     <div class="col-lg-8">
@@ -2545,15 +2480,14 @@
             </div>
         </div>
 
-        {{-- ══════════════════════════════════
-     CTA BAR
-══════════════════════════════════ --}}
+
         <div class="cta-bar">
             <div class="container">
                 <div class="row align-items-center gy-4">
                     <div class="col-lg-7">
                         <h3>Ready to Enroll Your Child?</h3>
-                        <p>Next batch starting soon — limited seats. WhatsApp us and we'll guide you to the right course.
+                        <p>Next batch starting soon — limited seats. WhatsApp us and we'll guide you to the right
+                            course.
                         </p>
                     </div>
                     <div class="col-lg-5 text-lg-end">
@@ -2565,9 +2499,6 @@
             </div>
         </div>
 
-        {{-- ══════════════════════════════════
-     VIDEO MODAL
-══════════════════════════════════ --}}
         <div id="videoModal" onclick="closeVideo(event)">
             <div class="modal-inner" onclick="event.stopPropagation()">
                 <button class="modal-close-btn" onclick="closeVideo()"><i class="bi bi-x-lg"></i></button>
@@ -2588,9 +2519,7 @@
 
     </main>
 
-    {{-- ══════════════════════════════════
-     SCRIPTS
-══════════════════════════════════ --}}
+
     <script>
         const allVideos = {!! json_encode(array_values($videos)) !!};
 

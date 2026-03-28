@@ -1,6 +1,282 @@
 @extends('frontend.course.layout')
 @section('content')
     <style>
+        /* ─── NEWS / IN THE NEWS ─── */
+        .news-section {
+            padding: 60px 0;
+            background: #f4f8ff;
+        }
+
+        .news-label {
+            font-family: var(--nav-font);
+            font-size: 12px;
+            font-weight: 700;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Scrolling marquee logos */
+        .logo-marquee-wrap {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .logo-marquee-wrap::before,
+        .logo-marquee-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+        }
+
+        .logo-marquee-wrap::before {
+            left: 0;
+            background: linear-gradient(to right, #f4f8ff, transparent);
+        }
+
+        .logo-marquee-wrap::after {
+            right: 0;
+            background: linear-gradient(to left, #f4f8ff, transparent);
+        }
+
+        .logo-marquee {
+            display: flex;
+            gap: 16px;
+            animation: marquee 28s linear infinite;
+            width: max-content;
+        }
+
+        .logo-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .logo-pill {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            background: #fff;
+            border: 1.5px solid #e0e8f5;
+            border-radius: 10px;
+            padding: 11px 22px;
+            white-space: nowrap;
+            font-family: var(--heading-font);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--heading-color);
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .logo-pill:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 18px rgba(23, 92, 221, .1);
+        }
+
+        .logo-pill i {
+            font-size: 15px;
+            color: var(--accent-color);
+        }
+
+        /* News quotes slider */
+        .news-quotes {
+            margin-top: 42px;
+        }
+
+        .quote-card {
+            background: #fff;
+            border: 1.5px solid #e0e8f5;
+            border-radius: 16px;
+            padding: 28px 30px;
+            position: relative;
+            height: 100%;
+        }
+
+        .quote-source {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--accent-color);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+        }
+
+        .quote-card blockquote {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--default-color);
+            font-style: italic;
+            margin: 0;
+        }
+
+        .quote-big {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-size: 40px;
+            color: #e8edf5;
+            line-height: 1;
+        }
+
+        /* ─── FOR SCHOOLS / BUSINESS ─── */
+        .business-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--heading-color) 0%, #112344 60%, #2b539e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .business-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1543269664-7eef42226a21?w=1400&q=50') center/cover;
+            opacity: .06;
+        }
+
+        .biz-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .3);
+            color: #b8d4ff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .business-section h2 {
+            font-size: 38px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 14px;
+        }
+
+        .business-section p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, .75);
+            line-height: 1.7;
+            margin-bottom: 30px;
+            max-width: 540px;
+        }
+
+        .biz-feature-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .biz-feature-row .biz-ico {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #93c5fd;
+            flex-shrink: 0;
+        }
+
+        .biz-feature-row h6 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .biz-feature-row p {
+            color: rgba(255, 255, 255, .65);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .btn-white-solid {
+            background: #fff;
+            color: var(--accent-color);
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            font-family: var(--heading-font);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background .2s, transform .15s;
+            cursor: pointer;
+        }
+
+        .btn-white-solid:hover {
+            background: #f0f5ff;
+            transform: translateY(-2px);
+        }
+
+        .biz-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .biz-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .biz-stat-card {
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .biz-stat-card .bsn {
+            font-family: var(--heading-font);
+            font-size: 34px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .biz-stat-card .bsn span {
+            color: #60a5fa;
+        }
+
+        .biz-stat-card .bsl {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .6);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-top: 4px;
+        }
+
         /* ===================== CSS VARIABLES ===================== */
         /* ===================== GLOBAL ===================== */
         *,
@@ -1061,7 +1337,68 @@
                 </div>
             </div>
         </section>
+        <section class="news-section">
+            <div class="container">
+                <p class="news-label">Act to Action — In the News</p>
+                <div class="logo-marquee-wrap">
+                    <div class="logo-marquee">
+                        @php
+                            $newsLogos = [
+                                ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
+                                ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
+                                ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
+                                ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
+                                ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
+                                ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
+                                ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
+                                ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
+                                ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
+                                ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                ['icon' => 'bi-shop', 'name' => 'Decathlon'],
+                                ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
+                            ];
+                        @endphp
+                        {{-- First set --}}
+                        @foreach ($newsLogos as $logo)
+                            <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
+                        @endforeach
+                        {{-- Duplicate for seamless loop --}}
+                        @foreach ($newsLogos as $logo)
+                            <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
+                        @endforeach
+                    </div>
+                </div>
 
+                <div class="news-quotes">
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="quote-card">
+                                <i class="bi bi-quote quote-big"></i>
+                                <div class="quote-source"><i class="bi bi-newspaper"></i> Rajasthan Patrika</div>
+                                <blockquote>"Act to Action's theatre show at RIC showcased extraordinary talent from
+                                    Jaipur's youngest stars — a standing ovation from all."</blockquote>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quote-card">
+                                <i class="bi bi-quote quote-big"></i>
+                                <div class="quote-source"><i class="bi bi-palette"></i> Kalaneri Art Expo</div>
+                                <blockquote>"A unique blend of performing arts and inner science — Act to Action students
+                                    brought depth and emotion rarely seen at this age."</blockquote>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quote-card">
+                                <i class="bi bi-quote quote-big"></i>
+                                <div class="quote-source"><i class="bi bi-trophy"></i> Dada Saheb Phalke 2022</div>
+                                <blockquote>"Kritesh Agarwal's award-winning films reflect a generation of children trained
+                                    to tell stories that matter."</blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- =================== OUR VALUES =================== -->
         <section class="values section section-alt">
             <div class="container">
@@ -1154,6 +1491,41 @@
                             actively leading Act to Action with vision and commitment.</p>
                     </div>
                 </div>
+                <section class="news-section" style="background: #fff">
+                    <div class="container">
+                        <p class="news-label">Founder Achievements</p>
+                        <div class="logo-marquee-wrap">
+                            <div class="logo-marquee">
+                                @php
+                                    $newsLogos = [
+                                        ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
+                                        ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
+                                        ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
+                                        ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
+                                        ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
+                                        ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
+                                        ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
+                                        ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
+                                        ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
+                                        ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                        ['icon' => 'bi-shop', 'name' => 'Decathlon'],
+                                        ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
+                                    ];
+                                @endphp
+                                {{-- First set --}}
+                                @foreach ($newsLogos as $logo)
+                                    <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}
+                                    </div>
+                                @endforeach
+                                {{-- Duplicate for seamless loop --}}
+                                @foreach ($newsLogos as $logo)
+                                    <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </section>
 
@@ -1162,7 +1534,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Legacy &amp; Impact</h2>
-                    <p>From global film festivals to grassroots skill development — Kritesh's journey and credentials that
+                    <p>From global film festivals to grassroots skill development — Kritesh's journey and
+                        credentials that
                         power Act to Action's world-class curriculum.</p>
                 </div>
                 <div class="row gy-4">
@@ -1171,9 +1544,12 @@
                             <div class="cert-icon"><i class="bi bi-mortarboard"></i></div>
                             <div>
                                 <h5>Academic &amp; Workshop Pedigree</h5>
-                                <p>Journalism &amp; Mass Communication (MUJ) · MA in Entertainment Media &amp; Advertisement
-                                    (KC College, Mumbai) · MBA (Symbiosis) · Short workshops of FTII Filmmaking Modules, NSD
-                                    Theatre Productions and Child Psychology Workshops with medical professionals.</p>
+                                <p>Journalism &amp; Mass Communication (MUJ) · MA in Entertainment Media &amp;
+                                    Advertisement
+                                    (KC College, Mumbai) · MBA (Symbiosis) · Short workshops of FTII Filmmaking
+                                    Modules, NSD
+                                    Theatre Productions and Child Psychology Workshops with medical professionals.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1182,8 +1558,10 @@
                             <div class="cert-icon"><i class="bi bi-globe-americas"></i></div>
                             <div>
                                 <h5>Global Impact — 3,000+ Students Across India &amp; UAE</h5>
-                                <p>Programs designed to support UN Sustainable Development Goals (via My Captain), impacting
-                                    students across India and UAE. Trained 100+ child artists now influencing film and TV
+                                <p>Programs designed to support UN Sustainable Development Goals (via My Captain),
+                                    impacting
+                                    students across India and UAE. Trained 100+ child artists now influencing film
+                                    and TV
                                     with socially conscious performances.</p>
                             </div>
                         </div>
@@ -1193,8 +1571,10 @@
                             <div class="cert-icon"><i class="bi bi-film"></i></div>
                             <div>
                                 <h5>Award-Winning Filmmaker</h5>
-                                <p>Visited Cannes Film Festival (France) · Rajasthan International Film Festival · Dada
-                                    Saheb Phalke Film Festival 2022. Kritesh has served as casting head, director, acting
+                                <p>Visited Cannes Film Festival (France) · Rajasthan International Film Festival ·
+                                    Dada
+                                    Saheb Phalke Film Festival 2022. Kritesh has served as casting head, director,
+                                    acting
                                     coach, mentor, assistant producer, and art director.</p>
                             </div>
                         </div>
@@ -1204,8 +1584,10 @@
                             <div class="cert-icon"><i class="bi bi-flag"></i></div>
                             <div>
                                 <h5>Contributing to Viksit Bharat &amp; Skill India</h5>
-                                <p>Dedicated to NEP 2020 implementation by producing the best young talent in the country.
-                                    Serving MNCs, television industry, production houses, health institutions, government
+                                <p>Dedicated to NEP 2020 implementation by producing the best young talent in the
+                                    country.
+                                    Serving MNCs, television industry, production houses, health institutions,
+                                    government
                                     awareness campaigns, and NGOs.</p>
                             </div>
                         </div>
@@ -1220,7 +1602,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Our Centres</h2>
-                    <p>Act to Action operates from multiple centres across Jaipur — making world-class creative education
+                    <p>Act to Action operates from multiple centres across Jaipur — making world-class creative
+                        education
                         accessible to children all over the city.</p>
                 </div>
                 <div class="row gy-4">
@@ -1247,7 +1630,8 @@
                             </div>
                             <div class="content">
                                 <h4>Sun India Pre School</h4>
-                                <p>Malviya Nagar, Jaipur — serving the youngest learners with age-appropriate, joyful
+                                <p>Malviya Nagar, Jaipur — serving the youngest learners with age-appropriate,
+                                    joyful
                                     creative education.</p>
                             </div>
                         </div>
@@ -1261,7 +1645,8 @@
                             </div>
                             <div class="content">
                                 <h4>The Palace School</h4>
-                                <p>Old City, Jaipur — bringing creative arts education to the heart of Jaipur's heritage
+                                <p>Old City, Jaipur — bringing creative arts education to the heart of Jaipur's
+                                    heritage
                                     neighbourhood.</p>
                             </div>
                         </div>
@@ -1275,7 +1660,8 @@
                             </div>
                             <div class="content">
                                 <h4>Mayoor School — Sitapura</h4>
-                                <p>Sitapura, Jaipur — expert-led screen acting and personality development for school-going
+                                <p>Sitapura, Jaipur — expert-led screen acting and personality development for
+                                    school-going
                                     children.</p>
                             </div>
                         </div>
@@ -1286,9 +1672,11 @@
                     style="background:linear-gradient(135deg,var(--heading-color),#1a3a7c);" data-aos="fade-up">
                     <div class="row align-items-center gy-3">
                         <div class="col-lg-8 text-lg-start">
-                            <h4 class="text-white fw-bold mb-1">Also at Royal Jaipur Skill Academy &amp; Little Starlings,
+                            <h4 class="text-white fw-bold mb-1">Also at Royal Jaipur Skill Academy &amp; Little
+                                Starlings,
                                 Ambabari</h4>
-                            <p style="color:rgba(255,255,255,0.8);margin:0;">Want to bring Act to Action to your school or
+                            <p style="color:rgba(255,255,255,0.8);margin:0;">Want to bring Act to Action to your
+                                school or
                                 centre? Partner with India's most trusted screen acting school.</p>
                         </div>
                         <div class="col-lg-4 text-lg-end">
@@ -1308,8 +1696,10 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Meet the Team</h2>
-                    <p>Act to Action aspires to be a leading acting academy in India that provides a lot under one umbrella.
-                        We work with the vision of creating a place where we build important personalities of the future.
+                    <p>Act to Action aspires to be a leading acting academy in India that provides a lot under one
+                        umbrella.
+                        We work with the vision of creating a place where we build important personalities of the
+                        future.
                     </p>
                 </div>
                 <div class="row gy-4 justify-content-center">
@@ -1326,9 +1716,12 @@
                             <div class="info">
                                 <h4>Deepak Chandel</h4>
                                 <p class="specialty">Photographer &amp; Cinematographer</p>
-                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">A passionate
-                                    photographer with over a decade of experience in celebrity events, grand weddings, and
-                                    creative fashion shoots. His expertise with children allows him to capture their most
+                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">A
+                                    passionate
+                                    photographer with over a decade of experience in celebrity events, grand
+                                    weddings, and
+                                    creative fashion shoots. His expertise with children allows him to capture their
+                                    most
                                     natural and expressive moments.</p>
                             </div>
                         </div>
@@ -1348,9 +1741,12 @@
                             <div class="info">
                                 <h4>Kriti Gupta</h4>
                                 <p class="specialty">Public Relation &amp; Event Head</p>
-                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">With a background
-                                    in Journalism &amp; Mass Communication, Kriti brings creativity and leadership to every
-                                    project. Her ability to think ahead and adapt ensures every challenge is met with
+                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">With a
+                                    background
+                                    in Journalism &amp; Mass Communication, Kriti brings creativity and leadership
+                                    to every
+                                    project. Her ability to think ahead and adapt ensures every challenge is met
+                                    with
                                     innovative solutions.</p>
                             </div>
                         </div>
@@ -1370,9 +1766,12 @@
                             <div class="info">
                                 <h4>Dr. Bhumika Soni</h4>
                                 <p class="specialty">Child Neuro Therapist</p>
-                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">A skilled child
-                                    neurotherapist specializing in developmental delays and sensory integration challenges,
-                                    providing evidence-based interventions to enhance children's growth and potential.</p>
+                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">A skilled
+                                    child
+                                    neurotherapist specializing in developmental delays and sensory integration
+                                    challenges,
+                                    providing evidence-based interventions to enhance children's growth and
+                                    potential.</p>
                             </div>
                         </div>
                     </div>
@@ -1382,7 +1781,8 @@
                     <div class="row align-items-center gy-3">
                         <div class="col-lg-8">
                             <h3 class="text-white fw-bold mb-2">Join Our Team</h3>
-                            <p style="color:rgba(255,255,255,0.85);margin:0;">Be part of something impactful. We're looking
+                            <p style="color:rgba(255,255,255,0.85);margin:0;">Be part of something impactful. We're
+                                looking
                                 for passionate, creative, and driven individuals to grow with us. Explore exciting
                                 opportunities and make a difference.</p>
                         </div>
@@ -1403,7 +1803,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Our Programmes &amp; Events</h2>
-                    <p>From grand graduation ceremonies and summer camps to national film festivals and parenting workshops
+                    <p>From grand graduation ceremonies and summer camps to national film festivals and parenting
+                        workshops
                         — a glimpse of life at Act to Action.</p>
                 </div>
                 <div class="row gy-4">
@@ -1504,8 +1905,10 @@
                                 <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i></div>
-                                <p>"My daughter was extremely shy before joining Act to Action. Within just 3 months, she
-                                    performed confidently on stage at the school annual function. The transformation has
+                                <p>"My daughter was extremely shy before joining Act to Action. Within just 3
+                                    months, she
+                                    performed confidently on stage at the school annual function. The transformation
+                                    has
                                     been nothing short of incredible. Kritesh sir's method works!"</p>
                                 <div class="author">
                                     <div
@@ -1524,8 +1927,10 @@
                                 <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i></div>
-                                <p>"My son got his first commercial advertisement within 4 months of training at Act to
-                                    Action. The casting connections and professional grooming they provide is unmatched
+                                <p>"My son got his first commercial advertisement within 4 months of training at Act
+                                    to
+                                    Action. The casting connections and professional grooming they provide is
+                                    unmatched
                                     anywhere else in Jaipur. Highly recommend to every parent."</p>
                                 <div class="author">
                                     <div
@@ -1544,8 +1949,10 @@
                                 <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i></div>
-                                <p>"The Bhagavad Gita principles integrated into the curriculum are what really sets Act to
-                                    Action apart. My child not only improved her acting but also developed a stronger sense
+                                <p>"The Bhagavad Gita principles integrated into the curriculum are what really sets
+                                    Act to
+                                    Action apart. My child not only improved her acting but also developed a
+                                    stronger sense
                                     of values and discipline. A truly holistic program."</p>
                                 <div class="author">
                                     <div
@@ -1564,8 +1971,10 @@
                                 <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i></div>
-                                <p>"Act to Action's summer camp was the highlight of our child's year. The activities, the
-                                    graduation ceremony, and the friendships formed were unforgettable. Our school trusts
+                                <p>"Act to Action's summer camp was the highlight of our child's year. The
+                                    activities, the
+                                    graduation ceremony, and the friendships formed were unforgettable. Our school
+                                    trusts
                                     them completely and will continue to partner with them."</p>
                                 <div class="author">
                                     <div
@@ -1589,7 +1998,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Frequently Asked Questions</h2>
-                    <p>Got questions? We've got answers. Here's everything parents and students commonly ask about Act to
+                    <p>Got questions? We've got answers. Here's everything parents and students commonly ask about
+                        Act to
                         Action's programs, admissions, and policies.</p>
                 </div>
                 <div class="row justify-content-center">
@@ -1606,8 +2016,10 @@
                                 </h2>
                                 <div id="faq1" class="accordion-collapse collapse show"
                                     data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">3–29 years. Our programs are thoughtfully designed to cater
-                                        to every stage — from toddlers building confidence to young adults honing their
+                                    <div class="accordion-body">3–29 years. Our programs are thoughtfully designed
+                                        to cater
+                                        to every stage — from toddlers building confidence to young adults honing
+                                        their
                                         professional craft.</div>
                                 </div>
                             </div>
@@ -1621,8 +2033,10 @@
                                     </button>
                                 </h2>
                                 <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Different experts from specific subjects will visit, and
-                                        their complete profile will be shared with parents before the session begins — so
+                                    <div class="accordion-body">Different experts from specific subjects will
+                                        visit, and
+                                        their complete profile will be shared with parents before the session begins
+                                        — so
                                         you always know who is teaching your child.</div>
                                 </div>
                             </div>
@@ -1636,7 +2050,8 @@
                                     </button>
                                 </h2>
                                 <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Yes! Students will receive a certificate upon course
+                                    <div class="accordion-body">Yes! Students will receive a certificate upon
+                                        course
                                         completion, provided they maintain a minimum attendance of 70%.</div>
                                 </div>
                             </div>
@@ -1650,9 +2065,11 @@
                                     </button>
                                 </h2>
                                 <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">We keep batches small — a maximum of 20 students per batch
+                                    <div class="accordion-body">We keep batches small — a maximum of 20 students
+                                        per batch
                                         —
-                                        to ensure every child receives personalized attention and guidance from our faculty.
+                                        to ensure every child receives personalized attention and guidance from our
+                                        faculty.
                                     </div>
                                 </div>
                             </div>
@@ -1666,8 +2083,10 @@
                                     </button>
                                 </h2>
                                 <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Class material is shared after every session. If extra help
-                                        is required, a personal virtual call can be scheduled to help the student catch up
+                                    <div class="accordion-body">Class material is shared after every session. If
+                                        extra help
+                                        is required, a personal virtual call can be scheduled to help the student
+                                        catch up
                                         at their own pace.</div>
                                 </div>
                             </div>
@@ -1681,7 +2100,8 @@
                                     </button>
                                 </h2>
                                 <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Both Online and Offline batches are available, making it
+                                    <div class="accordion-body">Both Online and Offline batches are available,
+                                        making it
                                         convenient for students regardless of location.</div>
                                 </div>
                             </div>
@@ -1695,7 +2115,8 @@
                                     </button>
                                 </h2>
                                 <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">The course uniquely combines Theatre in Education, Bhagavad
+                                    <div class="accordion-body">The course uniquely combines Theatre in Education,
+                                        Bhagavad
                                         Gita Principles, various acting techniques, personality development, and
                                         neuro-psychological growth — with a strong focus on camera acting and stage
                                         performance skills for kids.</div>
@@ -1712,7 +2133,8 @@
                                 </h2>
                                 <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">Lord Krishna, Bharatmuni, HH Pramukh Swami Maharaj,
-                                        Maharishi Patanjali, Stanford Meisner, Lee Strasberg, Konstantin Stanislavski, and
+                                        Maharishi Patanjali, Stanford Meisner, Lee Strasberg, Konstantin
+                                        Stanislavski, and
                                         Augusto Boal.</div>
                                 </div>
                             </div>
@@ -1726,8 +2148,10 @@
                                     </button>
                                 </h2>
                                 <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Students will receive Monologues, a Bhagavad Gita Jar, the
-                                        official Act to Action Uniform, and a Portfolio to share at casting calls.</div>
+                                    <div class="accordion-body">Students will receive Monologues, a Bhagavad Gita
+                                        Jar, the
+                                        official Act to Action Uniform, and a Portfolio to share at casting calls.
+                                    </div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -1742,8 +2166,10 @@
                                 <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                     <div class="accordion-body">Due to limited seats, there is generally no refund.
                                         However,
-                                        within the first month, if the child is not comfortable with the class or acting as
-                                        a subject, a refund of the remaining fees can be processed with mutual consent of
+                                        within the first month, if the child is not comfortable with the class or
+                                        acting as
+                                        a subject, a refund of the remaining fees can be processed with mutual
+                                        consent of
                                         the parent and mentor.</div>
                                 </div>
                             </div>
@@ -1759,8 +2185,10 @@
                 <div class="row align-items-center gy-4">
                     <div class="col-lg-8" data-aos="fade-right">
                         <h2>Annual Batch Registration Now Open!</h2>
-                        <p>Act to Action offers the perfect blend of skill development and lasting childhood memories,
-                            shaping a strong foundation for future success. Start today to build confidence, discipline, and
+                        <p>Act to Action offers the perfect blend of skill development and lasting childhood
+                            memories,
+                            shaping a strong foundation for future success. Start today to build confidence,
+                            discipline, and
                             on-camera excellence.</p>
                         <div class="d-flex flex-wrap gap-3 mt-3">
                             <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-white"><i
@@ -1776,7 +2204,8 @@
                             <div>
                                 <span>Early Bird Discount</span>
                                 <strong>Limited Seats Available</strong>
-                                <small style="display:block;opacity:0.7;font-size:12px;margin-top:2px;">Register before
+                                <small style="display:block;opacity:0.7;font-size:12px;margin-top:2px;">Register
+                                    before
                                     batch fills up</small>
                             </div>
                         </div>
@@ -1790,7 +2219,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Get In Touch</h2>
-                    <p>Have questions or need to reach us? Our support team is available Monday through Saturday. For
+                    <p>Have questions or need to reach us? Our support team is available Monday through Saturday.
+                        For
                         emergencies, please call our 24/7 hotline immediately.</p>
                 </div>
                 <div class="row gy-5">
