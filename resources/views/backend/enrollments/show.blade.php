@@ -135,24 +135,14 @@
                                     {{ ucfirst($enrollment->status) }}
                                 </span>
                             </div>
-                            <form method="POST" action="#">
+                            <form action="{{ route('enrollments.updateStatus', $enrollment->id) }}" method="POST">
                                 @csrf
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold" style="font-size:13px;">Update Status</label>
-                                    <select name="status" class="form-select form-select-sm">
-                                        <option value="lead" {{ $enrollment->status === 'lead' ? 'selected' : '' }}>
-                                            Lead</option>
-                                        <option value="pending" {{ $enrollment->status === 'pending' ? 'selected' : '' }}>
-                                            Pending</option>
-                                        <option value="paid" {{ $enrollment->status === 'paid' ? 'selected' : '' }}>
-                                            Paid</option>
-                                        <option value="cancelled"
-                                            {{ $enrollment->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-sm w-100">
-                                    <i class="fas fa-save me-1"></i> Update Status
-                                </button>
+                                <select name="status" required>
+                                    <option value="pending">Pending</option>
+                                    <option value="confirmed">Confirmed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                                <button type="submit">Update Status</button>
                             </form>
                         </div>
                     </div>

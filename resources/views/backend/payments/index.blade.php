@@ -3,15 +3,20 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Enrollments</h3>
+                <div class="d-flex align-items-center justify-content-between">
+                    <h3 class="fw-bold mb-3">Payments</h3>
+                    <a href="{{ route('payments.export') }}" class="btn btn-sm btn-success">
+                        <i class="fas fa-download me-1"></i> Export CSV
+                    </a>
+                </div>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
                     <li class="separator"><i class="icon-arrow-right"></i></li>
-                    <li class="nav-item"><a href="#">Enrollments</a></li>
+                    <li class="nav-item"><a href="#">Payments</a></li>
                 </ul>
             </div>
 
-            {{-- Stats --}}
+            {{-- Statistics Cards --}}
             <div class="row mb-3">
                 <div class="col-sm-6 col-md-3">
                     <div class="card card-stats card-round">
@@ -19,13 +24,13 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                        <i class="fas fa-users"></i>
+                                        <i class="fas fa-money-bill-wave"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Total</p>
-                                        <h4 class="card-title">{{ $stats['total'] }}</h4>
+                                        <p class="card-category">Total Amount</p>
+                                        <h4 class="card-title">₹{{ number_format($stats['total_amount'], 2) }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -43,8 +48,8 @@
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Confirmed</p>
-                                        <h4 class="card-title">{{ $stats['confirmed'] }}</h4>
+                                        <p class="card-category">Successful</p>
+                                        <h4 class="card-title">{{ $stats['success'] }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -56,14 +61,14 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-icon">
-                                    <div class="icon-big text-center icon-warning bubble-shadow-small">
-                                        <i class="fas fa-hourglass-half"></i>
+                                    <div class="icon-big text-center icon-danger bubble-shadow-small">
+                                        <i class="fas fa-times-circle"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Pending</p>
-                                        <h4 class="card-title">{{ $stats['pending'] }}</h4>
+                                        <p class="card-category">Failed</p>
+                                        <h4 class="card-title">{{ $stats['failed'] }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -76,15 +81,38 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-info bubble-shadow-small">
-                                        <i class="fas fa-user-clock"></i>
+                                        <i class="fas fa-exchange-alt"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Leads</p>
-                                        <h4 class="card-title">{{ $stats['lead'] }}</h4>
+                                        <p class="card-category">Total Transactions</p>
+                                        <h4 class="card-title">{{ $stats['total'] }}</h4>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Payment Type Quick Links --}}
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="fw-bold mb-3">Filter by Payment Type</h6>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="{{ route('payments.index') }}"
+                                    class="btn btn-sm {{ !request('type') ? 'btn-primary' : 'btn-outline-primary' }}">
+                                    <i class="fas fa-th me-1"></i> All Payments
+                                </a>
+                                @foreach ($paymentTypes as $key => $label)
+                                    <a href="{{ route('payments.index', ['type' => $key]) }}"
+                                        class="btn btn-sm {{ request('type') === $key ? 'btn-primary' : 'btn-outline-primary' }}">
+                                        <i class="fas fa-tag me-1"></i> {{ $label }}
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -96,29 +124,49 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between">
-                                <div class="card-title">All Enrollments</div>
+                                <div class="card-title">
+                                    All Payments
+                                    @if (request('type'))
+                                        <span
+                                            class="badge bg-primary ms-2">{{ $paymentTypes[request('type')] ?? 'Unknown' }}</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
                         {{-- Filters --}}
                         <div class="card-body border-bottom pb-3">
-                            <form method="GET" action="{{ route('enrollments.index') }}" class="row g-2 align-items-end">
-                                <div class="col-md-5">
+                            <form method="GET" action="{{ route('payments.index') }}" class="row g-2 align-items-end">
+                                <div class="col-md-4">
+                                    <label class="form-label form-label-sm">Search</label>
                                     <input type="text" name="search" class="form-control form-control-sm"
-                                        placeholder="Search name, phone, email, reference ID..."
+                                        placeholder="Email, phone, order ID, payment ID..."
                                         value="{{ request('search') }}">
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <label class="form-label form-label-sm">Status</label>
                                     <select name="status" class="form-control form-control-sm">
                                         <option value="">All Statuses</option>
-                                        <option value="lead" {{ request('status') === 'lead' ? 'selected' : '' }}>
-                                            Lead</option>
+                                        <option value="success" {{ request('status') === 'success' ? 'selected' : '' }}>
+                                            Success</option>
+                                        <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>
+                                            Failed</option>
                                         <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>
                                             Pending</option>
-                                        <option value="confirmed" {{ request('status') === 'confirmed' ? 'selected' : '' }}>
-                                            Confirmed</option>
-                                        <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>
-                                            Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label form-label-sm">Payment Method</label>
+                                    <select name="method" class="form-control form-control-sm">
+                                        <option value="">All Methods</option>
+                                        <option value="upi" {{ request('method') === 'upi' ? 'selected' : '' }}>UPI
+                                        </option>
+                                        <option value="card" {{ request('method') === 'card' ? 'selected' : '' }}>Card
+                                        </option>
+                                        <option value="netbanking"
+                                            {{ request('method') === 'netbanking' ? 'selected' : '' }}>Net Banking</option>
+                                        <option value="wallet" {{ request('method') === 'wallet' ? 'selected' : '' }}>
+                                            Wallet</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">
@@ -127,7 +175,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="{{ route('enrollments.index') }}" class="btn btn-secondary btn-sm w-100">
+                                    <a href="{{ route('payments.index') }}" class="btn btn-secondary btn-sm w-100">
                                         <i class="fa fa-times me-1"></i> Clear
                                     </a>
                                 </div>
@@ -148,87 +196,100 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Student</th>
-                                            <th>Course</th>
-                                            <th>Centre / State</th>
-                                            <th>Reference ID</th>
-                                            <th class="text-center">Status</th>
-                                            <th class="text-end">Fee</th>
+                                            <th>Type / Method</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                            <th>Payment ID</th>
                                             <th class="text-center">Date</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse ($enrollments as $e)
+                                        @forelse ($payments as $payment)
                                             <tr>
-                                                <td class="text-muted" style="font-size:12px;">{{ $e->id }}</td>
+                                                <td class="text-muted" style="font-size:12px;">{{ $payment->id }}</td>
                                                 <td>
                                                     <div class="d-flex align-items-center gap-2">
                                                         <div class="avatar avatar-sm">
                                                             <span class="avatar-title rounded-circle bg-primary text-white"
                                                                 style="font-size:12px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;">
-                                                                {{ strtoupper(substr($e->first_name, 0, 1)) }}
+                                                                @if ($payment->enrollment)
+                                                                    {{ strtoupper(substr($payment->enrollment->first_name, 0, 1)) }}
+                                                                @else
+                                                                    {{ strtoupper(substr($payment->email, 0, 1)) }}
+                                                                @endif
                                                             </span>
                                                         </div>
                                                         <div>
                                                             <div class="fw-bold" style="font-size:13px;">
-                                                                {{ $e->first_name }} {{ $e->last_name }}
+                                                                @if ($payment->enrollment)
+                                                                    {{ $payment->enrollment->first_name }}
+                                                                    {{ $payment->enrollment->last_name }}
+                                                                @else
+                                                                    {{ $payment->email }}
+                                                                @endif
                                                             </div>
                                                             <div class="text-muted" style="font-size:11px;">
-                                                                {{ $e->phone }}
+                                                                {{ $payment->contact ?? $payment->email }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td style="font-size:13px;max-width:160px;">
-                                                    <div class="text-truncate">{{ $e->course }}</div>
-                                                    <div class="text-muted" style="font-size:11px;">{{ $e->mode }}
-                                                    </div>
-                                                </td>
                                                 <td style="font-size:12px;">
-                                                    {{ $e->centre }}<br>
-                                                    <span class="text-muted">{{ $e->state }}</span>
+                                                    <span class="badge bg-info">
+                                                        {{ ucfirst(str_replace('_', ' ', $payment->type)) }}
+                                                    </span>
+                                                    <br>
+                                                    <small class="text-muted">
+                                                        {{ ucfirst($payment->transaction_type ?? 'Unknown') }}
+                                                    </small>
                                                 </td>
-                                                <td>
-                                                    <code style="font-size:11px;">{{ $e->reference_id ?? '—' }}</code>
+                                                <td class="fw-bold" style="color:#059669;">
+                                                    {{ $payment->currency }} {{ number_format($payment->amount, 2) }}
                                                 </td>
                                                 <td class="text-center">
                                                     @php
-                                                        $badge =
+                                                        $statusBadge =
                                                             [
-                                                                'confirmed' => 'success',
+                                                                'success' => 'success',
+                                                                'failed' => 'danger',
                                                                 'pending' => 'warning',
-                                                                'lead' => 'info',
-                                                                'cancelled' => 'danger',
-                                                            ][$e->status] ?? 'secondary';
+                                                            ][$payment->status] ?? 'secondary';
                                                     @endphp
-                                                    <span class="badge badge-{{ $badge }}">
-                                                        {{ ucfirst($e->status) }}
+                                                    <span class="badge badge-{{ $statusBadge }}">
+                                                        {{ ucfirst($payment->status) }}
                                                     </span>
                                                 </td>
-                                                <td class="text-end fw-bold" style="color:#059669;">
-                                                    ₹{{ number_format($e->fee ?? 0) }}
+                                                <td>
+                                                    <code style="font-size:10px;">
+                                                        {{ substr($payment->razorpay_payment_id, 0, 15) }}...
+                                                    </code>
                                                 </td>
                                                 <td class="text-center" style="font-size:12px;white-space:nowrap;">
-                                                    {{ $e->created_at->format('d M Y') }}<br>
-                                                    <span class="text-muted">{{ $e->created_at->format('g:ia') }}</span>
+                                                    @if ($payment->paid_at)
+                                                        {{ $payment->paid_at->format('d M Y') }}<br>
+                                                        <span
+                                                            class="text-muted">{{ $payment->paid_at->format('H:i') }}</span>
+                                                    @else
+                                                        <span class="text-muted">—</span>
+                                                    @endif
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="d-flex gap-1 justify-content-center">
-                                                        <a href="{{ route('enrollments.show', $e->id) }}"
+                                                        <a href="{{ route('payments.show', $payment->id) }}"
                                                             class="btn btn-sm btn-icon btn-primary btn-round"
-                                                            title="View">
+                                                            title="View Details">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
-                                                        {{-- Hidden delete form --}}
-                                                        <form id="del-form-{{ $e->id }}" method="POST"
-                                                            action="{{ route('enrollments.destroy', $e->id) }}"
+                                                        {{-- Delete form --}}
+                                                        <form id="del-form-{{ $payment->id }}" method="POST"
+                                                            action="{{ route('payments.destroy', $payment->id) }}"
                                                             style="display:none;">
                                                             @csrf @method('DELETE')
                                                         </form>
                                                         <button type="button"
                                                             class="btn btn-sm btn-icon btn-danger btn-round"
-                                                            title="Delete"
-                                                            onclick="confirmDelete({{ $e->id }}, '{{ $e->first_name }} {{ $e->last_name }}')">
+                                                            title="Delete" onclick="confirmDelete({{ $payment->id }})">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </div>
@@ -236,9 +297,9 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="9" class="text-center py-5 text-muted">
+                                                <td colspan="8" class="text-center py-5 text-muted">
                                                     <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
-                                                    No enrollments found.
+                                                    No payments found.
                                                 </td>
                                             </tr>
                                         @endforelse
@@ -248,17 +309,17 @@
                         </div>
 
                         {{-- Custom Pagination --}}
-                        @if ($enrollments->hasPages())
+                        @if ($payments->hasPages())
                             <nav aria-label="Page navigation" class="card-footer">
                                 <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                                     <div class="text-muted" style="font-size:13px;">
                                         Showing
-                                        <strong>{{ $enrollments->firstItem() }}</strong>–<strong>{{ $enrollments->lastItem() }}</strong>
-                                        of <strong>{{ $enrollments->total() }}</strong> enrollments
+                                        <strong>{{ $payments->firstItem() }}</strong>–<strong>{{ $payments->lastItem() }}</strong>
+                                        of <strong>{{ $payments->total() }}</strong> payments
                                     </div>
                                     <ul class="pagination pagination-sm mb-0">
                                         {{-- Previous Page Link --}}
-                                        @if ($enrollments->onFirstPage())
+                                        @if ($payments->onFirstPage())
                                             <li class="page-item disabled">
                                                 <span class="page-link">
                                                     <i class="fas fa-chevron-left"></i> Previous
@@ -266,7 +327,7 @@
                                             </li>
                                         @else
                                             <li class="page-item">
-                                                <a class="page-link" href="{{ $enrollments->previousPageUrl() }}"
+                                                <a class="page-link" href="{{ $payments->previousPageUrl() }}"
                                                     rel="prev">
                                                     <i class="fas fa-chevron-left"></i> Previous
                                                 </a>
@@ -274,10 +335,10 @@
                                         @endif
 
                                         {{-- Page Number Links --}}
-                                        @if ($enrollments->lastPage() > 1)
+                                        @if ($payments->lastPage() > 1)
                                             @php
-                                                $currentPage = $enrollments->currentPage();
-                                                $lastPage = $enrollments->lastPage();
+                                                $currentPage = $payments->currentPage();
+                                                $lastPage = $payments->lastPage();
                                                 $start = max(1, $currentPage - 2);
                                                 $end = min($lastPage, $currentPage + 2);
                                             @endphp
@@ -285,7 +346,7 @@
                                             {{-- First page link --}}
                                             @if ($start > 1)
                                                 <li class="page-item">
-                                                    <a class="page-link" href="{{ $enrollments->url(1) }}">1</a>
+                                                    <a class="page-link" href="{{ $payments->url(1) }}">1</a>
                                                 </li>
                                                 @if ($start > 2)
                                                     <li class="page-item disabled">
@@ -295,7 +356,7 @@
                                             @endif
 
                                             {{-- Page range --}}
-                                            @foreach ($enrollments->getUrlRange($start, $end) as $page => $url)
+                                            @foreach ($payments->getUrlRange($start, $end) as $page => $url)
                                                 @if ($page == $currentPage)
                                                     <li class="page-item active">
                                                         <span class="page-link">
@@ -320,15 +381,15 @@
                                                 @endif
                                                 <li class="page-item">
                                                     <a class="page-link"
-                                                        href="{{ $enrollments->url($lastPage) }}">{{ $lastPage }}</a>
+                                                        href="{{ $payments->url($lastPage) }}">{{ $lastPage }}</a>
                                                 </li>
                                             @endif
                                         @endif
 
                                         {{-- Next Page Link --}}
-                                        @if ($enrollments->hasMorePages())
+                                        @if ($payments->hasMorePages())
                                             <li class="page-item">
-                                                <a class="page-link" href="{{ $enrollments->nextPageUrl() }}"
+                                                <a class="page-link" href="{{ $payments->nextPageUrl() }}"
                                                     rel="next">
                                                     Next <i class="fas fa-chevron-right"></i>
                                                 </a>
@@ -354,10 +415,10 @@
     {{-- SweetAlert2 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirmDelete(id, name) {
+        function confirmDelete(id) {
             Swal.fire({
-                title: 'Delete Enrollment?',
-                html: `Are you sure you want to delete <strong>${name}</strong>?<br><small class="text-muted">This action cannot be undone.</small>`,
+                title: 'Delete Payment Record?',
+                text: 'This action cannot be undone.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#e74a3b',

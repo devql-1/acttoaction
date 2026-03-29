@@ -117,6 +117,10 @@
                 </li> --}}
 
                 {{-- ══════════════════════════════════════════
+                     HERO BANNER  ← NEW
+                ══════════════════════════════════════════ --}}
+
+                {{-- ══════════════════════════════════════════
                      SECTION: ACADEMIC
                 ══════════════════════════════════════════ --}}
                 <li class="nav-section">
@@ -180,6 +184,32 @@
                             <li><a href="{{ route('events-index') }}"><span class="sub-item">All Events</span></a>
                             </li>
                             <li><a href="{{ route('events-create') }}"><span class="sub-item">Add New</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                {{-- Event Registrations ← NEW --}}
+                <li class="nav-item {{ request()->routeIs('event-registrations.*') ? 'active' : '' }}">
+                    <a href="{{ route('event-registrations.index') }}">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>Event Registrations</p>
+                    </a>
+                </li>
+
+                {{-- Action Items ← NEW --}}
+                <li class="nav-item {{ request()->routeIs('action-items.*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#actionItems"
+                        class="{{ request()->routeIs('action-items.*') ? '' : 'collapsed' }}">
+                        <i class="fas fa-tasks"></i>
+                        <p>Action Items</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ request()->routeIs('action-items.*') ? 'show' : '' }}" id="actionItems">
+                        <ul class="nav nav-collapse">
+                            <li><a href="{{ route('action-items.index') }}"><span class="sub-item">All Action
+                                        Items</span></a></li>
+                            <li><a href="{{ route('action-items.create') }}"><span class="sub-item">Add New</span></a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -315,6 +345,37 @@
                     </div>
                 </li>
 
+                {{-- Gallery Categories & Images (Resource) ← NEW --}}
+                <li
+                    class="nav-item {{ request()->routeIs('galleryCategories.*') || request()->routeIs('galleries.*') ? 'active' : '' }}">
+                    <a data-bs-toggle="collapse" href="#galleryResource"
+                        class="{{ request()->routeIs('galleryCategories.*') || request()->routeIs('galleries.*') ? '' : 'collapsed' }}">
+                        <i class="fas fa-images"></i>
+                        <p>Photo Gallery</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse {{ request()->routeIs('galleryCategories.*') || request()->routeIs('galleries.*') ? 'show' : '' }}"
+                        id="galleryResource">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('galleryCategories.index') }}">
+                                    <span class="sub-item">Categories</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('galleries.index') }}">
+                                    <span class="sub-item">All Images</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('galleries.create') }}">
+                                    <span class="sub-item">Add New</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 {{-- ══════════════════════════════════════════
                      SECTION: LOCATIONS
                 ══════════════════════════════════════════ --}}
@@ -445,6 +506,30 @@
                                     </ul>
                                 </div>
                             </li>
+                            <li class="nav-section">
+                                <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
+                                <h4 class="text-section">Content Management</h4>
+                            </li>
+
+                            <li class="nav-item {{ request()->routeIs('hero-banner.*') ? 'active' : '' }}">
+                                <a data-bs-toggle="collapse" href="#heroBanner"
+                                    class="{{ request()->routeIs('hero-banner.*') ? '' : 'collapsed' }}">
+                                    <i class="fas fa-image"></i>
+                                    <p>Hero Banner</p>
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="collapse {{ request()->routeIs('hero-banner.*') ? 'show' : '' }}"
+                                    id="heroBanner">
+                                    <ul class="nav nav-collapse">
+                                        <li><a href="{{ route('hero-banner.index') }}"><span class="sub-item">All
+                                                    Banners</span></a>
+                                        </li>
+                                        <li><a href="{{ route('hero-banner.create') }}"><span class="sub-item">Add
+                                                    New</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
 
                             {{-- Statistics --}}
                             {{-- <li class="nav-item {{ request()->routeIs('stats-*') ? 'active' : '' }}">
@@ -515,17 +600,17 @@
                     </a>
                 </li> --}}
 
-                {{-- email --}}
-                <li class="nav-item">
+                {{-- Email --}}
+                <li class="nav-item {{ request()->routeIs('email-templates.*') ? 'active' : '' }}">
                     <a href="{{ route('email-templates.index') }}">
                         <i class="fas fa-envelope"></i>
                         <p>Email</p>
                     </a>
                 </li>
 
-                {{-- payment --}}
+                {{-- Payment --}}
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="{{ route('payments.index') }}">
                         <i class="fas fa-credit-card"></i>
                         <p>Payment</p>
                     </a>

@@ -634,7 +634,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
         Route::get('/enrollments/{id}', [EnrollmentController::class, 'show'])->name('enrollments.show');
-        Route::patch('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
+        Route::post('/enrollments/{id}/status', [EnrollmentController::class, 'updateStatus'])->name('enrollments.updateStatus');
         Route::delete('/enrollments/{id}', [EnrollmentController::class, 'destroy'])->name('enrollments.destroy');
 
         // ════════════════════════════════════════════════════════════════════════════
@@ -762,6 +762,26 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('galleryCategories', \App\Http\Controllers\admin\GalleryCategoryController::class);
 
         Route::resource('galleries', \App\Http\Controllers\admin\GalleryController::class);
+
+        Route::get('payments/', [App\Http\Controllers\admin\PaymentController::class, 'index'])->name('payments.index');
+
+        Route::get('payments/{id}', [App\Http\Controllers\admin\PaymentController::class, 'show'])->name('payments.show');
+
+        // Filter by type
+        Route::get('payments/type/{type}', [App\Http\Controllers\admin\PaymentController::class, 'byType'])
+            ->name('byType')
+            ->where('type', '(course_enrollment|workshop_registration|event_registration|subscription|other)');
+
+        // Statistics endpoint (for charts/analytics)
+        Route::get('payments/statistics/{period?}', [App\Http\Controllers\admin\PaymentController::class, 'statistics'])
+            ->name('payments.statistics')
+            ->where('period', '(day|week|month|year)');
+
+        // Export to CSV
+        Route::get('payments/export/csv', [App\Http\Controllers\admin\PaymentController::class, 'export'])->name('payments.export');
+
+        // Delete payment record
+        Route::delete('payments/{id}', [App\Http\Controllers\admin\PaymentController::class, 'destroy'])->name('payments.destroy');
     });
 });
 use App\Services\EmailService;
