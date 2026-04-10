@@ -1,5 +1,9 @@
 @extends('backend.layout.app')
 @section('content')
+    {{-- ONLY SHOWING CHANGED PARTS — REST OF YOUR FILE SAME --}}
+
+    {{-- ✅ ADD THIS JUST ABOVE SUBMIT BUTTON --}}
+    <div id="formErrorBox" class="alert alert-danger d-none mb-3"></div>
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
@@ -27,7 +31,6 @@
                             @csrf
 
                             <div class="card-body">
-
                                 {{-- TITLE --}}
                                 <div class="form-group row">
                                     <div class="col-md-3">
@@ -321,13 +324,14 @@
                                             <small class="text-muted">Course Fees (₹)</small>
                                         </label>
                                         <input type="number" 
-                                            class="form-control form-control-sm"
-                                            name="center_fees[${center.id}]"
-                                            placeholder="Enter fees"
-                                            min="0"
-                                            step="0.01"
-                                            data-center-id="${center.id}"
-                                            onchange="updateFeeData(${center.id}, this.value)">
+                                        class="form-control form-control-sm"
+                                        name="center_fees[${center.id}]"
+                                        placeholder="Enter fees"
+                                        min="0"
+                                        step="0.01"
+                                        data-center-id="${center.id}"
+                                        disabled
+                                        onchange="updateFeeData(${center.id}, this.value)">
                                     </div>
                                 </div>
                             </div>`;
@@ -349,11 +353,12 @@
             if (isChecked) {
                 feeDiv.style.display = 'block';
                 feeInput.required = true;
+                feeInput.disabled = false; // ✅ ADD
             } else {
                 feeDiv.style.display = 'none';
                 feeInput.required = false;
+                feeInput.disabled = true; // ✅ FIX
                 feeInput.value = '';
-                // Remove from centerFeesData
                 delete centerFeesData[centerId];
             }
         }
@@ -368,30 +373,40 @@
 
         // Form validation
         document.getElementById('courseForm').addEventListener('submit', function(e) {
+
+            const errorBox = document.getElementById('formErrorBox');
+            errorBox.classList.add('d-none');
+            errorBox.innerHTML = '';
+
             const selectedCenters = document.querySelectorAll('.center-checkbox:checked');
 
             if (selectedCenters.length === 0) {
                 e.preventDefault();
-                alert('Please select at least one center.');
+                errorBox.classList.remove('d-none');
+                errorBox.innerHTML = 'Please select at least one center.';
                 return false;
             }
 
-            // Validate that all selected centers have fees
             let allFeesProvided = true;
+
             selectedCenters.forEach(checkbox => {
                 const centerId = checkbox.dataset.centerId;
                 const feeInput = document.querySelector(
-                    `input[data-center-id="${centerId}"][name*="center_fees"]`);
+                    `input[data-center-id="${centerId}"][name*="center_fees"]`
+                );
 
                 if (!feeInput || !feeInput.value || parseFloat(feeInput.value) <= 0) {
                     allFeesProvided = false;
                     feeInput.classList.add('is-invalid');
+                } else {
+                    feeInput.classList.remove('is-invalid');
                 }
             });
 
             if (!allFeesProvided) {
                 e.preventDefault();
-                alert('Please enter fees for all selected centers.');
+                errorBox.classList.remove('d-none');
+                errorBox.innerHTML = 'Please enter fees for all selected centers.';
                 return false;
             }
         });

@@ -1381,7 +1381,7 @@
                                     $pcClasses = ['pc1', 'pc2', 'pc3'];
                                 @endphp
 
-                                @foreach($tests->take(3) as $i => $test)
+                                @foreach ($tests->take(3) as $i => $test)
                                     <div class="preview-card {{ $pcClasses[$i] }}">
                                         <div class="pc-icon">{{ $heroCards[$i]['icon'] }}</div>
                                         <div class="pc-title">{{ $test->test_name }}</div>
@@ -1392,7 +1392,7 @@
                                 @endforeach
 
                                 {{-- Fallback placeholders if fewer than 3 tests --}}
-                                @for($j = $tests->count(); $j < 3; $j++)
+                                @for ($j = $tests->count(); $j < 3; $j++)
                                     <div class="preview-card {{ $pcClasses[$j] }}">
                                         <div class="pc-icon">{{ $heroCards[$j]['icon'] }}</div>
                                         <div class="pc-title">Coming Soon</div>
@@ -1418,9 +1418,10 @@
                         coaches.</p>
                 </div>
 
-                @if($tests->isEmpty())
+                @if ($tests->isEmpty())
                     <div class="text-center py-5">
-                        <p style="color:#6b7280;font-size:16px;">No assessments available at the moment. Please check back soon!
+                        <p style="color:#6b7280;font-size:16px;">No assessments available at the moment. Please check back
+                            soon!
                         </p>
                     </div>
                 @else
@@ -1473,7 +1474,7 @@
                             ];
                         @endphp
 
-                        @foreach($tests as $index => $test)
+                        @foreach ($tests as $index => $test)
                             @php
                                 $palette = $palettes[$index % count($palettes)];
                                 $isFirst = $index === 0;
@@ -1485,7 +1486,7 @@
                                     <div class="test-card-top">
 
                                         {{-- Most Popular ribbon on first card --}}
-                                        @if($isFirst)
+                                        @if ($isFirst)
                                             <div class="popular-ribbon">⭐ Most Popular</div>
                                         @endif
 
@@ -1501,7 +1502,7 @@
 
                                         <div class="test-meta">
                                             {{-- Duration --}}
-                                            @if($test->duration)
+                                            @if ($test->duration)
                                                 <span>
                                                     <i class="bi bi-clock"></i>
                                                     {{ $test->duration }} mins
@@ -1511,11 +1512,12 @@
                                             {{-- Questions count (from withCount) --}}
                                             <span>
                                                 <i class="bi bi-question-circle"></i>
-                                                {{ $test->questions_count }} question{{ $test->questions_count != 1 ? 's' : '' }}
+                                                {{ $test->questions_count }}
+                                                question{{ $test->questions_count != 1 ? 's' : '' }}
                                             </span>
 
                                             {{-- Age range --}}
-                                            @if($test->age)
+                                            @if ($test->age)
                                                 <span>
                                                     <i class="bi bi-people"></i>
                                                     Age {{ $test->age }}
@@ -1527,571 +1529,581 @@
                                     <div class="test-card-footer">
                                         <span class="badge-free">Free</span>
                                         <a href="{{ route('quicktest.take', $test->id) }}" class="take-test-btn">
-                                                        Take Test <i class="bi bi-arrow-right"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            Take Test <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
-                            </div>
+                    </div>
                 @endif
+            </div>
+        </section>
+
+        {{-- ── WHY OUR TESTS ARE THE BEST ── --}}
+        <section class="why-tests-section">
+            <div class="container">
+
+                <div class="text-center mb-5">
+                    <div class="why-top-badge d-inline-flex"><i class="bi bi-patch-check-fill"></i> Science-Backed & Expert
+                        Designed</div>
+                    <h2 style="font-size:34px;font-weight:900;color:var(--heading-color);margin-bottom:12px;">Why Our Tests
+                        Are the <span style="color:var(--accent-color)">Best</span> for Your Child</h2>
+                    <p style="font-size:16px;color:#6b7280;max-width:580px;margin:0 auto;">Not just another online quiz —
+                        our assessments are built by child psychologists, acting coaches, and neuro-development experts to
+                        give you truly actionable insights.</p>
                 </div>
-            </section>
 
-            {{-- ── WHY OUR TESTS ARE THE BEST ── --}}
-            <section class="why-tests-section">
-                <div class="container">
-
-                    <div class="text-center mb-5">
-                        <div class="why-top-badge d-inline-flex"><i class="bi bi-patch-check-fill"></i> Science-Backed & Expert
-                            Designed</div>
-                        <h2 style="font-size:34px;font-weight:900;color:var(--heading-color);margin-bottom:12px;">Why Our Tests
-                            Are the <span style="color:var(--accent-color)">Best</span> for Your Child</h2>
-                        <p style="font-size:16px;color:#6b7280;max-width:580px;margin:0 auto;">Not just another online quiz —
-                            our assessments are built by child psychologists, acting coaches, and neuro-development experts to
-                            give you truly actionable insights.</p>
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-6">
+                        <div class="why-big-card">
+                            <div class="big-num">01</div>
+                            <h3>Built by Child Development Experts</h3>
+                            <div class="accent-line"></div>
+                            <p>Every question is co-designed with Dr. Bhumika Soni (Child Neuro Therapist), Kritesh Agarwal
+                                (Filmmaker & Acting Coach), and child psychology professionals — not generic quiz templates.
+                                Each assessment measures real developmental indicators.</p>
+                            <div class="why-pill-row">
+                                <div class="why-pill"><i class="bi bi-brain"></i> Neuro-Psychology Based</div>
+                                <div class="why-pill"><i class="bi bi-award"></i> Expert Validated</div>
+                                <div class="why-pill"><i class="bi bi-clipboard2-check"></i> 100% Free</div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="row g-4 mb-4">
-                        <div class="col-lg-6">
-                            <div class="why-big-card">
-                                <div class="big-num">01</div>
-                                <h3>Built by Child Development Experts</h3>
-                                <div class="accent-line"></div>
-                                <p>Every question is co-designed with Dr. Bhumika Soni (Child Neuro Therapist), Kritesh Agarwal
-                                    (Filmmaker & Acting Coach), and child psychology professionals — not generic quiz templates.
-                                    Each assessment measures real developmental indicators.</p>
-                                <div class="why-pill-row">
-                                    <div class="why-pill"><i class="bi bi-brain"></i> Neuro-Psychology Based</div>
-                                    <div class="why-pill"><i class="bi bi-award"></i> Expert Validated</div>
-                                    <div class="why-pill"><i class="bi bi-clipboard2-check"></i> 100% Free</div>
+                    <div class="col-lg-6">
+                        <div class="row g-4 h-100">
+                            <div class="col-12">
+                                <div class="why-feat-card">
+                                    <div class="why-feat-icon" style="background:#eff6ff;color:var(--accent-color);"><i
+                                            class="bi bi-lightning-charge-fill"></i></div>
+                                    <h5>Fast, Focused & Accurate</h5>
+                                    <p>No 50-question marathon. Each test is 5–10 minutes — designed to get a precise,
+                                        reliable result without losing a child's attention. Every question earns its place.
+                                    </p>
+                                    <ul class="feat-check-list">
+                                        <li><i class="bi bi-check-circle-fill"></i> 5–10 minutes per test</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Age-appropriate language at every level
+                                        </li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Immediate, detailed result report</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="why-feat-card">
+                                    <div class="why-feat-icon" style="background:#ecfdf5;color:#059669;"><i
+                                            class="bi bi-graph-up-arrow"></i></div>
+                                    <h5>Actionable Results, Not Just Labels</h5>
+                                    <p>We don't just tell you your child is "creative." We show you exactly which Act to
+                                        Action course matches their profile — so every test leads to a real next step.</p>
+                                    <ul class="feat-check-list">
+                                        <li><i class="bi bi-check-circle-fill"></i> Personalised course recommendation</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Strength & growth area breakdown</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Shareable PDF result report</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="row g-4 h-100">
-                                <div class="col-12">
-                                    <div class="why-feat-card">
-                                        <div class="why-feat-icon" style="background:#eff6ff;color:var(--accent-color);"><i
-                                                class="bi bi-lightning-charge-fill"></i></div>
-                                        <h5>Fast, Focused & Accurate</h5>
-                                        <p>No 50-question marathon. Each test is 5–10 minutes — designed to get a precise,
-                                            reliable result without losing a child's attention. Every question earns its place.
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="why-feat-card text-center">
+                            <div class="why-feat-icon mx-auto" style="background:#f5f3ff;color:#7c3aed;"><i
+                                    class="bi bi-shield-check"></i></div>
+                            <h5>100% Free, Always</h5>
+                            <p>Every single test on this page is completely free to take — no hidden fees, no credit card,
+                                no trial. Because every child deserves to discover their potential.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="why-feat-card text-center">
+                            <div class="why-feat-icon mx-auto" style="background:#fffbeb;color:#d97706;"><i
+                                    class="bi bi-people-fill"></i></div>
+                            <h5>Trusted by 1000+ Families</h5>
+                            <p>Parents across Jaipur and India have used our assessments to find the perfect course,
+                                discover hidden talent, and unlock their child's confidence.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="why-feat-card text-center">
+                            <div class="why-feat-icon mx-auto" style="background:#fdf2f8;color:#db2777;"><i
+                                    class="bi bi-mortarboard-fill"></i></div>
+                            <h5>Aligned with NEP 2020</h5>
+                            <p>Our assessments are built around the National Education Policy 2020 framework — holistic
+                                child development, skill-based learning, and creative intelligence.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="why-feat-card text-center">
+                            <div class="why-feat-icon mx-auto" style="background:#ecfeff;color:#0891b2;"><i
+                                    class="bi bi-phone-fill"></i></div>
+                            <h5>Works on Any Device</h5>
+                            <p>Take the test on a phone, tablet, or laptop — our tests are fully mobile-optimised so
+                                children can complete them comfortably from anywhere.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-wrap">
+                    <h3 class="text-center mb-2" style="font-size:26px;font-weight:800;">How We Compare</h3>
+                    <p class="text-center mb-4" style="color:#6b7280;font-size:15px;">See why Act to Action tests go far
+                        beyond generic online quizzes.</p>
+                    <div class="comparison-table">
+                        <div class="comp-header">
+                            <div class="ch">Feature</div>
+                            <div class="ch highlight text-center">Act to Action ✦</div>
+                            <div class="ch text-center" style="color:#9ca3af;">Generic Online Quiz</div>
+                            <div class="ch text-center" style="color:#9ca3af;">Paid Assessment App</div>
+                        </div>
+                        @php
+                            $compRows = [
+                                [
+                                    'label' => 'Expert-designed questions',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘',
+                                    'paid' => '✔',
+                                ],
+                                ['label' => '100% Free', 'ata' => '✔ Yes', 'generic' => '✔', 'paid' => '✘ Paid'],
+                                [
+                                    'label' => 'Child-specific (age 3–29)',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘',
+                                    'paid' => '✘',
+                                ],
+                                [
+                                    'label' => 'Course recommendation included',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘',
+                                    'paid' => '✘',
+                                ],
+                                [
+                                    'label' => 'Neuro-psychology backed',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘',
+                                    'paid' => 'Sometimes',
+                                ],
+                                [
+                                    'label' => 'Links to real coaching & castings',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘',
+                                    'paid' => '✘',
+                                ],
+                                [
+                                    'label' => 'Shareable PDF result report',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘',
+                                    'paid' => 'Paid only',
+                                ],
+                            ];
+                        @endphp
+                        @foreach ($compRows as $row)
+                            <div class="comp-row">
+                                <div class="cr-label">{{ $row['label'] }}</div>
+                                <div class="cr-val yes ata">{{ $row['ata'] }}</div>
+                                <div class="cr-val {{ str_starts_with($row['generic'], '✘') ? 'no' : 'yes' }}">
+                                    {{ $row['generic'] }}</div>
+                                <div class="cr-val {{ str_starts_with($row['paid'], '✘') ? 'no' : (str_starts_with($row['paid'], '✔') ? 'yes' : '') }}"
+                                    @if (!str_starts_with($row['paid'], '✘') && !str_starts_with($row['paid'], '✔')) style="color:#d97706;" @endif>
+                                    {{ $row['paid'] }}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="row g-5 mt-2 align-items-start">
+                    <div class="col-lg-6">
+                        <h3 style="font-size:24px;font-weight:800;margin-bottom:30px;">How It Works — 3 Simple Steps</h3>
+                        <div class="process-section">
+                            <div style="position:relative;">
+                                <div class="process-step">
+                                    <div class="step-num">1</div>
+                                    <div class="step-body">
+                                        <h5>Choose Your Test</h5>
+                                        <p>Pick the assessment that matches what you want to discover — acting talent,
+                                            confidence level, personality type, or the right course. All free, no sign-up
+                                            needed.</p>
+                                    </div>
+                                </div>
+                                <div class="process-line" style="top:46px;height:60px;"></div>
+                                <div class="process-step" style="margin-top:8px;">
+                                    <div class="step-num">2</div>
+                                    <div class="step-body">
+                                        <h5>Answer 10–20 Quick Questions</h5>
+                                        <p>Fun, engaging questions designed for children and parents to answer together.
+                                            Takes just 5–10 minutes. No wrong answers — just honest responses!</p>
+                                    </div>
+                                </div>
+                                <div class="process-line" style="top:130px;height:60px;left:23px;position:absolute;">
+                                </div>
+                                <div class="process-step" style="margin-top:8px;">
+                                    <div class="step-num">3</div>
+                                    <div class="step-body">
+                                        <h5>Get Your Personalised Report</h5>
+                                        <p>Instantly receive a detailed result — your child's strengths, growth areas,
+                                            personality profile, and the exact Act to Action course recommended for them.
                                         </p>
-                                        <ul class="feat-check-list">
-                                            <li><i class="bi bi-check-circle-fill"></i> 5–10 minutes per test</li>
-                                            <li><i class="bi bi-check-circle-fill"></i> Age-appropriate language at every level
-                                            </li>
-                                            <li><i class="bi bi-check-circle-fill"></i> Immediate, detailed result report</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="why-feat-card">
-                                        <div class="why-feat-icon" style="background:#ecfdf5;color:#059669;"><i
-                                                class="bi bi-graph-up-arrow"></i></div>
-                                        <h5>Actionable Results, Not Just Labels</h5>
-                                        <p>We don't just tell you your child is "creative." We show you exactly which Act to
-                                            Action course matches their profile — so every test leads to a real next step.</p>
-                                        <ul class="feat-check-list">
-                                            <li><i class="bi bi-check-circle-fill"></i> Personalised course recommendation</li>
-                                            <li><i class="bi bi-check-circle-fill"></i> Strength & growth area breakdown</li>
-                                            <li><i class="bi bi-check-circle-fill"></i> Shareable PDF result report</li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row g-4 mb-5">
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="why-feat-card text-center">
-                                <div class="why-feat-icon mx-auto" style="background:#f5f3ff;color:#7c3aed;"><i
-                                        class="bi bi-shield-check"></i></div>
-                                <h5>100% Free, Always</h5>
-                                <p>Every single test on this page is completely free to take — no hidden fees, no credit card,
-                                    no trial. Because every child deserves to discover their potential.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="why-feat-card text-center">
-                                <div class="why-feat-icon mx-auto" style="background:#fffbeb;color:#d97706;"><i
-                                        class="bi bi-people-fill"></i></div>
-                                <h5>Trusted by 1000+ Families</h5>
-                                <p>Parents across Jaipur and India have used our assessments to find the perfect course,
-                                    discover hidden talent, and unlock their child's confidence.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="why-feat-card text-center">
-                                <div class="why-feat-icon mx-auto" style="background:#fdf2f8;color:#db2777;"><i
-                                        class="bi bi-mortarboard-fill"></i></div>
-                                <h5>Aligned with NEP 2020</h5>
-                                <p>Our assessments are built around the National Education Policy 2020 framework — holistic
-                                    child development, skill-based learning, and creative intelligence.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="why-feat-card text-center">
-                                <div class="why-feat-icon mx-auto" style="background:#ecfeff;color:#0891b2;"><i
-                                        class="bi bi-phone-fill"></i></div>
-                                <h5>Works on Any Device</h5>
-                                <p>Take the test on a phone, tablet, or laptop — our tests are fully mobile-optimised so
-                                    children can complete them comfortably from anywhere.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="comparison-wrap">
-                        <h3 class="text-center mb-2" style="font-size:26px;font-weight:800;">How We Compare</h3>
-                        <p class="text-center mb-4" style="color:#6b7280;font-size:15px;">See why Act to Action tests go far
-                            beyond generic online quizzes.</p>
-                        <div class="comparison-table">
-                            <div class="comp-header">
-                                <div class="ch">Feature</div>
-                                <div class="ch highlight text-center">Act to Action ✦</div>
-                                <div class="ch text-center" style="color:#9ca3af;">Generic Online Quiz</div>
-                                <div class="ch text-center" style="color:#9ca3af;">Paid Assessment App</div>
-                            </div>
-                            @php
-                                $compRows = [
-                                    ['label' => 'Expert-designed questions', 'ata' => '✔ Yes', 'generic' => '✘', 'paid' => '✔'],
-                                    ['label' => '100% Free', 'ata' => '✔ Yes', 'generic' => '✔', 'paid' => '✘ Paid'],
-                                    ['label' => 'Child-specific (age 3–29)', 'ata' => '✔ Yes', 'generic' => '✘', 'paid' => '✘'],
-                                    ['label' => 'Course recommendation included', 'ata' => '✔ Yes', 'generic' => '✘', 'paid' => '✘'],
-                                    ['label' => 'Neuro-psychology backed', 'ata' => '✔ Yes', 'generic' => '✘', 'paid' => 'Sometimes'],
-                                    ['label' => 'Links to real coaching & castings', 'ata' => '✔ Yes', 'generic' => '✘', 'paid' => '✘'],
-                                    ['label' => 'Shareable PDF result report', 'ata' => '✔ Yes', 'generic' => '✘', 'paid' => 'Paid only'],
-                                ];
-                            @endphp
-                            @foreach($compRows as $row)
-                                <div class="comp-row">
-                                    <div class="cr-label">{{ $row['label'] }}</div>
-                                    <div class="cr-val yes ata">{{ $row['ata'] }}</div>
-                                    <div class="cr-val {{ str_starts_with($row['generic'], '✘') ? 'no' : 'yes' }}">
-                                        {{ $row['generic'] }}</div>
-                                    <div class="cr-val {{ str_starts_with($row['paid'], '✘') ? 'no' : (str_starts_with($row['paid'], '✔') ? 'yes' : '') }}"
-                                        @if(!str_starts_with($row['paid'], '✘') && !str_starts_with($row['paid'], '✔'))
-                                        style="color:#d97706;" @endif>
-                                        {{ $row['paid'] }}
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <div class="row g-5 mt-2 align-items-start">
-                        <div class="col-lg-6">
-                            <h3 style="font-size:24px;font-weight:800;margin-bottom:30px;">How It Works — 3 Simple Steps</h3>
-                            <div class="process-section">
-                                <div style="position:relative;">
-                                    <div class="process-step">
-                                        <div class="step-num">1</div>
-                                        <div class="step-body">
-                                            <h5>Choose Your Test</h5>
-                                            <p>Pick the assessment that matches what you want to discover — acting talent,
-                                                confidence level, personality type, or the right course. All free, no sign-up
-                                                needed.</p>
-                                        </div>
-                                    </div>
-                                    <div class="process-line" style="top:46px;height:60px;"></div>
-                                    <div class="process-step" style="margin-top:8px;">
-                                        <div class="step-num">2</div>
-                                        <div class="step-body">
-                                            <h5>Answer 10–20 Quick Questions</h5>
-                                            <p>Fun, engaging questions designed for children and parents to answer together.
-                                                Takes just 5–10 minutes. No wrong answers — just honest responses!</p>
-                                        </div>
-                                    </div>
-                                    <div class="process-line" style="top:130px;height:60px;left:23px;position:absolute;"></div>
-                                    <div class="process-step" style="margin-top:8px;">
-                                        <div class="step-num">3</div>
-                                        <div class="step-body">
-                                            <h5>Get Your Personalised Report</h5>
-                                            <p>Instantly receive a detailed result — your child's strengths, growth areas,
-                                                personality profile, and the exact Act to Action course recommended for them.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="#tests" class="btn-primary-solid mt-3" style="display:inline-flex;">
-                                    <i class="bi bi-play-circle-fill"></i> Start a Free Test Now
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="result-preview">
-                                <div class="rp-icon">📊</div>
-                                <h4>Your Child's Result Report</h4>
-                                <p>After completing any test, you get an instant, personalised report like this — broken down
-                                    into easy-to-understand scores and clear next steps.</p>
-                                <div
-                                    style="background:#fff;border-radius:14px;padding:20px;margin-bottom:18px;border:1.5px solid #dbeafe;text-align:left;">
-                                    <div
-                                        style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                                        <span
-                                            style="font-family:var(--heading-font);font-weight:700;font-size:14px;color:var(--heading-color);">Acting
-                                            Talent Score</span>
-                                        <span style="font-weight:800;font-size:18px;color:var(--accent-color);">87%</span>
-                                    </div>
-                                    <div style="background:#e8edf5;border-radius:8px;height:8px;overflow:hidden;">
-                                        <div
-                                            style="width:87%;height:100%;background:linear-gradient(90deg,var(--accent-color),#60a5fa);border-radius:8px;">
-                                        </div>
-                                    </div>
-                                    <div style="display:flex;justify-content:space-between;margin-top:14px;gap:8px;">
-                                        <div style="text-align:center;flex:1;">
-                                            <div style="font-size:18px;font-weight:800;color:#059669;">High</div>
-                                            <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Emotional Range
-                                            </div>
-                                        </div>
-                                        <div style="text-align:center;flex:1;">
-                                            <div style="font-size:18px;font-weight:800;color:#d97706;">Medium</div>
-                                            <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Stage Confidence
-                                            </div>
-                                        </div>
-                                        <div style="text-align:center;flex:1;">
-                                            <div style="font-size:18px;font-weight:800;color:var(--accent-color);">High</div>
-                                            <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Creativity</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p style="font-size:13px;color:#16a34a;font-weight:600;margin-bottom:14px;"><i
-                                        class="bi bi-star-fill me-1"></i> Recommended: Screen Acting + Personality Development
-                                    Course</p>
-                                <div class="result-tag-row">
-                                    <span class="result-tag">Natural Performer</span>
-                                    <span class="result-tag">Visual Thinker</span>
-                                    <span class="result-tag">Empathetic Leader</span>
-                                    <span class="result-tag">Camera-Ready</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            {{-- ── IN THE NEWS ── --}}
-            <section class="news-section">
-                <div class="container">
-                    <p class="news-label">Act to Action — In the News</p>
-                    <div class="logo-marquee-wrap">
-                        <div class="logo-marquee">
-                            @php
-                                $newsLogos = [
-                                    ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
-                                    ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
-                                    ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
-                                    ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
-                                    ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
-                                    ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
-                                    ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
-                                    ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
-                                    ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
-                                    ['icon' => 'bi-flag', 'name' => 'Skill India'],
-                                    ['icon' => 'bi-shop', 'name' => 'Decathlon'],
-                                    ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
-                                ];
-                            @endphp
-                            {{-- First set --}}
-                            @foreach($newsLogos as $logo)
-                                <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
-                            @endforeach
-                            {{-- Duplicate for seamless loop --}}
-                            @foreach($newsLogos as $logo)
-                                <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <div class="news-quotes">
-                        <div class="row g-4">
-                            <div class="col-md-4">
-                                <div class="quote-card">
-                                    <i class="bi bi-quote quote-big"></i>
-                                    <div class="quote-source"><i class="bi bi-newspaper"></i> Rajasthan Patrika</div>
-                                    <blockquote>"Act to Action's theatre show at RIC showcased extraordinary talent from
-                                        Jaipur's youngest stars — a standing ovation from all."</blockquote>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="quote-card">
-                                    <i class="bi bi-quote quote-big"></i>
-                                    <div class="quote-source"><i class="bi bi-palette"></i> Kalaneri Art Expo</div>
-                                    <blockquote>"A unique blend of performing arts and inner science — Act to Action students
-                                        brought depth and emotion rarely seen at this age."</blockquote>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="quote-card">
-                                    <i class="bi bi-quote quote-big"></i>
-                                    <div class="quote-source"><i class="bi bi-trophy"></i> Dada Saheb Phalke 2022</div>
-                                    <blockquote>"Kritesh Agarwal's award-winning films reflect a generation of children trained
-                                        to tell stories that matter."</blockquote>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {{-- ── FOR SCHOOLS & BUSINESSES ── --}}
-            <section class="business-section">
-                <div class="container position-relative">
-                    <div class="row align-items-center g-5">
-                        <div class="col-lg-6">
-                            <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Schools & Organisations</div>
-                            <h2>Unlock your school's true creative potential</h2>
-                            <p>Act to Action partners with schools, NGOs, hospitals, and corporates to deliver impactful
-                                workshops, events, and ongoing programmes. Get started in minutes — no consultants, no wasted
-                                time, just results.</p>
-                            <div class="biz-feature-row">
-                                <div class="biz-ico"><i class="bi bi-mortarboard-fill"></i></div>
-                                <div>
-                                    <h6>School Partnerships</h6>
-                                    <p>Theatre in Education, NEP 2020 aligned, modelling shows, exhibitions & parenting
-                                        workshops.</p>
-                                </div>
-                            </div>
-                            <div class="biz-feature-row">
-                                <div class="biz-ico"><i class="bi bi-heart-pulse-fill"></i></div>
-                                <div>
-                                    <h6>Hospitals & Health Institutions</h6>
-                                    <p>Mindfulness teaching and mindful doctor programmes for healthcare professionals.</p>
-                                </div>
-                            </div>
-                            <div class="biz-feature-row">
-                                <div class="biz-ico"><i class="bi bi-globe2"></i></div>
-                                <div>
-                                    <h6>NGOs & Government Campaigns</h6>
-                                    <p>Free character building based on Bhagavad Gita for NGOs, slums, juveniles, and awareness
-                                        campaigns.</p>
-                                </div>
-                            </div>
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-white-solid mt-2" target="_blank">
-                                <i class="bi bi-whatsapp"></i> Get Started Today
+                            <a href="#tests" class="btn-primary-solid mt-3" style="display:inline-flex;">
+                                <i class="bi bi-play-circle-fill"></i> Start a Free Test Now
                             </a>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="biz-visual">
-                                <div class="biz-stats-grid">
-                                    <div class="biz-stat-card">
-                                        <div class="bsn">25<span>+</span></div>
-                                        <div class="bsl">Partner Institutes</div>
-                                    </div>
-                                    <div class="biz-stat-card">
-                                        <div class="bsn">3K<span>+</span></div>
-                                        <div class="bsl">Students Impacted</div>
-                                    </div>
-                                    <div class="biz-stat-card">
-                                        <div class="bsn">6<span>+</span></div>
-                                        <div class="bsl">Centres in Jaipur</div>
-                                    </div>
-                                    <div class="biz-stat-card">
-                                        <div class="bsn">100<span>%</span></div>
-                                        <div class="bsl">Free for NGOs</div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="result-preview">
+                            <div class="rp-icon">📊</div>
+                            <h4>Your Child's Result Report</h4>
+                            <p>After completing any test, you get an instant, personalised report like this — broken down
+                                into easy-to-understand scores and clear next steps.</p>
+                            <div
+                                style="background:#fff;border-radius:14px;padding:20px;margin-bottom:18px;border:1.5px solid #dbeafe;text-align:left;">
+                                <div
+                                    style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                                    <span
+                                        style="font-family:var(--heading-font);font-weight:700;font-size:14px;color:var(--heading-color);">Acting
+                                        Talent Score</span>
+                                    <span style="font-weight:800;font-size:18px;color:var(--accent-color);">87%</span>
+                                </div>
+                                <div style="background:#e8edf5;border-radius:8px;height:8px;overflow:hidden;">
+                                    <div
+                                        style="width:87%;height:100%;background:linear-gradient(90deg,var(--accent-color),#60a5fa);border-radius:8px;">
                                     </div>
                                 </div>
+                                <div style="display:flex;justify-content:space-between;margin-top:14px;gap:8px;">
+                                    <div style="text-align:center;flex:1;">
+                                        <div style="font-size:18px;font-weight:800;color:#059669;">High</div>
+                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Emotional Range
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;flex:1;">
+                                        <div style="font-size:18px;font-weight:800;color:#d97706;">Medium</div>
+                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Stage
+                                            Confidence
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;flex:1;">
+                                        <div style="font-size:18px;font-weight:800;color:var(--accent-color);">High</div>
+                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Creativity
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="font-size:13px;color:#16a34a;font-weight:600;margin-bottom:14px;"><i
+                                    class="bi bi-star-fill me-1"></i> Recommended: Screen Acting + Personality Development
+                                Course</p>
+                            <div class="result-tag-row">
+                                <span class="result-tag">Natural Performer</span>
+                                <span class="result-tag">Visual Thinker</span>
+                                <span class="result-tag">Empathetic Leader</span>
+                                <span class="result-tag">Camera-Ready</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            {{-- ── TESTIMONIALS ── --}}
-            <section class="testimonials-section">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>What people are saying about us</h2>
-                        <span class="divider-line"></span>
-                        <p>From child development experts to parents and students — here's what they say.</p>
-                    </div>
-                    <div class="row g-4">
+            </div>
+        </section>
+
+        {{-- ── IN THE NEWS ── --}}
+        <section class="news-section">
+            <div class="container">
+                <p class="news-label">Act to Action — In the News</p>
+                <div class="logo-marquee-wrap">
+                    <div class="logo-marquee">
                         @php
-                            $testimonials = [
-                                [
-                                    'initials' => 'DB',
-                                    'color' => '#7c3aed',
-                                    'author' => 'Dr. Bhumika Soni',
-                                    'role' => 'Child Neuro Therapist',
-                                    'quote' => '"Kritesh\'s integration of neuro-psychology with theatre is genuinely pioneering. I have not seen any other programme in India address both the emotional and cognitive development of children this holistically."',
-                                ],
-                                [
-                                    'initials' => 'PV',
-                                    'color' => '#059669',
-                                    'author' => 'Priya Verma',
-                                    'role' => 'Parent — Vaishali Nagar',
-                                    'quote' => '"My daughter went from refusing to speak in public to anchoring the school annual function. The Stage Confidence assessment showed us exactly where she needed support — and the course delivered."',
-                                ],
-                                [
-                                    'initials' => 'AK',
-                                    'color' => '#d97706',
-                                    'author' => 'Arjun Kapoor',
-                                    'role' => 'Student, Age 19 — Jagatpura',
-                                    'quote' => '"I took the Acting Talent Test and was surprised by how accurately it identified my strengths. Joined the screen acting batch within a week and got my first casting call in Month 4!"',
-                                ],
-                                [
-                                    'initials' => 'NS',
-                                    'color' => '#db2777',
-                                    'author' => 'Neha Singhania',
-                                    'role' => 'Parent — Old City, Jaipur',
-                                    'quote' => '"The Skill Course Finder test is brilliant for parents who don\'t know where to start. It asked the right questions and matched my 7-year-old perfectly to the theatre programme."',
-                                ],
-                                [
-                                    'initials' => 'MK',
-                                    'color' => '#0891b2',
-                                    'author' => 'Mrs. Meena Khatri',
-                                    'role' => 'Principal — Mayoor School, Sitapura',
-                                    'quote' => '"As a school principal, I partnered with Act to Action for our annual day. The children\'s transformation was visible — confidence, expression, and discipline all improved noticeably."',
-                                ],
-                                [
-                                    'initials' => 'RS',
-                                    'color' => '#175cdd',
-                                    'author' => 'Rajesh Sharma',
-                                    'role' => 'Parent — Malviya Nagar',
-                                    'quote' => '"The Bhagavad Gita module is unlike anything I\'ve seen. My son is calmer, more focused, and speaks about values we were struggling to teach at home. Act to Action changed our family."',
-                                ],
+                            $newsLogos = [
+                                ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
+                                ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
+                                ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
+                                ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
+                                ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
+                                ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
+                                ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
+                                ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
+                                ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
+                                ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                ['icon' => 'bi-shop', 'name' => 'Decathlon'],
+                                ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
                             ];
                         @endphp
-
-                        @foreach($testimonials as $t)
-                            <div class="col-md-6 col-lg-4">
-                                <div class="testimonial-item">
-                                    <i class="bi bi-quote t-big-quote"></i>
-                                    <div class="t-stars">
-                                        @for($s = 0; $s < 5; $s++)<i class="bi bi-star-fill"></i>@endfor
-                                    </div>
-                                    <p class="t-quote">{{ $t['quote'] }}</p>
-                                    <div class="t-footer">
-                                        <div class="avatar-circle" style="background:{{ $t['color'] }};">{{ $t['initials'] }}</div>
-                                        <div>
-                                            <div class="t-author">{{ $t['author'] }}</div>
-                                            <div class="t-role">{{ $t['role'] }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        {{-- First set --}}
+                        @foreach ($newsLogos as $logo)
+                            <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
+                        @endforeach
+                        {{-- Duplicate for seamless loop --}}
+                        @foreach ($newsLogos as $logo)
+                            <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
                         @endforeach
                     </div>
                 </div>
-            </section>
 
-            {{-- ── BLOG ── --}}
-            <section class="blog-section">
-                <div class="container">
-                    <div class="section-title">
-                        <h2>Something to Read</h2>
-                        <span class="divider-line"></span>
-                        <p>The latest updates on child acting, personality development, and creative education from our blog.
-                        </p>
-                    </div>
+                <div class="news-quotes">
                     <div class="row g-4">
-                        @php
-                            $blogs = [
-                                [
-                                    'img' => 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=75',
-                                    'tag' => 'Acting Tips',
-                                    'tag_style' => '',
-                                    'title' => '5 Signs Your Child Has Natural Acting Talent',
-                                    'excerpt' => 'From emotional memory to spontaneous improvisation — how to recognise the star in your child before they even audition.',
-                                    'author' => 'Kritesh Agarwal',
-                                    'date' => 'Jan 2025',
-                                ],
-                                [
-                                    'img' => 'https://images.unsplash.com/photo-1535982330050-f1c2fb79ff78?w=600&q=75',
-                                    'tag' => 'Parenting',
-                                    'tag_style' => 'background:#f5f3ff;color:#7c3aed;',
-                                    'title' => 'How Bhagavad Gita Shapes a Confident, Character-Strong Child',
-                                    'excerpt' => 'Ancient wisdom meets modern child psychology — a deep dive into our unique curriculum approach for inner strength.',
-                                    'author' => 'Act to Action Team',
-                                    'date' => 'Dec 2024',
-                                ],
-                                [
-                                    'img' => 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=600&q=75',
-                                    'tag' => 'Success Story',
-                                    'tag_style' => 'background:#ecfdf5;color:#059669;',
-                                    'title' => 'From Jaipur to Bollywood: A Student\'s Journey',
-                                    'excerpt' => 'How one of our students went from stage fright at age 10 to landing a national television advertisement by age 12.',
-                                    'author' => 'Kriti Gupta',
-                                    'date' => 'Nov 2024',
-                                ],
-                                [
-                                    'img' => 'https://images.unsplash.com/photo-1560523159-6b681a1e1852?w=600&q=75',
-                                    'tag' => 'Development',
-                                    'tag_style' => 'background:#fef3c7;color:#d97706;',
-                                    'title' => 'Why Theatre is the Best Classroom for Children',
-                                    'excerpt' => 'Research shows theatre-trained children score higher in empathy, communication, and academic performance.',
-                                    'author' => 'Kritesh Agarwal',
-                                    'date' => 'Oct 2024',
-                                ],
-                                [
-                                    'img' => 'https://images.unsplash.com/photo-1543269664-7eef42226a21?w=600&q=75',
-                                    'tag' => 'Industry',
-                                    'tag_style' => 'background:#ecfeff;color:#0891b2;',
-                                    'title' => 'What Bollywood Casting Directors Actually Look For',
-                                    'excerpt' => 'Insider tips from our casting head on what makes a child stand out in an audition — beyond just acting skill.',
-                                    'author' => 'Deepak Chandel',
-                                    'date' => 'Sep 2024',
-                                ],
-                                [
-                                    'img' => 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&q=75',
-                                    'tag' => 'Wellness',
-                                    'tag_style' => 'background:#fdf2f8;color:#db2777;',
-                                    'title' => 'The Link Between Creativity and Mental Health in Children',
-                                    'excerpt' => 'How expressive arts reduce anxiety, build resilience, and improve focus in children aged 3 to 18.',
-                                    'author' => 'Dr. Bhumika Soni',
-                                    'date' => 'Aug 2024',
-                                ],
-                            ];
-                        @endphp
-
-                        @foreach($blogs as $blog)
-                            <div class="col-md-4">
-                                <div class="blog-card">
-                                    <img class="blog-img" src="{{ $blog['img'] }}" alt="{{ $blog['title'] }}" />
-                                    <div class="blog-body">
-                                        <span class="blog-tag" @if($blog['tag_style']) style="{{ $blog['tag_style'] }}" @endif>
-                                            {{ $blog['tag'] }}
-                                        </span>
-                                        <h5>{{ $blog['title'] }}</h5>
-                                        <p>{{ $blog['excerpt'] }}</p>
-                                        <div class="blog-by">
-                                            <i class="bi bi-person-circle"></i> {{ $blog['author'] }}
-                                            &nbsp;·&nbsp;
-                                            <i class="bi bi-calendar3"></i> {{ $blog['date'] }}
-                                        </div>
-                                        <a href="#" class="read-more-link">Read More <i class="bi bi-arrow-right"></i></a>
-                                    </div>
-                                </div>
+                        <div class="col-md-4">
+                            <div class="quote-card">
+                                <i class="bi bi-quote quote-big"></i>
+                                <div class="quote-source"><i class="bi bi-newspaper"></i> Rajasthan Patrika</div>
+                                <blockquote>"Act to Action's theatre show at RIC showcased extraordinary talent from
+                                    Jaipur's youngest stars — a standing ovation from all."</blockquote>
                             </div>
-                        @endforeach
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quote-card">
+                                <i class="bi bi-quote quote-big"></i>
+                                <div class="quote-source"><i class="bi bi-palette"></i> Kalaneri Art Expo</div>
+                                <blockquote>"A unique blend of performing arts and inner science — Act to Action students
+                                    brought depth and emotion rarely seen at this age."</blockquote>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quote-card">
+                                <i class="bi bi-quote quote-big"></i>
+                                <div class="quote-source"><i class="bi bi-trophy"></i> Dada Saheb Phalke 2022</div>
+                                <blockquote>"Kritesh Agarwal's award-winning films reflect a generation of children trained
+                                    to tell stories that matter."</blockquote>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-center mt-5">
-                        <a href="#" class="btn-primary-solid" style="display:inline-flex;">
-                            <i class="bi bi-journals"></i> Read All Entries
+                </div>
+            </div>
+        </section>
+
+        {{-- ── FOR SCHOOLS & BUSINESSES ── --}}
+        <section class="business-section">
+            <div class="container position-relative">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Schools & Organisations</div>
+                        <h2>Unlock your school's true creative potential</h2>
+                        <p>Act to Action partners with schools, NGOs, hospitals, and corporates to deliver impactful
+                            workshops, events, and ongoing programmes. Get started in minutes — no consultants, no wasted
+                            time, just results.</p>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-mortarboard-fill"></i></div>
+                            <div>
+                                <h6>School Partnerships</h6>
+                                <p>Theatre in Education, NEP 2020 aligned, modelling shows, exhibitions & parenting
+                                    workshops.</p>
+                            </div>
+                        </div>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-heart-pulse-fill"></i></div>
+                            <div>
+                                <h6>Hospitals & Health Institutions</h6>
+                                <p>Mindfulness teaching and mindful doctor programmes for healthcare professionals.</p>
+                            </div>
+                        </div>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-globe2"></i></div>
+                            <div>
+                                <h6>NGOs & Government Campaigns</h6>
+                                <p>Free character building based on Bhagavad Gita for NGOs, slums, juveniles, and awareness
+                                    campaigns.</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-white-solid mt-2" target="_blank">
+                            <i class="bi bi-whatsapp"></i> Get Started Today
                         </a>
                     </div>
-                </div>
-            </section>
-
-            {{-- ── NEWSLETTER ── --}}
-            <section class="newsletter-section">
-                <div class="container">
-                    <div class="newsletter-box">
-                        <h3>Get Our Newsletter</h3>
-                        <p>Monthly tips on child acting, personality development, casting opportunities, and event updates —
-                            straight to your inbox.</p>
-                        <div class="newsletter-form">
-                            <input type="email" placeholder="Enter your email address..." />
-                            <button class="btn-primary-solid" type="button">
-                                <i class="bi bi-send-fill"></i> Subscribe
-                            </button>
+                    <div class="col-lg-6">
+                        <div class="biz-visual">
+                            <div class="biz-stats-grid">
+                                <div class="biz-stat-card">
+                                    <div class="bsn">25<span>+</span></div>
+                                    <div class="bsl">Partner Institutes</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">3K<span>+</span></div>
+                                    <div class="bsl">Students Impacted</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">6<span>+</span></div>
+                                    <div class="bsl">Centres in Jaipur</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">100<span>%</span></div>
+                                    <div class="bsl">Free for NGOs</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-        </main>
+        {{-- ── TESTIMONIALS ── --}}
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>What people are saying about us</h2>
+                    <span class="divider-line"></span>
+                    <p>From child development experts to parents and students — here's what they say.</p>
+                </div>
+                <div class="row g-4">
+                    @php
+                        $testimonials = [
+                            [
+                                'initials' => 'DB',
+                                'color' => '#7c3aed',
+                                'author' => 'Dr. Bhumika Soni',
+                                'role' => 'Child Neuro Therapist',
+                                'quote' =>
+                                    '"Kritesh\'s integration of neuro-psychology with theatre is genuinely pioneering. I have not seen any other programme in India address both the emotional and cognitive development of children this holistically."',
+                            ],
+                            [
+                                'initials' => 'PV',
+                                'color' => '#059669',
+                                'author' => 'Priya Verma',
+                                'role' => 'Parent — Vaishali Nagar',
+                                'quote' =>
+                                    '"My daughter went from refusing to speak in public to anchoring the school annual function. The Stage Confidence assessment showed us exactly where she needed support — and the course delivered."',
+                            ],
+                            [
+                                'initials' => 'AK',
+                                'color' => '#d97706',
+                                'author' => 'Arjun Kapoor',
+                                'role' => 'Student, Age 19 — Jagatpura',
+                                'quote' =>
+                                    '"I took the Acting Talent Test and was surprised by how accurately it identified my strengths. Joined the screen acting batch within a week and got my first casting call in Month 4!"',
+                            ],
+                            [
+                                'initials' => 'NS',
+                                'color' => '#db2777',
+                                'author' => 'Neha Singhania',
+                                'role' => 'Parent — Old City, Jaipur',
+                                'quote' =>
+                                    '"The Skill Course Finder test is brilliant for parents who don\'t know where to start. It asked the right questions and matched my 7-year-old perfectly to the theatre programme."',
+                            ],
+                            [
+                                'initials' => 'MK',
+                                'color' => '#0891b2',
+                                'author' => 'Mrs. Meena Khatri',
+                                'role' => 'Principal — Mayoor School, Sitapura',
+                                'quote' =>
+                                    '"As a school principal, I partnered with Act to Action for our annual day. The children\'s transformation was visible — confidence, expression, and discipline all improved noticeably."',
+                            ],
+                            [
+                                'initials' => 'RS',
+                                'color' => '#175cdd',
+                                'author' => 'Rajesh Sharma',
+                                'role' => 'Parent — Malviya Nagar',
+                                'quote' =>
+                                    '"The Bhagavad Gita module is unlike anything I\'ve seen. My son is calmer, more focused, and speaks about values we were struggling to teach at home. Act to Action changed our family."',
+                            ],
+                        ];
+                    @endphp
+
+                    @foreach ($testimonials as $t)
+                        <div class="col-md-6 col-lg-4">
+                            <div class="testimonial-item">
+                                <i class="bi bi-quote t-big-quote"></i>
+                                <div class="t-stars">
+                                    @for ($s = 0; $s < 5; $s++)
+                                        <i class="bi bi-star-fill"></i>
+                                    @endfor
+                                </div>
+                                <p class="t-quote">{{ $t['quote'] }}</p>
+                                <div class="t-footer">
+                                    <div class="avatar-circle" style="background:{{ $t['color'] }};">
+                                        {{ $t['initials'] }}</div>
+                                    <div>
+                                        <div class="t-author">{{ $t['author'] }}</div>
+                                        <div class="t-role">{{ $t['role'] }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+
+        {{-- ── BLOG ── --}}
+        <section class="blog-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Something to Read</h2>
+                    <span class="divider-line"></span>
+                    <p>
+                        The latest updates on child acting, personality development, and creative education from our blog.
+                    </p>
+                </div>
+
+                <div class="row g-4">
+                    @forelse($blogs as $blog)
+                        <div class="col-md-4">
+                            <div class="blog-card">
+
+                                {{-- Blog Image --}}
+                                <img class="blog-img" src="{{ asset('img/' . $blog->image) }}"
+                                    alt="{{ $blog->title }}" />
+
+                                <div class="blog-body">
+
+                                    {{-- Category Tag --}}
+                                    <span class="blog-tag">
+                                        {{ $blog->category->category_name ?? 'Uncategorized' }}
+                                    </span>
+
+                                    {{-- Title --}}
+                                    <h5>{{ $blog->title }}</h5>
+
+                                    {{-- Excerpt --}}
+                                    <p>
+                                        {{ \Illuminate\Support\Str::limit(strip_tags($blog->description), 50) }}
+                                    </p>
+
+                                    {{-- Author + Date --}}
+                                    <div class="blog-by">
+                                        <i class="bi bi-person-circle"></i>
+                                        <span>{{ $blog->author->name ?? 'Admin' }}</span>
+                                        <i class="bi bi-calendar3"></i>
+                                        {{ $blog->created_at->format('M Y') }}
+                                    </div>
+
+                                    {{-- Read More --}}
+                                    <a href="{{ route('frontend.blog.details', $blog->slug) }}" class="read-more-link">
+                                        Read More <i class="bi bi-arrow-right"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="col-12 text-center">
+                            <p>No blog posts available.</p>
+                        </div>
+                    @endforelse
+                </div>
+
+                {{-- Read All Button --}}
+                <div class="text-center mt-5">
+                    <a href="{{ route('frontend.blog.index') }}" class="btn-primary-solid" style="display:inline-flex;">
+                        <i class="bi bi-journals"></i> Read All Entries
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        {{-- ── NEWSLETTER ── --}}
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="newsletter-box">
+                    <h3>Get Our Newsletter</h3>
+                    <p>Monthly tips on child acting, personality development, casting opportunities, and event updates —
+                        straight to your inbox.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Enter your email address..." />
+                        <button class="btn-primary-solid" type="button">
+                            <i class="bi bi-send-fill"></i> Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
 @endsection

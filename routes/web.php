@@ -177,6 +177,8 @@ Route::get('/workshops/{school}', [SummerWorkshopController::class, 'workshopdet
 Route::post('/workshops/{school}/register', [WorkshopRegistrationController::class, 'register'])->name('frontend.summercamp.register.submit');
 Route::post('/register/{registration}/verify', [WorkshopRegistrationController::class, 'verifyPayment'])->name('frontend.summercamp.register.verify');
 
+Route::get('/curriculum', [SummerController::class, 'curriculum'])->name('curriculum');
+
 // Frontend Index
 Route::get('indexx', [indexController::class, 'index'])->name('index');
 

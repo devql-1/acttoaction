@@ -2,10 +2,10 @@
 @section('content')
     <style>
         /* ════════════════════════════════════════════
-                                   QUIZ RESULT PAGE — Act to Action
-                                   Design: Deep navy + electric blue, editorial
-                                   premium feel with bold typographic hierarchy
-                                ════════════════════════════════════════════ */
+                                                                                   QUIZ RESULT PAGE — Act to Action
+                                                                                   Design: Deep navy + electric blue, editorial
+                                                                                   premium feel with bold typographic hierarchy
+                                                                                ════════════════════════════════════════════ */
         *,
         *::before,
         *::after {
@@ -59,6 +59,7 @@
         }
 
         .rh-hero .container {
+            margin-top: 70px;
             position: relative;
             padding: 72px 0;
         }
@@ -1008,7 +1009,8 @@
                 'name' => 'The Performer',
                 'emoji' => '🎭',
                 'tagline' => 'Natural On-Screen Magnetism',
-                'desc' => 'Your child has exceptional natural charisma and camera presence. They light up every room, command attention instinctively, and make every performance feel alive and genuine. They were born for the screen.',
+                'desc' =>
+                    'Your child has exceptional natural charisma and camera presence. They light up every room, command attention instinctively, and make every performance feel alive and genuine. They were born for the screen.',
                 'course' => 'Screen Acting + Camera Techniques',
                 'tags' => ['Charismatic', 'Camera-Ready', 'Energetic', 'Scene-Stealer'],
                 'color' => '#175cdd',
@@ -1017,7 +1019,8 @@
                 'name' => 'The Empath',
                 'emoji' => '💙',
                 'tagline' => 'Deep Emotional Expression',
-                'desc' => 'Your child feels emotions profoundly and channels them into powerful, believable performances. Their ability to connect emotionally with characters and audiences is rare and extremely valuable in performing arts.',
+                'desc' =>
+                    'Your child feels emotions profoundly and channels them into powerful, believable performances. Their ability to connect emotionally with characters and audiences is rare and extremely valuable in performing arts.',
                 'course' => 'Screen Acting + Personality Development',
                 'tags' => ['Deeply Feeling', 'Expressive', 'Authentic', 'Emotionally Intelligent'],
                 'color' => '#7c3aed',
@@ -1026,7 +1029,8 @@
                 'name' => 'The Creator',
                 'emoji' => '✨',
                 'tagline' => 'Storytelling & Wild Imagination',
-                'desc' => "Your child's imagination is extraordinary. They invent entire worlds, create vivid characters, and bring total originality to everything they do. Storytelling is their superpower.",
+                'desc' =>
+                    "Your child's imagination is extraordinary. They invent entire worlds, create vivid characters, and bring total originality to everything they do. Storytelling is their superpower.",
                 'course' => 'Theatre & Stage + Filmmaking',
                 'tags' => ['Imaginative', 'Inventive', 'Original', 'Storyteller'],
                 'color' => '#059669',
@@ -1035,7 +1039,8 @@
                 'name' => 'The Leader',
                 'emoji' => '👑',
                 'tagline' => 'Stage Presence & Command',
-                'desc' => 'Your child naturally commands attention and authority the moment they enter a room. They have powerful stage presence and the natural ability to lead an audience through any performance with total confidence.',
+                'desc' =>
+                    'Your child naturally commands attention and authority the moment they enter a room. They have powerful stage presence and the natural ability to lead an audience through any performance with total confidence.',
                 'course' => 'Screen Acting + Public Speaking',
                 'tags' => ['Commanding', 'Confident', 'Authoritative', 'Natural Leader'],
                 'color' => '#d97706',
@@ -1044,7 +1049,8 @@
                 'name' => 'The Voice',
                 'emoji' => '🎤',
                 'tagline' => 'Powerful Speech & Expression',
-                'desc' => "Your child's greatest performing gift is their voice — its tone, clarity, and expressive range. They excel in dialogue delivery, public speaking, and voice-led performance of all kinds.",
+                'desc' =>
+                    "Your child's greatest performing gift is their voice — its tone, clarity, and expressive range. They excel in dialogue delivery, public speaking, and voice-led performance of all kinds.",
                 'course' => 'Public Speaking + Theatre & Stage',
                 'tags' => ['Articulate', 'Persuasive', 'Expressive', 'Clear Communicator'],
                 'color' => '#db2777',
@@ -1053,7 +1059,8 @@
                 'name' => 'The Director',
                 'emoji' => '🎬',
                 'tagline' => 'Vision, Craft & Filmmaking',
-                'desc' => "Your child has the eye of a born director. They see the bigger picture, understand narrative structure, notice composition details others miss, and have a natural gift for guiding the creative process.",
+                'desc' =>
+                    'Your child has the eye of a born director. They see the bigger picture, understand narrative structure, notice composition details others miss, and have a natural gift for guiding the creative process.',
                 'course' => 'Filmmaking + Screen Acting',
                 'tags' => ['Visionary', 'Strategic', 'Detail-Oriented', 'Big-Picture Thinker'],
                 'color' => '#0891b2',
@@ -1063,10 +1070,10 @@
         $tt = $talentTypes[$topTypeKey] ?? $talentTypes['performer'];
 
         /* ════════════════════════════════════════════
-           TestResultRange DATA
-           ─────────────────────────────────────────
-           $range comes from session (set in submit())
-           It's a plain PHP array built from:
+                                                                                                           TestResultRange DATA
+                                                                                                           ─────────────────────────────────────────
+                                                                                                           $range comes from session (set in submit())
+                                                                                                           It's a plain PHP array built from:
                TestResultRange::where('test_id', $id)
                    ->where('min_percent', '<=', $overallPct)
                    ->where('max_percent', '>=', $overallPct)
@@ -1085,22 +1092,22 @@
                ]
            If no range matched → $range is null → fallback to talent type
         ════════════════════════════════════════════ */
-        $hasRange = !empty($range);
+$hasRange = !empty($range);
 
-        $displayLabel = $range['label'] ?? $tt['name'];
-        $displayEmoji = $range['emoji'] ?? $tt['emoji'];
-        $displayTagline = $range['tagline'] ?? $tt['tagline'];
-        $displayDesc = $range['description'] ?? $tt['desc'];
-        $displayCourse = $range['recommended_course'] ?? $tt['course'];
-        $displayTags = !empty($range['tags']) ? $range['tags'] : $tt['tags'];
-        $displayColor = $range['color'] ?? $tt['color'];
-        $rangeMin = $range['min_percent'] ?? null;
-        $rangeMax = $range['max_percent'] ?? null;
+$displayLabel = $range['label'] ?? $tt['name'];
+$displayEmoji = $range['emoji'] ?? $tt['emoji'];
+$displayTagline = $range['tagline'] ?? $tt['tagline'];
+$displayDesc = $range['description'] ?? $tt['desc'];
+$displayCourse = $range['recommended_course'] ?? $tt['course'];
+$displayTags = !empty($range['tags']) ? $range['tags'] : $tt['tags'];
+$displayColor = $range['color'] ?? $tt['color'];
+$rangeMin = $range['min_percent'] ?? null;
+$rangeMax = $range['max_percent'] ?? null;
 
-        /* Answer display maps (1-indexed to match scale 1–5) */
-        $ansLabels = ['', 'Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
-        $ansEmoji = ['', '😟', '😐', '🙂', '😊', '🤩'];
-        $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-always'];
+/* Answer display maps (1-indexed to match scale 1–5) */
+$ansLabels = ['', 'Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
+$ansEmoji = ['', '😟', '😐', '🙂', '😊', '🤩'];
+$ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-always'];
     @endphp
 
     <main class="main">
@@ -1142,7 +1149,7 @@
                         </div>
 
                         {{-- Range band pill — only shown when TestResultRange matched --}}
-                        @if($hasRange && $rangeMin !== null && $rangeMax !== null)
+                        @if ($hasRange && $rangeMin !== null && $rangeMax !== null)
                             <div class="au au-3">
                                 <div class="range-info-strip">
                                     <i class="bi bi-shield-check-fill"></i>
@@ -1204,133 +1211,104 @@
                     <p>A full breakdown of your child's performing arts talent profile across all dimensions.</p>
                 </div>
 
-                <div class="row g-4 align-items-start">
+                {{-- LEFT: Type spotlight --}}
+                <div class="type-spotlight">
+                    <div class="ts-accent-bar" style="background:{{ $displayColor }};"></div>
 
-                    {{-- LEFT: Type spotlight --}}
-                    <div class="col-lg-7">
+                    <div class="ts-body">
+                        <div class="ts-emoji">{{ $displayEmoji }}</div>
 
-                        <div class="type-spotlight">
-                            {{-- Coloured accent top bar using the range/talent color --}}
-                            <div class="ts-accent-bar" style="background:{{ $displayColor }};"></div>
-                            <div class="ts-body">
-                                <div class="ts-emoji">{{ $displayEmoji }}</div>
-                                <div class="ts-content">
+                        <div class="ts-content">
 
-                                    {{-- ✅ Source badge: DB range or fallback talent type --}}
-                                    @if($hasRange)
-                                        <div class="ts-source-badge db-source">
-                                            <i class="bi bi-database-check"></i>
-                                            Personalised Range · Admin Configured
-                                        </div>
-                                    @else
-                                        <div class="ts-source-badge fallback-source">
-                                            <i class="bi bi-stars"></i>
-                                            Talent Type Profile
-                                        </div>
-                                    @endif
-
-                                    <div class="ts-name">{{ $displayLabel }}</div>
-                                    <div class="ts-tagline" style="color:{{ $displayColor }};">
-                                        {{ $displayTagline }}
-                                    </div>
-                                    <p class="ts-desc">{{ $displayDesc }}</p>
-
-                                    {{-- Tags --}}
-                                    @if($displayTags)
-                                        <div class="ts-tags">
-                                            @foreach((array) $displayTags as $tag)
-                                                <span class="ts-tag"
-                                                    style="color:{{ $displayColor }};
-                                                                                                                                             border-color:{{ $displayColor }}33;
-                                                                                                                                             background:{{ $displayColor }}0e;">
-                                                    {{ $tag }}
-                                                </span>
-                                            @endforeach
-                                        </div>
-                                    @endif
-
-                                    {{-- ✅ Show score band info when range matched --}}
-                                    @if($hasRange && $rangeMin !== null && $rangeMax !== null)
-                                        <div class="range-band">
-                                            <i class="bi bi-bar-chart-fill"></i>
-                                            Your score: <strong>{{ $overallPct }}%</strong>
-                                            &nbsp;·&nbsp; Matched band: <strong>{{ $rangeMin }}%–{{ $rangeMax }}%</strong>
-                                        </div>
-                                    @endif
-
+                            @if ($hasRange)
+                                <div class="ts-source-badge db-source">
+                                    <i class="bi bi-database-check"></i>
+                                    Personalised Range · Admin Configured
                                 </div>
-                            </div>
-                        </div>
-
-                        {{-- Stats --}}
-                        <div class="stat-grid-3">
-                            <div class="stat-tile">
-                                <div class="st-val" style="color:{{ $displayColor }};">{{ $overallPct }}%</div>
-                                <div class="st-lbl">Overall Score</div>
-                            </div>
-                            <div class="stat-tile">
-                                <div class="st-val">{{ $test->categories->flatMap->questions->count() }}</div>
-                                <div class="st-lbl">Questions Answered</div>
-                            </div>
-                            <div class="stat-tile">
-                                <div class="st-val">{{ $test->categories->count() }}</div>
-                                <div class="st-lbl">Sections Done</div>
-                            </div>
-                        </div>
-
-                        {{-- ✅ Recommended course (from range or talent type) --}}
-                        @if($displayCourse)
-                            <div class="course-pill">
-                                <div class="cp-icon">🎬</div>
-                                <div>
-                                    <h6>
-                                        @if($hasRange)
-                                            Admin-Recommended Course
-                                        @else
-                                            Suggested Course for Your Type
-                                        @endif
-                                    </h6>
-                                    <p>{{ $displayCourse }}</p>
+                            @else
+                                <div class="ts-source-badge fallback-source">
+                                    <i class="bi bi-stars"></i>
+                                    Talent Type Profile
                                 </div>
-                            </div>
-                        @endif
+                            @endif
 
-                    </div>
+                            <div class="ts-name">{{ $displayLabel }}</div>
 
-                    {{-- RIGHT: All 6 talent scores --}}
-                    <div class="col-lg-5">
-                        <div class="scores-card">
-                            <div class="scores-card-head">
-                                <div class="sch-icon">
-                                    <i class="bi bi-bar-chart-steps"></i>
-                                </div>
-                                <div>
-                                    <p class="sch-title">All 6 Talent Scores</p>
-                                    <p class="sch-sub">Sorted highest to lowest</p>
-                                </div>
+                            <div class="ts-tagline" style="color:{{ $displayColor }};">
+                                {{ $displayTagline }}
                             </div>
-                            <div class="scores-card-body">
-                                @foreach(collect($typeScores)->sortDesc() as $key => $val)
-                                    @php $t = $talentTypes[$key] ?? null; @endphp
-                                    @if($t)
-                                        <div class="score-row">
-                                            <div class="score-row-head">
-                                                <span class="sr-name">{{ $t['emoji'] }} {{ $t['name'] }}</span>
-                                                <span class="sr-val" style="color:{{ $t['color'] }};">{{ $val }}%</span>
-                                            </div>
-                                            <div class="score-track">
-                                                <div class="score-fill anim-bar" style="background:{{ $t['color'] }};"
-                                                    data-w="{{ $val }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
+
+                            <p class="ts-desc">{{ $displayDesc }}</p>
+
+                            {{-- Tags --}}
+                            @if ($displayTags)
+                                <div class="ts-tags">
+                                    @foreach ((array) $displayTags as $tag)
+                                        <span class="ts-tag"
+                                            style="color:{{ $displayColor }};
+                                           border-color:{{ $displayColor }}33;
+                                           background:{{ $displayColor }}0e;">
+                                            {{ $tag }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            {{-- Score band --}}
+                            @if ($hasRange && $rangeMin !== null && $rangeMax !== null)
+                                <div class="range-band">
+                                    <i class="bi bi-bar-chart-fill"></i>
+                                    Your score: <strong>{{ $overallPct }}%</strong>
+                                    &nbsp;·&nbsp; Matched band:
+                                    <strong>{{ $rangeMin }}%–{{ $rangeMax }}%</strong>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
-
                 </div>
+
+                {{-- Stats --}}
+                <div class="stat-grid-3">
+                    <div class="stat-tile">
+                        <div class="st-val" style="color:{{ $displayColor }};">
+                            {{ $overallPct }}%
+                        </div>
+                        <div class="st-lbl">Overall Score</div>
+                    </div>
+
+                    <div class="stat-tile">
+                        <div class="st-val">
+                            {{ $test->categories->flatMap->questions->count() }}
+                        </div>
+                        <div class="st-lbl">Questions Answered</div>
+                    </div>
+
+                    <div class="stat-tile">
+                        <div class="st-val">
+                            {{ $test->categories->count() }}
+                        </div>
+                        <div class="st-lbl">Sections Done</div>
+                    </div>
+                </div>
+
+                {{-- Course --}}
+                @if ($displayCourse)
+                    <div class="course-pill">
+                        <div class="cp-icon">🎬</div>
+                        <div>
+                            <h6>
+                                @if ($hasRange)
+                                    Admin-Recommended Course
+                                @else
+                                    Suggested Course for Your Type
+                                @endif
+                            </h6>
+                            <p>{{ $displayCourse }}</p>
+                        </div>
+                    </div>
+                @endif
+
             </div>
         </section>
 
@@ -1351,11 +1329,11 @@
 
                 <div class="row g-4">
                     @php $qIdx = 0; @endphp
-                    @foreach($test->categories as $si => $cat)
+                    @foreach ($test->categories as $si => $cat)
                         @php
                             $catColor = $cat->color ?? ($chartData[$si]['color'] ?? '#175cdd');
                             $catIcon = $cat->icon ?? ($chartData[$si]['icon'] ?? '📋');
-                            $catName = $cat->category_name ?? $cat->name ?? 'Section ' . ($si + 1);
+                            $catName = $cat->category_name ?? ($cat->name ?? 'Section ' . ($si + 1));
                             $catScore = $chartData[$si]['score'] ?? 0;
                         @endphp
                         <div class="col-md-4">
@@ -1369,7 +1347,7 @@
                                     </div>
                                 </div>
                                 <div class="cat-card-body">
-                                    @foreach($cat->questions as $qi => $question)
+                                    @foreach ($cat->questions as $qi => $question)
                                         @php
                                             $ans = $answers[$qIdx] ?? 3;
                                             $qIdx++;
@@ -1399,7 +1377,7 @@
         TestGraphConfig table. Options: bar, radar,
         pie, line, none
         ════════════════════════════════════════════ --}}
-        @if(isset($graphType) && $graphType !== 'none')
+        @if (isset($graphType) && $graphType !== 'none')
             <section class="res-section bg-soft">
                 <div class="container">
 
@@ -1451,11 +1429,11 @@
 
                 <div class="row g-4">
                     @php $qIdx2 = 0; @endphp
-                    @foreach($test->categories as $si => $cat)
+                    @foreach ($test->categories as $si => $cat)
                         @php
                             $catColor = $cat->color ?? ($chartData[$si]['color'] ?? '#175cdd');
                             $catIcon = $cat->icon ?? ($chartData[$si]['icon'] ?? '📋');
-                            $catName = $cat->category_name ?? $cat->name ?? 'Section ' . ($si + 1);
+                            $catName = $cat->category_name ?? ($cat->name ?? 'Section ' . ($si + 1));
                             $catScore = $chartData[$si]['score'] ?? 0;
                         @endphp
                         <div class="col-lg-4">
@@ -1477,7 +1455,7 @@
                                     </div>
                                 </div>
                                 <div class="bc-body">
-                                    @foreach($cat->questions as $qi => $question)
+                                    @foreach ($cat->questions as $qi => $question)
                                         @php
                                             $ans = $answers[$qIdx2] ?? 3;
                                             $qIdx2++;
@@ -1532,7 +1510,8 @@
 
     </main>
 
-    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        style="display: none;">
         <i class="bi bi-arrow-up"></i>
     </button>
 
@@ -1541,7 +1520,7 @@
         const OVERALL = {{ $overallPct }};
 
         /* ── Score ring animated counter + conic fill ── */
-        (function () {
+        (function() {
             const ring = document.getElementById('score-ring');
             const label = document.getElementById('ring-pct');
             const color = '{{ $displayColor }}';
@@ -1570,7 +1549,9 @@
                     barObs.unobserve(e.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, {
+            threshold: 0.15
+        });
 
         document.querySelectorAll(
             '.anim-bar, .cmc-fill, .dct-fill, .bc-fill, .ct-bar-fill'

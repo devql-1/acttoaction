@@ -1286,8 +1286,8 @@
         }
 
         /* =====================================================
-               RESPONSIVE — TABLET & MOBILE  (max-width: 768px)
-               ===================================================== */
+                                                       RESPONSIVE — TABLET & MOBILE  (max-width: 768px)
+                                                       ===================================================== */
         @media (max-width: 768px) {
 
             .quiz-top-bar,
@@ -1379,8 +1379,8 @@
         }
 
         /* =====================================================
-               RESPONSIVE — SMALL PHONES  (max-width: 480px)
-               ===================================================== */
+                                                       RESPONSIVE — SMALL PHONES  (max-width: 480px)
+                                                       ===================================================== */
         @media (max-width: 480px) {
 
             .test-hero {
@@ -1521,10 +1521,10 @@
                                 <strong>{{ $test->age }}</strong>
                             </p>
                         @endif
-                        <div class="reviewer-badge">
+                        {{-- <div class="reviewer-badge">
                             <div class="rv-avatar">KA</div>
                             <span>Reviewed by <strong>Kritesh Agarwal</strong>, Filmmaker & Child Acting Coach</span>
-                        </div>
+                        </div> --}}
                         <div class="mt-3">
                             <a href="#quiz" class="btn d-inline-flex align-items-center gap-2"
                                 style="background:var(--accent-color);color:#fff;border-radius:30px;padding:13px 32px;font-family:var(--heading-font);font-weight:700;font-size:15px;">
@@ -1568,7 +1568,7 @@
         </section>
 
         {{-- ── MEDIA BAR ── --}}
-        <div class="media-bar">
+        {{-- <div class="media-bar">
             <div class="container">
                 <p>As Seen In</p>
                 <div class="media-logos">
@@ -1582,139 +1582,66 @@
                     <div class="media-logo">Skill India</div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- ── QUIZ AREA ── --}}
         <section class="quiz-wrapper" id="quiz">
             <div class="container">
-                <div class="row g-5">
 
-                    {{-- SIDEBAR --}}
-                    <div class="col-lg-4 order-lg-1 order-2">
-                        <div class="quiz-sidebar">
-                            <div class="sidebar-card">
-                                <h6><i class="bi bi-info-circle-fill me-2" style="color:var(--accent-color)"></i>About This
-                                    Test</h6>
-                                @if ($test->duration)
-                                    <div class="sidebar-info-row"><i class="bi bi-clock"></i> Takes about
-                                        {{ $test->duration }}
-                                        minutes</div>
-                                @endif
-                                <div class="sidebar-info-row"><i class="bi bi-list-check"></i> {{ $totalQuestions }} quick
-                                    questions</div>
-                                @if ($test->age)
-                                    <div class="sidebar-info-row"><i class="bi bi-people"></i> Best for age
-                                        {{ $test->age }}
-                                    </div>
-                                @endif
-                                <div class="sidebar-info-row"><i class="bi bi-shield-check"></i> 100% Free, no sign-up
-                                    needed</div>
-                                <div class="sidebar-info-row"><i class="bi bi-bar-chart-line"></i> Instant personalised
-                                    result</div>
-                                <div class="sidebar-info-row"><i class="bi bi-star-fill" style="color:#f59e0b"></i> Rated
-                                    4.9/5 by 1000+ parents</div>
-                            </div>
-                            <div class="sidebar-card">
-                                <div class="sidebar-types">
-                                    <h6><i class="bi bi-lightning-charge-fill me-2"
-                                            style="color:var(--accent-color)"></i>Talent Types You May Discover</h6>
-                                    <div class="type-chip">
-                                        <div class="tc-num">1</div>
-                                        <div>
-                                            <div class="tc-name">The Performer</div>
-                                            <div class="tc-sub">Natural on-screen magnetism</div>
-                                        </div>
-                                    </div>
-                                    <div class="type-chip">
-                                        <div class="tc-num">2</div>
-                                        <div>
-                                            <div class="tc-name">The Empath</div>
-                                            <div class="tc-sub">Deep emotional expression</div>
-                                        </div>
-                                    </div>
-                                    <div class="type-chip">
-                                        <div class="tc-num">3</div>
-                                        <div>
-                                            <div class="tc-name">The Creator</div>
-                                            <div class="tc-sub">Storytelling & imagination</div>
-                                        </div>
-                                    </div>
-                                    <div class="type-chip">
-                                        <div class="tc-num">4</div>
-                                        <div>
-                                            <div class="tc-name">The Leader</div>
-                                            <div class="tc-sub">Stage presence & command</div>
-                                        </div>
-                                    </div>
-                                    <div class="type-chip">
-                                        <div class="tc-num">5</div>
-                                        <div>
-                                            <div class="tc-name">The Voice</div>
-                                            <div class="tc-sub">Powerful speech & expression</div>
-                                        </div>
-                                    </div>
-                                    <div class="type-chip">
-                                        <div class="tc-num">6</div>
-                                        <div>
-                                            <div class="tc-name">The Director</div>
-                                            <div class="tc-sub">Vision, craft & filmmaking</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div id="quiz-container">
+                    <div class="quiz-top-bar">
+                        <h3>🎭 {{ $test->test_name }}</h3>
+                        <span class="quiz-step-badge" id="step-badge">
+                            Step 1 of {{ $categories->count() }}
+                        </span>
                     </div>
 
-                    {{-- QUIZ CARD --}}
-                    <div class="col-lg-8 order-lg-2 order-1">
-                        <div id="quiz-container">
-                            <div class="quiz-top-bar">
-                                <h3>🎭 {{ $test->test_name }}</h3>
-                                <span class="quiz-step-badge" id="step-badge">Step 1 of {{ $categories->count() }}</span>
-                            </div>
-                            <div class="quiz-progress-wrap">
-                                <div class="progress-meta">
-                                    <span id="q-progress-label">Question <strong>1</strong> of
-                                        {{ $totalQuestions }}</span>
-                                    <span><strong id="pct-label">0%</strong> complete</span>
-                                </div>
-                                <div class="progress-track">
-                                    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-                                </div>
-                                <div class="step-labels" id="step-labels"></div>
-                            </div>
-                            <div class="quiz-body">
-                                <div class="q-section-label" id="q-section-label">
-                                    <i class="bi bi-emoji-smile"></i> Loading...
-                                </div>
-                                <div class="q-number" id="q-number"></div>
-                                <div class="q-text" id="q-text"></div>
-                                <div id="q-answers"></div>
-                            </div>
-                            <div class="quiz-nav">
-                                <button class="btn-quiz-prev" id="btn-prev" disabled>
-                                    <i class="bi bi-arrow-left"></i> Previous
-                                </button>
-                                <button class="btn-quiz-next" id="btn-next">
-                                    Next <i class="bi bi-arrow-right"></i>
-                                </button>
-                            </div>
+                    <div class="quiz-progress-wrap">
+                        <div class="progress-meta">
+                            <span id="q-progress-label">
+                                Question <strong>1</strong> of {{ $totalQuestions }}
+                            </span>
+                            <span><strong id="pct-label">0%</strong> complete</span>
                         </div>
 
-                        {{-- ✅ HIDDEN FORM — submits answers to controller --}}
-                        <form id="quiz-submit-form" method="POST" action="{{ route('test.submit', $test->id) }}"
-                            style="display:none;">
-                            @csrf
-                            <input type="hidden" id="hidden-answers" name="answers" value="">
-                        </form>
+                        <div class="progress-track">
+                            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+                        </div>
 
-                    </div>{{-- end col-lg-8 --}}
+                        <div class="step-labels" id="step-labels"></div>
+                    </div>
+
+                    <div class="quiz-body">
+                        <div class="q-section-label" id="q-section-label">
+                            <i class="bi bi-emoji-smile"></i> Loading...
+                        </div>
+                        <div class="q-number" id="q-number"></div>
+                        <div class="q-text" id="q-text"></div>
+                        <div id="q-answers"></div>
+                    </div>
+
+                    <div class="quiz-nav">
+                        <button class="btn-quiz-prev" id="btn-prev" disabled>
+                            <i class="bi bi-arrow-left"></i> Previous
+                        </button>
+                        <button class="btn-quiz-next" id="btn-next">
+                            Next <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
+
+                {{-- Hidden Form --}}
+                <form id="quiz-submit-form" method="POST" action="{{ route('test.submit', $test->id) }}"
+                    style="display:none;">
+                    @csrf
+                    <input type="hidden" id="hidden-answers" name="answers">
+                </form>
+
             </div>
         </section>
 
         {{-- ── TALENT TYPES ── --}}
-        <section class="talent-types-section">
+        {{-- <section class="talent-types-section">
             <div class="container">
                 <div class="section-title">
                     <h2>What Are the 6 Acting Talent Types?</h2>
@@ -1799,10 +1726,10 @@
                     @endforeach
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         {{-- ── FAQ ── --}}
-        <section class="faq-section">
+        {{-- <section class="faq-section">
             <div class="container">
                 <div class="section-title">
                     <h2>{{ $test->test_name }} — FAQ</h2>
@@ -1886,7 +1813,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
     </main>
 
     <script>

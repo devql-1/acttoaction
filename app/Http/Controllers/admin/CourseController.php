@@ -40,7 +40,6 @@ class CourseController extends Controller
             'center_fees' => 'required|array',
             'center_fees.*' => 'required|numeric|min:0',
         ]);
-
         $bannerPath = null;
 
         // Upload Banner Image

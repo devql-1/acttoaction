@@ -335,8 +335,8 @@
                     <div class="collapse {{ request()->routeIs('admin.video_gallery*') || request()->routeIs('youtubeVideo*') || request()->routeIs('youtubeCategory*') ? 'show' : '' }}"
                         id="gallery">
                         <ul class="nav nav-collapse">
-                            <li><a href="{{ route('admin.video_gallery') }}"><span class="sub-item">Video
-                                        Gallery</span></a></li>
+                            {{-- <li><a href="{{ route('admin.video_gallery') }}"><span class="sub-item">Video
+                                        Gallery</span></a></li> --}}
                             <li><a href="{{ route('youtubeVideos.index') }}"><span class="sub-item">YouTube
                                         Videos</span></a></li>
                             <li><a href="{{ route('youtubeCategory.index') }}"><span class="sub-item">YouTube
@@ -532,12 +532,12 @@
                             </li>
 
                             {{-- Statistics --}}
-                            {{-- <li class="nav-item {{ request()->routeIs('stats-*') ? 'active' : '' }}">
+                            <li class="nav-item {{ request()->routeIs('stats-*') ? 'active' : '' }}">
                                 <a href="{{ route('stats-index') }}">
                                     <i class="fas fa-chart-bar"></i>
                                     <span class="sub-item">Statistics</span>
                                 </a>
-                            </li> --}}
+                            </li>
 
                             {{-- About Section --}}
                             <li class="nav-item {{ request()->routeIs('about-section-*') ? 'active' : '' }}">

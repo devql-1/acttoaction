@@ -1,15 +1,7 @@
 @extends('frontend.course.layout')
 
 @section('content')
-    {{-- ══════════════════════════════════════════════════════════
-     HOME PAGE — resources/views/frontend/Home/index.blade.php
-     Variables: $featuredCourses, $categories, $allCourses
-══════════════════════════════════════════════════════════ --}}
     <style>
-        /* ═══ CSS VARIABLES ═══ */
-        /* These were missing in the original courses CSS — added from healthcare CSS pattern */
-
-        /* ═══ HERO ═══ */
         .hero-section {
             position: relative;
             min-height: 92vh;
@@ -2079,8 +2071,6 @@
     </style>
 
     <main class="main">
-
-
         <section class="hero-section">
             <div class="hero-bg">
                 <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=85" alt="Act to Action" />

@@ -202,15 +202,54 @@ class HomeController extends Controller
 
         return view('frontend.event.subevent', compact('event', 'otherEvents'));
     }
-    public function quicktest()
+
+    public function quicktest(Request $request)
     {
+        // ================= BLOG DATA =================
+        $categories = BlogCategory::where('status', 1)
+            ->withCount(['posts' => fn($q) => $q->where('status', 1)])
+            ->get();
+
+        $totalBlogs = Blog::where('status', 1)->count();
+
+        $featured = Blog::with(['author', 'category'])
+            ->where('status', 1)
+            ->latest()
+            ->first();
+
+        $blogsQuery = Blog::with(['author', 'category', 'tags'])->where('status', 1);
+
+        // Filter by category
+        if ($categorySlug = $request->category) {
+            $blogsQuery->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        }
+
+        // Filter by tag
+        if ($tagSlug = $request->tag) {
+            $blogsQuery->whereHas('tags', function ($q) use ($tagSlug) {
+                $q->where('slug', $tagSlug);
+            });
+        }
+
+        $blogs = $blogsQuery->latest()->paginate(6)->withQueryString();
+
+        $recentPosts = Blog::with('category')->where('status', 1)->latest()->limit(5)->get();
+
+        $tags = BlogTag::withCount('blogs')->having('blogs_count', '>', 0)->orderByDesc('blogs_count')->limit(20)->get();
+
+        // ================= QUICK TEST DATA =================
         $tests = PsychTest::withCount(['categories', 'questions'])
             ->latest()
             ->get();
+
         if ($tests->isEmpty()) {
             return view('frontend.quick-test.no-tests');
         }
-        return view('frontend.quick-test.quicktest', compact('tests'));
+
+        // ================= RETURN VIEW =================
+        return view('frontend.quick-test.quicktest', compact('tests', 'categories', 'totalBlogs', 'featured', 'blogs', 'recentPosts', 'tags'));
     }
 
     public function show($id)

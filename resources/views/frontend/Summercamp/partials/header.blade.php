@@ -33,8 +33,26 @@
                                 <a href="{{ route('event.summercamp') }}">Event</a>
                             </li>
 
-                            <li><a href="{{ url('/blog') }}">Blog</a></li>
-                            <li><a href="{{ url('/about') }}">About</a></li>
+                            <li><a href="{{ route('frontend.blog.index') }}">Blog</a></li>
+                            <li>
+                                <a href="{{ route('frontend.tests') }}"
+                                    class="{{ request()->routeIs('frontend.tests') ? 'active' : '' }}"
+                                    style="
+            background: #ff6a00;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+       ">
+                                    Quiz-Test
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </li>
 
                         </ul>
                     </nav>

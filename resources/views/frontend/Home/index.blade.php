@@ -44,14 +44,14 @@
                 <div class="icon">
                     <i class="fas fa-book-open"></i>
                 </div>
-                <h1 class="title">Offering</h1>
+                <h1 class="title">Courses</h1>
             </a>
         </div>
 
         <div class="action send">
-            <a href="{{ route('event') }}" class="action-link">
-                <div class="icon"><i class="fas fa-calendar-check"></i></div>
-                <h1>Event</h1>
+            <a href="{{ route('frontend.tests') }}" class="action-link">
+                <div class="icon"><i class="fas fa-file-alt"></i></div>
+                <h1>Skill Assessment</h1>
             </a>
         </div>
 
@@ -83,14 +83,11 @@
         <a href="{{ route('frontend.blog.index') }}">
             <div>Blog</div>
         </a>
-        <a href="{{ route('service') }}">
-            <div>Service</div>
+        <a href="{{ route('event') }}">
+            <div>Events</div>
         </a>
         <a href="{{ route('aboutus') }}">
             <div>About us</div>
-        </a>
-        <a href="{{ route('frontend.tests') }}">
-            <div>Take Quiz</div>
         </a>
     </div>
 

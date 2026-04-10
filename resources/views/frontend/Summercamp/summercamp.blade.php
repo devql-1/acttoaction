@@ -345,7 +345,7 @@
 
 
     <!-- ===== GALLERY ===== -->
-    @include('frontend.Summercamp.partials.gallery')
+
     {{-- <section class="gallery-sec" id="gallery">
         <div class="gallery-header">
             <div class="g-eyebrow"><span></span>Photo Gallery<span></span></div>
@@ -668,9 +668,24 @@
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
+            <div class="act-banner mt-5">
+                <div class="row align-items-center g-4">
+                    <div class="col-md-8">
+                        <h3>Explore Our Summer Camp Partners</h3>
+                        <p>Discover our trusted partners and find the perfect summer camp for your child.</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <a href="#" class="act-btn">
+                            <i class="bi bi-people-fill"></i>
+                            View Partners
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
 
+
+    </section>
 
     <!-- ===== SPEAKERS ===== -->
     @include('frontend.Summercamp.partials.people')
@@ -689,7 +704,7 @@
         </div>
     </section>
 
-
+    @include('frontend.Summercamp.partials.gallery')
     <!-- ===== CTA ===== -->
     <section class="cta-sec" id="register">
         <div class="container">

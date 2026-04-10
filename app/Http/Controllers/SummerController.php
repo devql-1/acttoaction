@@ -93,4 +93,8 @@ class SummerController extends Controller
 
         return view('frontend.Summercamp.event.subevent', compact('event', 'otherEvents'));
     }
+    public function curriculum()
+    {
+        return view('frontend.Summercamp.cirulum');
+    }
 }

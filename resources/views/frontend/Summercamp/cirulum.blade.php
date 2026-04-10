@@ -59,19 +59,19 @@
             bottom: 15px;
             right: 15px;
             z-index: 99999;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background: var(--accent-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 18px;
+            font-size: 20px;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s;
-            box-shadow: 0 4px 15px rgba(23, 92, 221, 0.35);
+            transition: all 0.4s cubic-bezier(.34, 1.56, .64, 1);
+            box-shadow: 0 4px 18px rgba(23, 92, 221, 0.38);
         }
 
         .scroll-top.active {
@@ -83,6 +83,254 @@
             background: color-mix(in srgb, var(--accent-color), #000 15%);
             color: #fff;
             transform: translateY(-3px);
+        }
+
+        /* ===================== KEYFRAMES ===================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes pulseRing {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.35);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        @keyframes shimmerText {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        /* ===================== WORKSHOP BANNER ===================== */
+        .workshop-banner {
+            background: linear-gradient(100deg, #0d1f4a 0%, #175cdd 60%, #2563eb 100%);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .workshop-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Decorative glow blob */
+        .workshop-banner::after {
+            content: '';
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.18) 0%, transparent 70%);
+            right: -80px;
+            top: -120px;
+            pointer-events: none;
+        }
+
+        .workshop-banner .wb-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 22px 0;
+            flex-wrap: wrap;
+        }
+
+        .workshop-banner .wb-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            animation: fadeInLeft .6s ease both;
+        }
+
+        .workshop-banner .wb-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1.5px solid rgba(255, 255, 255, 0.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #ffd96a;
+            flex-shrink: 0;
+            backdrop-filter: blur(6px);
+            animation: pulseRing 2.5s ease infinite;
+        }
+
+        .workshop-banner .wb-text .wb-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #a8c4ff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .workshop-banner .wb-text h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            margin: 0 0 3px;
+            line-height: 1.25;
+            font-family: var(--heading-font);
+        }
+
+        .workshop-banner .wb-text h3 em {
+            font-style: normal;
+            background: linear-gradient(90deg, #ffd96a, #ffb020, #ffd96a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerText 2.5s linear infinite;
+        }
+
+        .workshop-banner .wb-text p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.68);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .workshop-banner .wb-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            animation: fadeInUp .6s .15s ease both;
+        }
+
+        .workshop-banner .wb-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            padding: 10px 16px;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(6px);
+        }
+
+        .workshop-banner .wb-badge i {
+            color: #ffd96a;
+            font-size: 15px;
+        }
+
+        .workshop-banner .btn-workshop {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: #ffd96a;
+            color: #0d1f4a;
+            padding: 13px 28px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 14px;
+            transition: all .3s cubic-bezier(.34, 1.56, .64, 1);
+            box-shadow: 0 5px 18px rgba(255, 217, 106, 0.4);
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .workshop-banner .btn-workshop:hover {
+            background: #ffca28;
+            color: #0d1f4a;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 28px rgba(255, 217, 106, 0.55);
+            gap: 13px;
+        }
+
+        .workshop-banner .btn-workshop i {
+            font-size: 13px;
+            transition: transform .3s;
+        }
+
+        .workshop-banner .btn-workshop:hover i {
+            transform: translateX(3px);
+        }
+
+        @media (max-width: 768px) {
+            .workshop-banner .wb-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                padding: 18px 0;
+            }
+
+            .workshop-banner .wb-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .workshop-banner .wb-badge {
+                display: none;
+            }
+
+            .workshop-banner .btn-workshop {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         /* ===================== HEADER ===================== */
@@ -137,7 +385,6 @@
             color: var(--accent-color);
             font-style: normal;
         }
-
 
         /* ===================== PAGE TITLE ===================== */
         .page-title {
@@ -265,6 +512,7 @@
             border-bottom: 3px solid transparent;
             position: relative;
             overflow: hidden;
+            animation: fadeInUp .5s ease both;
         }
 
         .why-join .reason-card::before {
@@ -427,6 +675,157 @@
             margin-top: -32px;
             position: relative;
             top: -35px;
+        }
+
+        /* ===================== SCHOOL PARTNERSHIP SLIDER ===================== */
+        .school-partners {
+            padding: 70px 0 80px;
+            background: #f4f8ff;
+            overflow: hidden;
+        }
+
+        .school-partners .section-title {
+            padding-bottom: 40px;
+        }
+
+        .school-partners .section-title h2 {
+            font-size: 34px;
+        }
+
+        .school-partners .section-title .partner-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: color-mix(in srgb, var(--accent-color), transparent 90%);
+            color: var(--accent-color);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 5px 16px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        /* Marquee track */
+        .partners-marquee-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Fade edges */
+        .partners-marquee-wrap::before,
+        .partners-marquee-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .partners-marquee-wrap::before {
+            left: 0;
+            background: linear-gradient(to right, #f4f8ff, transparent);
+        }
+
+        .partners-marquee-wrap::after {
+            right: 0;
+            background: linear-gradient(to left, #f4f8ff, transparent);
+        }
+
+        .partners-marquee {
+            display: flex;
+            gap: 20px;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+
+        .partners-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Logo card — full image style */
+        .partner-logo-card {
+            background: #fff;
+            border: 1.5px solid #e0e8f5;
+            border-radius: 16px;
+            overflow: hidden;
+            width: 200px;
+            height: 130px;
+            flex-shrink: 0;
+            transition: border-color .25s, box-shadow .25s, transform .25s;
+            cursor: default;
+            position: relative;
+        }
+
+        .partner-logo-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 26px rgba(23, 92, 221, 0.14);
+            transform: translateY(-5px);
+        }
+
+        /* Full-size image fills the card */
+        .partner-logo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(20%);
+            transition: filter .3s, transform .4s;
+        }
+
+        .partner-logo-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* School name overlay at bottom */
+        .partner-logo-card .ph-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(13, 31, 74, 0.82), transparent);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            padding: 14px 8px 8px;
+            line-height: 1.3;
+            letter-spacing: 0.2px;
+        }
+
+        /* Stats row below slider */
+        .partners-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+
+        .partners-stats .ps-item {
+            text-align: center;
+        }
+
+        .partners-stats .ps-item .ps-num {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            font-family: var(--heading-font);
+            display: block;
+            line-height: 1;
+        }
+
+        .partners-stats .ps-item .ps-lbl {
+            font-size: 13px;
+            color: color-mix(in srgb, var(--default-color), transparent 30%);
+            margin-top: 5px;
+            display: block;
+            font-weight: 500;
         }
 
         /* ===================== VOLUNTEER FORM ===================== */
@@ -666,71 +1065,7 @@
             transform: translateY(-2px);
         }
 
-        /* ===================== TESTIMONIALS MINI ===================== */
-        .team-voices .voice-card {
-            background: #fff;
-            border-radius: 18px;
-            padding: 30px 26px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
-            height: 100%;
-            border-left: 4px solid var(--accent-color);
-            transition: 0.3s;
-        }
-
-        .team-voices .voice-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(23, 92, 221, 0.1);
-        }
-
-        .team-voices .voice-card .quote {
-            font-size: 38px;
-            color: color-mix(in srgb, var(--accent-color), transparent 75%);
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .team-voices .voice-card p {
-            font-size: 14px;
-            line-height: 1.75;
-            font-style: italic;
-            color: color-mix(in srgb, var(--default-color), transparent 15%);
-            margin-bottom: 20px;
-        }
-
-        .team-voices .voice-card .author {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-        }
-
-        .team-voices .voice-card .author .avatar {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--accent-color);
-            color: #fff;
-            font-size: 18px;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .team-voices .voice-card .author h6 {
-            font-size: 14px;
-            font-weight: 800;
-            margin: 0 0 2px;
-        }
-
-        .team-voices .voice-card .author span {
-            font-size: 12px;
-            color: var(--accent-color);
-            font-weight: 600;
-        }
-
-
-
+        /* ===================== RESPONSIVE ===================== */
         @media (max-width: 768px) {
             .page-title h1 {
                 font-size: 34px;
@@ -747,11 +1082,20 @@
             .volunteer-form-section .role-checkbox-group {
                 grid-template-columns: 1fr;
             }
+
+            .partners-stats {
+                gap: 28px;
+            }
         }
     </style>
 
     <main class="main">
         <div style="margin-top: 80px;"></div>
+
+        {{-- =================== JAIPUR WORKSHOP BANNER =================== --}}
+
+
+        {{-- =================== WHY JOIN =================== --}}
         <section class="why-join section">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
@@ -796,7 +1140,7 @@
             </div>
         </section>
 
-        <!-- =================== OPEN ROLES =================== -->
+        {{-- =================== OPEN ROLES =================== --}}
         <section class="roles section section-alt">
             <div class="container">
                 <div class="row gy-5 align-items-start">
@@ -870,7 +1214,7 @@
             </div>
         </section>
 
-        <!-- =================== HOW IT WORKS (STEPS) =================== -->
+        {{-- =================== HOW IT WORKS (STEPS) =================== --}}
         <section class="steps-section section">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
@@ -919,389 +1263,219 @@
             </div>
         </section>
 
-        <!-- =================== VOLUNTEER FORM =================== -->
-        <section class="volunteer-form-section section section-alt" id="join-form">
-
+        {{-- =================== SCHOOL PARTNERSHIPS (replaces Team Voices) =================== --}}
+        <section class="school-partners" data-aos="fade-up">
             <div class="container">
-                <div class="section-title" data-aos="fade-up">
-                    <h2>Submit Your Application</h2>
-                    <p>Ready to make a difference? Fill in your details below and our team will soon contact you. We look
-                        forward to having you on board!</p>
+                <div class="section-title">
+                    <div class="partner-badge">
+                        <i class="bi bi-building"></i> School Partnerships
+                    </div>
+                    <h2>Trusted by 25+ Schools Across India</h2>
+                    <p>Act to Action proudly collaborates with leading schools, educational institutes, and child
+                        development organisations to nurture every child's potential.</p>
                 </div>
-                <div class="row gy-5">
+            </div>
 
-                    <!-- Form -->
-                    <div class="col-lg-8" data-aos="fade-right">
-                        <div class="form-wrapper">
-                            <h3><i class="bi bi-person-plus-fill me-2" style="color:var(--accent-color)"></i>Join Our Team
-                            </h3>
-                            <p class="form-subtitle">Fill in the form below and our team will soon contact you. All fields
-                                marked <span style="color:var(--accent-color);font-weight:700;">*</span> are required.</p>
+            {{-- Auto-scrolling logo marquee --}}
+            <div class="partners-marquee-wrap">
+                <div class="partners-marquee" id="partnersMarquee">
 
-                            <form id="volunteerForm" method="POST" novalidate>
-                                @csrf
+                    {{-- ── ROW 1 (original set) ── --}}
+                    {{-- Replace src with your real school logo/photo URLs when available --}}
 
-                                <!-- Personal Info -->
-                                <p
-                                    style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-color);margin-bottom:16px;">
-                                    <i class="bi bi-person me-1"></i> Personal Information
-                                </p>
-
-                                <div class="row gy-3 mb-3">
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">First Name <span class="req">*</span></label>
-                                        <input type="text" name="first_name" class="form-control"
-                                            placeholder="e.g. Rahul">
-                                        <small class="text-danger first_name_error"></small>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Last Name <span class="req">*</span></label>
-                                        <input type="text" name="last_name" class="form-control"
-                                            placeholder="e.g. Sharma">
-                                        <small class="text-danger last_name_error"></small>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Email Address <span class="req">*</span></label>
-                                        <input type="email" name="email" class="form-control"
-                                            placeholder="yourname@email.com">
-                                        <small class="text-danger email_error"></small>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Phone Number <span class="req">*</span></label>
-                                        <input type="tel" name="phone" class="form-control"
-                                            placeholder="+91 98765 43210">
-                                        <small class="text-danger phone_error"></small>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label class="form-label">Age <span class="req">*</span></label>
-                                        <input type="number" name="age" class="form-control" placeholder="e.g. 24"
-                                            min="16" max="60">
-                                    </div>
-
-                                    <div class="col-md-8">
-                                        <label class="form-label">City / Address <span class="req">*</span></label>
-                                        <input type="text" name="city" class="form-control"
-                                            placeholder="e.g. Vaishali Nagar, Jaipur">
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">State <span class="req">*</span></label>
-                                        <select name="state" class="form-select">
-                                            <option value="" disabled selected>Select your state</option>
-                                            <option>Rajasthan</option>
-                                            <option>Delhi</option>
-                                            <option>Maharashtra</option>
-                                            <option>Gujarat</option>
-                                            <option>Uttar Pradesh</option>
-                                            <option>Madhya Pradesh</option>
-                                            <option>Karnataka</option>
-                                            <option>Tamil Nadu</option>
-                                            <option>West Bengal</option>
-                                            <option>Haryana</option>
-                                            <option>Punjab</option>
-                                            <option>Telangana</option>
-                                            <option>Andhra Pradesh</option>
-                                            <option>Kerala</option>
-                                            <option>Bihar</option>
-                                            <option>Other</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Current Occupation</label>
-                                        <input type="text" name="occupation" class="form-control"
-                                            placeholder="e.g. Student, Teacher, Freelancer">
-                                    </div>
-
-                                </div>
-
-                                <hr class="divider">
-
-                                <!-- Role Selection -->
-
-                                <p
-                                    style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-color);margin-bottom:16px;">
-                                    <i class="bi bi-briefcase me-1"></i> Area of Interest <span class="req">*</span>
-                                </p>
-
-                                <div class="role-checkbox-group mb-3">
-
-                                    <label class="role-check-item">
-                                        <input type="checkbox" name="role[]" value="acting-trainer">
-                                        <span><i class="bi bi-camera-video me-1"></i> Acting Trainer</span>
-                                    </label>
-
-                                    <label class="role-check-item">
-                                        <input type="checkbox" name="role[]" value="photographer">
-                                        <span><i class="bi bi-camera me-1"></i> Photographer / Videographer</span>
-                                    </label>
-
-                                    <label class="role-check-item">
-                                        <input type="checkbox" name="role[]" value="social-media">
-                                        <span><i class="bi bi-megaphone me-1"></i> Social Media & PR</span>
-                                    </label>
-
-                                    <label class="role-check-item">
-                                        <input type="checkbox" name="role[]" value="event-coordinator">
-                                        <span><i class="bi bi-calendar-event me-1"></i> Event Coordinator</span>
-                                    </label>
-
-                                    <label class="role-check-item">
-                                        <input type="checkbox" name="role[]" value="child-dev">
-                                        <span><i class="bi bi-heart-pulse me-1"></i> Child Development</span>
-                                    </label>
-
-                                    <label class="role-check-item">
-                                        <input type="checkbox" name="role[]" value="other">
-                                        <span><i class="bi bi-three-dots me-1"></i> Other</span>
-                                    </label>
-
-                                </div>
-
-                                <hr class="divider">
-
-                                <!-- Availability & Message -->
-
-                                <p
-                                    style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent-color);margin-bottom:16px;">
-                                    <i class="bi bi-chat-dots me-1"></i> Tell Us More
-                                </p>
-
-                                <div class="row gy-3">
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">Availability</label>
-                                        <select name="availability" class="form-select">
-                                            <option value="" disabled selected>How available are you?</option>
-                                            <option>Weekends only</option>
-                                            <option>Weekdays only</option>
-                                            <option>Flexible / Both</option>
-                                            <option>Online only</option>
-                                            <option>Full-time</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <label class="form-label">How did you hear about us?</label>
-                                        <select name="hear_about" class="form-select">
-                                            <option value="" disabled selected>Select an option</option>
-                                            <option>Instagram</option>
-                                            <option>WhatsApp</option>
-                                            <option>Friend / Referral</option>
-                                            <option>School / Event</option>
-                                            <option>Google Search</option>
-                                            <option>Other</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label">Why do you want to join Act to Action?</label>
-                                        <textarea name="message" class="form-control" rows="4"
-                                            placeholder="Tell us about yourself, your passion, and what you'd love to contribute to Act to Action..."></textarea>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label class="form-label">Any relevant experience or skills?</label>
-                                        <textarea name="experience" class="form-control" rows="3"
-                                            placeholder="e.g. 2 years teaching theatre, event management at college, photography skills..."></textarea>
-                                    </div>
-
-                                </div>
-
-                                <div class="mt-4">
-                                    <button type="submit" class="btn-submit">
-                                        <i class="bi bi-send-fill"></i> Submit My Application
-                                    </button>
-                                </div>
-
-                                <!-- Success message -->
-                                <div class="success-msg" id="successMsg" style="display:none;">
-                                    <i class="bi bi-check-circle-fill"></i>
-                                    <h5>Application Submitted Successfully! 🎉</h5>
-                                    <p>Thank you for your interest in joining Act to Action. Our team will soon contact you
-                                        via WhatsApp or phone.</p>
-                                </div>
-
-                            </form>
-
-                        </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=60"
+                            alt="Maharaja School">
+                        <div class="ph-name">Maharaja School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=60"
+                            alt="Delhi Public School">
+                        <div class="ph-name">Delhi Public School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=60"
+                            alt="Ryan Int'l School">
+                        <div class="ph-name">Ryan Int'l School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=60"
+                            alt="St. Xavier's School">
+                        <div class="ph-name">St. Xavier's School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=60"
+                            alt="Tagore Public School">
+                        <div class="ph-name">Tagore Public School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&q=60"
+                            alt="Modern School">
+                        <div class="ph-name">Modern School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&q=60"
+                            alt="Bal Bharati School">
+                        <div class="ph-name">Bal Bharati School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=60"
+                            alt="Vidyashram School">
+                        <div class="ph-name">Vidyashram School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=400&q=60"
+                            alt="Seedling School">
+                        <div class="ph-name">Seedling School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1598618443855-232ee0f819f6?w=400&q=60"
+                            alt="Cambridge School">
+                        <div class="ph-name">Cambridge School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?w=400&q=60"
+                            alt="Podar World School">
+                        <div class="ph-name">Podar World School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1584697964358-3e14ca57658b?w=400&q=60"
+                            alt="Apex Academy">
+                        <div class="ph-name">Apex Academy</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1567168544813-cc03465b4fa8?w=400&q=60"
+                            alt="Heritage School">
+                        <div class="ph-name">Heritage School</div>
                     </div>
 
-                    <!-- Sidebar -->
-                    <div class="col-lg-4" data-aos="fade-left" data-aos-delay="100">
-                        <div class="info-sidebar">
+                    {{-- ── ROW 2 (duplicate for seamless loop) ── --}}
 
-                            <!-- What to Expect -->
-                            <div class="info-card">
-                                <h5><i class="bi bi-list-check"></i> What to Expect</h5>
-                                <ul>
-                                    <li><i class="bi bi-check-circle-fill"></i> Our team will review your application
-                                        within
-                                        2–3 working days</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> You'll be contacted via WhatsApp or phone
-                                        call</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> A brief orientation session before
-                                        onboarding</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> Official volunteer certificate upon
-                                        completion</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> Letter of recommendation for dedicated
-                                        volunteers</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> Access to Act to Action events and shows
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <!-- Office Hours -->
-                            <div class="info-card">
-                                <h5><i class="bi bi-clock"></i> Operating Hours</h5>
-                                <ul>
-                                    <li><i class="bi bi-calendar-week"></i>
-                                        <div><strong>Tue – Sat</strong><br>11:00 AM – 7:00 PM</div>
-                                    </li>
-                                    <li><i class="bi bi-calendar-week"></i>
-                                        <div><strong>Sunday</strong><br>10:00 AM – 4:00 PM</div>
-                                    </li>
-                                    <li><i class="bi bi-geo-alt-fill"></i>
-                                        <div>Rising Passion Studio, Vaishali Nagar, Jaipur – 302021</div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <!-- WhatsApp Contact -->
-                            <div class="contact-card">
-                                <h5>Have a Question?</h5>
-                                <p>Not sure which role is right for you? Chat directly with our team on WhatsApp before
-                                    applying — we'll help guide you to the best fit.</p>
-                                <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-wa">
-                                    <i class="bi bi-whatsapp"></i> Chat on WhatsApp
-                                </a>
-                            </div>
-                        </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=60"
+                            alt="Maharaja School">
+                        <div class="ph-name">Maharaja School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=60"
+                            alt="Delhi Public School">
+                        <div class="ph-name">Delhi Public School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=60"
+                            alt="Ryan Int'l School">
+                        <div class="ph-name">Ryan Int'l School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=60"
+                            alt="St. Xavier's School">
+                        <div class="ph-name">St. Xavier's School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=60"
+                            alt="Tagore Public School">
+                        <div class="ph-name">Tagore Public School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&q=60"
+                            alt="Modern School">
+                        <div class="ph-name">Modern School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&q=60"
+                            alt="Bal Bharati School">
+                        <div class="ph-name">Bal Bharati School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=60"
+                            alt="Vidyashram School">
+                        <div class="ph-name">Vidyashram School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=400&q=60"
+                            alt="Seedling School">
+                        <div class="ph-name">Seedling School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1598618443855-232ee0f819f6?w=400&q=60"
+                            alt="Cambridge School">
+                        <div class="ph-name">Cambridge School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?w=400&q=60"
+                            alt="Podar World School">
+                        <div class="ph-name">Podar World School</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1584697964358-3e14ca57658b?w=400&q=60"
+                            alt="Apex Academy">
+                        <div class="ph-name">Apex Academy</div>
+                    </div>
+                    <div class="partner-logo-card">
+                        <img src="https://images.unsplash.com/photo-1567168544813-cc03465b4fa8?w=400&q=60"
+                            alt="Heritage School">
+                        <div class="ph-name">Heritage School</div>
                     </div>
 
                 </div>
             </div>
-        </section>
 
-        <!-- =================== TEAM VOICES =================== -->
-        <section class="team-voices section">
+            {{-- Partner stats --}}
             <div class="container">
-                <div class="section-title" data-aos="fade-up">
-                    <h2>From Our Team</h2>
-                    <p>Hear from the passionate people already making a difference at Act to Action.</p>
+                <div class="partners-stats" data-aos="fade-up" data-aos-delay="150">
+                    <div class="ps-item">
+                        <span class="ps-num">25+</span>
+                        <span class="ps-lbl">Partner Schools</span>
+                    </div>
+                    <div class="ps-item">
+                        <span class="ps-num">1000+</span>
+                        <span class="ps-lbl">Children Reached</span>
+                    </div>
+                    <div class="ps-item">
+                        <span class="ps-num">6+</span>
+                        <span class="ps-lbl">Cities Active</span>
+                    </div>
+                    <div class="ps-item">
+                        <span class="ps-num">5★</span>
+                        <span class="ps-lbl">Avg. School Rating</span>
+                    </div>
                 </div>
-                <div class="row gy-4">
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                        <div class="voice-card">
-                            <div class="quote"><i class="bi bi-quote"></i></div>
-                            <p>"Being a part of Act to Action has been the most rewarding experience of my career. Watching
-                                children transform from shy to stage-confident in just months is indescribable."</p>
-                            <div class="author">
-                                <div class="avatar">D</div>
-                                <div>
-                                    <h6>Deepak Chandel</h6>
-                                    <span>Photographer &amp; Cinematographer</span>
+            </div>
+        </section>
+        <section class="container">
+            <div class="workshop-banner">
+                <div class="container">
+                    <div class="wb-inner">
+                        <div class="wb-left">
+                            <div class="wb-icon">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <div class="wb-text">
+                                <div class="wb-label">
+                                    <i class="bi bi-lightning-charge-fill"></i>
+                                    Now Live in Jaipur
                                 </div>
+                                <h3>Top Jaipur <em>Workshops</em> — Find Yours!</h3>
+                                <p>Acting, theatre, public speaking & confidence-building workshops for kids near you.</p>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
-                        <div class="voice-card">
-                            <div class="quote"><i class="bi bi-quote"></i></div>
-                            <p>"Act to Action doesn't just teach acting — it builds people. As someone with a journalism
-                                background, the storytelling and creativity here is unlike anything I've experienced."</p>
-                            <div class="author">
-                                <div class="avatar">K</div>
-                                <div>
-                                    <h6>Kriti Gupta</h6>
-                                    <span>PR &amp; Event Head</span>
-                                </div>
+                        <div class="wb-right">
+                            <div class="wb-badge">
+                                <i class="bi bi-calendar-check-fill"></i>
+                                <span>New batches starting soon</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                        <div class="voice-card">
-                            <div class="quote"><i class="bi bi-quote"></i></div>
-                            <p>"Collaborating with Act to Action from a neurotherapy perspective has opened my eyes to how
-                                deeply the arts can support child development. Science and art are powerful together."</p>
-                            <div class="author">
-                                <div class="avatar">B</div>
-                                <div>
-                                    <h6>Dr. Bhumika Soni</h6>
-                                    <span>Child Neuro Therapist</span>
-                                </div>
-                            </div>
+                            <a href="#" class="btn-workshop">
+                                Browse Workshops <i class="bi bi-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
     </main>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script>
-        $(document).ready(function() {
-
-            $('#volunteerForm').submit(function(e) {
-
-                e.preventDefault();
-
-                let formData = new FormData(this);
-
-                $('.text-danger').text('');
-
-                $.ajax({
-
-                    url: "{{ route('volunteer.store') }}",
-                    method: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-
-                    success: function(response) {
-
-                        if (response.status == 200) {
-
-                            toastr.success(response.message);
-
-                            $('#volunteerForm')[0].reset();
-
-                            $('#successMsg').fadeIn();
-
-                        }
-
-                    },
-
-                    error: function(xhr) {
-
-                        if (xhr.status === 422) {
-
-                            let errors = xhr.responseJSON.errors;
-
-                            $.each(errors, function(key, value) {
-
-                                $('.' + key + '_error').text(value[0]);
-
-                            });
-
-                            toastr.error("Please fix the errors");
-
-                        }
-
-                    }
-
-                });
-
-            });
-
-        });
-    </script>
 @endsection

@@ -1596,7 +1596,90 @@
             </div>
         </section>
 
+        <section class="certifications section">
+            <div class="container">
+                <div class="section-title" data-aos="fade-up">
+                    <h2>Meet the Co-Founder</h2>
+                    <p>The visionary architect behind Act to Action's formula-driven pedagogy and child-centric creative
+                        education philosophy.</p>
+                </div>
+                <div class="row gy-5 align-items-center">
+                    <div class="col-lg-4 text-center" data-aos="fade-right">
+                        <img src="https://static.wixstatic.com/media/495d44_4b14b64cccde4ee797cfd36583c43a9f~mv2.jpg/v1/crop/x_0,y_39,w_408,h_338/fill/w_403,h_334,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kriti%20Gupta.jpg"
+                            alt="Kriti Gupta"
+                            style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;">
+                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Kriti Gupta</h3>
+                        <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Filmmaker
+                            &amp; Acting Coach</p>
+                        <p style="font-size:13px;color:var(--default-color);margin-bottom:20px;font-style:italic;">
+                            Co-Founder
+                            &amp; MD, Rising Passion Pvt. Ltd.</p>
+                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"
+                            class="about cta-btn d-inline-flex align-items-center gap-2"
+                            style="background:var(--accent-color);color:#fff;padding:12px 28px;border-radius:30px;font-weight:700;box-shadow:0 6px 20px rgba(23,92,221,0.3);">
+                            <i class="bi bi-whatsapp"></i> Connect with Us
+                        </a>
+                    </div>
 
+                    <div class="col-lg-8" data-aos="fade-left" data-aos-delay="100">
+                        <p
+                            style="font-size:13px;font-weight:700;color:var(--accent-color);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">
+                            <i class="bi bi-stars me-2"></i>Formula-driven pedagogy · Child development science · Holistic
+                            mental health
+                        </p>
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Kriti Gupta is a trailblazing
+                            expert in child-centric creative education, renowned for his innovative approach to nurturing
+                            young minds through performing arts and holistic development. As the architect of Act to Action,
+                            he merges scientific child psychology with artistic training to foster confidence, creativity,
+                            and emotional resilience in children.</p>
+                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Kritesh's proprietary methodologies
+                            integrate medical insights (via collaborations with child development experts) and theatre
+                            techniques to address physical, mental, emotional, and intellectual growth. His programs use
+                            Shlok Recitation, Theatre exercises, Medical Therapies and Practice protocol to transform
+                            abstract concepts into tangible skills — ensuring learning is experiential and impactful.</p>
+                        <p style="font-size:15px;line-height:1.8;">Over the years, Kritesh has donned multiple hats —
+                            casting head, director, acting coach, mentor, assistant producer, and art director. Currently,
+                            he serves as the Founder &amp; Managing Director of <strong>Rising Passion Pvt. Ltd.</strong>,
+                            actively leading Act to Action with vision and commitment.</p>
+                    </div>
+                </div>
+                <section class="news-section" style="background: #fff">
+                    <div class="container">
+                        <p class="news-label">Founder Achievements</p>
+                        <div class="logo-marquee-wrap">
+                            <div class="logo-marquee">
+                                @php
+                                    $newsLogos = [
+                                        ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
+                                        ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
+                                        ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
+                                        ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
+                                        ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
+                                        ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
+                                        ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
+                                        ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
+                                        ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
+                                        ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                        ['icon' => 'bi-shop', 'name' => 'Decathlon'],
+                                        ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
+                                    ];
+                                @endphp
+                                {{-- First set --}}
+                                @foreach ($newsLogos as $logo)
+                                    <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}
+                                    </div>
+                                @endforeach
+                                {{-- Duplicate for seamless loop --}}
+                                @foreach ($newsLogos as $logo)
+                                    <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
         <!-- =================== OUR CENTRES =================== -->
         <section class="departments section section-alt">
             <div class="container">
