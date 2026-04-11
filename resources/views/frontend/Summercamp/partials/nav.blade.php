@@ -222,7 +222,8 @@
         }
 
         .site-header .brand .logo img {
-            height: 50px;
+            margin-top: 10px;
+            height: 83px;
         }
 
         .site-header .brand .logo h1 {
@@ -2752,6 +2753,282 @@
             .sec-title {
                 margin-bottom: 36px;
             }
+        }
+
+        /* ===== ONLY ADD THESE ANIMATION RULES TO YOUR EXISTING CSS ===== */
+
+        /* UPDATE: .ann-bar - Add animation */
+        .ann-bar {
+            /* Keep all existing properties, just ADD these: */
+            animation: slideDownAnn 0.4s ease-out;
+        }
+
+        .ann-bar.hidden {
+            /* Keep all existing properties, just ADD this: */
+            animation: slideUpAnn 0.4s ease-out forwards;
+        }
+
+        /* ADD NEW KEYFRAME: Announcement Bar Slide Down */
+        @keyframes slideDownAnn {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ADD NEW KEYFRAME: Announcement Bar Slide Up */
+        @keyframes slideUpAnn {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+        }
+
+        /* UPDATE: .ann-bar .cta - Add animation & hover scale */
+        .ann-bar .cta {
+            /* Keep all existing properties, just ADD these: */
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s both;
+        }
+
+        .ann-bar .cta:hover {
+            /* Change this line: */
+            /* FROM: transform: (nothing) */
+            /* TO: */
+            transform: scale(1.05);
+        }
+
+        /* UPDATE: .ann-bar .close-btn:hover - Add rotation */
+        .ann-bar .close-btn:hover {
+            /* Keep color, just ADD this: */
+            transform: rotate(90deg);
+        }
+
+        /* ADD NEW KEYFRAME: Pop In Effect */
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* ===== HEADER ANIMATIONS ===== */
+
+        /* UPDATE: .site-header - Add animation */
+        .site-header {
+            /* Keep all existing properties, just ADD this: */
+            animation: slideHeaderDown 0.5s ease-out;
+        }
+
+        /* ADD NEW KEYFRAME: Header Slide Down */
+        @keyframes slideHeaderDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* UPDATE: .site-header .brand .logo - Add animation */
+        .site-header .brand .logo {
+            /* Keep all existing properties, just ADD this: */
+            animation: fadeInLeft 0.6s ease-out 0.1s both;
+        }
+
+        /* UPDATE: .site-header .brand .logo img - Add hover effect */
+        .site-header .brand .logo img {
+            /* Keep all existing, just ADD this: */
+            transition: transform 0.3s ease;
+        }
+
+        .site-header .brand .logo img:hover {
+            /* ADD NEW RULE: */
+            transform: scale(1.05);
+        }
+
+        /* ADD NEW KEYFRAME: Fade In Left */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* UPDATE: .navmenu ul - Add animation */
+        .navmenu ul {
+            /* Keep all existing properties, just ADD this: */
+            animation: fadeInRight 0.6s ease-out 0.2s both;
+        }
+
+        /* ADD NEW KEYFRAME: Fade In Right */
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* UPDATE: .navmenu a::after - Improve transition */
+        .navmenu a::after {
+            /* Keep all existing, change this line: */
+            /* FROM: transition: .3s; */
+            /* TO: */
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* AND ADD: */
+            transform-origin: center;
+        }
+
+        /* UPDATE: .navmenu .dropdown - Improve transition */
+        .navmenu .dropdown {
+            /* Keep all existing, change this line: */
+            /* FROM: transition: .25s; */
+            /* TO: */
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* UPDATE: .nav-register - Add animation & better hover */
+        .nav-register {
+            /* Keep all existing properties, just ADD these: */
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s both;
+        }
+
+        .nav-register:hover {
+            /* Keep existing, change this line: */
+            /* FROM: transform: translateY(-1px); */
+            /* TO: */
+            transform: translateY(-3px) scale(1.05);
+            /* AND ADD: */
+            box-shadow: 0 8px 20px rgba(255, 106, 0, 0.3);
+        }
+
+        /* UPDATE: .header-right - Add animation */
+        .header-right {
+            /* Keep all existing properties, just ADD this: */
+            animation: fadeInRight 0.6s ease-out 0.3s both;
+        }
+
+        /* UPDATE: .header-soc a - Better hover animation */
+        .header-soc a {
+            /* Change this line: */
+            /* FROM: transition: .2s; */
+            /* TO: */
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .header-soc a:hover {
+            /* Change this line: */
+            /* FROM: color: var(--accent); */
+            /* TO: */
+            color: var(--accent);
+            transform: translateY(-3px) scale(1.15);
+        }
+
+        /* UPDATE: .mob-toggle - Add hover animation */
+        .mob-toggle {
+            /* Keep all existing, just ADD this: */
+            transition: all 0.3s ease;
+        }
+
+        .mob-toggle:hover {
+            /* ADD NEW RULE: */
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* ===== MOBILE MENU ANIMATIONS ===== */
+
+        /* UPDATE: .nav-wrap - Add fade animation */
+        .nav-wrap {
+            /* Keep all existing, just ADD this: */
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* ADD NEW KEYFRAME: Fade In */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* UPDATE: .navmenu (mobile) - Add slide animation */
+        .navmenu {
+            /* Keep all existing, just ADD this: */
+            animation: slideInRight 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ADD NEW KEYFRAME: Slide In Right */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* UPDATE: .navmenu .has-drop.open .dropdown - Add slide animation */
+        .navmenu .has-drop.open .dropdown {
+            /* Keep all existing, just ADD this: */
+            animation: slideDown 0.25s ease-out;
+        }
+
+        /* ADD NEW KEYFRAME: Slide Down Menu */
+        @keyframes slideDown {
+            from {
+                max-height: 0;
+                opacity: 0;
+            }
+
+            to {
+                max-height: 500px;
+                opacity: 1;
+            }
+        }
+
+        /* UPDATE: .mob-close - Add hover animation */
+        .mob-close {
+            /* Keep all existing, just ADD this: */
+            transition: all 0.3s ease;
+        }
+
+        .mob-close:hover {
+            /* ADD NEW RULE: */
+            transform: rotate(90deg);
+            color: var(--accent);
         }
     </style>
 </head>

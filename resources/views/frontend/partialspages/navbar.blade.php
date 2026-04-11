@@ -1,3 +1,8 @@
+<style>
+    .logo img {
+        height: 120px;
+    }
+</style>
 <header id="header" class="header fixed-top">
     <div class="topbar d-flex align-items-center dark-background">
         <div class="container d-flex justify-content-center justify-content-md-between">
@@ -21,7 +26,9 @@
     <div class="branding d-flex align-items-center">
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-                <h1 class="sitename">Act-to-Action</h1>
+                <div class="logo">
+                    <img src="{{ asset('img/logo/IMG_1658.JPG-removebg-preview.png') }}" alt="ActToAction Logo">
+                </div>
             </a>
 
             <nav id="navmenu" class="navmenu">

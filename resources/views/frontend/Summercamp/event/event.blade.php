@@ -1,14 +1,8 @@
-@extends('frontend.course.layout')
+@extends('frontend.course.layoutsummercamp')
 @section('content')
-    {{-- ══════════════════════════════════════════════════════
-     EVENTS PAGE — Dynamic blade (design from static HTML)
-══════════════════════════════════════════════════════ --}}
-
     <style>
-        /* ─── CSS Variable System ─── */
-
         .light-background {
-            background: #f4f8ff !important;
+            background: color-mix(in srgb, var(--accent-color), transparent 96%) !important;
         }
 
         h1,
@@ -24,7 +18,7 @@
         /* ─── HERO ─── */
         .hero-events {
             background: linear-gradient(135deg, var(--heading-color) 0%, #1a3a72 50%, var(--accent-color) 100%);
-            padding: 72px 0 56px;
+            padding: 150px 0 56px;
             position: relative;
             overflow: hidden;
         }
@@ -88,12 +82,13 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: background .2s, transform .15s;
+            transition: background 0.3s, transform 0.3s;
             text-decoration: none;
+            box-shadow: 0 6px 20px rgba(23, 92, 221, 0.35);
         }
 
         .btn-primary-solid:hover {
-            background: #0f4ab8;
+            background: color-mix(in srgb, var(--accent-color), #000 15%);
             transform: translateY(-2px);
             color: #fff;
         }
@@ -111,7 +106,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: border-color .2s, background .2s;
+            transition: border-color 0.3s, background 0.3s;
             text-decoration: none;
         }
 
@@ -206,9 +201,10 @@
 
         .section-title p {
             font-size: 16px;
-            color: #6b7280;
+            color: color-mix(in srgb, var(--default-color), transparent 25%);
             max-width: 560px;
             margin: 0 auto;
+            line-height: 1.7;
         }
 
         /* ─── FILTER TABS ─── */
@@ -221,12 +217,12 @@
             font-size: 13px;
             font-weight: 600;
             color: var(--default-color);
-            background: #f4f8ff;
-            border: 1.5px solid #e4ecf8;
+            background: color-mix(in srgb, var(--accent-color), transparent 96%);
+            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 80%);
             border-radius: 25px;
             padding: 7px 18px;
             cursor: pointer;
-            transition: all .2s;
+            transition: all 0.3s;
         }
 
         .filter-btn:hover,
@@ -234,6 +230,7 @@
             background: var(--accent-color);
             color: #fff;
             border-color: var(--accent-color);
+            box-shadow: 0 6px 20px rgba(23, 92, 221, 0.35);
         }
 
         /* ─── EVENT CARDS ─── */
@@ -245,9 +242,9 @@
         .event-card {
             background: var(--surface-color);
             border-radius: 18px;
-            border: 1.5px solid #e8edf5;
+            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 85%);
             overflow: hidden;
-            transition: box-shadow .25s, transform .2s, border-color .25s;
+            transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -275,7 +272,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform .5s;
+            transition: transform 0.5s;
         }
 
         .event-card:hover .event-card-img img {
@@ -335,7 +332,7 @@
 
         .event-card-body p {
             font-size: 13.5px;
-            color: #6b7280;
+            color: color-mix(in srgb, var(--default-color), transparent 20%);
             line-height: 1.6;
             margin-bottom: 14px;
             flex: 1;
@@ -357,7 +354,7 @@
             align-items: center;
             gap: 5px;
             font-size: 12px;
-            color: #9ca3af;
+            color: color-mix(in srgb, var(--default-color), transparent 40%);
         }
 
         .event-meta-item i {
@@ -369,7 +366,7 @@
             align-items: center;
             justify-content: space-between;
             padding-top: 13px;
-            border-top: 1px solid #f0f4fb;
+            border-top: 1px solid color-mix(in srgb, var(--accent-color), transparent 90%);
             margin-top: auto;
         }
 
@@ -379,7 +376,7 @@
             gap: 5px;
             font-size: 12px;
             font-weight: 600;
-            color: #6b7280;
+            color: color-mix(in srgb, var(--default-color), transparent 20%);
         }
 
         .view-details-link {
@@ -390,19 +387,19 @@
             font-weight: 700;
             font-size: 13px;
             font-family: var(--heading-font);
-            transition: gap .2s;
+            transition: gap 0.3s;
             text-decoration: none;
         }
 
         .view-details-link:hover {
             gap: 10px;
-            color: var(--accent-color);
+            color: color-mix(in srgb, var(--accent-color), transparent 25%);
         }
 
         /* Status badge colours */
         .status-upcoming {
-            background: #dbeafe;
-            color: #1e40af;
+            background: color-mix(in srgb, var(--accent-color), transparent 85%);
+            color: var(--accent-color);
         }
 
         .status-ongoing {
@@ -411,8 +408,8 @@
         }
 
         .status-past {
-            background: #f3f4f6;
-            color: #6b7280;
+            background: color-mix(in srgb, var(--default-color), transparent 90%);
+            color: color-mix(in srgb, var(--default-color), transparent 20%);
         }
 
         /* ─── WHY JOIN ─── */
@@ -424,31 +421,38 @@
         .why-card {
             background: var(--surface-color);
             border-radius: 14px;
-            border: 1.5px solid #e8edf5;
+            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 85%);
             padding: 24px;
             display: flex;
             align-items: flex-start;
             gap: 16px;
             height: 100%;
-            transition: box-shadow .2s, transform .2s;
+            transition: box-shadow 0.3s, transform 0.3s;
         }
 
         .why-card:hover {
             box-shadow: 0 10px 30px rgba(23, 92, 221, .1);
             transform: translateY(-4px);
+            border-color: var(--accent-color);
         }
 
         .why-icon {
             width: 46px;
             height: 46px;
             border-radius: 12px;
-            background: #eff6ff;
+            background: color-mix(in srgb, var(--accent-color), transparent 90%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 20px;
             color: var(--accent-color);
             flex-shrink: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .why-card:hover .why-icon {
+            background: var(--accent-color);
+            color: #fff;
         }
 
         .why-card h4 {
@@ -460,7 +464,7 @@
 
         .why-card p {
             font-size: 13px;
-            color: #6b7280;
+            color: color-mix(in srgb, var(--default-color), transparent 20%);
             line-height: 1.55;
             margin: 0;
         }
@@ -475,6 +479,7 @@
             overflow: hidden;
             position: relative;
             cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .gallery-item img {
@@ -482,7 +487,7 @@
             height: 220px;
             object-fit: cover;
             display: block;
-            transition: transform .4s;
+            transition: transform 0.5s;
         }
 
         .gallery-item:hover img {
@@ -493,9 +498,15 @@
             position: absolute;
             inset: 0;
             background: linear-gradient(to top, rgba(13, 23, 43, 0.7) 0%, transparent 60%);
+            opacity: 0;
             display: flex;
             align-items: flex-end;
             padding: 14px;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
         }
 
         .gallery-overlay span {
@@ -569,6 +580,11 @@
             font-size: 18px;
             color: #93c5fd;
             flex-shrink: 0;
+            transition: background 0.3s;
+        }
+
+        .biz-feature-row:hover .biz-ico {
+            background: rgba(255, 255, 255, .22);
         }
 
         .biz-feature-row h6 {
@@ -598,6 +614,12 @@
             padding: 22px 18px;
             text-align: center;
             backdrop-filter: blur(4px);
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .biz-stat-card:hover {
+            background: rgba(255, 255, 255, .18);
+            transform: translateY(-3px);
         }
 
         .biz-stat-card .bsn {
@@ -631,13 +653,14 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: background .2s, transform .15s;
+            transition: background 0.3s, transform 0.3s;
             cursor: pointer;
             text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .btn-white-solid:hover {
-            background: #f0f5ff;
+            background: color-mix(in srgb, #fff, transparent 8%);
             transform: translateY(-2px);
             color: var(--accent-color);
         }
@@ -652,14 +675,15 @@
             background: var(--surface-color);
             border-radius: 16px;
             padding: 28px;
-            border: 1.5px solid #e8edf5;
-            transition: box-shadow .2s;
+            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 85%);
+            transition: box-shadow 0.3s, transform 0.3s;
             position: relative;
             height: 100%;
         }
 
         .testimonial-item:hover {
             box-shadow: 0 10px 35px rgba(23, 92, 221, .09);
+            transform: translateY(-4px);
         }
 
         .t-stars {
@@ -705,7 +729,7 @@
 
         .t-role {
             font-size: 12px;
-            color: #9ca3af;
+            color: color-mix(in srgb, var(--default-color), transparent 40%);
         }
 
         .t-big-quote {
@@ -713,7 +737,7 @@
             top: 16px;
             right: 18px;
             font-size: 38px;
-            color: #f0f4fb;
+            color: color-mix(in srgb, var(--accent-color), transparent 90%);
             line-height: 1;
         }
 
@@ -721,15 +745,15 @@
         .newsletter-section {
             padding: 70px 0;
             background: var(--background-color);
-            border-top: 1px solid #eef3fb;
+            border-top: 1px solid color-mix(in srgb, var(--accent-color), transparent 85%);
         }
 
         .newsletter-box {
-            background: linear-gradient(135deg, #eff6ff 0%, #f4f8ff 100%);
+            background: color-mix(in srgb, var(--accent-color), transparent 94%);
             border-radius: 24px;
             padding: 52px 40px;
             text-align: center;
-            border: 1.5px solid #dbeafe;
+            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 80%);
         }
 
         .newsletter-box h3 {
@@ -740,7 +764,7 @@
         }
 
         .newsletter-box p {
-            color: #6b7280;
+            color: color-mix(in srgb, var(--default-color), transparent 20%);
             font-size: 15px;
             margin-bottom: 28px;
         }
@@ -758,15 +782,16 @@
             flex: 1;
             min-width: 220px;
             padding: 13px 20px;
-            border: 1.5px solid #dbeafe;
+            border: 1.5px solid color-mix(in srgb, var(--accent-color), transparent 75%);
             border-radius: 30px;
             font-size: 14px;
             outline: none;
-            transition: border-color .2s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         .newsletter-form input:focus {
             border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 85%);
         }
 
         /* ─── VIDEO CARDS ─── */
@@ -776,12 +801,12 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0, 0, 0, .08);
-            transition: transform .3s, box-shadow .3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .video-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, .15);
+            box-shadow: 0 15px 35px rgba(23, 92, 221, .15);
         }
 
         /* ─── VIDEO MODAL ─── */
@@ -796,7 +821,7 @@
             padding: 20px;
         }
 
-        @media(max-width:768px) {
+        @media (max-width: 768px) {
             .hero-mosaic {
                 display: none !important;
             }
@@ -806,12 +831,7 @@
             }
         }
     </style>
-
     <main class="main">
-
-        {{-- ══════════════════════
-       HERO
-  ══════════════════════ --}}
         <section class="hero-events">
             <div class="container position-relative">
                 <div class="row align-items-center g-5">
@@ -867,7 +887,7 @@
             <div class="container">
                 <div class="section-title">
                     <h2>All Events & Programmes</h2>
-                    <span class="divider-line"></span>
+
                     <p>Click any event to see full details, sub-events, and register for free.</p>
                 </div>
 
@@ -996,7 +1016,7 @@
             <div class="container">
                 <div class="section-title">
                     <h2>Why Join Our Events</h2>
-                    <span class="divider-line"></span>
+
                     <p>More than just an event — an experience worth remembering</p>
                 </div>
                 <div class="row g-4">
@@ -1018,49 +1038,21 @@
         {{-- ══════════════════════
        GALLERY
   ══════════════════════ --}}
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.min.css" />
-
-        <section class="gallery-section light-background" data-aos="fade-up">
+        <section class="gallery-section" data-aos="fade-up">
             <div class="container">
-                <div class="section-title">
-                    <h2>Event Gallery</h2>
-                    <span class="divider-line"></span>
-                    <p>Moments & highlights from our past events</p>
+
+                <div class="section-title text-center">
+                    <div class="sh-label">Our Memories</div>
+                    <h2>Event <em>Gallery</em></h2>
+
+                    <p>Moments & highlights from our students, events and performances</p>
                 </div>
-
-                <div style="overflow:hidden;">
-                    <div id="evTrack"
-                        style="display:flex; gap:16px; transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);">
-
-                        @php
-                            $galleryItems = [
-                                ['src' => 'assets/img/health/cardiology-2.webp', 'caption' => 'Opening Ceremony'],
-                                ['src' => 'assets/img/health/neurology-3.webp', 'caption' => 'Workshop Sessions'],
-                                ['src' => 'assets/img/health/orthopedics-1.webp', 'caption' => 'Community Gathering'],
-                                ['src' => 'assets/img/health/pediatrics-4.webp', 'caption' => 'Award Night'],
-                                ['src' => 'assets/img/health/emergency-2.webp', 'caption' => 'Cultural Program'],
-                                ['src' => 'assets/img/health/laboratory-3.webp', 'caption' => 'Closing Ceremony'],
-                            ];
-                        @endphp
-
-                        @foreach ($galleryItems as $gi)
-                            <div style="flex:0 0 calc(33.333% - 11px);">
-                                <div class="gallery-item">
-                                    <a href="{{ asset($gi['src']) }}" data-fancybox="gallery"
-                                        data-caption="{{ $gi['caption'] }}">
-                                        <img src="{{ asset($gi['src']) }}" alt="{{ $gi['caption'] }}" class="img-fluid"
-                                            style="width:100%;height:220px;object-fit:cover;display:block;" />
-                                        <div class="gallery-overlay"><span>{{ $gi['caption'] }}</span></div>
-                                    </a>
-                                </div>
-                            </div>
-                        @endforeach
-
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-center gap-2 mt-3" id="evDots"></div>
+                @include('frontend.partialspages.Gallery', [
+                    'images' => $galleryImages,
+                    'sectionTitle' => 'Event Highlights Gallery',
+                    'sectionDesc' =>
+                        'A glimpse into the magic of our past events — the smiles, the performances, and the unforgettable moments captured in every frame.',
+                ])
             </div>
         </section>
 
@@ -1121,7 +1113,6 @@
             <div class="container">
                 <div class="section-title">
                     <h2>What Parents & Schools Say</h2>
-                    <span class="divider-line"></span>
                     <p>Real feedback from parents, students, and school coordinators who've attended our events.</p>
                 </div>
                 <div class="row g-4">
@@ -1149,74 +1140,20 @@
             </div>
         </section>
 
-        {{-- ══════════════════════
-       YOUTUBE / PARENT TESTIMONIALS
-       (kept exactly as-is from original)
-  ══════════════════════ --}}
-        <section class="section light-background" data-aos="fade-up">
+        {{-- YOUTUBE / PARENT TESTIMONIALS --}}
+        <section class="video-section">
             <div class="container">
-                <div class="section-title">
-                    <h2>Parents Testimonials</h2>
-                    <span class="divider-line"></span>
+                <div class="section-title" style="padding-bottom: 0px;">
+                    <div class="sh-label">Parents Testimonials</div>
+                    <h2>Event <em>Testimonials</em></h2>
                     <p>Real stories from our event participants</p>
+
                 </div>
 
-                {{-- Prev / Next --}}
-                <div class="d-flex justify-content-end gap-2 mb-3">
-                    <button class="btn btn-sm px-3" id="vidPrev"
-                        style="background:var(--accent-color);color:#fff;border:none;">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <button class="btn btn-sm px-3" id="vidNext"
-                        style="background:var(--accent-color);color:#fff;border:none;">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-
-                <div style="overflow:hidden;">
-                    <div id="vidTrack"
-                        style="display:flex; gap:16px; transition:transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);">
-                        @foreach ($videoData as $video)
-                            <div style="flex:0 0 calc(25% - 12px); min-width:0;">
-                                <div class="video-card" onclick="openVideo('{{ $video['id'] }}')">
-                                    <div style="position:relative; overflow:hidden;">
-                                        <img src="{{ $video['thumb'] }}" alt="{{ $video['title'] }}"
-                                            class="img-fluid w-100"
-                                            style="aspect-ratio:16/9; object-fit:cover; display:block;">
-                                        <div
-                                            style="position:absolute;inset:0;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;">
-                                            <div
-                                                style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,.3);">
-                                                <i class="fas fa-play"
-                                                    style="color:#ff0000;font-size:15px;margin-left:3px;"></i>
-                                            </div>
-                                        </div>
-                                        @if ($video['duration'])
-                                            <div
-                                                style="position:absolute;bottom:6px;right:8px;background:rgba(0,0,0,.8);color:#fff;font-size:11px;font-weight:600;padding:2px 6px;border-radius:3px;">
-                                                {{ $video['duration'] }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <div style="padding:12px 14px 16px;">
-                                        <h5
-                                            style="font-size:13px;font-weight:600;color:var(--heading-color);line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-                                            {{ $video['title'] }}
-                                        </h5>
-                                        <p
-                                            style="font-size:11px;color:#9ca3af;line-height:1.5;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
-                                            {{ $video['desc'] }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-center gap-2 mt-3" id="vidDots"></div>
+                @include('frontend.partialspages.youtube', ['videos' => $videos])
             </div>
         </section>
+        {{-- </section> --}}
 
         {{-- ══════════════════════
        VIDEO MODAL
@@ -1249,7 +1186,6 @@
                 </div>
             </div>
         </div>
-
         {{-- ══════════════════════
        NEWSLETTER
   ══════════════════════ --}}
@@ -1397,48 +1333,7 @@
             });
         })();
 
-        /* ── Video modal ── */
-        const allVideos = {!! json_encode($videoData) !!};
 
-        function openVideo(videoId) {
-            const modal = document.getElementById('videoModal');
-            const frame = document.getElementById('videoFrame');
-            const titleEl = document.getElementById('videoTitle');
-            frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-            const found = allVideos.find(v => v.id === videoId);
-            titleEl.textContent = found ? found.title : '';
-            buildRecommended(videoId);
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function buildRecommended(excludeId) {
-            const list = document.getElementById('recommendedList');
-            list.innerHTML = '';
-            allVideos.filter(v => v.id !== excludeId).forEach(v => {
-                const item = document.createElement('div');
-                item.style.cssText =
-                    'display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;cursor:pointer;border-radius:8px;padding:6px;transition:background .2s';
-                item.onmouseover = () => item.style.background = 'rgba(255,255,255,.08)';
-                item.onmouseout = () => item.style.background = 'transparent';
-                item.onclick = () => switchVideo(v.id);
-                item.innerHTML = `
-        <div style="position:relative;flex-shrink:0;width:120px;">
-          <img src="${v.thumb}" style="width:120px;height:68px;object-fit:cover;border-radius:6px;display:block;">
-          ${v.duration ? `<div style="position:absolute;bottom:4px;right:5px;background:rgba(0,0,0,.8);color:#fff;font-size:10px;font-weight:600;padding:1px 5px;border-radius:3px;">${v.duration}</div>` : ''}
-          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-            <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;">
-              <i class="fas fa-play" style="color:#ff0000;font-size:10px;margin-left:2px;"></i>
-            </div>
-          </div>
-        </div>
-        <div style="flex:1;min-width:0;">
-          <p style="color:#fff;font-size:12px;font-weight:600;line-height:1.4;margin:0 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${v.title}</p>
-          <p style="color:rgba(255,255,255,.45);font-size:11px;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${v.desc}</p>
-        </div>`;
-                list.appendChild(item);
-            });
-        }
 
         function switchVideo(videoId) {
             document.getElementById('videoFrame').src =

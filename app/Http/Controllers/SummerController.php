@@ -65,19 +65,52 @@ class SummerController extends Controller
     }
     public function event()
     {
+        $galleryImages = \App\Models\Gallery::with('galleryCategory')
+            ->latest()
+            ->get()
+            ->map(function ($g) {
+                return [
+                    'id' => $g->id,
+                    'title' => $g->title,
+                    'image' => asset('storage/' . $g->image),
+                    'category' => $g->galleryCategory->name ?? '',
+                    'slug' => $g->galleryCategory->slug ?? '',
+                ];
+            })
+            ->toArray();
+        $galleryCategories = \App\Models\Gallerycat::withCount('galleries')->get();
+
         $events = Event::with('subEvents')->where('type', 'summer-event')->latest('event_date')->get();
+        $categoryId = \App\Models\YoutubeCategory::where('slug', 'parent-testimoial')->value('id');
 
-        $videoData = YoutubeVideo::with('youtubeCategory')->latest()->get()->map(
-            fn($v) => [
-                'id' => $v->youtube_id,
-                'thumb' => 'https://img.youtube.com/vi/' . $v->youtube_id . '/mqdefault.jpg',
-                'title' => $v->name,
-                'desc' => $v->youtubeCategory?->name ?? '',
-                'duration' => '',
-            ],
-        );
+        $videos = YoutubeVideo::where('youtube_category_id', $categoryId)
+            ->latest()
+            ->get()
+            ->map(function ($v) {
+                $cleanId = explode('?', $v->youtube_id)[0];
+                return [
+                    'id' => $cleanId,
+                    'thumb' => 'https://img.youtube.com/vi/' . $cleanId . '/mqdefault.jpg',
+                    'title' => $v->name,
+                    'desc' => 'Parent testimonial',
+                    'duration' => '',
+                ];
+            })
+            ->toArray();
 
-        return view('frontend.Summercamp.event.event', compact('events', 'videoData'));
+        if (empty($videos)) {
+            $videos = [
+                [
+                    'id' => 'dQw4w9WgXcQ',
+                    'thumb' => 'https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg',
+                    'title' => 'Fallback Video',
+                    'desc' => 'No videos found',
+                    'duration' => '2:30',
+                ],
+            ];
+        }
+
+        return view('frontend.Summercamp.event.event', compact('events', 'videos', 'galleryImages', 'galleryCategories'));
     }
     public function subEventDetail($id)
     {

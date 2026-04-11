@@ -1442,6 +1442,9 @@
                 </div>
             </div>
         </section>
+
+
+        {{-- =================== Workshop Banner (replaces Team Voices) =================== --}}
         <section class="container">
             <div class="workshop-banner">
                 <div class="container">

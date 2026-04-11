@@ -7,7 +7,7 @@
 
 {{-- Slider wrapper --}}
 <div class="vid-slider-outer">
-    <div id="vidTrack" class="vid-track">
+    <div id="vidTrack" class="vid-track" style="padding: 10px">
         @foreach ($videos as $video)
             <div class="vid-slide">
                 <div class="video-card" onclick="openVideo('{{ $video['id'] }}')">
