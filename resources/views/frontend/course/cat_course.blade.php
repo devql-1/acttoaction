@@ -1891,7 +1891,7 @@
                                             <i class="bi bi-collection-play"></i>
                                             {{ $course->sessions ?? '10' }} Sessions
                                         </div>
-                                        <a href="{{ route('course.details', $course->id) }}"
+                                        <a href="{{ route('course.details', $course->slug) }}"
                                             class="btn-card-primary stp-btn">
                                             <i class="bi bi-person-plus-fill"></i> Enroll
                                         </a>

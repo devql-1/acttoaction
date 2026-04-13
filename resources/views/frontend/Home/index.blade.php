@@ -61,6 +61,7 @@
             display: block;
         }
 
+
         /* ===========================================================
    SECTION 3 — BANNER
    Edit: height (line marked), overlay alpha, tagline text in HTML
@@ -721,6 +722,34 @@
             }
 
             /* hide on very small screens */
+        }
+
+        @media (max-width: 600px) {
+
+            html,
+            body {
+                height: auto;
+                overflow-y: auto;
+            }
+
+            body {
+                display: block;
+                /* remove flex restriction */
+            }
+
+            .container {
+                overflow-y: auto;
+            }
+
+            @media (max-width: 600px) {
+
+                .container {
+                    justify-content: flex-start;
+                    /* allow top-to-bottom flow */
+                }
+
+            }
+
         }
     </style>
 
