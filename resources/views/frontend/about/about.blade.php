@@ -1337,6 +1337,68 @@
                 </div>
             </div>
         </section>
+        <section class="business-section">
+            <div class="container position-relative">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Schools & Organisations</div>
+                        <h2>Unlock your school's true creative potential</h2>
+                        <p>Act to Action partners with schools, NGOs, hospitals, and corporates to deliver impactful
+                            workshops, events, and ongoing programmes. Get started in minutes — no consultants, no wasted
+                            time, just results.</p>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-mortarboard-fill"></i></div>
+                            <div>
+                                <h6>School Partnerships</h6>
+                                <p>Theatre in Education, NEP 2020 aligned, modelling shows, exhibitions & parenting
+                                    workshops.</p>
+                            </div>
+                        </div>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-heart-pulse-fill"></i></div>
+                            <div>
+                                <h6>Hospitals & Health Institutions</h6>
+                                <p>Mindfulness teaching and mindful doctor programmes for healthcare professionals.</p>
+                            </div>
+                        </div>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-globe2"></i></div>
+                            <div>
+                                <h6>NGOs & Government Campaigns</h6>
+                                <p>Free character building based on Bhagavad Gita for NGOs, slums, juveniles, and awareness
+                                    campaigns.</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-white-solid mt-2" target="_blank">
+                            <i class="bi bi-whatsapp"></i> Get Started Today
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="biz-visual">
+                            <div class="biz-stats-grid">
+                                <div class="biz-stat-card">
+                                    <div class="bsn">25<span>+</span></div>
+                                    <div class="bsl">Partner Institutes</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">3K<span>+</span></div>
+                                    <div class="bsl">Students Impacted</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">6<span>+</span></div>
+                                    <div class="bsl">Centres in Jaipur</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">100<span>%</span></div>
+                                    <div class="bsl">Free for NGOs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="news-section">
             <div class="container">
                 <p class="news-label">Act to Action — In the News</p>
