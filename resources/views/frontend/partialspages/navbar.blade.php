@@ -58,13 +58,13 @@
                     <li>
                         <a href="{{ route('frontend.tests') }}"
                             class="{{ request()->routeIs('frontend.tests') ? 'active' : '' }}">
-                            Quiz-Test
+                            Skill Assessment
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('volunteer') }}"
                             class="{{ request()->routeIs('volunteer') ? 'active' : '' }}">
-                            volunteer
+                            Join Us
                         </a>
                     </li>
 
