@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>StageLight - Acting Course</title>
+    <title>Act to Action</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
 

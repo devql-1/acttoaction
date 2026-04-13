@@ -10,8 +10,9 @@
                             <span class="sitename">Act To Action</span>
                         </a>
                         <p class="brand-description">
-                            Transforming aspiring performers into professional artists through expert training, creative
-                            exploration, and industry connections.
+                            Developing globally competent young performers through age-structured, experiential, skill -
+                            based learning, supported by on-demand, personalised programs for academic institutions and
+                            individual learners.
                         </p>
 
                         <!-- Contact Info -->
@@ -41,8 +42,14 @@
                                 <div class="nav-column">
                                     <h6>Follow Us</h6>
                                     <nav class="footer-nav">
-                                        <a href="#!">Instagram</a>
-                                        <a href="#!">YouTube</a>
+                                        <a href="https://www.instagram.com/acttoaction_" target="_blank">Instagram</a>
+                                        <a href="https://youtube.com/@acttoaction-21?si=Qz1Or7FLOiVJDVtv"
+                                            target="_blank">YouTube</a>
+                                        <a href="https://x.com/acttoaction_?s=21" target="_blank">X (Twitter)</a>
+                                        <a href="https://www.facebook.com/share/1GB3Jn5JcU/?mibextid=wwXIfr"
+                                            target="_blank">Facebook</a>
+                                        <a href="https://www.linkedin.com/company/acttoaction-skills/"
+                                            target="_blank">LinkedIn</a>
                                     </nav>
                                 </div>
                             </div>
@@ -66,14 +73,14 @@
                                 <div class="nav-column">
                                     <h6>Actions</h6>
                                     <nav class="footer-nav">
-                                        <a href="#!">Enroll Now</a>
-                                        <a href="#!">Book a Tour</a>
-                                        <a href="#!">Join Newsletter</a>
-                                        <a href="#!">Contact Us</a>
+                                        <a href="{{ route('aboutus') }}">Admissions</a>
+                                        <a href="{{ route('aboutus') }}">Courses</a>
+                                        <a href="{{ route('event') }}">Events</a>
+                                        <a href="{{ route('volunteer') }}">Join Us</a>
+                                        <a href="{{ route('frontend.blog.index') }}">Blog</a>
                                     </nav>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

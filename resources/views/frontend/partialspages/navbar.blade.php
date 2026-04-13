@@ -11,7 +11,8 @@
                     <a href="mailto:info@acttoaction.com">info@acttoaction.com</a>
                 </i>
                 <i class="bi bi-whatsapp d-flex align-items-center ms-4">
-                    <span>+1 5589 55488 55</span>
+                    <span>+91-91191-92811</span>
+                    <span>+91-91191-82511 </span>
                 </i>
             </div>
             {{-- <div class="social-links d-none d-md-flex align-items-center">
@@ -27,7 +28,7 @@
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="logo d-flex align-items-center">
                 <div class="logo">
-                    <img src="{{ asset('img/logo/IMG_1658.JPG-removebg-preview.png') }}" alt="ActToAction Logo">
+                    <img src="{{ asset('img/logo/IMG_6008.PNG') }}" alt="ActToAction Logo">
                 </div>
             </a>
 

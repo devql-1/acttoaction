@@ -5,17 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Action UI</title>
-    {{-- <link rel="stylesheet" href="{{ asset('frontendassets/css/style.css') }}"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="{{ asset('courseassets/img/faviconsdf.png') }}">
-</head>
-
-<body>
     <style>
-        /* ===========================================================
-   SECTION 1 — RESET & BASE
-   =========================================================== */
-
+        /* ===== RESET & BASE ===== */
         *,
         *::before,
         *::after {
@@ -38,11 +31,7 @@
             min-height: 100vh;
         }
 
-        /* ===========================================================
-   SECTION 2 — TOPBAR / HEADER
-   Edit: logo height, padding
-   =========================================================== */
-
+        /* ===== TOPBAR ===== */
         .topbar {
             width: 100%;
             padding: 16px 60px;
@@ -56,21 +45,91 @@
         }
 
         .logo img {
-            height: 70px;
+            height: 80px;
             width: auto;
             display: block;
         }
 
+        /* ===== BADGE ===== */
+        .badge-free {
+            position: absolute;
+            top: 8px;
+            right: -34px;
 
-        /* ===========================================================
-   SECTION 3 — BANNER
-   Edit: height (line marked), overlay alpha, tagline text in HTML
-   =========================================================== */
+            background: linear-gradient(45deg, #ff3b3b, #ff0000);
+            color: #fff;
 
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 32px;
+
+            transform: rotate(45deg);
+            z-index: 3;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            animation: glow 1.5s infinite alternate;
+
+            white-space: nowrap;
+            /* prevent breaking */
+        }
+
+        @media (max-width: 600px) {
+            .badge-free {
+                top: 6px;
+                right: -26px;
+
+                font-size: 9px;
+                padding: 3px 20px;
+
+                transform: rotate(45deg);
+            }
+        }
+
+        @media (max-width: 380px) {
+            .badge-free {
+                top: 12px;
+                right: -29px;
+                font-size: 7px;
+                padding: 2px 14px;
+            }
+        }
+
+        .badge-free::before,
+        .badge-free::after {
+            content: "";
+            position: absolute;
+            bottom: -6px;
+            border-top: 6px solid #b30000;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+        }
+
+        .badge-free::before {
+            left: 0;
+        }
+
+        .badge-free::after {
+            right: 0;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            }
+
+            to {
+                box-shadow: 0 0 12px rgba(255, 0, 0, 0.9);
+            }
+        }
+
+        /* ===== BANNER SECTION ===== */
         .site-banner {
             width: 100%;
             height: 800px;
-            /* ← CHANGE BANNER HEIGHT HERE */
             position: relative;
             overflow: hidden;
             display: flex;
@@ -90,7 +149,6 @@
             z-index: 1;
         }
 
-        /* Dark overlay — change last value (0.45) to adjust darkness */
         .site-banner::after {
             content: "";
             position: absolute;
@@ -99,7 +157,6 @@
             z-index: 2;
         }
 
-        /* Hero text on banner */
         .hero-content {
             position: relative;
             z-index: 3;
@@ -130,11 +187,7 @@
             margin-bottom: 0;
         }
 
-        /* ===========================================================
-   SECTION 4 — SHARED PILL BUTTON
-   Edit once — applies to Deal, Support, Login everywhere
-   =========================================================== */
-
+        /* ===== PILL BUTTON ===== */
         .pill-btn {
             display: inline-block;
             background: #ff6a00;
@@ -158,11 +211,7 @@
             box-shadow: 0 6px 20px rgba(255, 106, 0, 0.38);
         }
 
-        /* ===========================================================
-   SECTION 5 — DEAL POPUP (fixed left side)
-   Edit: width, text, badge label, description
-   =========================================================== */
-
+        /* ===== DEAL POPUP ===== */
         .deal-popup {
             position: fixed;
             left: 18px;
@@ -229,18 +278,14 @@
             padding: 8px 10px;
         }
 
-        /* ===========================================================
-   SECTION 6 — MAIN CONTAINER & ACTION ITEMS
-   Edit: icon colors (.add/.send/.exchange), font size, gap
-   =========================================================== */
-
+        /* ===== MAIN CONTAINER & ACTIONS ===== */
         .container {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 50px 20px 140px;
+            padding: 80px 20px 140px;
             width: 100%;
         }
 
@@ -248,11 +293,12 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            margin: 22px 0;
+            margin: 32px 0;
             cursor: pointer;
             opacity: 0;
             transform: translateY(25px);
             animation: fadeSlide 0.6s ease forwards;
+            position: relative;
         }
 
         .action:nth-child(1) {
@@ -292,21 +338,16 @@
             background: #ff6a00;
         }
 
-        /* Courses */
         .send .icon {
             background: #0f2747;
         }
 
-        /* Skill Assessment */
         .exchange .icon {
             background: #ff6a00;
         }
 
-        /* Summer Camp */
-
         .action h1 {
             font-size: 58px;
-            /* ← desktop action label size */
             font-weight: 700;
             color: #0f2747;
             line-height: 1;
@@ -318,10 +359,7 @@
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
 
-        /* ===========================================================
-   SECTION 7 — BOTTOM NAV (desktop floating pill)
-   =========================================================== */
-
+        /* ===== BOTTOM NAV (DESKTOP) ===== */
         .bottom-nav {
             position: fixed;
             bottom: 25px;
@@ -364,10 +402,7 @@
             font-weight: 600;
         }
 
-        /* ===========================================================
-   SECTION 8 — HAMBURGER BUTTON (mobile only, hidden on desktop)
-   =========================================================== */
-
+        /* ===== HAMBURGER BUTTON (MOBILE) ===== */
         .hamburger-btn {
             display: none;
             position: fixed;
@@ -409,10 +444,7 @@
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        /* ===========================================================
-   SECTION 9 — MOBILE MENU DRAWER
-   =========================================================== */
-
+        /* ===== MOBILE MENU ===== */
         .mobile-menu {
             display: none;
             position: fixed;
@@ -458,10 +490,7 @@
             color: #ff6a00;
         }
 
-        /* ===========================================================
-   SECTION 10 — SUPPORT BUTTON (fixed bottom-right)
-   =========================================================== */
-
+        /* ===== SUPPORT BUTTON ===== */
         .support {
             position: fixed;
             bottom: 25px;
@@ -473,10 +502,7 @@
             box-shadow: 0 6px 20px rgba(255, 106, 0, 0.38);
         }
 
-        /* ===========================================================
-   SECTION 11 — ANIMATIONS
-   =========================================================== */
-
+        /* ===== ANIMATIONS ===== */
         @keyframes fadeSlide {
             from {
                 opacity: 0;
@@ -501,13 +527,10 @@
             }
         }
 
-        /* ===========================================================
-   SECTION 12 — RESPONSIVE: LARGE DESKTOP (1200px+)
-   =========================================================== */
-
+        /* ===== LARGE DESKTOP (1200px+) ===== */
         @media (min-width: 1200px) {
             .site-banner {
-                height: 360px;
+                height: 1000px;
             }
 
             .hero-content h2 {
@@ -515,14 +538,11 @@
             }
 
             .action h1 {
-                font-size: 64px;
+                font-size: 60px;
             }
         }
 
-        /* ===========================================================
-   SECTION 13 — RESPONSIVE: TABLET (601px – 900px)
-   =========================================================== */
-
+        /* ===== TABLET (601px – 900px) ===== */
         @media (max-width: 900px) and (min-width: 601px) {
             .topbar {
                 padding: 14px 30px;
@@ -544,18 +564,22 @@
                 font-size: 15px;
             }
 
+            .container {
+                padding: 60px 20px 130px;
+            }
+
+            .action {
+                margin: 24px 0;
+            }
+
             .action h1 {
-                font-size: 44px;
+                font-size: 40px;
             }
 
             .icon {
                 width: 58px;
                 height: 58px;
                 font-size: 24px;
-            }
-
-            .container {
-                padding: 40px 20px 130px;
             }
 
             .deal-popup {
@@ -584,13 +608,8 @@
             }
         }
 
-        /* ===========================================================
-   SECTION 14 — RESPONSIVE: MOBILE (≤ 600px)
-   =========================================================== */
-
+        /* ===== MOBILE (≤ 600px) ===== */
         @media (max-width: 600px) {
-
-            /* Topbar */
             .topbar {
                 padding: 10px 16px;
             }
@@ -599,7 +618,6 @@
                 height: 48px;
             }
 
-            /* Banner */
             .site-banner {
                 height: 200px;
             }
@@ -612,19 +630,19 @@
                 font-size: 13px;
             }
 
-            /* Actions */
             .container {
-                padding: 30px 16px 120px;
+                padding: 50px 16px 120px;
                 align-items: center;
+                justify-content: flex-start;
             }
 
             .action {
                 gap: 14px;
-                margin: 16px 0;
+                margin: 20px 0;
             }
 
             .action h1 {
-                font-size: 32px;
+                font-size: 30px;
             }
 
             .icon {
@@ -634,7 +652,6 @@
                 border-radius: 14px;
             }
 
-            /* Deal popup — moves bottom-left on mobile */
             .deal-popup {
                 left: 8px;
                 top: auto;
@@ -664,7 +681,6 @@
                 padding: 6px 8px;
             }
 
-            /* Nav swap */
             .bottom-nav {
                 display: none !important;
             }
@@ -677,7 +693,6 @@
                 display: block;
             }
 
-            /* Support */
             .support {
                 bottom: 18px;
                 right: 12px;
@@ -689,11 +704,7 @@
             }
         }
 
-        /* ===========================================================
-   SECTION 15 — RESPONSIVE: SMALL MOBILE (≤ 380px)
-   Extra care for very small phones like iPhone SE
-   =========================================================== */
-
+        /* ===== SMALL MOBILE (≤ 380px) ===== */
         @media (max-width: 380px) {
             .site-banner {
                 height: 170px;
@@ -708,7 +719,7 @@
             }
 
             .action h1 {
-                font-size: 27px;
+                font-size: 25px;
             }
 
             .icon {
@@ -720,102 +731,41 @@
             .deal-popup {
                 display: none;
             }
-
-            /* hide on very small screens */
-        }
-
-        @media (max-width: 600px) {
-
-            html,
-            body {
-                height: auto;
-                overflow-y: auto;
-            }
-
-            body {
-                display: block;
-                /* remove flex restriction */
-            }
-
-            .container {
-                overflow-y: auto;
-            }
-
-            @media (max-width: 600px) {
-
-                .container {
-                    justify-content: flex-start;
-                    /* allow top-to-bottom flow */
-                }
-
-            }
-
         }
     </style>
+</head>
 
-
-    {{-- =====================================================
-     SECTION A — HEADER
-     Edit: logo image path, logo height in SECTION 2
-     ===================================================== --}}
+<body>
+    <!-- HEADER -->
     <header class="topbar">
         <div class="logo">
-            <img src="{{ asset('img/logo/IMG_1658.JPG-removebg-preview.png') }}" alt="ActToAction Logo">
+            <img src="{{ asset('img/logo/IMG_6008.PNG') }}" alt="ActToAction Logo">
         </div>
     </header>
 
-
-    {{-- =====================================================
-     SECTION B — BANNER
-     Edit: img src (image path), h2 tagline, p subtitle
-     Banner height controlled in SECTION 3 CSS
-     ===================================================== --}}
+    <!-- HERO BANNER SECTION -->
     <section class="site-banner">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80" alt="Site Banner">
+        <img src="{{ asset('courseassets/img/homebanner/IMG_3987.JPEG') }}" alt="Site Banner">
         <div class="hero-content">
-            <h2>Learn. Grow. <span>Succeed.</span></h2>
-            <p>Explore our courses, assessments and summer camps.</p>
+            <h2>Building Future Ready Leaders Explore our courses,<span> assessments & summer camps.</span>
+            </h2>
+            <p>Creative Expression, Cognative Leadership & Technology led Innovation</p>
         </div>
     </section>
-    {{-- <div class="site-banner">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80" alt="Site Banner">
-        <div class="hero-content">
-            <h2>Learn. Grow. <span>Succeed.</span></h2>
-            <p>Explore our courses, assessments and summer camps.</p>
-        </div>
-    </div> --}}
 
-
-    {{-- =====================================================
-     SECTION C — DEAL POPUP
-     Edit: badge text, title, description, button label
-     Position & size controlled in SECTION 5 CSS
-     ===================================================== --}}
-    <div class="deal-popup" id="dealPopup">
-        <button class="deal-close" onclick="document.getElementById('dealPopup').style.display='none'"
-            aria-label="Close">&#10005;</button>
-        <div class="deal-badge">Hot Deal</div>
-        <div class="deal-title">Special Offer!</div>
-        <div class="deal-desc">30% off on all courses today only</div>
-        <button class="pill-btn">Grab Now</button>
-    </div>
-
-
-    {{-- =====================================================
-     SECTION D — MAIN ACTION ITEMS
-     Edit: route names, Font Awesome icon class, label text
-     Icon colors controlled in SECTION 6 CSS
-     ===================================================== --}}
-    <div class="container">
-
+    <!-- DEAL POPUP -->
+    <span class="bell-badge">4</span>
+    <!-- MAIN ACTION SECTION -->
+    <section class="container">
         <div class="action add">
             <a href="{{ route('index.course') }}" class="action-link">
                 <div class="icon"><i class="fas fa-book-open"></i></div>
-                <h1>Courses</h1>
+                <h1>Our Courses</h1>
             </a>
         </div>
 
         <div class="action send">
+            <span class="badge-free">FREE*</span>
             <a href="{{ route('frontend.tests') }}" class="action-link">
                 <div class="icon"><i class="fas fa-file-alt"></i></div>
                 <h1>Skill Assessment</h1>
@@ -825,19 +775,13 @@
         <div class="action exchange">
             <a href="{{ route('summercamp') }}" class="action-link">
                 <div class="icon"><i class="fas fa-campground"></i></div>
-                <h1>Summer Camp</h1>
+                <h1>Summer Camp 2026</h1>
             </a>
         </div>
+    </section>
 
-    </div>
-
-
-    {{-- =====================================================
-     SECTION E — BOTTOM NAV (desktop)
-     Edit: route names, link labels
-     Keep in sync with SECTION G (mobile menu)
-     ===================================================== --}}
-    <div class="bottom-nav">
+    <!-- BOTTOM NAVIGATION (DESKTOP) -->
+    <nav class="bottom-nav">
         <a href="{{ route('frontend.blog.index') }}">
             <div>Blog</div>
         </a>
@@ -847,48 +791,37 @@
         <a href="{{ route('aboutus') }}">
             <div>About us</div>
         </a>
-    </div>
+        <a href="{{ route('volunteer') }}">
+            <div>Join us</div>
+        </a>
+    </nav>
 
-
-    {{-- =====================================================
-     SECTION F — HAMBURGER BUTTON (mobile only)
-     Styling controlled in SECTION 8 CSS
-     ===================================================== --}}
+    <!-- HAMBURGER BUTTON (MOBILE) -->
     <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Open menu">
         <div class="hb-bars">
             <span id="hb1"></span>
             <span id="hb2"></span>
             <span id="hb3"></span>
+            <span id="hb4"></span>
         </div>
         Menu
     </button>
 
-
-    {{-- =====================================================
-     SECTION G — MOBILE MENU DRAWER
-     Edit: route names, link labels (keep in sync with SECTION E)
-     ===================================================== --}}
+    <!-- MOBILE MENU DRAWER -->
     <div class="mobile-menu" id="mobileMenu">
         <a href="{{ route('frontend.blog.index') }}">Blog</a>
         <a href="{{ route('event') }}">Events</a>
         <a href="{{ route('aboutus') }}">About us</a>
+        <a href="{{ route('volunteer') }}">
+            <div>Join us</div>
+        </a>
     </div>
 
-
-    {{-- =====================================================
-     SECTION H — SUPPORT BUTTON
-     Edit: button label text only
-     Styling controlled in SECTION 10 CSS
-     ===================================================== --}}
+    <!-- SUPPORT BUTTON -->
     <div class="support">
         <button class="pill-btn">&#128172; Support</button>
     </div>
 
-
-    {{-- =====================================================
-     SECTION I — JAVASCRIPT
-     Hamburger toggle + outside-click to close
-     ===================================================== --}}
     <script>
         function toggleMenu() {
             var menu = document.getElementById('mobileMenu');
@@ -909,7 +842,544 @@
             }
         });
     </script>
-
 </body>
+@include('frontend.Home.chatbot')
+<script>
+    // Banner Slides Data - Static
+    const bannerSlidesData = [{
+            id: 1,
+            image: "{{ asset('courseassets/img/homebanner/IMG_3987.JPEG') }}",
+            title: "Learn Programming",
+            url: "{{ route('index.course') }}"
+        },
+        {
+            id: 2,
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+            title: "Free Skill Assessment",
+            url: "{{ route('frontend.tests') }}"
+        },
+        {
+            id: 3,
+            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+            title: "Summer Camp 2026",
+            url: "{{ route('summercamp') }}"
+        },
+        {
+            id: 4,
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+            title: "Special Offer - 30% Off",
+            url: "{{ route('index.course') }}"
+        }
+    ];
+
+    let currentSlideIndex = 0;
+
+    // Create Bell Notification + Banner Slider
+    function createBellAndSlider() {
+        const bellHTML = `
+        <div class="bell-notification-wrapper">
+            <button class="bell-icon" id="bellIcon" onclick="toggleBannerSlider()" aria-label="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="bell-badge">${bannerSlidesData.length}</span>
+            </button>
+        </div>
+    `;
+
+        const sliderHTML = `
+        <!-- Banner Slider Modal -->
+        <div class="banner-slider-backdrop" id="bannerBackdrop" onclick="closeBannerSlider(event)"></div>
+        
+        <div class="banner-slider-container" id="bannerSliderContainer">
+            <!-- Close Button -->
+            <button class="banner-slider-close" onclick="closeBannerSlider(event)" aria-label="Close">✕</button>
+
+            <!-- Slider Wrapper -->
+            <div class="banner-slider-wrapper">
+                <div class="banner-slides" id="bannerSlides">
+                    ${bannerSlidesData.map((slide, index) => `
+                        <div class="banner-slide" onclick="goToBannerPage('${slide.url}')">
+                            <img src="${slide.image}" alt="${slide.title}">
+                            <div class="banner-slide-overlay">
+                                <p>${slide.title}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Navigation Arrows -->
+                <button class="banner-arrow banner-arrow-prev" onclick="prevBannerSlide()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="banner-arrow banner-arrow-next" onclick="nextBannerSlide()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+        
+        </div>
+    `;
+
+        document.body.insertAdjacentHTML('beforeend', bellHTML);
+        document.body.insertAdjacentHTML('beforeend', sliderHTML);
+        addBellAndSliderStyles();
+    }
+
+    // Add Styles
+    function addBellAndSliderStyles() {
+        const styles = `
+        /* ===== BELL NOTIFICATION ICON ===== */
+        .bell-notification-wrapper {
+            position: fixed;
+            bottom: 100px;
+            left: 25px;
+            z-index: 150;
+        }
+
+        .bell-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6a00, #ff8533);
+            color: #ffffff;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(255, 106, 0, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .bell-icon:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 20px rgba(255, 106, 0, 0.45);
+        }
+
+        .bell-icon:active {
+            transform: scale(0.95);
+        }
+
+        .bell-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff3b3b;
+            color: #ffffff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            border: 2px solid #ffffff;
+            animation: bellPulse 2s infinite;
+        }
+
+        @keyframes bellPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        /* ===== BANNER SLIDER MODAL ===== */
+        .banner-slider-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease, pointer-events 0.35s ease;
+        }
+
+        .banner-slider-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .banner-slider-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 900px;
+            height: 500px;
+            background: #ffffff;
+            border-radius: 20px;
+            z-index: 999;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            overflow: hidden;
+            transition: opacity 0.4s ease, pointer-events 0.4s ease;
+        }
+
+        .banner-slider-container.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @keyframes bannerSliderSlideIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .banner-slider-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #0f2747;
+            color: #ffffff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: background 0.2s ease;
+        }
+
+        .banner-slider-close:hover {
+            background: #ff6a00;
+        }
+
+        .banner-slider-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-slides {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .banner-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .banner-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .banner-slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(15, 39, 71, 0.8));
+            padding: 30px 20px 20px;
+            color: #ffffff;
+        }
+
+        .banner-slide-overlay p {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Navigation Arrows */
+        .banner-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 106, 0, 0.85);
+            color: #ffffff;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .banner-arrow:hover {
+            background: #ff6a00;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .banner-arrow-prev {
+            left: 15px;
+        }
+
+        .banner-arrow-next {
+            right: 15px;
+        }
+
+        /* Dots Indicator */
+        .banner-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px;
+            background: #f8f9fb;
+        }
+
+        .banner-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d0d5dd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .banner-dot.active {
+            background: #ff6a00;
+            width: 28px;
+            border-radius: 5px;
+        }
+
+        .banner-dot:hover {
+            background: #ff6a00;
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .bell-notification-wrapper {
+                bottom: 80px;
+                left: 15px;
+            }
+
+            .bell-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .banner-slider-container {
+                height: 350px;
+                max-width: 85%;
+            }
+
+            .banner-slide-overlay {
+                padding: 20px 15px 15px;
+            }
+
+            .banner-slide-overlay p {
+                font-size: 15px;
+            }
+
+            .banner-arrow {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .bell-notification-wrapper {
+                bottom: 70px;
+                left: 12px;
+            }
+
+            .bell-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 16px;
+            }
+
+            .bell-badge {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+
+            .banner-slider-container {
+                height: 300px;
+                width: 95%;
+                max-width: none;
+                border-radius: 16px;
+            }
+
+            .banner-arrow {
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
+            }
+
+            .banner-arrow-prev {
+                left: 8px;
+            }
+
+            .banner-arrow-next {
+                right: 8px;
+            }
+
+            .banner-slide-overlay {
+                padding: 16px 12px 12px;
+            }
+
+            .banner-slide-overlay p {
+                font-size: 13px;
+            }
+
+            .banner-dots {
+                padding: 12px;
+                gap: 6px;
+            }
+
+            .banner-dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .banner-dot.active {
+                width: 24px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .bell-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+
+            .bell-badge {
+                width: 18px;
+                height: 18px;
+                font-size: 9px;
+            }
+
+            .banner-slider-container {
+                height: 250px;
+            }
+
+            .banner-slide-overlay p {
+                font-size: 12px;
+            }
+        }
+    `;
+
+        const styleTag = document.createElement('style');
+        styleTag.textContent = styles;
+        document.head.appendChild(styleTag);
+    }
+
+    // Toggle Banner Slider
+    function toggleBannerSlider() {
+        const container = document.getElementById('bannerSliderContainer');
+        const backdrop = document.getElementById('bannerBackdrop');
+
+        if (container && backdrop) {
+            const isOpen = container.classList.contains('open');
+            if (isOpen) {
+                container.classList.remove('open');
+                backdrop.classList.remove('open');
+            } else {
+                container.classList.add('open');
+                backdrop.classList.add('open');
+            }
+        }
+    }
+
+    // Close Banner Slider
+    function closeBannerSlider(e) {
+        if (e) {
+            e.stopPropagation();
+        }
+
+        const container = document.getElementById('bannerSliderContainer');
+        const backdrop = document.getElementById('bannerBackdrop');
+
+        if (container) container.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+    }
+
+    // Next Slide
+    function nextBannerSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % bannerSlidesData.length;
+        updateSlide();
+    }
+
+    // Previous Slide
+    function prevBannerSlide() {
+        currentSlideIndex = (currentSlideIndex - 1 + bannerSlidesData.length) % bannerSlidesData.length;
+        updateSlide();
+    }
+
+    // Go to Specific Slide
+    function goToSlide(index) {
+        currentSlideIndex = index;
+        updateSlide();
+    }
+
+    // Update Slide Display
+    function updateSlide() {
+        const slidesContainer = document.getElementById('bannerSlides');
+        const dots = document.querySelectorAll('.banner-dot');
+
+        slidesContainer.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlideIndex);
+        });
+    }
+
+    // Go to Banner Page
+    function goToBannerPage(url) {
+        if (url && url !== '#') {
+            window.location.href = url;
+        }
+    }
+
+    // Initialize on Page Load
+    document.addEventListener('DOMContentLoaded', function() {
+        createBellAndSlider();
+
+        // Auto-advance slides every 5 seconds (only when modal is open)
+        setInterval(() => {
+            try {
+                const container = document.getElementById('bannerSliderContainer');
+                if (container && container.classList.contains('open')) {
+                    nextBannerSlide();
+                }
+            } catch (err) {
+                console.log('Auto-advance error:', err);
+            }
+        }, 5000);
+
+        // Test - make sure functions are accessible
+        window.toggleBannerSlider = toggleBannerSlider;
+        window.closeBannerSlider = closeBannerSlider;
+        window.nextBannerSlide = nextBannerSlide;
+        window.prevBannerSlide = prevBannerSlide;
+        window.goToSlide = goToSlide;
+        window.goToBannerPage = goToBannerPage;
+    });
+</script>
 
 </html>
