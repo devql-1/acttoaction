@@ -10,8 +10,8 @@
                 <p class="brand-desc">Office Visits :- Only Appointment Based</p>
                 <div class="fc-item"><i class="bi bi-geo-alt-fill"></i>Rising Passion Studio, Hoshiar Singh
                     Marg, Moti Nagar, Vaishali Nagar, Jaipur – 302021</div>
-                <div class="fc-item"><i class="bi bi-telephone-fill"></i><a href="tel:9119118844" style="color:#666">+91
-                        91191 88844</a></div>
+                <div class="fc-item"><i class="bi bi-telephone-fill"></i><a href="tel:9119118844" style="color:#666">
+                        Chat with us: +91 91191-18844, +91 91191-87311, +91 91191-87411</a></div>
                 <div class="fc-item"><i class="bi bi-clock-fill"></i>Tue–Sat: 11am–7pm &nbsp;|&nbsp; Sun:
                     10am–4pm</div>
             </div>

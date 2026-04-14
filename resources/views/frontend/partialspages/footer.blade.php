@@ -17,8 +17,8 @@
 
                         <!-- Contact Info -->
                         <div class="contact-info mt-4">
-                            <div class="contact-item"><i class="bi bi-telephone"></i><span>Chat with us: +91 12345
-                                    67890</span></div>
+                            <div class="contact-item"><i class="bi bi-telephone"></i><span>Chat with us: +91
+                                    91191-18844, +91 91191-87311, +91 91191-87411</span></div>
                             <div class="contact-item"><i class="bi bi-clock"></i><span>
                                     Operating Hours:<br>
                                     Tue - Sat: 11am - 7pm<br>

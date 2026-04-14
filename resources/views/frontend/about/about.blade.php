@@ -137,6 +137,7 @@
 
         /* ─── FOR SCHOOLS / BUSINESS ─── */
         .business-section {
+
             padding: 80px 0;
             background: linear-gradient(135deg, var(--heading-color) 0%, #112344 60%, #2b539e 100%);
             position: relative;
@@ -1337,67 +1338,8 @@
                 </div>
             </div>
         </section>
-        <section class="business-section">
-            <div class="container position-relative">
-                <div class="row align-items-center g-5">
-                    <div class="col-lg-6">
-                        <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Schools & Organisations</div>
-                        <h2>Unlock your school's true creative potential</h2>
-                        <p>Act to Action partners with schools, NGOs, hospitals, and corporates to deliver impactful
-                            workshops, events, and ongoing programmes. Get started in minutes — no consultants, no wasted
-                            time, just results.</p>
-                        <div class="biz-feature-row">
-                            <div class="biz-ico"><i class="bi bi-mortarboard-fill"></i></div>
-                            <div>
-                                <h6>School Partnerships</h6>
-                                <p>Theatre in Education, NEP 2020 aligned, modelling shows, exhibitions & parenting
-                                    workshops.</p>
-                            </div>
-                        </div>
-                        <div class="biz-feature-row">
-                            <div class="biz-ico"><i class="bi bi-heart-pulse-fill"></i></div>
-                            <div>
-                                <h6>Hospitals & Health Institutions</h6>
-                                <p>Mindfulness teaching and mindful doctor programmes for healthcare professionals.</p>
-                            </div>
-                        </div>
-                        <div class="biz-feature-row">
-                            <div class="biz-ico"><i class="bi bi-globe2"></i></div>
-                            <div>
-                                <h6>NGOs & Government Campaigns</h6>
-                                <p>Free character building based on Bhagavad Gita for NGOs, slums, juveniles, and awareness
-                                    campaigns.</p>
-                            </div>
-                        </div>
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-white-solid mt-2" target="_blank">
-                            <i class="bi bi-whatsapp"></i> Get Started Today
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="biz-visual">
-                            <div class="biz-stats-grid">
-                                <div class="biz-stat-card">
-                                    <div class="bsn">25<span>+</span></div>
-                                    <div class="bsl">Partner Institutes</div>
-                                </div>
-                                <div class="biz-stat-card">
-                                    <div class="bsn">3K<span>+</span></div>
-                                    <div class="bsl">Students Impacted</div>
-                                </div>
-                                <div class="biz-stat-card">
-                                    <div class="bsn">6<span>+</span></div>
-                                    <div class="bsl">Centres in Jaipur</div>
-                                </div>
-                                <div class="biz-stat-card">
-                                    <div class="bsn">100<span>%</span></div>
-                                    <div class="bsl">Free for NGOs</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
+
 
         <section class="news-section">
             <div class="container">
@@ -1537,18 +1479,37 @@
                             <i class="bi bi-stars me-2"></i>Formula-driven pedagogy · Child development science · Holistic
                             mental health
                         </p>
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Kritesh Agarwal is a trailblazing
-                            expert in child-centric creative education, renowned for his innovative approach to nurturing
-                            young minds through performing arts and holistic development. As the architect of Act to Action,
-                            he merges scientific child psychology with artistic training to foster confidence, creativity,
-                            and emotional resilience in children.</p>
-                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Kritesh's proprietary methodologies
-                            integrate medical insights (via collaborations with child development experts) and theatre
-                            techniques to address physical, mental, emotional, and intellectual growth. His programs use
-                            Shlok Recitation, Theatre exercises, Medical Therapies and Practice protocol to transform
-                            abstract concepts into tangible skills — ensuring learning is experiential and impactful.</p>
-                        <p style="font-size:15px;line-height:1.8;">Over the years, Kritesh has donned multiple hats —
-                            casting head, director, acting coach, mentor, assistant producer, and art director. Currently,
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Kritesh Agarwal is the Founder of Act
+                            to Action and an emerging force in child-centric innovation, creative leadership, and
+                            AVGC-XR-aligned education. As a performer, strategist, mentor, and creative diplomacy
+                            professional, he brings together artistic sensitivity and technical understanding to design
+                            learning experiences that are expressive, future-focused, and deeply human.</p>
+                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">His work stands at the intersection
+                            of storytelling, leadership development, child wellness, narrative design, and immersive
+                            creative pedagogy. With a distinctive ability to translate performance, psychology, and
+                            innovation into meaningful educational practice, Kritesh has built a powerful framework that
+                            nurtures confidence, communication, creative expression, and real-world readiness in young
+                            learners.</p>
+
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Over the past five years, Kritesh has
+                            mentored more than 2,000 children aged 3–15 across performance, confidence-building,
+                            communication, and applied creative exposure. Under his guidance, students have secured 250+
+                            castings in major campaigns and productions associated with brands and banners such as Adani
+                            Greens, SBI, and Dettol. His professional journey also includes experience with Zee Studios
+                            Jaipur, along with collaborations across leading schools, premium education institutions, and
+                            national platforms including IICT, IIT, and IIM.</p>
+                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">His work stands at the intersection
+                            of storytelling, leadership development, child wellness, narrative design, and immersive
+                            creative pedagogy. With a distinctive ability to translate performance, psychology, and
+                            innovation into meaningful educational practice, Kritesh has built a powerful framework that
+                            nurtures confidence, communication, creative expression, and real-world readiness in young
+                            learners.</p>
+                        <p style="font-size:15px;line-height:1.8;">Recognized through associations with respected national
+                            and international bodies such as ASSITEJ, CQ-ECCE, and AIP, and acknowledged under iStart and
+                            Startup India, Kritesh represents a new generation of leadership that blends creative vision
+                            with institutional thinking. Through Act to Action, he continues to shape a bold and culturally
+                            rooted movement committed to building emotionally aware, technically skilled, and future-ready
+                            young leaders.
                             he serves as the Founder &amp; Managing Director of <strong>Rising Passion Pvt. Ltd.</strong>,
                             actively leading Act to Action with vision and commitment.</p>
                     </div>

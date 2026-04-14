@@ -172,8 +172,7 @@ class EventRegistrationController extends Controller
 
         $registrations = $query->paginate(20);
         $events = Event::orderBy('title')->get();
-
-        return view('backend.registrations.index', compact('registrations', 'events'));
+        return view('backend.registrations.registrations-index', compact('registrations', 'events'));
     }
 
     // ── ADMIN SHOW ────────────────────────────────────────────────────────────

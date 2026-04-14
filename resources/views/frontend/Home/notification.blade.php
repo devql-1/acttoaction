@@ -2,28 +2,29 @@
     // Banner Slides Data - Static
     const bannerSlidesData = [{
             id: 1,
-            image: "{{ asset('courseassets/img/homebanner/IMG_3987.JPEG') }}",
-            title: "Learn Programming",
+
+            image: "{{ asset('courseassets/img/notificationbanner/banner1course.JPEG') }}",
+            title: "Courses",
             url: "{{ route('index.course') }}"
         },
         {
             id: 2,
-            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+            image: "{{ asset('courseassets/img/notificationbanner/banner2skill.JPEG') }}",
             title: "Free Skill Assessment",
             url: "{{ route('frontend.tests') }}"
         },
-        {
-            id: 3,
-            image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
-            title: "Summer Camp 2026",
-            url: "{{ route('summercamp') }}"
-        },
-        {
-            id: 4,
-            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
-            title: "Special Offer - 30% Off",
-            url: "{{ route('index.course') }}"
-        }
+        // {
+        //     id: 3,
+        //     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+        //     title: "Summer Camp 2026",
+        //     url: "{{ route('summercamp') }}"
+        // },
+        // {
+        //     id: 4,
+        //     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+        //     title: "Special Offer - 30% Off",
+        //     url: "{{ route('index.course') }}"
+        // }
     ];
 
     let currentSlideIndex = 0;
@@ -190,7 +191,7 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 90%;
+                width: 100%;
                 max-width: 900px;
                 height: 500px;
                 background: #ffffff;

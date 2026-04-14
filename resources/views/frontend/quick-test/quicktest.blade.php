@@ -59,7 +59,7 @@
         /* ─── HERO ─── */
         .hero-tests {
             background: var(--background-color);
-            padding: 64px 0 48px;
+            padding: 114px 0 48px;
             border-bottom: 2px solid #eef3fb;
         }
 
@@ -192,8 +192,8 @@
 
         .test-preview-stack {
             position: relative;
-            width: 340px;
-            height: 360px;
+            width: 390px;
+            height: 362px;
         }
 
         .preview-card {
@@ -1351,22 +1351,28 @@
                     <div class="col-lg-6">
                         <div class="eyebrow"><i class="bi bi-lightning-charge-fill"></i> Free Skill & Talent Assessments
                         </div>
-                        <h1>We've got your child's <em>talent tests</em> down to a science</h1>
-                        <p class="hero-sub">Accurate, insightful assessments for children aged 3–29 — discover acting
-                            talent, personality type, confidence level, and the ideal skill course for your child.</p>
+                        <h1>Understand your child’s strengths with <em>child development–informed </em> skill
+                            assessments</h1>
+                        <p class="hero-sub">Parenting today cannot rely only on the methods of the past, because childhood,
+                            opportunity, and the future world have changed. Act to Action created this assessment ecosystem
+                            to help parents understand each child through a more personalised, modern, and
+                            development-sensitive lens. Built with a child development–informed, applied psychology–guided,
+                            and quality-governed approach, these assessments are designed to support clearer decisions,
+                            personalised growth pathways, and meaningful future readiness.</p>
                         <div class="hero-cta-row">
                             <a href="#tests" class="btn-primary-solid">
-                                <i class="bi bi-play-circle-fill"></i> Take a Free Test
+                                <i class="bi bi-play-circle-fill"></i> Take Test
                             </a>
-                            <a href="#" class="btn-ghost">
-                                <i class="bi bi-grid-3x3-gap"></i> View All Courses
+                            <a href="{{ route('index.course') }}" class="btn-ghost">
+                                <i class="bi bi-grid-3x3-gap"> </i> View All Courses
                             </a>
                         </div>
                         <div class="hero-trust-row">
                             <div class="hero-trust-item"><i class="bi bi-check-circle-fill"></i> 100% Free</div>
                             <div class="hero-trust-item"><i class="bi bi-clock"></i> 5–10 min each</div>
-                            <div class="hero-trust-item"><i class="bi bi-shield-check"></i> Expert designed</div>
-                            <div class="hero-trust-item"><i class="bi bi-people-fill"></i> 1000+ taken</div>
+                            <div class="hero-trust-item"><i class="bi bi-shield-check"></i> Age-appropriate format</div>
+                            <div class="hero-trust-item"><i class="bi bi-people-fill"></i> Personalised result direction
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -1545,28 +1551,34 @@
             <div class="container">
 
                 <div class="text-center mb-5">
-                    <div class="why-top-badge d-inline-flex"><i class="bi bi-patch-check-fill"></i> Science-Backed & Expert
-                        Designed</div>
+                    <div class="why-top-badge d-inline-flex"><i class="bi bi-patch-check-fill"></i> CHILD
+                        DEVELOPMENT–INFORMED & EXPERT-DESIGNED
+                    </div>
                     <h2 style="font-size:34px;font-weight:900;color:var(--heading-color);margin-bottom:12px;">Why Our Tests
                         Are the <span style="color:var(--accent-color)">Best</span> for Your Child</h2>
-                    <p style="font-size:16px;color:#6b7280;max-width:580px;margin:0 auto;">Not just another online quiz —
-                        our assessments are built by child psychologists, acting coaches, and neuro-development experts to
-                        give you truly actionable insights.</p>
+                    <p style="font-size:16px;color:#6b7280;max-width:580px;margin:0 auto;">Not just another These
+                        assessments are not random personality quizzes or generic talent tests. They are built to offer
+                        structured developmental insights across expression, communication, emotional resilience,
+                        performance readiness, and future-facing creative skills helping families make better decisions with
+                        greater clarity.
+                    </p>
                 </div>
 
                 <div class="row g-4 mb-4">
                     <div class="col-lg-6">
                         <div class="why-big-card">
                             <div class="big-num">01</div>
-                            <h3>Built by Child Development Experts</h3>
+                            <h3>Built for real child development understanding
+                            </h3>
                             <div class="accent-line"></div>
                             <p>Every question is co-designed with Dr. Bhumika Soni (Child Neuro Therapist), Kritesh Agarwal
                                 (Filmmaker & Acting Coach), and child psychology professionals — not generic quiz templates.
                                 Each assessment measures real developmental indicators.</p>
                             <div class="why-pill-row">
-                                <div class="why-pill"><i class="bi bi-brain"></i> Neuro-Psychology Based</div>
-                                <div class="why-pill"><i class="bi bi-award"></i> Expert Validated</div>
-                                <div class="why-pill"><i class="bi bi-clipboard2-check"></i> 100% Free</div>
+                                <div class="why-pill"><i class="bi bi-brain"></i> Child development–informed</div>
+                                <div class="why-pill"><i class="bi bi-award"></i>Parent-friendly
+                                </div>
+                                <div class="why-pill"><i class="bi bi-clipboard2-check"></i> Strength-based</div>
                             </div>
                         </div>
                     </div>
@@ -1576,7 +1588,7 @@
                                 <div class="why-feat-card">
                                     <div class="why-feat-icon" style="background:#eff6ff;color:var(--accent-color);"><i
                                             class="bi bi-lightning-charge-fill"></i></div>
-                                    <h5>Fast, Focused & Accurate</h5>
+                                    <h5>Short, focused & meaningful</h5>
                                     <p>No 50-question marathon. Each test is 5–10 minutes — designed to get a precise,
                                         reliable result without losing a child's attention. Every question earns its place.
                                     </p>

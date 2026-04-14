@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Action UI</title>
+    <title>ActtoAction</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="{{ asset('courseassets/img/faviconsdf.png') }}">
     <style>
@@ -732,10 +732,268 @@
                 display: none;
             }
         }
+
+        .ann-bar {
+            background: #0e1c38;
+            height: var(--ann-h);
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1002;
+            font-family: var(--ff-nav);
+            font-size: 11.5px;
+            border-bottom: 1px solid rgba(255, 106, 0, .25);
+            transition: height .3s, opacity .3s;
+        }
+
+        .ann-bar.hidden {
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .ann-bar .inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 12px;
+            position: relative;
+            padding: 0 40px;
+        }
+
+        .ann-bar .dot {
+            width: 6px;
+            height: 6px;
+            background: #ff6a00;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: dotPulse 1.8s infinite;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .25
+            }
+        }
+
+        /* ===== ANNOUNCEMENT BAR (Below Header) ===== */
+        .ann-bar {
+            background: #0e1c38;
+            display: flex;
+            align-items: center;
+            position: relative;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(255, 106, 0, 0.25);
+            transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+            max-height: 60px;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        .ann-bar.hidden {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .ann-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 12px;
+            position: relative;
+            padding: 12px 40px;
+        }
+
+        .ann-dot {
+            width: 6px;
+            height: 6px;
+            background: #ff6a00;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: dotPulse 1.8s infinite;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.25;
+            }
+        }
+
+        .ann-msg {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 640px;
+        }
+
+        .ann-msg strong {
+            color: #ff6a00;
+            font-weight: 700;
+        }
+
+        .ann-cta {
+            background: #ff6a00;
+            color: #ffffff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .ann-cta:hover {
+            background: #e65c00;
+        }
+
+        .ann-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 0;
+            position: absolute;
+            right: 12px;
+            line-height: 1;
+            transition: color 0.2s ease;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ann-close:hover {
+            color: #ffffff;
+        }
+
+        /* ===== TABLET (601px – 900px) ===== */
+        @media (max-width: 900px) and (min-width: 601px) {
+            .ann-bar {
+                font-size: 11px;
+                max-height: 56px;
+            }
+
+            .ann-inner {
+                padding: 10px 30px;
+                gap: 10px;
+            }
+
+            .ann-msg {
+                max-width: 500px;
+            }
+
+            .ann-cta {
+                padding: 5px 12px;
+                font-size: 9px;
+            }
+        }
+
+        /* ===== MOBILE (≤ 600px) ===== */
+        @media (max-width: 600px) {
+            .ann-bar {
+                font-size: 10.5px;
+                max-height: 80px;
+            }
+
+            .ann-inner {
+                padding: 10px 40px 10px 12px;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .ann-msg {
+                max-width: 100%;
+                font-size: 10px;
+                line-height: 1.4;
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+            }
+
+            .ann-cta {
+                display: none;
+            }
+
+            .ann-dot {
+                width: 5px;
+                height: 5px;
+            }
+
+            .ann-close {
+                right: 6px;
+                font-size: 12px;
+            }
+        }
+
+        /* ===== SMALL MOBILE (≤ 380px) ===== */
+        @media (max-width: 380px) {
+            .ann-bar {
+                font-size: 9.5px;
+                max-height: 100px;
+            }
+
+            .ann-inner {
+                padding: 8px 36px 8px 8px;
+                gap: 6px;
+            }
+
+            .ann-msg {
+                font-size: 9px;
+            }
+
+            .ann-close {
+                right: 4px;
+                width: 20px;
+                height: 20px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 
 <body>
+
+    <div class="ann-bar" id="annBar">
+        <div class="ann-inner">
+            <span class="ann-dot"></span>
+            <span class="ann-msg">🎭 &nbsp;<strong>Summer Camp 2026</strong> — Jaipur's Biggest Performing Arts Camp is
+                Coming! &nbsp;|&nbsp; Drama · Dance · Music · Storytelling</span>
+            <a href="{{ route('event') }}" class="ann-cta">Register Interest</a>
+            <button class="ann-close" id="annClose" title="Close"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
     <!-- HEADER -->
     <header class="topbar">
         <div class="logo">
@@ -747,9 +1005,9 @@
     <section class="site-banner">
         <img src="{{ asset('courseassets/img/homebanner/IMG_3987.JPEG') }}" alt="Site Banner">
         <div class="hero-content">
-            <h2>Building Future Ready Leaders Explore our courses,<span> assessments & summer camps.</span>
+            <h2>Building Future Ready <span> Leaders</span>
             </h2>
-            <p>Creative Expression, Cognative Leadership & Technology led Innovation</p>
+            <p>Creative Expression, Cognitive Leadership & Technology led Innovation</p>
         </div>
     </section>
 
@@ -821,7 +1079,20 @@
     <div class="support">
         <button class="pill-btn">&#128172; Support</button>
     </div>
+    <script>
+        // Simple Announcement Bar Close (Current Tab Only - No Storage)
+        document.addEventListener('DOMContentLoaded', function() {
+            const annBar = document.getElementById('annBar');
+            const annCloseBtn = document.getElementById('annClose');
 
+            if (!annBar || !annCloseBtn) return;
+
+            annCloseBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                annBar.classList.add('hidden'); // Closes only for current tab
+            });
+        });
+    </script>
     <script>
         function toggleMenu() {
             var menu = document.getElementById('mobileMenu');
@@ -843,8 +1114,11 @@
         });
     </script>
     @include('frontend.Home.notification')
+
 </body>
 @include('frontend.Home.chatbot')
+
+
 
 
 </html>

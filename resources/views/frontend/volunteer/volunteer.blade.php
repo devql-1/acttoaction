@@ -748,10 +748,214 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ─── FOR SCHOOLS / BUSINESS ─── */
+        .business-section {
+            margin-top: 206px;
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--heading-color) 0%, #112344 60%, #2b539e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .business-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1543269664-7eef42226a21?w=1400&q=50') center/cover;
+            opacity: .06;
+        }
+
+        .biz-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, .15);
+            border: 1px solid rgba(255, 255, 255, .3);
+            color: #b8d4ff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .business-section h2 {
+            font-size: 38px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 14px;
+        }
+
+        .business-section p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, .75);
+            line-height: 1.7;
+            margin-bottom: 30px;
+            max-width: 540px;
+        }
+
+        .biz-feature-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .biz-feature-row .biz-ico {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #93c5fd;
+            flex-shrink: 0;
+        }
+
+        .biz-feature-row h6 {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .biz-feature-row p {
+            color: rgba(255, 255, 255, .65);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .btn-white-solid {
+            background: #fff;
+            color: var(--accent-color);
+            padding: 13px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            font-family: var(--heading-font);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background .2s, transform .15s;
+            cursor: pointer;
+        }
+
+        .btn-white-solid:hover {
+            background: #f0f5ff;
+            transform: translateY(-2px);
+        }
+
+        .biz-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .biz-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .biz-stat-card {
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .biz-stat-card .bsn {
+            font-family: var(--heading-font);
+            font-size: 34px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .biz-stat-card .bsn span {
+            color: #60a5fa;
+        }
+
+        .biz-stat-card .bsl {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .6);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-top: 4px;
+        }
     </style>
 
     <main class="main">
-        <div style="margin-top: 80px;"></div>
+        <div style="margin-top: 100px;"></div>
+        <section class="business-section ">
+            <div class="container position-relative">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-6">
+                        <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Schools & Organisations</div>
+                        <h2>Unlock your school's true creative potential</h2>
+                        <p>Act to Action partners with schools, NGOs, hospitals, and corporates to deliver impactful
+                            workshops, events, and ongoing programmes. Get started in minutes — no consultants, no wasted
+                            time, just results.</p>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-mortarboard-fill"></i></div>
+                            <div>
+                                <h6>School Partnerships</h6>
+                                <p>Theatre in Education, NEP 2020 aligned, modelling shows, exhibitions & parenting
+                                    workshops.</p>
+                            </div>
+                        </div>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-heart-pulse-fill"></i></div>
+                            <div>
+                                <h6>Hospitals & Health Institutions</h6>
+                                <p>Mindfulness teaching and mindful doctor programmes for healthcare professionals.</p>
+                            </div>
+                        </div>
+                        <div class="biz-feature-row">
+                            <div class="biz-ico"><i class="bi bi-globe2"></i></div>
+                            <div>
+                                <h6>NGOs & Government Campaigns</h6>
+                                <p>Free character building based on Bhagavad Gita for NGOs, slums, juveniles, and awareness
+                                    campaigns.</p>
+                            </div>
+                        </div>
+                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-white-solid mt-2" target="_blank">
+                            <i class="bi bi-whatsapp"></i> Get Started Today
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="biz-visual">
+                            <div class="biz-stats-grid">
+                                <div class="biz-stat-card">
+                                    <div class="bsn">25<span>+</span></div>
+                                    <div class="bsl">Partner Institutes</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">3K<span>+</span></div>
+                                    <div class="bsl">Students Impacted</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">6<span>+</span></div>
+                                    <div class="bsl">Centres in Jaipur</div>
+                                </div>
+                                <div class="biz-stat-card">
+                                    <div class="bsn">100<span>%</span></div>
+                                    <div class="bsl">Free for NGOs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="why-join section">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
