@@ -1,50 +1,9 @@
 @extends('frontend.course.layout')
 @section('content')
 
-    {{-- ══════════════════════════════════════════════════════
-     EVENT DETAIL PAGE
-     resources/views/frontend/events/show.blade.php
-
-     Controller:
-     public function show($id) {
-         $event = Event::with(['subEvents' => function($q) {
-             $q->active()->with(['centersWithState']);
-         }])->findOrFail($id);
-
-         $otherEvents = Event::with(['subEvents' => function($q) {
-             $q->active();
-         }])->where('id', '!=', $id)->latest()->take(3)->get();
-
-         return view('frontend.events.show', compact('event', 'otherEvents'));
-     }
-══════════════════════════════════════════════════════ --}}
-
-    @php
-        use Carbon\Carbon;
-        $now = now();
-
-        $totalSeats = $event->subEvents->sum('max_seats');
-        $freeCount = $event->subEvents->where('fees', 0)->count();
-        $activeCount = $event->subEvents->where('status', 1)->count();
-
-        $stripes = [
-            'linear-gradient(90deg,#112344,#175cdd)',
-            'linear-gradient(90deg,#d97706,#fbbf24)',
-            'linear-gradient(90deg,#059669,#34d399)',
-            'linear-gradient(90deg,#7c3aed,#a78bfa)',
-            'linear-gradient(90deg,#0891b2,#22d3ee)',
-            'linear-gradient(90deg,#db2777,#f472b6)',
-        ];
-
-        $modeBadge = [
-            'online' => ['bg' => '#dcfce7', 'color' => '#166534', 'icon' => 'bi-camera-video-fill'],
-            'offline' => ['bg' => '#dbeafe', 'color' => '#1e40af', 'icon' => 'bi-building'],
-            'hybrid' => ['bg' => '#f3e8ff', 'color' => '#6b21a8', 'icon' => 'bi-intersect'],
-        ];
-    @endphp
 
     <style>
-        h1,
+h1,
         h2,
         h3,
         h4,
@@ -849,6 +808,49 @@
             }
         }
     </style>
+    {{-- ══════════════════════════════════════════════════════
+     EVENT DETAIL PAGE
+     resources/views/frontend/events/show.blade.php
+
+     Controller:
+     public function show($id) {
+         $event = Event::with(['subEvents' => function($q) {
+             $q->active()->with(['centersWithState']);
+         }])->findOrFail($id);
+
+         $otherEvents = Event::with(['subEvents' => function($q) {
+             $q->active();
+         }])->where('id', '!=', $id)->latest()->take(3)->get();
+
+         return view('frontend.events.show', compact('event', 'otherEvents'));
+     }
+══════════════════════════════════════════════════════ --}}
+
+    @php
+        use Carbon\Carbon;
+        $now = now();
+
+        $totalSeats = $event->subEvents->sum('max_seats');
+        $freeCount = $event->subEvents->where('fees', 0)->count();
+        $activeCount = $event->subEvents->where('status', 1)->count();
+
+        $stripes = [
+            'linear-gradient(90deg,#112344,#175cdd)',
+            'linear-gradient(90deg,#d97706,#fbbf24)',
+            'linear-gradient(90deg,#059669,#34d399)',
+            'linear-gradient(90deg,#7c3aed,#a78bfa)',
+            'linear-gradient(90deg,#0891b2,#22d3ee)',
+            'linear-gradient(90deg,#db2777,#f472b6)',
+        ];
+
+        $modeBadge = [
+            'online' => ['bg' => '#dcfce7', 'color' => '#166534', 'icon' => 'bi-camera-video-fill'],
+            'offline' => ['bg' => '#dbeafe', 'color' => '#1e40af', 'icon' => 'bi-building'],
+            'hybrid' => ['bg' => '#f3e8ff', 'color' => '#6b21a8', 'icon' => 'bi-intersect'],
+        ];
+    @endphp
+
+    
 
     <main class="main">
 
@@ -1115,7 +1117,7 @@
                                                             <div class="{{ $subDot }}"></div>{{ $subStatus }}
                                                         </div>
                                                         @if ($subDot !== 'dot-closed')
-                                                            <a href="{{ route('frontend.events.register', $sub->slug) }}"
+                                                            <a href="{{ $sub->redirect_link ?: route('frontend.events.register', $sub->slug) }}"
                                                                 class="btn-register">
                                                                 Register <i class="bi bi-arrow-right"></i>
                                                             </a>

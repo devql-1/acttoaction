@@ -1,7 +1,9 @@
 @extends('frontend.course.layoutsummercamp')
 @section('content')
+    
+
     <style>
-        .light-background {
+.light-background {
             background: color-mix(in srgb, var(--accent-color), transparent 96%) !important;
         }
 

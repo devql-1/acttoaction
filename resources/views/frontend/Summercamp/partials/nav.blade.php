@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet" />
 
     <style>
-        /* ===== VARIABLES ===== */
+/* ===== VARIABLES ===== */
         :root {
             --ff-body: "Roboto", system-ui, sans-serif;
             --ff-head: "Montserrat", sans-serif;

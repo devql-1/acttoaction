@@ -2,13 +2,9 @@
 
 @section('content')
 
-{{-- resources/views/frontend/events/register-success.blade.php --}}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-    :root {
+    <style>
+:root {
         --reg-ink: #0d1b2a;
         --reg-blue: #1750d4;
         --reg-green: #059669;
@@ -223,7 +219,11 @@
         gap: 9px;
     }
     .note-box i { color: #f59e0b; flex-shrink: 0; margin-top: 2px; }
-</style>
+    </style>
+{{-- resources/views/frontend/events/register-success.blade.php --}}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <div class="success-page">
     <div class="container">

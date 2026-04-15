@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Mail\TemplateMail;
 use App\Models\EmailLog;
 use App\Models\EmailTemplate;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -45,7 +46,10 @@ class EmailService
 
             ['subject' => $subject, 'body' => $body] = $template->render($variables);
 
-            $recipient = $toName ? [$toEmail, $toName] : $toEmail;
+            // Must use Address or a string — a plain indexed array like
+            // [$email, $name] is interpreted by Laravel as TWO recipients
+            // and the name fails RFC 2822 validation before hitting SMTP.
+            $recipient = $toName ? new Address($toEmail, $toName) : $toEmail;
             Mail::to($recipient)->send(new TemplateMail($subject, $body));
 
             EmailLog::create([

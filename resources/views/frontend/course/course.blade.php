@@ -1,8 +1,11 @@
 @extends('frontend.course.layout')
 
 @section('content')
+    
+
+
     <style>
-        .hero-section {
+.hero-section {
             position: relative;
             min-height: 92vh;
             display: flex;
@@ -2069,7 +2072,6 @@
             margin-top: var(--bs-gutter-y);
         }
     </style>
-
     <main class="main">
         <section class="hero-section">
             <div class="hero-bg">

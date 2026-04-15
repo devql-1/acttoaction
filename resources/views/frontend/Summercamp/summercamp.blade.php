@@ -2,8 +2,11 @@
 <html lang="en">
 
 @include('frontend.Summercamp.partials.nav')
-<style>
-    .swiper-wrapper {
+
+
+<body>
+    <style>
+.swiper-wrapper {
         display: flex !important;
     }
 
@@ -16,9 +19,8 @@
         padding-top: var(--ann-h, 40px);
         transition: padding-top 0.3s ease;
     }
-</style>
+    </style>
 
-<body>
     <div id="preloader"></div>
 
     <!-- ===== ANNOUNCEMENT BAR ===== -->

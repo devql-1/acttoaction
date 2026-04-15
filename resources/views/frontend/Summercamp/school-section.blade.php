@@ -1,7 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
+
     <style>
-        a {
+a {
             color: var(--accent-color);
             text-decoration: none;
             transition: 0.3s;
@@ -246,7 +249,6 @@
 
 @media (max-width: 768px) { .section { padding: 60px 0; } .partners-stats { gap: 28px; } }
     </style>
-
     <main class="main">
         <div style="margin-top: 185px;"></div>
 

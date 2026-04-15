@@ -79,8 +79,546 @@
      CSS — injected once per page
 ══════════════════════════════════════ --}}
 
+
+
+
+{{-- ══════════════════════════════════════
+     YOUTUBE SECTION
+══════════════════════════════════════ --}}
+<section class="t-yt-sec">
+    <div class="t-wrap">
+
+        <div class="t-sec-title">
+            <h2>{{ $sectionTitle }}</h2>
+            <p>{{ $sectionDesc }}</p>
+        </div>
+
+        <div class="t-tabs" id="tTabRow">
+            <button class="t-tab active" data-cat="all" onclick="tFilter(this,'all')">
+                <i class="bi bi-grid-3x3-gap-fill"></i> All Videos
+            </button>
+
+            @foreach ($tabs ?? [] as $tab)
+                @php $icon = ($tab['key'] === 'parent') ? 'person-heart' : 'star-fill'; @endphp
+                <button class="t-tab" data-cat="{{ $tab['key'] }}" onclick="tFilter(this, '{{ $tab['key'] }}')">
+                    <i class="bi bi-{{ $icon }}"></i>
+                    {{ $tab['label'] }}
+                </button>
+            @endforeach
+        </div>
+
+        <div class="t-car-wrap" onmouseenter="tPause('yt')" onmouseleave="tResume('yt')">
+            <button class="t-arr prev" onclick="tMove('yt',-1)">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+
+            <div class="t-vp">
+                <div class="t-track" id="tYtTrack">
+                    @foreach ($videos ?? [] as $i => $video)
+                        <div class="t-yt-card" data-card="{{ $i }}" data-cat="{{ $video->video_category }}"
+                            onclick='tOpenYt(@json($video->youtube_video_id))'>
+
+                            <div class="t-thumb">
+                                <img src="https://i.ytimg.com/vi/{{ $video->youtube_video_id }}/maxresdefault.jpg"
+                                    onerror="this.src='https://i.ytimg.com/vi/{{ $video->youtube_video_id }}/mqdefault.jpg'"
+                                    alt="{{ $video->title }}" loading="lazy" />
+
+                                <div class="t-scrim"></div>
+                                <div class="t-yt-badge">
+                                    <i class="bi bi-youtube"></i> YouTube
+                                </div>
+
+                                <div class="t-play-btn">
+                                    <i class="bi bi-play-fill"></i>
+                                </div>
+
+                                @if (!empty($video->duration))
+                                    <div class="t-dur">{{ $video->duration }}</div>
+                                @endif
+
+                                <div class="t-cat-tag {{ $video->video_category }}">
+                                    {{ $video->category_label }}
+                                </div>
+                            </div>
+
+                            <div class="t-card-body">
+                                <h4>{{ $video->title }}</h4>
+                                <p>{{ $video->description }}</p>
+
+                                <div class="t-card-foot">
+                                    <div class="t-channel">
+                                        <div class="t-ch-ico">A</div>
+                                        {{ $video->channel_name }}
+                                    </div>
+
+                                    <a class="t-watch-btn" href="{{ $video->watch_link }}" target="_blank"
+                                        onclick="event.stopPropagation()">
+                                        <i class="bi bi-youtube"></i> Watch
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <button class="t-arr next" onclick="tMove('yt',1)">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+
+            <div class="t-dots" id="tYtDots"></div>
+
+            <div class="t-mob-nav">
+                <button class="t-mob-btn" onclick="tMove('yt',-1)">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="t-mob-btn" onclick="tMove('yt',1)">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="t-prog">
+                <div class="t-prog-bar" id="tYtBar"></div>
+            </div>
+        </div>
+
+        <div class="t-view-all">
+            <a href="{{ $ytChannel }}" target="_blank" class="t-view-all-btn">
+                <i class="bi bi-youtube" style="color:#ff0000"></i>
+                View All on YouTube
+                <i class="bi bi-arrow-up-right"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+@if ($showInstagram)
+    <section class="t-ig-sec">
+        <div class="t-wrap">
+
+            <div class="t-ig-head">
+                <div class="t-ig-head-left">
+                    <div class="t-ig-logo"><i class="bi bi-instagram"></i></div>
+                    <div class="t-ig-meta">
+                        <h3>{{ $igHandle }}</h3>
+                        <span>Follow for daily reels, castings &amp; behind-the-scenes</span>
+                    </div>
+                </div>
+                <a href="{{ $igUrl }}" target="_blank" class="t-ig-follow">
+                    <i class="bi bi-instagram"></i> Follow on Instagram
+                </a>
+            </div>
+
+            <div class="t-car-wrap" onmouseenter="tPause('ig')" onmouseleave="tResume('ig')">
+                <button class="t-arr prev" onclick="tMove('ig',-1)"><i class="bi bi-chevron-left"></i></button>
+                <div class="t-vp">
+                    <div class="t-track" id="tIgTrack">
+                        @foreach ($igPosts ?? [] as $i => $post)
+                            @php
+                                if ($post['type'] === 'reel') {
+                                    $igIcon = 'play-circle-fill';
+                                } elseif ($post['type'] === 'carousel') {
+                                    $igIcon = 'images';
+                                } else {
+                                    $igIcon = 'image';
+                                }
+                            @endphp
+                            <div class="t-ig-card" data-card="{{ $i }}"
+                                onclick="tOpenIg({{ $i }})">
+                                <img src="{{ $post['img'] }}" onerror="this.src='{{ $post['fb'] }}'"
+                                    alt="Instagram" loading="lazy" />
+
+                                @if ($post['type'] === 'reel')
+                                    <div class="t-ig-badge-v"><i class="bi bi-play-fill"></i></div>
+                                @elseif ($post['type'] === 'carousel')
+                                    <div class="t-ig-badge-c"><i class="bi bi-images"></i></div>
+                                @endif
+
+                                <div class="t-ig-ov">
+                                    <i class="bi bi-{{ $igIcon }} t-ig-oi"></i>
+                                    <span class="t-ig-cap-ov">{{ Str::limit($post['cap'], 75) }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <button class="t-arr next" onclick="tMove('ig',1)"><i class="bi bi-chevron-right"></i></button>
+                <div class="t-dots" id="tIgDots"></div>
+                <div class="t-mob-nav">
+                    <button class="t-mob-btn" onclick="tMove('ig',-1)"><i class="bi bi-chevron-left"></i></button>
+                    <button class="t-mob-btn" onclick="tMove('ig', 1)"><i class="bi bi-chevron-right"></i></button>
+                </div>
+                <div class="t-prog">
+                    <div class="t-prog-bar" id="tIgBar"></div>
+                </div>
+            </div>
+
+            <div class="t-ig-more">
+                <button class="t-ig-more-btn" onclick="window.open('{{ $igUrl }}','_blank')">
+                    <i class="bi bi-instagram"></i> Load More on Instagram
+                </button>
+            </div>
+
+        </div>
+    </section>
+@endif
+
+{{-- YouTube Modal --}}
+<div class="t-yt-modal" id="tYtModal" onclick="if(event.target===this)tCloseYt()">
+    <div class="t-yt-mwrap">
+        <div class="t-yt-mplayer">
+            <button class="t-m-back" onclick="tCloseYt()"><i class="bi bi-arrow-left"></i> Back</button>
+            <div class="t-player-fr">
+                <iframe id="tYtFrame" src="" allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="t-pinfo">
+                <div class="t-pmeta">
+                    <span id="tPDur"><i class="bi bi-clock"></i></span>
+                    <span id="tPCat" class="t-pcat"></span>
+                </div>
+                <h3 id="tPTitle"></h3>
+                <p id="tPDesc"></p>
+            </div>
+        </div>
+        <div class="t-suggs">
+            <div class="t-sugg-ttl" id="tSuggTtl">Up Next</div>
+            <div class="t-sugg-list" id="tSuggList"></div>
+        </div>
+    </div>
+</div>
+
+@if ($showInstagram)
+    {{-- Instagram Modal --}}
+    <div class="t-ig-modal" id="tIgModal" onclick="if(event.target===this)tCloseIg()">
+        <div class="t-ig-mbox">
+            <div class="t-ig-mmedia" id="tIgMedia">
+                <img id="tIgMImg" src="" alt="" />
+                <div class="t-ig-mnav">
+                    <button onclick="tIgNav(-1);event.stopPropagation()"><i class="bi bi-chevron-left"></i></button>
+                    <button onclick="tIgNav( 1);event.stopPropagation()"><i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="t-ig-mpanel">
+                <div class="t-ig-mph">
+                    <div class="t-ig-muser">
+                        <div class="t-ig-mav">
+                            <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=60&q=80"
+                                alt="" />
+                        </div>
+                        <div>
+                            <span class="t-ig-mname">{{ $igHandle }}</span>
+                            <span class="t-ig-mhandle">Act to Action · Jaipur</span>
+                        </div>
+                    </div>
+                    <button class="t-ig-mx" onclick="tCloseIg()"><i class="bi bi-x-lg"></i></button>
+                </div>
+                <div class="t-ig-mcap">
+                    <p id="tIgMCap"></p>
+                    <div class="t-ig-mtags" id="tIgMTags"></div>
+                </div>
+                <div class="t-ig-mdots" id="tIgMDots"></div>
+                <div class="t-ig-mfoot">
+                    <div class="t-ig-macts">
+                        <div class="t-ig-mabtns">
+                            <button class="t-ig-mab"
+                                onclick="this.classList.toggle('liked');this.querySelector('i').className=this.classList.contains('liked')?'bi bi-heart-fill':'bi bi-heart'">
+                                <i class="bi bi-heart"></i><span>Like</span>
+                            </button>
+                            <button class="t-ig-mab"><i class="bi bi-chat"></i><span>Comment</span></button>
+                            <button class="t-ig-mab"><i class="bi bi-send"></i><span>Share</span></button>
+                        </div>
+                        <button class="t-ig-mab"><i class="bi bi-bookmark"></i></button>
+                    </div>
+                    <a class="t-ig-open" id="tIgMLink" href="{{ $igUrl }}" target="_blank">
+                        <i class="bi bi-instagram"></i> Open in Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+
+{{-- ══════════════════════════════════════
+     JS — data comes entirely from PHP
+     $videos->map->toCarouselArray() outputs
+     the array the carousel JS needs.
+══════════════════════════════════════ --}}
+@push('scripts')
+    <script>
+        @php
+            $jsVids = ($videos ?? collect())->map(function ($v) {
+                return method_exists($v, 'toCarouselArray') ? $v->toCarouselArray() : [];
+            });
+            $jsPosts = $igPosts ?? [];
+        @endphp
+            (function() {
+                /* All video data from PHP — no fetch, no API */
+                const VIDS = @json($jsVids);
+                const POSTS = @json($jsPosts);
+
+                /* Carousel state */
+                const C = {
+                    yt: {
+                        cur: 0,
+                        total: 0,
+                        items: [],
+                        timer: null,
+                        paused: false,
+                        interval: 4500,
+                        prog: 0,
+                        progT: null
+                    },
+                    ig: {
+                        cur: 0,
+                        total: 0,
+                        items: [],
+                        timer: null,
+                        paused: false,
+                        interval: 3500,
+                        prog: 0,
+                        progT: null
+                    },
+                };
+
+                function vis(t) {
+                    const w = window.innerWidth;
+                    return t === 'yt' ? (w <= 600 ? 1 : w <= 1100 ? 2 : 3) : (w <= 600 ? 2 : w <= 992 ? 3 : 4);
+                }
+                const trackEl = t => document.getElementById(t === 'yt' ? 'tYtTrack' : 'tIgTrack');
+                const barEl = t => document.getElementById(t === 'yt' ? 'tYtBar' : 'tIgBar');
+                const dotsEl = t => document.getElementById(t === 'yt' ? 'tYtDots' : 'tIgDots');
+
+                function update(t) {
+                    const c = C[t],
+                        tr = trackEl(t);
+                    if (!tr) return;
+                    const v = vis(t),
+                        gap = 20,
+                        cw = (tr.parentElement.offsetWidth - gap * (v - 1)) / v;
+                    c.total = Math.max(0, c.items.length - v);
+                    c.cur = Math.min(c.cur, c.total);
+                    tr.style.transform = `translateX(-${c.cur*(cw+gap)}px)`;
+                    tr.querySelectorAll('[data-card]').forEach(el => {
+                        el.style.flex = `0 0 ${cw}px`;
+                        el.style.minWidth = `${cw}px`;
+                    });
+                    const page = Math.floor(c.cur / v);
+                    dotsEl(t).querySelectorAll('.t-dot').forEach((d, i) => d.classList.toggle('active', i === page));
+                }
+
+                function buildDots(t) {
+                    const v = vis(t),
+                        pages = Math.ceil(C[t].items.length / v);
+                    dotsEl(t).innerHTML = Array.from({
+                            length: pages
+                        }, (_, i) =>
+                        `<button class="t-dot${i===0?' active':''}" onclick="tGoPage('${t}',${i})"></button>`
+                    ).join('');
+                }
+
+                window.tGoPage = (t, p) => {
+                    C[t].cur = Math.min(p * vis(t), C[t].total);
+                    update(t);
+                    rProg(t);
+                };
+                window.tMove = (t, d) => {
+                    const c = C[t];
+                    c.cur = Math.max(0, Math.min(c.cur + d, c.total));
+                    update(t);
+                    rProg(t);
+                };
+                window.tPause = t => {
+                    if (C[t]) C[t].paused = true;
+                };
+                window.tResume = t => {
+                    if (C[t]) C[t].paused = false;
+                };
+
+                function startAuto(t) {
+                    const c = C[t];
+                    rProg(t);
+                    c.timer = setInterval(() => {
+                        if (c.paused) return;
+                        if (c.cur >= c.total) c.cur = -1;
+                        tMove(t, 1);
+                    }, c.interval);
+                }
+
+                function rProg(t) {
+                    const c = C[t],
+                        bar = barEl(t);
+                    clearInterval(c.progT);
+                    c.prog = 0;
+                    if (bar) bar.style.width = '0%';
+                    const step = 100 / (c.interval / 50);
+                    c.progT = setInterval(() => {
+                        if (c.paused) return;
+                        c.prog = Math.min(c.prog + step, 100);
+                        if (bar) bar.style.width = c.prog + '%';
+                    }, 50);
+                }
+
+                /* Swipe */
+                function swipe(trackId, t) {
+                    const el = document.getElementById(trackId);
+                    if (!el) return;
+                    let sx, sy;
+                    el.parentElement.addEventListener('touchstart', e => {
+                        sx = e.touches[0].clientX;
+                        sy = e.touches[0].clientY;
+                    }, {
+                        passive: true
+                    });
+                    el.parentElement.addEventListener('touchend', e => {
+                        const dx = sx - e.changedTouches[0].clientX,
+                            dy = sy - e.changedTouches[0].clientY;
+                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) tMove(t, dx > 0 ? 1 : -1);
+                    }, {
+                        passive: true
+                    });
+                }
+
+
+                function initCar(t) {
+                    const items = Array.from(trackEl(t).querySelectorAll('[data-card]'));
+                    C[t].items = items;
+                    buildDots(t);
+                    update(t);
+                    startAuto(t);
+                }
+
+                /* Tab filter — show/hide existing DOM cards */
+                window.tFilter = function(btn, cat) {
+                    document.querySelectorAll('#tTabRow .t-tab').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const tr = trackEl('yt');
+                    Array.from(tr.querySelectorAll('[data-card]')).forEach(card => {
+                        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+                    });
+                    C.yt.items = Array.from(tr.querySelectorAll('[data-card]')).filter(c => c.style.display !==
+                        'none');
+                    C.yt.cur = 0;
+                    buildDots('yt');
+                    update('yt');
+                    rProg('yt');
+                };
+
+                /* YT Modal */
+                window.tOpenYt = function(id) {
+                    const v = VIDS.find(x => x.id === id);
+                    if (!v) return;
+                    document.getElementById('tYtFrame').src =
+                        `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+                    document.getElementById('tPTitle').textContent = v.title;
+                    document.getElementById('tPDesc').textContent = v.desc || '';
+                    document.getElementById('tPDur').innerHTML = `<i class="bi bi-clock"></i> ${v.dur||''}`;
+                    const b = document.getElementById('tPCat');
+                    b.className = 't-pcat ' + v.cat;
+                    b.textContent = v.label || v.cat;
+                    const same = VIDS.filter(x => x.cat === v.cat && x.id !== id);
+                    const suggs = [...same, ...VIDS.filter(x => x.cat !== v.cat && x.id !== id)].slice(0, 5);
+                    document.getElementById('tSuggTtl').textContent = same.length ? 'More Like This' : 'Up Next';
+                    document.getElementById('tSuggList').innerHTML = suggs.map(s => `
+      <div class="t-sugg-card" onclick="tSwitchVid('${s.id}')">
+        <div class="t-sugg-th"><img src="https://i.ytimg.com/vi/${s.id}/mqdefault.jpg" alt=""/>
+          <div class="t-splay"><i class="bi bi-play-fill"></i></div>
+          <div class="t-sdur">${s.dur||''}</div></div>
+        <div class="t-sugg-info"><h5>${s.title}</h5><span>${s.label||s.cat}</span></div>
+      </div>`).join('');
+                    document.getElementById('tYtModal').classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                    tPause('yt');
+                };
+                window.tSwitchVid = id => {
+                    tCloseYt();
+                    setTimeout(() => tOpenYt(id), 120);
+                };
+                window.tCloseYt = () => {
+                    document.getElementById('tYtFrame').src = '';
+                    document.getElementById('tYtModal').classList.remove('open');
+                    document.body.style.overflow = '';
+                    tResume('yt');
+                };
+
+                /* IG Modal */
+                let igIdx = 0;
+                window.tOpenIg = i => {
+                    igIdx = i;
+                    renderIg();
+                    document.getElementById('tIgModal').classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                    tPause('ig');
+                };
+
+                function renderIg() {
+                    const p = POSTS[igIdx];
+                    const img = document.getElementById('tIgMImg');
+                    img.src = p.img;
+                    img.onerror = () => {
+                        img.src = p.fb;
+                    };
+                    document.getElementById('tIgMCap').textContent = p.cap;
+                    document.getElementById('tIgMTags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join(' ');
+                    document.getElementById('tIgMDots').innerHTML = POSTS.map((_, i) =>
+                        `<div class="t-ig-mdot${i===igIdx?' active':''}"></div>`).join('');
+                }
+                window.tIgNav = d => {
+                    const m = document.getElementById('tIgMedia');
+                    m.style.cssText =
+                        `transition:opacity .18s,transform .18s;opacity:0;transform:translateX(${d>0?'22px':'-22px'})`;
+                    setTimeout(() => {
+                        igIdx = (igIdx + d + POSTS.length) % POSTS.length;
+                        renderIg();
+                        m.style.cssText = `transition:none;transform:translateX(${d>0?'-22px':'22px'})`;
+                        requestAnimationFrame(() => requestAnimationFrame(() => {
+                            m.style.cssText =
+                                'transition:opacity .22s,transform .22s;opacity:1;transform:translateX(0)';
+                        }));
+                    }, 180);
+                };
+                window.tCloseIg = () => {
+                    document.getElementById('tIgModal').classList.remove('open');
+                    document.body.style.overflow = '';
+                    tResume('ig');
+                };
+
+                /* Keyboard */
+                document.addEventListener('keydown', e => {
+                    if (e.key === 'Escape') {
+                        tCloseYt();
+                        tCloseIg();
+                    }
+                    if (document.getElementById('tIgModal')?.classList.contains('open')) {
+                        if (e.key === 'ArrowRight') tIgNav(1);
+                        if (e.key === 'ArrowLeft') tIgNav(-1);
+                    }
+                });
+
+                /* Resize */
+                window.addEventListener('resize', () => {
+                    ['yt', 'ig'].forEach(t => {
+                        const tr = trackEl(t);
+                        if (!tr) return;
+                        tr.classList.add('no-anim');
+                        update(t);
+                        buildDots(t);
+                        requestAnimationFrame(() => tr.classList.remove('no-anim'));
+                    });
+                });
+
+                /* Init */
+                swipe('tYtTrack', 'yt');
+                swipe('tIgTrack', 'ig');
+                initCar('yt');
+                initCar('ig');
+            })();
+    </script>
+@endpush
 <style>
-    :root {
+:root {
         --t-default-font: "Roboto", sans-serif;
         --t-heading-font: "Montserrat", sans-serif;
         --t-nav-font: "Lato", sans-serif;
@@ -1317,540 +1855,3 @@
         }
     }
 </style>
-
-
-{{-- ══════════════════════════════════════
-     YOUTUBE SECTION
-══════════════════════════════════════ --}}
-<section class="t-yt-sec">
-    <div class="t-wrap">
-
-        <div class="t-sec-title">
-            <h2>{{ $sectionTitle }}</h2>
-            <p>{{ $sectionDesc }}</p>
-        </div>
-
-        <div class="t-tabs" id="tTabRow">
-            <button class="t-tab active" data-cat="all" onclick="tFilter(this,'all')">
-                <i class="bi bi-grid-3x3-gap-fill"></i> All Videos
-            </button>
-
-            @foreach ($tabs ?? [] as $tab)
-                @php $icon = ($tab['key'] === 'parent') ? 'person-heart' : 'star-fill'; @endphp
-                <button class="t-tab" data-cat="{{ $tab['key'] }}" onclick="tFilter(this, '{{ $tab['key'] }}')">
-                    <i class="bi bi-{{ $icon }}"></i>
-                    {{ $tab['label'] }}
-                </button>
-            @endforeach
-        </div>
-
-        <div class="t-car-wrap" onmouseenter="tPause('yt')" onmouseleave="tResume('yt')">
-            <button class="t-arr prev" onclick="tMove('yt',-1)">
-                <i class="bi bi-chevron-left"></i>
-            </button>
-
-            <div class="t-vp">
-                <div class="t-track" id="tYtTrack">
-                    @foreach ($videos ?? [] as $i => $video)
-                        <div class="t-yt-card" data-card="{{ $i }}" data-cat="{{ $video->video_category }}"
-                            onclick='tOpenYt(@json($video->youtube_video_id))'>
-
-                            <div class="t-thumb">
-                                <img src="https://i.ytimg.com/vi/{{ $video->youtube_video_id }}/maxresdefault.jpg"
-                                    onerror="this.src='https://i.ytimg.com/vi/{{ $video->youtube_video_id }}/mqdefault.jpg'"
-                                    alt="{{ $video->title }}" loading="lazy" />
-
-                                <div class="t-scrim"></div>
-                                <div class="t-yt-badge">
-                                    <i class="bi bi-youtube"></i> YouTube
-                                </div>
-
-                                <div class="t-play-btn">
-                                    <i class="bi bi-play-fill"></i>
-                                </div>
-
-                                @if (!empty($video->duration))
-                                    <div class="t-dur">{{ $video->duration }}</div>
-                                @endif
-
-                                <div class="t-cat-tag {{ $video->video_category }}">
-                                    {{ $video->category_label }}
-                                </div>
-                            </div>
-
-                            <div class="t-card-body">
-                                <h4>{{ $video->title }}</h4>
-                                <p>{{ $video->description }}</p>
-
-                                <div class="t-card-foot">
-                                    <div class="t-channel">
-                                        <div class="t-ch-ico">A</div>
-                                        {{ $video->channel_name }}
-                                    </div>
-
-                                    <a class="t-watch-btn" href="{{ $video->watch_link }}" target="_blank"
-                                        onclick="event.stopPropagation()">
-                                        <i class="bi bi-youtube"></i> Watch
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <button class="t-arr next" onclick="tMove('yt',1)">
-                <i class="bi bi-chevron-right"></i>
-            </button>
-
-            <div class="t-dots" id="tYtDots"></div>
-
-            <div class="t-mob-nav">
-                <button class="t-mob-btn" onclick="tMove('yt',-1)">
-                    <i class="bi bi-chevron-left"></i>
-                </button>
-                <button class="t-mob-btn" onclick="tMove('yt',1)">
-                    <i class="bi bi-chevron-right"></i>
-                </button>
-            </div>
-
-            <div class="t-prog">
-                <div class="t-prog-bar" id="tYtBar"></div>
-            </div>
-        </div>
-
-        <div class="t-view-all">
-            <a href="{{ $ytChannel }}" target="_blank" class="t-view-all-btn">
-                <i class="bi bi-youtube" style="color:#ff0000"></i>
-                View All on YouTube
-                <i class="bi bi-arrow-up-right"></i>
-            </a>
-        </div>
-
-    </div>
-</section>
-
-@if ($showInstagram)
-    <section class="t-ig-sec">
-        <div class="t-wrap">
-
-            <div class="t-ig-head">
-                <div class="t-ig-head-left">
-                    <div class="t-ig-logo"><i class="bi bi-instagram"></i></div>
-                    <div class="t-ig-meta">
-                        <h3>{{ $igHandle }}</h3>
-                        <span>Follow for daily reels, castings &amp; behind-the-scenes</span>
-                    </div>
-                </div>
-                <a href="{{ $igUrl }}" target="_blank" class="t-ig-follow">
-                    <i class="bi bi-instagram"></i> Follow on Instagram
-                </a>
-            </div>
-
-            <div class="t-car-wrap" onmouseenter="tPause('ig')" onmouseleave="tResume('ig')">
-                <button class="t-arr prev" onclick="tMove('ig',-1)"><i class="bi bi-chevron-left"></i></button>
-                <div class="t-vp">
-                    <div class="t-track" id="tIgTrack">
-                        @foreach ($igPosts ?? [] as $i => $post)
-                            @php
-                                if ($post['type'] === 'reel') {
-                                    $igIcon = 'play-circle-fill';
-                                } elseif ($post['type'] === 'carousel') {
-                                    $igIcon = 'images';
-                                } else {
-                                    $igIcon = 'image';
-                                }
-                            @endphp
-                            <div class="t-ig-card" data-card="{{ $i }}"
-                                onclick="tOpenIg({{ $i }})">
-                                <img src="{{ $post['img'] }}" onerror="this.src='{{ $post['fb'] }}'"
-                                    alt="Instagram" loading="lazy" />
-
-                                @if ($post['type'] === 'reel')
-                                    <div class="t-ig-badge-v"><i class="bi bi-play-fill"></i></div>
-                                @elseif ($post['type'] === 'carousel')
-                                    <div class="t-ig-badge-c"><i class="bi bi-images"></i></div>
-                                @endif
-
-                                <div class="t-ig-ov">
-                                    <i class="bi bi-{{ $igIcon }} t-ig-oi"></i>
-                                    <span class="t-ig-cap-ov">{{ Str::limit($post['cap'], 75) }}</span>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <button class="t-arr next" onclick="tMove('ig',1)"><i class="bi bi-chevron-right"></i></button>
-                <div class="t-dots" id="tIgDots"></div>
-                <div class="t-mob-nav">
-                    <button class="t-mob-btn" onclick="tMove('ig',-1)"><i class="bi bi-chevron-left"></i></button>
-                    <button class="t-mob-btn" onclick="tMove('ig', 1)"><i class="bi bi-chevron-right"></i></button>
-                </div>
-                <div class="t-prog">
-                    <div class="t-prog-bar" id="tIgBar"></div>
-                </div>
-            </div>
-
-            <div class="t-ig-more">
-                <button class="t-ig-more-btn" onclick="window.open('{{ $igUrl }}','_blank')">
-                    <i class="bi bi-instagram"></i> Load More on Instagram
-                </button>
-            </div>
-
-        </div>
-    </section>
-@endif
-
-{{-- YouTube Modal --}}
-<div class="t-yt-modal" id="tYtModal" onclick="if(event.target===this)tCloseYt()">
-    <div class="t-yt-mwrap">
-        <div class="t-yt-mplayer">
-            <button class="t-m-back" onclick="tCloseYt()"><i class="bi bi-arrow-left"></i> Back</button>
-            <div class="t-player-fr">
-                <iframe id="tYtFrame" src="" allow="autoplay; encrypted-media; picture-in-picture"
-                    allowfullscreen></iframe>
-            </div>
-            <div class="t-pinfo">
-                <div class="t-pmeta">
-                    <span id="tPDur"><i class="bi bi-clock"></i></span>
-                    <span id="tPCat" class="t-pcat"></span>
-                </div>
-                <h3 id="tPTitle"></h3>
-                <p id="tPDesc"></p>
-            </div>
-        </div>
-        <div class="t-suggs">
-            <div class="t-sugg-ttl" id="tSuggTtl">Up Next</div>
-            <div class="t-sugg-list" id="tSuggList"></div>
-        </div>
-    </div>
-</div>
-
-@if ($showInstagram)
-    {{-- Instagram Modal --}}
-    <div class="t-ig-modal" id="tIgModal" onclick="if(event.target===this)tCloseIg()">
-        <div class="t-ig-mbox">
-            <div class="t-ig-mmedia" id="tIgMedia">
-                <img id="tIgMImg" src="" alt="" />
-                <div class="t-ig-mnav">
-                    <button onclick="tIgNav(-1);event.stopPropagation()"><i class="bi bi-chevron-left"></i></button>
-                    <button onclick="tIgNav( 1);event.stopPropagation()"><i class="bi bi-chevron-right"></i></button>
-                </div>
-            </div>
-            <div class="t-ig-mpanel">
-                <div class="t-ig-mph">
-                    <div class="t-ig-muser">
-                        <div class="t-ig-mav">
-                            <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=60&q=80"
-                                alt="" />
-                        </div>
-                        <div>
-                            <span class="t-ig-mname">{{ $igHandle }}</span>
-                            <span class="t-ig-mhandle">Act to Action · Jaipur</span>
-                        </div>
-                    </div>
-                    <button class="t-ig-mx" onclick="tCloseIg()"><i class="bi bi-x-lg"></i></button>
-                </div>
-                <div class="t-ig-mcap">
-                    <p id="tIgMCap"></p>
-                    <div class="t-ig-mtags" id="tIgMTags"></div>
-                </div>
-                <div class="t-ig-mdots" id="tIgMDots"></div>
-                <div class="t-ig-mfoot">
-                    <div class="t-ig-macts">
-                        <div class="t-ig-mabtns">
-                            <button class="t-ig-mab"
-                                onclick="this.classList.toggle('liked');this.querySelector('i').className=this.classList.contains('liked')?'bi bi-heart-fill':'bi bi-heart'">
-                                <i class="bi bi-heart"></i><span>Like</span>
-                            </button>
-                            <button class="t-ig-mab"><i class="bi bi-chat"></i><span>Comment</span></button>
-                            <button class="t-ig-mab"><i class="bi bi-send"></i><span>Share</span></button>
-                        </div>
-                        <button class="t-ig-mab"><i class="bi bi-bookmark"></i></button>
-                    </div>
-                    <a class="t-ig-open" id="tIgMLink" href="{{ $igUrl }}" target="_blank">
-                        <i class="bi bi-instagram"></i> Open in Instagram
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
-
-
-{{-- ══════════════════════════════════════
-     JS — data comes entirely from PHP
-     $videos->map->toCarouselArray() outputs
-     the array the carousel JS needs.
-══════════════════════════════════════ --}}
-@push('scripts')
-    <script>
-        @php
-            $jsVids = ($videos ?? collect())->map(function ($v) {
-                return method_exists($v, 'toCarouselArray') ? $v->toCarouselArray() : [];
-            });
-            $jsPosts = $igPosts ?? [];
-        @endphp
-            (function() {
-                /* All video data from PHP — no fetch, no API */
-                const VIDS = @json($jsVids);
-                const POSTS = @json($jsPosts);
-
-                /* Carousel state */
-                const C = {
-                    yt: {
-                        cur: 0,
-                        total: 0,
-                        items: [],
-                        timer: null,
-                        paused: false,
-                        interval: 4500,
-                        prog: 0,
-                        progT: null
-                    },
-                    ig: {
-                        cur: 0,
-                        total: 0,
-                        items: [],
-                        timer: null,
-                        paused: false,
-                        interval: 3500,
-                        prog: 0,
-                        progT: null
-                    },
-                };
-
-                function vis(t) {
-                    const w = window.innerWidth;
-                    return t === 'yt' ? (w <= 600 ? 1 : w <= 1100 ? 2 : 3) : (w <= 600 ? 2 : w <= 992 ? 3 : 4);
-                }
-                const trackEl = t => document.getElementById(t === 'yt' ? 'tYtTrack' : 'tIgTrack');
-                const barEl = t => document.getElementById(t === 'yt' ? 'tYtBar' : 'tIgBar');
-                const dotsEl = t => document.getElementById(t === 'yt' ? 'tYtDots' : 'tIgDots');
-
-                function update(t) {
-                    const c = C[t],
-                        tr = trackEl(t);
-                    if (!tr) return;
-                    const v = vis(t),
-                        gap = 20,
-                        cw = (tr.parentElement.offsetWidth - gap * (v - 1)) / v;
-                    c.total = Math.max(0, c.items.length - v);
-                    c.cur = Math.min(c.cur, c.total);
-                    tr.style.transform = `translateX(-${c.cur*(cw+gap)}px)`;
-                    tr.querySelectorAll('[data-card]').forEach(el => {
-                        el.style.flex = `0 0 ${cw}px`;
-                        el.style.minWidth = `${cw}px`;
-                    });
-                    const page = Math.floor(c.cur / v);
-                    dotsEl(t).querySelectorAll('.t-dot').forEach((d, i) => d.classList.toggle('active', i === page));
-                }
-
-                function buildDots(t) {
-                    const v = vis(t),
-                        pages = Math.ceil(C[t].items.length / v);
-                    dotsEl(t).innerHTML = Array.from({
-                            length: pages
-                        }, (_, i) =>
-                        `<button class="t-dot${i===0?' active':''}" onclick="tGoPage('${t}',${i})"></button>`
-                    ).join('');
-                }
-
-                window.tGoPage = (t, p) => {
-                    C[t].cur = Math.min(p * vis(t), C[t].total);
-                    update(t);
-                    rProg(t);
-                };
-                window.tMove = (t, d) => {
-                    const c = C[t];
-                    c.cur = Math.max(0, Math.min(c.cur + d, c.total));
-                    update(t);
-                    rProg(t);
-                };
-                window.tPause = t => {
-                    if (C[t]) C[t].paused = true;
-                };
-                window.tResume = t => {
-                    if (C[t]) C[t].paused = false;
-                };
-
-                function startAuto(t) {
-                    const c = C[t];
-                    rProg(t);
-                    c.timer = setInterval(() => {
-                        if (c.paused) return;
-                        if (c.cur >= c.total) c.cur = -1;
-                        tMove(t, 1);
-                    }, c.interval);
-                }
-
-                function rProg(t) {
-                    const c = C[t],
-                        bar = barEl(t);
-                    clearInterval(c.progT);
-                    c.prog = 0;
-                    if (bar) bar.style.width = '0%';
-                    const step = 100 / (c.interval / 50);
-                    c.progT = setInterval(() => {
-                        if (c.paused) return;
-                        c.prog = Math.min(c.prog + step, 100);
-                        if (bar) bar.style.width = c.prog + '%';
-                    }, 50);
-                }
-
-                /* Swipe */
-                function swipe(trackId, t) {
-                    const el = document.getElementById(trackId);
-                    if (!el) return;
-                    let sx, sy;
-                    el.parentElement.addEventListener('touchstart', e => {
-                        sx = e.touches[0].clientX;
-                        sy = e.touches[0].clientY;
-                    }, {
-                        passive: true
-                    });
-                    el.parentElement.addEventListener('touchend', e => {
-                        const dx = sx - e.changedTouches[0].clientX,
-                            dy = sy - e.changedTouches[0].clientY;
-                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) tMove(t, dx > 0 ? 1 : -1);
-                    }, {
-                        passive: true
-                    });
-                }
-
-                /* Init — cards are already in DOM from @foreach */
-                function initCar(t) {
-                    const items = Array.from(trackEl(t).querySelectorAll('[data-card]'));
-                    C[t].items = items;
-                    buildDots(t);
-                    update(t);
-                    startAuto(t);
-                }
-
-                /* Tab filter — show/hide existing DOM cards */
-                window.tFilter = function(btn, cat) {
-                    document.querySelectorAll('#tTabRow .t-tab').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const tr = trackEl('yt');
-                    Array.from(tr.querySelectorAll('[data-card]')).forEach(card => {
-                        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
-                    });
-                    C.yt.items = Array.from(tr.querySelectorAll('[data-card]')).filter(c => c.style.display !==
-                        'none');
-                    C.yt.cur = 0;
-                    buildDots('yt');
-                    update('yt');
-                    rProg('yt');
-                };
-
-                /* YT Modal */
-                window.tOpenYt = function(id) {
-                    const v = VIDS.find(x => x.id === id);
-                    if (!v) return;
-                    document.getElementById('tYtFrame').src =
-                        `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
-                    document.getElementById('tPTitle').textContent = v.title;
-                    document.getElementById('tPDesc').textContent = v.desc || '';
-                    document.getElementById('tPDur').innerHTML = `<i class="bi bi-clock"></i> ${v.dur||''}`;
-                    const b = document.getElementById('tPCat');
-                    b.className = 't-pcat ' + v.cat;
-                    b.textContent = v.label || v.cat;
-                    const same = VIDS.filter(x => x.cat === v.cat && x.id !== id);
-                    const suggs = [...same, ...VIDS.filter(x => x.cat !== v.cat && x.id !== id)].slice(0, 5);
-                    document.getElementById('tSuggTtl').textContent = same.length ? 'More Like This' : 'Up Next';
-                    document.getElementById('tSuggList').innerHTML = suggs.map(s => `
-      <div class="t-sugg-card" onclick="tSwitchVid('${s.id}')">
-        <div class="t-sugg-th"><img src="https://i.ytimg.com/vi/${s.id}/mqdefault.jpg" alt=""/>
-          <div class="t-splay"><i class="bi bi-play-fill"></i></div>
-          <div class="t-sdur">${s.dur||''}</div></div>
-        <div class="t-sugg-info"><h5>${s.title}</h5><span>${s.label||s.cat}</span></div>
-      </div>`).join('');
-                    document.getElementById('tYtModal').classList.add('open');
-                    document.body.style.overflow = 'hidden';
-                    tPause('yt');
-                };
-                window.tSwitchVid = id => {
-                    tCloseYt();
-                    setTimeout(() => tOpenYt(id), 120);
-                };
-                window.tCloseYt = () => {
-                    document.getElementById('tYtFrame').src = '';
-                    document.getElementById('tYtModal').classList.remove('open');
-                    document.body.style.overflow = '';
-                    tResume('yt');
-                };
-
-                /* IG Modal */
-                let igIdx = 0;
-                window.tOpenIg = i => {
-                    igIdx = i;
-                    renderIg();
-                    document.getElementById('tIgModal').classList.add('open');
-                    document.body.style.overflow = 'hidden';
-                    tPause('ig');
-                };
-
-                function renderIg() {
-                    const p = POSTS[igIdx];
-                    const img = document.getElementById('tIgMImg');
-                    img.src = p.img;
-                    img.onerror = () => {
-                        img.src = p.fb;
-                    };
-                    document.getElementById('tIgMCap').textContent = p.cap;
-                    document.getElementById('tIgMTags').innerHTML = p.tags.map(t => `<span>${t}</span>`).join(' ');
-                    document.getElementById('tIgMDots').innerHTML = POSTS.map((_, i) =>
-                        `<div class="t-ig-mdot${i===igIdx?' active':''}"></div>`).join('');
-                }
-                window.tIgNav = d => {
-                    const m = document.getElementById('tIgMedia');
-                    m.style.cssText =
-                        `transition:opacity .18s,transform .18s;opacity:0;transform:translateX(${d>0?'22px':'-22px'})`;
-                    setTimeout(() => {
-                        igIdx = (igIdx + d + POSTS.length) % POSTS.length;
-                        renderIg();
-                        m.style.cssText = `transition:none;transform:translateX(${d>0?'-22px':'22px'})`;
-                        requestAnimationFrame(() => requestAnimationFrame(() => {
-                            m.style.cssText =
-                                'transition:opacity .22s,transform .22s;opacity:1;transform:translateX(0)';
-                        }));
-                    }, 180);
-                };
-                window.tCloseIg = () => {
-                    document.getElementById('tIgModal').classList.remove('open');
-                    document.body.style.overflow = '';
-                    tResume('ig');
-                };
-
-                /* Keyboard */
-                document.addEventListener('keydown', e => {
-                    if (e.key === 'Escape') {
-                        tCloseYt();
-                        tCloseIg();
-                    }
-                    if (document.getElementById('tIgModal')?.classList.contains('open')) {
-                        if (e.key === 'ArrowRight') tIgNav(1);
-                        if (e.key === 'ArrowLeft') tIgNav(-1);
-                    }
-                });
-
-                /* Resize */
-                window.addEventListener('resize', () => {
-                    ['yt', 'ig'].forEach(t => {
-                        const tr = trackEl(t);
-                        if (!tr) return;
-                        tr.classList.add('no-anim');
-                        update(t);
-                        buildDots(t);
-                        requestAnimationFrame(() => tr.classList.remove('no-anim'));
-                    });
-                });
-
-                /* Init */
-                swipe('tYtTrack', 'yt');
-                swipe('tIgTrack', 'ig');
-                initCar('yt');
-                initCar('ig');
-            })();
-    </script>
-@endpush

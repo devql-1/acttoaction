@@ -357,11 +357,12 @@ class EnrollmentController extends Controller
                 'razorpay_signature'  => $request->razorpay_signature,
             ]);
 
-            // Step 2: Prevent cross-enrollment/order replay by matching the checkout session.
-            if (
-                (int) session('rzp_enrollment_id') !== (int) $request->enrollment_id ||
-                (string) session('rzp_order_id') !== (string) $request->razorpay_order_id
-            ) {
+            // Step 2: Prevent cross-enrollment replay by matching the checkout session.
+            // Note: rzp_order_id is not tracked here because store() uses Razorpay
+            // Payment Links (no pre-created order); matching the enrollment is
+            // sufficient — the authoritative order/amount check happens in Step 4/5b
+            // against the Razorpay-fetched payment object.
+            if ((int) session('rzp_enrollment_id') !== (int) $request->enrollment_id) {
                 return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
             }
 

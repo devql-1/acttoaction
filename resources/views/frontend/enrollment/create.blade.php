@@ -1,7 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
+
     <style>
-        /* ── FAILED SCREEN anim override ── */
+/* ── FAILED SCREEN anim override ── */
         #failedScreen .success-anim {
             background: linear-gradient(135deg, #dc2626, #ef4444);
         }
@@ -970,6 +973,13 @@
         }
 
         @media (max-width: 640px) {
+            /* Prevent iOS zoom-on-focus for form inputs */
+            .fi,
+            select.fi,
+            textarea.fi {
+                font-size: 16px;
+            }
+
             .header-inner {
                 padding: 28px 16px 24px;
             }
@@ -1114,6 +1124,9 @@
         }
 
         @media (max-width: 420px) {
+            #summary-grid {
+                grid-template-columns: 1fr !important;
+            }
             .step-label {
                 display: none;
             }
@@ -1194,8 +1207,58 @@
         .phone-pfx-wrap.is-valid {
             border-color: var(--success);
         }
-    </style>
+    
 
+
+        .field-success {
+            font-size: 12px;
+            color: #059669;
+            font-weight: 600;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ajax-indicator {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .ajax-indicator.checking::after {
+            content: '';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #175cdd;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+        }
+
+        .ajax-indicator.ok::after {
+            content: '✓';
+            color: #059669;
+            font-weight: 700;
+        }
+
+        .ajax-indicator.bad::after {
+            content: '✕';
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        @keyframes spin {
+            to {
+                transform: translateY(-50%) rotate(360deg);
+            }
+        }
+    </style>
     @php
         $centresByState = $centresByState ?? [];
         $courseStates = $courseStates ?? [];
@@ -2578,56 +2641,7 @@
         updateStepper(0, false);
     </script>
 
-    <style>
-        .field-success {
-            font-size: 12px;
-            color: #059669;
-            font-weight: 600;
-            margin-top: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .ajax-indicator {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 14px;
-            pointer-events: none;
-        }
-
-        .ajax-indicator.checking::after {
-            content: '';
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid #e5e7eb;
-            border-top-color: #175cdd;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-            vertical-align: middle;
-        }
-
-        .ajax-indicator.ok::after {
-            content: '✓';
-            color: #059669;
-            font-weight: 700;
-        }
-
-        .ajax-indicator.bad::after {
-            content: '✕';
-            color: #dc2626;
-            font-weight: 700;
-        }
-
-        @keyframes spin {
-            to {
-                transform: translateY(-50%) rotate(360deg);
-            }
-        }
-    </style>
+    
 
     {{-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>

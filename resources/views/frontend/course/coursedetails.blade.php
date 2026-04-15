@@ -1,7 +1,9 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
     <style>
-        a {
+a {
             color: var(--accent-color);
             text-decoration: none;
             transition: .3s;
@@ -159,6 +161,14 @@
             color: #fff;
         }
 
+        @media(max-width:991px) {
+            .enroll-card {
+                position: static;
+                top: auto;
+                margin-top: 32px;
+            }
+        }
+
         @media(max-width:768px) {
             .course-hero {
                 height: auto;
@@ -171,6 +181,27 @@
 
             .course-hero .hero-overlay {
                 background: rgba(10, 20, 50, .8);
+            }
+
+            .quick-info {
+                padding: 16px 0;
+            }
+            .quick-info .qi-item {
+                justify-content: center;
+                padding: 6px 0;
+            }
+
+            .enroll-card .card-top {
+                padding: 22px 20px 18px;
+            }
+            .enroll-card .card-top .price-big {
+                font-size: 32px;
+            }
+        }
+
+        @media(max-width:576px) {
+            .course-hero .hero-content h1 {
+                font-size: 24px;
             }
         }
 

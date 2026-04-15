@@ -1,23 +1,8 @@
 @extends('frontend.course.layout')
 @section('content')
-    @php
-        $ci = $contactInfo ?? null;
-        $phone = $ci->phone ?? '';
-        $whatsapp = $ci->whatsapp ?? '';
-        $email = $ci->email ?? '';
-        $address = $ci->address ?? 'Our Location';
-        $mapLink = $ci->map_link ?? '';
-        $fbUrl = $ci->fb_url ?? '';
-        $instaUrl = $ci->insta_url ?? '';
-        $linkedinUrl = $ci->linkedin_url ?? '';
-
-        $phoneDigits = preg_replace('/\D/', '', $phone);
-        $whatsappDigits = preg_replace('/\D/', '', $whatsapp);
-        $isEmbedMap = $mapLink && str_contains($mapLink, '/maps/embed');
-    @endphp
 
     <style>
-        :root {
+:root {
             --cu-accent: var(--accent-color, #0d6efd);
             --cu-surface: var(--surface-color, #ffffff);
             --cu-text: var(--default-color, #495057);
@@ -450,8 +435,45 @@
             .cu-map-fallback {
                 padding: 24px;
             }
+
+            /* Prevent iOS zoom-on-focus + comfortable tap targets */
+            .cu-field .form-control,
+            .cu-field textarea.form-control {
+                font-size: 16px;
+                min-height: 44px;
+            }
+            .cu-field .input-group-text {
+                font-size: 14px;
+            }
+            .cu-form-card,
+            .cu-info-card {
+                padding: 24px 18px;
+            }
         }
     </style>
+    @php
+        $ci = $contactInfo ?? null;
+        $phone = $ci->phone ?? '';
+        $whatsapp = $ci->whatsapp ?? '';
+        $email = $ci->email ?: 'info@acttoaction.com';
+        $address = $ci->address ?: 'Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar, Jaipur - 302021';
+        $mapLink = $ci->map_link ?? '';
+        $fbUrl = $ci->fb_url ?? '';
+        $instaUrl = $ci->insta_url ?? '';
+        $linkedinUrl = $ci->linkedin_url ?? '';
+
+        $chatPhones = ['+91 91191-18844', '+91 91191-87311', '+91 91191-87411'];
+        $workingHours = [
+            'Tue – Sat: 11:00 AM – 7:00 PM',
+            'Sunday: 10:00 AM – 4:00 PM',
+        ];
+
+        $phoneDigits = preg_replace('/\D/', '', $phone);
+        $whatsappDigits = preg_replace('/\D/', '', $whatsapp);
+        $isEmbedMap = $mapLink && str_contains($mapLink, '/maps/embed');
+    @endphp
+
+    
 
     <main class="main">
         <!-- Hero -->
@@ -514,33 +536,45 @@
                             <h3>Reach Out To Us</h3>
                             <p>Visit our office, drop us a line, or connect on social — we're happy to help.</p>
 
-                            @if ($address)
-                                <div class="cu-info-row">
-                                    <div class="cu-ic-sm"><i class="bi bi-geo-alt-fill"></i></div>
-                                    <div>
-                                        <h6>Our Location</h6>
-                                        <p>{{ $address }}</p>
-                                    </div>
+                            <div class="cu-info-row">
+                                <div class="cu-ic-sm"><i class="bi bi-geo-alt-fill"></i></div>
+                                <div>
+                                    <h6>Our Location</h6>
+                                    <p>{{ $address }}</p>
                                 </div>
-                            @endif
+                            </div>
+
+                            <div class="cu-info-row">
+                                <div class="cu-ic-sm"><i class="bi bi-telephone-fill"></i></div>
+                                <div>
+                                    <h6>Chat With Us</h6>
+                                    <p>
+                                        @foreach ($chatPhones as $ph)
+                                            <a href="tel:{{ preg_replace('/\D/', '', $ph) }}" style="color:inherit;text-decoration:none;">{{ $ph }}</a>@if (!$loop->last),<br>@endif
+                                        @endforeach
+                                    </p>
+                                </div>
+                            </div>
 
                             <div class="cu-info-row">
                                 <div class="cu-ic-sm"><i class="bi bi-clock-fill"></i></div>
                                 <div>
-                                    <h6>Working Hours</h6>
-                                    <p>Mon – Fri: 9:00 AM – 7:00 PM<br>Sat: 10:00 AM – 5:00 PM</p>
+                                    <h6>Operating Hours</h6>
+                                    <p>
+                                        @foreach ($workingHours as $wh)
+                                            {{ $wh }}@if (!$loop->last)<br>@endif
+                                        @endforeach
+                                    </p>
                                 </div>
                             </div>
 
-                            @if ($email)
-                                <div class="cu-info-row">
-                                    <div class="cu-ic-sm"><i class="bi bi-envelope-fill"></i></div>
-                                    <div>
-                                        <h6>Email Support</h6>
-                                        <p>{{ $email }}</p>
-                                    </div>
+                            <div class="cu-info-row">
+                                <div class="cu-ic-sm"><i class="bi bi-envelope-fill"></i></div>
+                                <div>
+                                    <h6>Email Support</h6>
+                                    <p><a href="mailto:{{ $email }}" style="color:inherit;text-decoration:none;">{{ $email }}</a></p>
                                 </div>
-                            @endif
+                            </div>
 
                             @if ($fbUrl || $instaUrl || $linkedinUrl)
                                 <div class="cu-socials">

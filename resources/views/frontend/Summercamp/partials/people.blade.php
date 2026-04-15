@@ -1,33 +1,6 @@
 {{-- resources/views/frontend/partials/people.blade.php --}}
 {{-- Requires: $people = ['mentors'=>..., 'speakers'=>..., 'guests'=>..., 'faculty'=>...] --}}
-<style>
-    /* ===== SCOPED FIX FOR THIS PAGE ONLY ===== */
 
-    .sc-people-page .sc-swiper {
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .sc-people-page .swiper-wrapper {
-        display: flex !important;
-    }
-
-    .sc-people-page .swiper-slide {
-        width: auto !important;
-        /* 🔥 fixes bleeding */
-        flex-shrink: 0;
-    }
-
-    /* Fix card stretching */
-    .sc-people-page .swiper-slide>* {
-        width: 160%;
-    }
-
-    /* Optional spacing fix */
-    .sc-people-page .ppl-swiper {
-        padding-bottom: 50px;
-    }
-</style>
 <div class="sc-people-page">
     @if ($people['mentors']->isNotEmpty())
         <section class="people-section" id="mentors">
@@ -233,3 +206,31 @@
         });
     })();
 </script>
+<style>
+/* ===== SCOPED FIX FOR THIS PAGE ONLY ===== */
+
+    .sc-people-page .sc-swiper {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .sc-people-page .swiper-wrapper {
+        display: flex !important;
+    }
+
+    .sc-people-page .swiper-slide {
+        width: auto !important;
+        /* 🔥 fixes bleeding */
+        flex-shrink: 0;
+    }
+
+    /* Fix card stretching */
+    .sc-people-page .swiper-slide>* {
+        width: 160%;
+    }
+
+    /* Optional spacing fix */
+    .sc-people-page .ppl-swiper {
+        padding-bottom: 50px;
+    }
+</style>

@@ -182,6 +182,24 @@
                                 </div>
                             </div>
 
+                            {{-- REDIRECT LINK --}}
+                            <div class="form-group row">
+                                <div class="col-md-3">
+                                    <label>Redirect Link</label>
+                                    <small class="text-muted d-block fw-normal">Optional external URL.</small>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="url" name="redirect_link"
+                                        class="form-control @error('redirect_link') is-invalid @enderror"
+                                        value="{{ old('redirect_link') }}"
+                                        placeholder="https://forms.gle/...">
+                                    @error('redirect_link')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="text-muted">If set, the Register button on the public sub-event page will open this URL instead of the internal registration form.</small>
+                                </div>
+                            </div>
+
                             <script>
                                 // Show preview of selected image
                                 document.querySelector('input[name="banner_image"]').addEventListener('change', function (e) {

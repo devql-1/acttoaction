@@ -1,7 +1,9 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
     <style>
-        /* ─── NEWS / IN THE NEWS ─── */
+/* ─── NEWS / IN THE NEWS ─── */
         .news-section {
             padding: 60px 0;
             background: #f4f8ff;
@@ -1293,6 +1295,13 @@
             .doctors .doctor-card .img-wrap img {
                 height: 200px;
             }
+
+            .founder-avatar {
+                width: 150px !important;
+                height: 150px !important;
+                margin-bottom: 16px !important;
+                border-width: 4px !important;
+            }
         }
     </style>
     <main class="main">
@@ -1482,7 +1491,7 @@
                     <div class="col-lg-4 text-center" data-aos="fade-right">
                         <img src="https://static.wixstatic.com/media/f6a8d9_034eaf05abd04f2291659c9ee18f92ea~mv2.jpg/v1/fill/w_247,h_247,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kritesh%20Image.jpg"
                             alt="Kritesh Agarwal"
-                            style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;">
+                            class="founder-avatar" style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
                         <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Kritesh Agarwal</h3>
                         <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Filmmaker
                             &amp; Acting Coach</p>
@@ -1652,7 +1661,7 @@
                     <div class="col-lg-4 text-center" data-aos="fade-right">
                         <img src="https://static.wixstatic.com/media/495d44_4b14b64cccde4ee797cfd36583c43a9f~mv2.jpg/v1/crop/x_0,y_39,w_408,h_338/fill/w_403,h_334,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kriti%20Gupta.jpg"
                             alt="Kriti Gupta"
-                            style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;">
+                            class="founder-avatar" style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
                         <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Kriti Gupta</h3>
                         <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Filmmaker
                             &amp; Acting Coach</p>

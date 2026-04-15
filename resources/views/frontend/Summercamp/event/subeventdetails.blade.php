@@ -1,63 +1,9 @@
 @extends('frontend.course.layout')
 @section('content')
 
-    @php
-        use Carbon\Carbon;
-        $now = now();
-
-        $subDate = Carbon::parse($sub->event_date);
-        $centers = $sub->centersWithState ?? collect();
-        $byState = $centers->groupBy(fn($c) => $c->state->name ?? 'Other');
-
-        $modeBadge = [
-            'online' => [
-                'bg' => '#dcfce7',
-                'color' => '#166534',
-                'icon' => 'bi-camera-video-fill',
-                'label' => 'Online',
-            ],
-            'offline' => ['bg' => '#dbeafe', 'color' => '#1e40af', 'icon' => 'bi-building', 'label' => 'Offline'],
-            'hybrid' => ['bg' => '#f3e8ff', 'color' => '#6b21a8', 'icon' => 'bi-intersect', 'label' => 'Hybrid'],
-        ];
-        $mb = $modeBadge[strtolower($sub->mode ?? '')] ?? [
-            'bg' => '#f3f4f6',
-            'color' => '#374151',
-            'icon' => 'bi-circle',
-            'label' => ucfirst($sub->mode ?: '—'),
-        ];
-
-        // Status logic
-        if (!$sub->status) {
-            $dot = 'dot-closed';
-            $statusLabel = 'Inactive';
-        } elseif ($now->lt($subDate)) {
-            $dot = 'dot-soon';
-            $statusLabel = 'Opening Soon';
-        } elseif ($now->gt($subDate)) {
-            $dot = 'dot-closed';
-            $statusLabel = 'Registrations Closed';
-        } else {
-            $dot = 'dot-open';
-            $statusLabel = 'Open · Live';
-        }
-
-        $canRegister = $dot !== 'dot-closed';
-
-        // Related sessions from same parent event (exclude current)
-        $siblings = $sub->event->subEvents->where('id', '!=', $sub->id)->values();
-
-        $stripes = [
-            'linear-gradient(90deg,#112344,#175cdd)',
-            'linear-gradient(90deg,#d97706,#fbbf24)',
-            'linear-gradient(90deg,#059669,#34d399)',
-            'linear-gradient(90deg,#7c3aed,#a78bfa)',
-            'linear-gradient(90deg,#0891b2,#22d3ee)',
-            'linear-gradient(90deg,#db2777,#f472b6)',
-        ];
-    @endphp
 
     <style>
-        /* ── Base ─────────────────────────────────────────── */
+/* ── Base ─────────────────────────────────────────── */
         h1,
         h2,
         h3,
@@ -739,6 +685,62 @@
             }
         }
     </style>
+    @php
+        use Carbon\Carbon;
+        $now = now();
+
+        $subDate = Carbon::parse($sub->event_date);
+        $centers = $sub->centersWithState ?? collect();
+        $byState = $centers->groupBy(fn($c) => $c->state->name ?? 'Other');
+
+        $modeBadge = [
+            'online' => [
+                'bg' => '#dcfce7',
+                'color' => '#166534',
+                'icon' => 'bi-camera-video-fill',
+                'label' => 'Online',
+            ],
+            'offline' => ['bg' => '#dbeafe', 'color' => '#1e40af', 'icon' => 'bi-building', 'label' => 'Offline'],
+            'hybrid' => ['bg' => '#f3e8ff', 'color' => '#6b21a8', 'icon' => 'bi-intersect', 'label' => 'Hybrid'],
+        ];
+        $mb = $modeBadge[strtolower($sub->mode ?? '')] ?? [
+            'bg' => '#f3f4f6',
+            'color' => '#374151',
+            'icon' => 'bi-circle',
+            'label' => ucfirst($sub->mode ?: '—'),
+        ];
+
+        // Status logic
+        if (!$sub->status) {
+            $dot = 'dot-closed';
+            $statusLabel = 'Inactive';
+        } elseif ($now->lt($subDate)) {
+            $dot = 'dot-soon';
+            $statusLabel = 'Opening Soon';
+        } elseif ($now->gt($subDate)) {
+            $dot = 'dot-closed';
+            $statusLabel = 'Registrations Closed';
+        } else {
+            $dot = 'dot-open';
+            $statusLabel = 'Open · Live';
+        }
+
+        $canRegister = $dot !== 'dot-closed';
+
+        // Related sessions from same parent event (exclude current)
+        $siblings = $sub->event->subEvents->where('id', '!=', $sub->id)->values();
+
+        $stripes = [
+            'linear-gradient(90deg,#112344,#175cdd)',
+            'linear-gradient(90deg,#d97706,#fbbf24)',
+            'linear-gradient(90deg,#059669,#34d399)',
+            'linear-gradient(90deg,#7c3aed,#a78bfa)',
+            'linear-gradient(90deg,#0891b2,#22d3ee)',
+            'linear-gradient(90deg,#db2777,#f472b6)',
+        ];
+    @endphp
+
+    
 
     <main class="main">
 

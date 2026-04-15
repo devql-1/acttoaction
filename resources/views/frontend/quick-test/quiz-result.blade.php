@@ -1,7 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
+
     <style>
-        /* ════════════════════════════════════════════
+/* ════════════════════════════════════════════
                                                                                    QUIZ RESULT PAGE — Act to Action
                                                                                    Design: Deep navy + electric blue, editorial
                                                                                    premium feel with bold typographic hierarchy
@@ -1072,7 +1075,6 @@
         .qa-block, .qa-item             { break-inside: avoid; page-break-inside: avoid; }
     }
     </style>
-
     {{-- Chart.js must load before any graph @include partial runs --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

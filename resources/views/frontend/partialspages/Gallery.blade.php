@@ -159,8 +159,36 @@
 
 
 
-   <style>
-       /* ── Section ── */
+   
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.umd.js"></script>
+   <script>
+       (function() {
+           @php
+               $allSlugs = \App\Models\Gallerycat::pluck('slug');
+           @endphp
+
+           @foreach ($allSlugs as $slug)
+               Fancybox.bind('[data-fancybox="gallery-{{ $slug }}"]', {
+                   Toolbar: {
+                       display: {
+                           left: ['infobar'],
+                           middle: [],
+                           right: ['slideshow', 'fullscreen', 'close'],
+                       },
+                   },
+                   Images: {
+                       zoom: true
+                   },
+                   Carousel: {
+                       infinite: true
+                   },
+               });
+           @endforeach
+       })();
+   </script>
+<style>
+/* ── Section ── */
        .gallery-section {
            padding: 80px 0;
            background: #f8faff;
@@ -502,31 +530,4 @@
            font-weight: 600;
            text-align: center;
        }
-   </style>
-
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.umd.js"></script>
-   <script>
-       (function() {
-           @php
-               $allSlugs = \App\Models\Gallerycat::pluck('slug');
-           @endphp
-
-           @foreach ($allSlugs as $slug)
-               Fancybox.bind('[data-fancybox="gallery-{{ $slug }}"]', {
-                   Toolbar: {
-                       display: {
-                           left: ['infobar'],
-                           middle: [],
-                           right: ['slideshow', 'fullscreen', 'close'],
-                       },
-                   },
-                   Images: {
-                       zoom: true
-                   },
-                   Carousel: {
-                       infinite: true
-                   },
-               });
-           @endforeach
-       })();
-   </script>
+</style>

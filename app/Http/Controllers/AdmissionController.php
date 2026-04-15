@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\AdmissionShortForm;
 use App\Models\Service;
 use Illuminate\Http\Request;
-use App\Mail\ContactAdminMail;
-use App\Mail\ContactUserMail;
+use App\Mail\AdmissionAdminMail;
+use App\Mail\AdmissionUserMail;
 use App\Models\AdmissionFullForm;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -104,16 +105,21 @@ class AdmissionController extends Controller
             ], 422);
         }
 
-        $contact = AdmissionFullForm::create($request->all());
+        $admission = AdmissionFullForm::create($request->all());
 
-        // Send mail to admin (use config('mail.from.address') or set admin email)
-        $adminEmail = config('mail.from.address') ?? 'admin@yourdomain.com';
-        // For production prefer ->queue(...) if queue configured
-        Mail::to($adminEmail)->send(new ContactAdminMail($contact));
+        // Emails must not break the form submit — wrap in try/catch
+        try {
+            $adminEmail = config('mail.from.address') ?? 'admin@yourdomain.com';
+            Mail::to($adminEmail)->send(new AdmissionAdminMail($admission));
 
-        // Optional: send confirmation to user if provided
-        if (!empty($contact->email)) {
-            Mail::to($contact->email)->send(new ContactUserMail($contact));
+            if (!empty($admission->email)) {
+                Mail::to($admission->email)->send(new AdmissionUserMail($admission));
+            }
+        } catch (\Throwable $e) {
+            Log::error('Admission email failed', [
+                'admission_id' => $admission->id,
+                'error'        => $e->getMessage(),
+            ]);
         }
 
         return response()->json([

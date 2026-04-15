@@ -4,8 +4,12 @@
 @section('title', 'Workshops — Act To Action')
 
 {{-- ── Styles ── --}}
-<style>
-    /* ── Page title ── */
+
+@section('content')
+
+
+    <style>
+/* ── Page title ── */
     .page-title {
         color: var(--default-color);
         background-color: var(--background-color);
@@ -962,10 +966,7 @@
         border-radius: 20px;
         white-space: nowrap;
     }
-</style>
-
-@section('content')
-
+    </style>
     {{-- ── Hero Section ── --}}
     <section class="workshops-hero">
         <div class="container position-relative">

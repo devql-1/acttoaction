@@ -2,7 +2,10 @@
 @extends('frontend.course.layout')
 @section('title', $school->name . ' – Act To Action')
 
-<style>
+@section('content')
+
+
+    <style>
 /* ── Hero ── */
 .ws-hero {
     position: relative;
@@ -419,10 +422,10 @@
     .ws-cta-bottom { padding: 40px 24px; }
     .btn-register-cta { padding: 14px 32px; font-size: 1rem; }
 }
-</style>
 
-@section('content')
-<style>.ws-hero { padding-top: 185px !important; }</style>
+
+.ws-hero { padding-top: 185px !important; }
+    </style>
 <main class="main">
 
     {{-- ── Hero ── --}}

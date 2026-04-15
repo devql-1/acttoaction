@@ -1,7 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
+
     <style>
-        a {
+a {
             color: var(--accent-color);
             text-decoration: none;
             transition: 0.3s;
@@ -761,6 +764,20 @@
             .business-section h2 {
                 font-size: 24px;
             }
+
+            /* iOS no-zoom + comfortable tap targets */
+            .volunteer-form-section .form-control,
+            .volunteer-form-section .form-select,
+            .volunteer-form-section textarea.form-control {
+                font-size: 16px;
+                min-height: 44px;
+            }
+            .volunteer-form-section textarea.form-control {
+                min-height: 88px;
+            }
+            .volunteer-form-section .form-wrapper {
+                padding: 22px 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -912,7 +929,6 @@
             margin-top: 4px;
         }
     </style>
-
     <main class="main">
         <div style="margin-top: 195px;"></div>
         <section class="business-section ">

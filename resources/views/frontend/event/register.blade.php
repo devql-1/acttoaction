@@ -1,31 +1,8 @@
 @extends('frontend.course.layout')
 @section('content')
-    {{--
-    resources/views/frontend/event/register.blade.php
-    Variables: $sub, $booked, $avail, $isFull, $centres
---}}
-    @php
-        use Carbon\Carbon;
-        $event = $sub->event;
-        $pct = $sub->max_seats && $sub->max_seats > 0 ? min(100, round(($booked / $sub->max_seats) * 100)) : 0;
-        $isLow = $avail !== null && $avail > 0 && $avail <= 5;
-        $maxTickets = $avail !== null ? min($avail, 10) : 10;
-        $oldAtts = old('attendees', [
-            ['name' => '', 'phone' => '', 'email' => '', 'dob' => '', 'gender' => '', 'institution' => ''],
-        ]);
-        $oldPrimary = (int) old('primary_ticket', 0);
-    @endphp
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
-        rel="stylesheet">
-    <script>
-        window.__RZP_KEY__ = '{{ config('services.razorpay.key') }}';
-    </script>
 
     <style>
-        :root {
+:root {
             --ink: #0c1825;
             --soft: #455a70;
             --mute: #8fa8bf;
@@ -1199,6 +1176,31 @@
             background: var(--bd);
         }
     </style>
+    {{--
+    resources/views/frontend/event/register.blade.php
+    Variables: $sub, $booked, $avail, $isFull, $centres
+--}}
+    @php
+        use Carbon\Carbon;
+        $event = $sub->event;
+        $pct = $sub->max_seats && $sub->max_seats > 0 ? min(100, round(($booked / $sub->max_seats) * 100)) : 0;
+        $isLow = $avail !== null && $avail > 0 && $avail <= 5;
+        $maxTickets = $avail !== null ? min($avail, 10) : 10;
+        $oldAtts = old('attendees', [
+            ['name' => '', 'phone' => '', 'email' => '', 'dob' => '', 'gender' => '', 'institution' => ''],
+        ]);
+        $oldPrimary = (int) old('primary_ticket', 0);
+    @endphp
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
+    <script>
+        window.__RZP_KEY__ = '{{ config('services.razorpay.key') }}';
+    </script>
+
+    
 
     <div class="pg">
 

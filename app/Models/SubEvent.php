@@ -10,7 +10,7 @@ class SubEvent extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['event_id', 'title', 'slug', 'description', 'event_date', 'start_time', 'end_time', 'fees', 'age_group', 'mode', 'max_seats', 'status', 'banner_image', 'type'];
+    protected $fillable = ['event_id', 'title', 'slug', 'description', 'event_date', 'start_time', 'end_time', 'fees', 'age_group', 'mode', 'max_seats', 'status', 'banner_image', 'redirect_link', 'type'];
 
     protected static function boot()
     {

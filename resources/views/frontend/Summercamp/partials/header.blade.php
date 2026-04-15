@@ -52,8 +52,186 @@
 </header>
 
 
+
+
+
+<script>
+    (function() {
+        'use strict';
+
+        const BP = 1099; // mobile breakpoint
+        let openDrop = null;
+        let openSub = null;
+        let subTimer = null;
+
+        /* ── helpers ── */
+        function closeDrop() {
+            if (!openDrop) return;
+            openDrop.classList.remove('is-open');
+            openDrop = null;
+            closeSub();
+        }
+
+        function closeSub() {
+            clearTimeout(subTimer);
+            if (!openSub) return;
+            openSub.sub.classList.remove('is-open');
+            openSub.row.classList.remove('is-active-sub');
+            openSub = null;
+        }
+
+        function openSubPanel(row, sub) {
+            if (openSub && openSub.sub !== sub) closeSub();
+            clearTimeout(subTimer);
+            row.classList.add('is-active-sub');
+            sub.classList.add('is-open');
+            openSub = {
+                row,
+                sub
+            };
+        }
+
+        /* ── DESKTOP: hover flyouts ── */
+        document.querySelectorAll('.sh-has-drop').forEach(li => {
+            const link = li.querySelector(':scope > a');
+            const drop = li.querySelector(':scope > .sh-drop');
+            if (!drop) return;
+
+            const show = () => {
+                if (window.innerWidth <= BP) return;
+                if (openDrop && openDrop !== drop) openDrop.classList.remove('is-open');
+                drop.classList.add('is-open');
+                openDrop = drop;
+                const arr = link?.querySelector('.sh-arrow');
+                if (arr) arr.style.transform = 'rotate(180deg)';
+            };
+
+            const hide = () => {
+                if (window.innerWidth <= BP) return;
+                drop.classList.remove('is-open');
+                openDrop = null;
+                closeSub();
+                const arr = link?.querySelector('.sh-arrow');
+                if (arr) arr.style.transform = '';
+            };
+
+            li.addEventListener('mouseenter', show);
+            li.addEventListener('mouseleave', hide);
+
+            /* ── lvl 2 hover ── */
+            drop.querySelectorAll('.sh-has-sub').forEach(subLi => {
+                const row = subLi.querySelector('.sh-row');
+                const sub = subLi.querySelector('.sh-sub');
+                if (!row || !sub) return;
+
+                row.addEventListener('mouseenter', () => {
+                    if (window.innerWidth <= BP) return;
+                    clearTimeout(subTimer);
+                    openSubPanel(row, sub);
+                });
+                sub.addEventListener('mouseenter', () => {
+                    if (window.innerWidth <= BP) return;
+                    clearTimeout(subTimer);
+                });
+                row.addEventListener('mouseleave', () => {
+                    if (window.innerWidth <= BP) return;
+                    subTimer = setTimeout(closeSub, 120);
+                });
+                sub.addEventListener('mouseleave', () => {
+                    if (window.innerWidth <= BP) return;
+                    subTimer = setTimeout(closeSub, 120);
+                });
+            });
+        });
+
+        /* Close when clicking outside */
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.sh')) closeDrop();
+        });
+
+        /* ── MOBILE: drawer open / close ── */
+        const toggle = document.getElementById('shToggle');
+        const drawer = document.getElementById('shDrawer');
+        const closeBtn = document.getElementById('shClose');
+
+        toggle?.addEventListener('click', () => drawer.classList.add('open'));
+        closeBtn?.addEventListener('click', () => drawer.classList.remove('open'));
+        drawer?.addEventListener('click', e => {
+            if (e.target === drawer) drawer.classList.remove('open');
+        });
+
+        /* ── MOBILE: accordion lvl1 ── */
+        document.querySelectorAll('.sh-has-drop > a').forEach(link => {
+            link.addEventListener('click', e => {
+                if (window.innerWidth > BP) return;
+                e.preventDefault();
+
+                const drop = link.parentElement.querySelector(':scope > .sh-drop');
+                if (!drop) return;
+
+                const isOpen = drop.classList.contains('mob-open');
+
+                // collapse all open drops
+                document.querySelectorAll('.sh-drop.mob-open').forEach(d => {
+                    d.classList.remove('mob-open');
+                    d.querySelectorAll('.sh-sub.mob-open').forEach(s => s.classList.remove(
+                        'mob-open'));
+                    d.querySelectorAll('.sh-row.is-active-sub').forEach(r => r.classList
+                        .remove('is-active-sub'));
+                });
+
+                if (!isOpen) drop.classList.add('mob-open');
+            });
+        });
+
+        /* ── MOBILE: accordion lvl2 ── */
+        document.querySelectorAll('.sh-has-sub > .sh-row').forEach(row => {
+            row.addEventListener('click', e => {
+                if (window.innerWidth > BP) return;
+
+                const sub = row.parentElement.querySelector('.sh-sub');
+                if (!sub) return;
+
+                const isOpen = sub.classList.contains('mob-open');
+
+                // collapse sibling subs
+                row.parentElement.closest('.sh-drop')?.querySelectorAll('.sh-sub.mob-open').forEach(
+                    s => s.classList.remove('mob-open'));
+                row.parentElement.closest('.sh-drop')?.querySelectorAll('.sh-row.is-active-sub')
+                    .forEach(r => r.classList.remove('is-active-sub'));
+
+                if (!isOpen) {
+                    sub.classList.add('mob-open');
+                    row.classList.add('is-active-sub');
+                    e.preventDefault(); // first tap = expand only
+                }
+                // second tap = navigate (default href)
+            });
+        });
+
+        /* Close drawer when leaf link is tapped */
+        drawer?.querySelectorAll('.sh-leaf, .sh-drop-foot a, .sh-events a').forEach(a => {
+            a.addEventListener('click', () => {
+                if (window.innerWidth <= BP) drawer.classList.remove('open');
+            });
+        });
+
+        /* ── Active link highlight ── */
+        const curPath = window.location.pathname;
+        document.querySelectorAll('.sh-nav a').forEach(a => {
+            try {
+                const lp = new URL(a.href, location.origin).pathname;
+                if (lp !== '/' && curPath.startsWith(lp)) {
+                    a.classList.add('sh-active');
+                    a.closest('.sh-has-drop')?.querySelector(':scope > a')?.classList.add('sh-active');
+                }
+            } catch (_) {}
+        });
+
+    })();
+</script>
 <style>
-    /* ================================================================
+/* ================================================================
    SITE HEADER  —  sh = site-header prefix
    All class names are scoped so they never clash with page styles.
 ================================================================ */
@@ -655,180 +833,3 @@
         }
     }
 </style>
-
-
-<script>
-    (function() {
-        'use strict';
-
-        const BP = 1099; // mobile breakpoint
-        let openDrop = null;
-        let openSub = null;
-        let subTimer = null;
-
-        /* ── helpers ── */
-        function closeDrop() {
-            if (!openDrop) return;
-            openDrop.classList.remove('is-open');
-            openDrop = null;
-            closeSub();
-        }
-
-        function closeSub() {
-            clearTimeout(subTimer);
-            if (!openSub) return;
-            openSub.sub.classList.remove('is-open');
-            openSub.row.classList.remove('is-active-sub');
-            openSub = null;
-        }
-
-        function openSubPanel(row, sub) {
-            if (openSub && openSub.sub !== sub) closeSub();
-            clearTimeout(subTimer);
-            row.classList.add('is-active-sub');
-            sub.classList.add('is-open');
-            openSub = {
-                row,
-                sub
-            };
-        }
-
-        /* ── DESKTOP: hover flyouts ── */
-        document.querySelectorAll('.sh-has-drop').forEach(li => {
-            const link = li.querySelector(':scope > a');
-            const drop = li.querySelector(':scope > .sh-drop');
-            if (!drop) return;
-
-            const show = () => {
-                if (window.innerWidth <= BP) return;
-                if (openDrop && openDrop !== drop) openDrop.classList.remove('is-open');
-                drop.classList.add('is-open');
-                openDrop = drop;
-                const arr = link?.querySelector('.sh-arrow');
-                if (arr) arr.style.transform = 'rotate(180deg)';
-            };
-
-            const hide = () => {
-                if (window.innerWidth <= BP) return;
-                drop.classList.remove('is-open');
-                openDrop = null;
-                closeSub();
-                const arr = link?.querySelector('.sh-arrow');
-                if (arr) arr.style.transform = '';
-            };
-
-            li.addEventListener('mouseenter', show);
-            li.addEventListener('mouseleave', hide);
-
-            /* ── lvl 2 hover ── */
-            drop.querySelectorAll('.sh-has-sub').forEach(subLi => {
-                const row = subLi.querySelector('.sh-row');
-                const sub = subLi.querySelector('.sh-sub');
-                if (!row || !sub) return;
-
-                row.addEventListener('mouseenter', () => {
-                    if (window.innerWidth <= BP) return;
-                    clearTimeout(subTimer);
-                    openSubPanel(row, sub);
-                });
-                sub.addEventListener('mouseenter', () => {
-                    if (window.innerWidth <= BP) return;
-                    clearTimeout(subTimer);
-                });
-                row.addEventListener('mouseleave', () => {
-                    if (window.innerWidth <= BP) return;
-                    subTimer = setTimeout(closeSub, 120);
-                });
-                sub.addEventListener('mouseleave', () => {
-                    if (window.innerWidth <= BP) return;
-                    subTimer = setTimeout(closeSub, 120);
-                });
-            });
-        });
-
-        /* Close when clicking outside */
-        document.addEventListener('click', e => {
-            if (!e.target.closest('.sh')) closeDrop();
-        });
-
-        /* ── MOBILE: drawer open / close ── */
-        const toggle = document.getElementById('shToggle');
-        const drawer = document.getElementById('shDrawer');
-        const closeBtn = document.getElementById('shClose');
-
-        toggle?.addEventListener('click', () => drawer.classList.add('open'));
-        closeBtn?.addEventListener('click', () => drawer.classList.remove('open'));
-        drawer?.addEventListener('click', e => {
-            if (e.target === drawer) drawer.classList.remove('open');
-        });
-
-        /* ── MOBILE: accordion lvl1 ── */
-        document.querySelectorAll('.sh-has-drop > a').forEach(link => {
-            link.addEventListener('click', e => {
-                if (window.innerWidth > BP) return;
-                e.preventDefault();
-
-                const drop = link.parentElement.querySelector(':scope > .sh-drop');
-                if (!drop) return;
-
-                const isOpen = drop.classList.contains('mob-open');
-
-                // collapse all open drops
-                document.querySelectorAll('.sh-drop.mob-open').forEach(d => {
-                    d.classList.remove('mob-open');
-                    d.querySelectorAll('.sh-sub.mob-open').forEach(s => s.classList.remove(
-                        'mob-open'));
-                    d.querySelectorAll('.sh-row.is-active-sub').forEach(r => r.classList
-                        .remove('is-active-sub'));
-                });
-
-                if (!isOpen) drop.classList.add('mob-open');
-            });
-        });
-
-        /* ── MOBILE: accordion lvl2 ── */
-        document.querySelectorAll('.sh-has-sub > .sh-row').forEach(row => {
-            row.addEventListener('click', e => {
-                if (window.innerWidth > BP) return;
-
-                const sub = row.parentElement.querySelector('.sh-sub');
-                if (!sub) return;
-
-                const isOpen = sub.classList.contains('mob-open');
-
-                // collapse sibling subs
-                row.parentElement.closest('.sh-drop')?.querySelectorAll('.sh-sub.mob-open').forEach(
-                    s => s.classList.remove('mob-open'));
-                row.parentElement.closest('.sh-drop')?.querySelectorAll('.sh-row.is-active-sub')
-                    .forEach(r => r.classList.remove('is-active-sub'));
-
-                if (!isOpen) {
-                    sub.classList.add('mob-open');
-                    row.classList.add('is-active-sub');
-                    e.preventDefault(); // first tap = expand only
-                }
-                // second tap = navigate (default href)
-            });
-        });
-
-        /* Close drawer when leaf link is tapped */
-        drawer?.querySelectorAll('.sh-leaf, .sh-drop-foot a, .sh-events a').forEach(a => {
-            a.addEventListener('click', () => {
-                if (window.innerWidth <= BP) drawer.classList.remove('open');
-            });
-        });
-
-        /* ── Active link highlight ── */
-        const curPath = window.location.pathname;
-        document.querySelectorAll('.sh-nav a').forEach(a => {
-            try {
-                const lp = new URL(a.href, location.origin).pathname;
-                if (lp !== '/' && curPath.startsWith(lp)) {
-                    a.classList.add('sh-active');
-                    a.closest('.sh-has-drop')?.querySelector(':scope > a')?.classList.add('sh-active');
-                }
-            } catch (_) {}
-        });
-
-    })();
-</script>

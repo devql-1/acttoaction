@@ -1,8 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
 
+    
+
     <style>
-        /* ─── CSS Variable System (Clinic / Bootstrap template) ─── */
+/* ─── CSS Variable System (Clinic / Bootstrap template) ─── */
 
 
         .light-background {
@@ -1339,6 +1341,32 @@
             .newsletter-box {
                 padding: 36px 20px;
             }
+
+            .comp-header,
+            .comp-row {
+                grid-template-columns: 2fr 1fr 1fr 1fr;
+                padding: 12px 14px;
+                font-size: 12px;
+            }
+            .comp-header .ch,
+            .comp-row div {
+                font-size: 12px;
+            }
+
+            .biz-stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .biz-stat-card { padding: 18px 14px; }
+            .biz-stat-card .bsn { font-size: 26px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-tests h1 { font-size: 22px; }
+            .biz-stats-grid { grid-template-columns: 1fr; }
+            .comparison-table { overflow-x: auto; }
+            .comp-header,
+            .comp-row { min-width: 520px; }
         }
 
         /* ─── IMPORTANT DISCLAIMER ─── */
@@ -1444,7 +1472,6 @@
                 gap: 10px;
             }
         }
-
     </style>
     <main class="main">
         <div class="page-title"></div>

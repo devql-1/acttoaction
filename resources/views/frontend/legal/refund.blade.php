@@ -2,8 +2,10 @@
 @section('title', 'Refund Policy – Act To Action')
 
 @section('content')
-<style>
-    .legal-page {
+
+
+    <style>
+.legal-page {
         min-height: 60vh;
         padding-top: 185px;
         padding-bottom: 80px;
@@ -92,13 +94,20 @@
         color: var(--heading-color);
         font-weight: 700;
     }
+    .refund-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 12px 0 18px;
+    }
+    .refund-table-wrap .refund-table { margin: 0; }
     @media (max-width: 576px) {
-        .legal-card { padding: 28px 22px; }
+        .legal-card { padding: 24px 18px; }
         .legal-header { padding: 30px 24px; }
         .legal-header h1 { font-size: 1.5rem; }
+        .refund-table { min-width: 420px; font-size: 0.85rem; }
+        .refund-table th, .refund-table td { padding: 8px 10px; }
     }
-</style>
-
+    </style>
 <main class="main">
     <div class="legal-page">
         <div class="legal-wrap">
@@ -120,6 +129,7 @@
                 </ul>
 
                 <h2>3. Refund Timelines</h2>
+                <div class="refund-table-wrap">
                 <table class="refund-table">
                     <thead>
                         <tr>
@@ -146,6 +156,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
 
                 <h2>4. Cancellation by Act To Action</h2>
                 <p>If a workshop, course, or event is cancelled by Act To Action due to unforeseen circumstances (such as low enrollment, instructor unavailability, or force majeure), participants will be offered either:</p>

@@ -96,6 +96,7 @@
                                         <th class="text-center">Mode</th>
                                         <th class="text-center">Seats</th>
                                         <th class="text-center">Centers</th>
+                                        <th class="text-center">Redirect</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -157,6 +158,18 @@
                                         </td>
 
                                         <td class="text-center">
+                                            @if($subEvent->redirect_link)
+                                                <a href="{{ $subEvent->redirect_link }}" target="_blank"
+                                                    title="{{ $subEvent->redirect_link }}"
+                                                    class="badge badge-info text-white">
+                                                    <i class="fa fa-external-link me-1"></i> Link
+                                                </a>
+                                            @else
+                                                <small class="text-muted">--</small>
+                                            @endif
+                                        </td>
+
+                                        <td class="text-center">
                                             <label class="switch">
                                                 <input type="checkbox" class="toggle-status"
                                                     data-id="{{ $subEvent->id }}"
@@ -190,7 +203,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="11" class="text-center text-muted py-5">
+                                        <td colspan="12" class="text-center text-muted py-5">
                                             <i class="fa fa-calendar-o fa-2x mb-2 d-block"></i>
                                             No sub events yet.
                                             <a href="{{ route('sub-events-create', $event->id) }}">

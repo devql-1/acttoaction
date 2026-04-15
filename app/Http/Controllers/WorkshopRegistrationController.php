@@ -272,22 +272,23 @@ class WorkshopRegistrationController extends Controller
                         'razorpay_signature'   => $request->razorpay_signature,
                     ]);
 
-                // Save payment record — use the authoritative amount from Razorpay.
-                Payment::create([
-                    'event_registration_id' => null,
-                    'enrollment_id'         => null,
-                    'razorpay_order_id'     => $request->razorpay_order_id,
-                    'razorpay_payment_id'   => $request->razorpay_payment_id,
-                    'razorpay_signature'    => $request->razorpay_signature,
-                    'amount'                => $rzpPayment->amount / 100, // authoritative from Razorpay
-                    'currency'              => 'INR',
-                    'status'                => 'success',
-                    'transaction_type'      => $rzpPayment->method,
-                    'type'                  => 'workshop_registration',
-                    'paid_at'               => now(),
-                    'contact'               => $rzpPayment->contact ?? null,
-                    'email'                 => $rzpPayment->email ?? null,
-                ]);
+                // Save payment record — use direct property assignment because
+                // 'status' is intentionally excluded from $fillable on the Payment
+                // model to prevent mass-assignment from bypassing verification.
+                $payment = new Payment();
+                $payment->enrollment_id       = null;
+                $payment->razorpay_order_id   = $request->razorpay_order_id;
+                $payment->razorpay_payment_id = $request->razorpay_payment_id;
+                $payment->razorpay_signature  = $request->razorpay_signature;
+                $payment->amount              = $rzpPayment->amount / 100; // authoritative from Razorpay
+                $payment->currency            = 'INR';
+                $payment->status              = 'success';
+                $payment->transaction_type    = $rzpPayment->method;
+                $payment->type                = 'workshop_registration';
+                $payment->paid_at             = now();
+                $payment->contact             = $rzpPayment->contact ?? null;
+                $payment->email               = $rzpPayment->email ?? null;
+                $payment->save();
 
                 $confirmedCount = $registrations->count();
             });

@@ -45,6 +45,7 @@ class SummerSubEventController extends Controller
             'mode' => 'required|in:online,offline,both',
             'max_seats' => 'nullable|integer|min:1',
             'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'redirect_link' => 'nullable|url|max:2048',
             'center_ids' => 'nullable|array',
             'center_ids.*' => 'exists:centers,id',
         ]);
@@ -69,6 +70,7 @@ class SummerSubEventController extends Controller
             'mode' => $request->mode,
             'max_seats' => $request->max_seats,
             'banner_image' => $bannerPath,
+            'redirect_link' => $request->redirect_link,
             'status' => 1,
         ]);
 
@@ -107,6 +109,7 @@ class SummerSubEventController extends Controller
             'mode' => 'required|in:online,offline,both',
             'max_seats' => 'nullable|integer|min:1',
             'banner_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'redirect_link' => 'nullable|url|max:2048',
             'center_ids' => 'nullable|array',
             'center_ids.*' => 'exists:centers,id',
         ]);
@@ -141,6 +144,7 @@ class SummerSubEventController extends Controller
             'mode' => $request->mode,
             'max_seats' => $request->max_seats,
             'banner_image' => $bannerPath,
+            'redirect_link' => $request->redirect_link,
         ]);
 
         $subEvent->centers()->sync($request->center_ids ?? []);

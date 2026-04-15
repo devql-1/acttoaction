@@ -710,6 +710,7 @@ Route::group(['prefix' => 'admin'], function () {
         // ════════════════════════════════════════════════════════════════════════════
 
         Route::get('/email-logs', [EmailLogController::class, 'index'])->name('email-logs.index');
+        Route::get('/email-logs/{id}', [EmailLogController::class, 'show'])->name('email-logs.show');
         Route::delete('/email-logs/{id}', [EmailLogController::class, 'destroy'])->name('email-logs.destroy');
         Route::post('/email-logs/clear', [EmailLogController::class, 'clearAll'])->name('email-logs.clear');
 

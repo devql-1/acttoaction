@@ -349,7 +349,6 @@ body   { font-family: DejaVu Sans, Arial, sans-serif; font-size: 12px; color: #1
 
 </div>{{-- /content --}}
 
-
 {{-- ══════════════════════════════════════════
      PAGE 2 — QUESTION BREAKDOWN
 ══════════════════════════════════════════ --}}

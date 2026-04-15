@@ -1,7 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
+
     <style>
-        :root {
+:root {
             /* Typography Stack */
             --default-font: "Roboto", system-ui, sans-serif;
             --heading-font: "Montserrat", sans-serif;
@@ -1680,7 +1683,6 @@
             }
         }
     </style>
-
     <main class="main">
         {{-- ═══ HERO ═══ --}}
         <section class="course-hero" id="courseHero">

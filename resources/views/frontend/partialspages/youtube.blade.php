@@ -53,8 +53,196 @@
     </div>
 </div>
 
+
+
+<script>
+    (function() {
+        var videos = @json($videos);
+        var track = document.getElementById('vidTrack');
+        var dotsWrap = document.getElementById('vidDots');
+        var btnPrev = document.getElementById('vidPrev');
+        var btnNext = document.getElementById('vidNext');
+        var currentIdx = 0;
+        var autoTimer = null;
+        var AUTOPLAY_MS = 3500; // change speed here
+
+        function perPage() {
+            if (window.innerWidth <= 575) return 1;
+            if (window.innerWidth <= 991) return 2;
+            return 4;
+        }
+
+        function totalPages() {
+            return Math.ceil(videos.length / perPage());
+        }
+
+        function buildDots() {
+            dotsWrap.innerHTML = '';
+            var pages = totalPages();
+            for (var i = 0; i < pages; i++) {
+                var btn = document.createElement('button');
+                btn.className = 'vid-dot' + (i === currentIdx ? ' active' : '');
+                btn.dataset.idx = i;
+                btn.setAttribute('aria-label', 'Go to page ' + (i + 1));
+                btn.addEventListener('click', function() {
+                    stopAuto();
+                    goTo(parseInt(this.dataset.idx));
+                    startAuto();
+                });
+                dotsWrap.appendChild(btn);
+            }
+        }
+
+        function updateDots() {
+            dotsWrap.querySelectorAll('.vid-dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === currentIdx);
+            });
+        }
+
+        function goTo(idx) {
+            var pages = totalPages();
+            // Loop around
+            if (idx >= pages) idx = 0;
+            if (idx < 0) idx = pages - 1;
+            currentIdx = idx;
+
+            var slides = track.querySelectorAll('.vid-slide');
+            if (!slides.length) return;
+            var slideW = slides[0].offsetWidth;
+            var gap = 16;
+            var pp = perPage();
+            var offset = currentIdx * pp * (slideW + gap);
+            var maxOff = (slides.length - pp) * (slideW + gap);
+            if (maxOff < 0) maxOff = 0;
+            offset = Math.min(offset, maxOff);
+
+            track.style.transform = 'translateX(-' + offset + 'px)';
+            updateDots();
+            btnPrev.disabled = false; // always enabled because we loop
+            btnNext.disabled = false;
+        }
+
+        function startAuto() {
+            stopAuto();
+            autoTimer = setInterval(function() {
+                goTo(currentIdx + 1);
+            }, AUTOPLAY_MS);
+        }
+
+        function stopAuto() {
+            if (autoTimer) {
+                clearInterval(autoTimer);
+                autoTimer = null;
+            }
+        }
+
+        // Pause on hover
+        track.addEventListener('mouseenter', stopAuto);
+        track.addEventListener('mouseleave', startAuto);
+
+        btnPrev.addEventListener('click', function() {
+            stopAuto();
+            goTo(currentIdx - 1);
+            startAuto();
+        });
+        btnNext.addEventListener('click', function() {
+            stopAuto();
+            goTo(currentIdx + 1);
+            startAuto();
+        });
+
+        // Touch / swipe
+        var touchStartX = 0;
+        track.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+            stopAuto();
+        }, {
+            passive: true
+        });
+        track.addEventListener('touchend', function(e) {
+            var diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) goTo(diff > 0 ? currentIdx + 1 : currentIdx - 1);
+            startAuto();
+        }, {
+            passive: true
+        });
+
+        // Pause when tab is hidden, resume when visible
+        document.addEventListener('visibilitychange', function() {
+            document.hidden ? stopAuto() : startAuto();
+        });
+
+        // Rebuild on resize
+        var resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                stopAuto();
+                currentIdx = 0;
+                buildDots();
+                goTo(0);
+                startAuto();
+            }, 200);
+        });
+
+        // Init
+        buildDots();
+        goTo(0);
+        startAuto();
+
+        // ── Modal ──
+        window.openVideo = function(id) {
+            stopAuto(); // pause while modal is open
+            var v = videos.find(function(x) {
+                return x.id === id;
+            });
+            document.getElementById('videoFrame').src =
+                'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+            document.getElementById('videoTitle').textContent = v ? v.title : '';
+
+            var recList = document.getElementById('recommendedList');
+            recList.innerHTML = '';
+            videos.filter(function(x) {
+                return x.id !== id;
+            }).slice(0, 6).forEach(function(rv) {
+                var div = document.createElement('div');
+                div.style.cssText =
+                    'display:flex;gap:10px;align-items:center;margin-bottom:12px;cursor:pointer;';
+                div.innerHTML =
+                    '<img src="' + rv.thumb +
+                    '" style="width:80px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0;" />' +
+                    '<div style="font-size:12px;color:#fff;font-weight:500;line-height:1.4;">' + rv
+                    .title + '</div>';
+                div.addEventListener('click', function() {
+                    openVideo(rv.id);
+                });
+                recList.appendChild(div);
+            });
+
+            document.getElementById('videoModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeVideo = function(e) {
+            if (e && e.target !== document.getElementById('videoModal')) return;
+            document.getElementById('videoFrame').src = '';
+            document.getElementById('videoModal').classList.remove('open');
+            document.body.style.overflow = '';
+            startAuto(); // resume after modal closes
+        };
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('videoFrame').src = '';
+                document.getElementById('videoModal').classList.remove('open');
+                document.body.style.overflow = '';
+                startAuto();
+            }
+        });
+    })();
+</script>
 <style>
-    /* ── Slider core ── */
+/* ── Slider core ── */
     .vid-slider-outer {
         overflow: hidden;
         width: 100%;
@@ -348,190 +536,3 @@
         }
     }
 </style>
-
-<script>
-    (function() {
-        var videos = @json($videos);
-        var track = document.getElementById('vidTrack');
-        var dotsWrap = document.getElementById('vidDots');
-        var btnPrev = document.getElementById('vidPrev');
-        var btnNext = document.getElementById('vidNext');
-        var currentIdx = 0;
-        var autoTimer = null;
-        var AUTOPLAY_MS = 3500; // change speed here
-
-        function perPage() {
-            if (window.innerWidth <= 575) return 1;
-            if (window.innerWidth <= 991) return 2;
-            return 4;
-        }
-
-        function totalPages() {
-            return Math.ceil(videos.length / perPage());
-        }
-
-        function buildDots() {
-            dotsWrap.innerHTML = '';
-            var pages = totalPages();
-            for (var i = 0; i < pages; i++) {
-                var btn = document.createElement('button');
-                btn.className = 'vid-dot' + (i === currentIdx ? ' active' : '');
-                btn.dataset.idx = i;
-                btn.setAttribute('aria-label', 'Go to page ' + (i + 1));
-                btn.addEventListener('click', function() {
-                    stopAuto();
-                    goTo(parseInt(this.dataset.idx));
-                    startAuto();
-                });
-                dotsWrap.appendChild(btn);
-            }
-        }
-
-        function updateDots() {
-            dotsWrap.querySelectorAll('.vid-dot').forEach(function(d, i) {
-                d.classList.toggle('active', i === currentIdx);
-            });
-        }
-
-        function goTo(idx) {
-            var pages = totalPages();
-            // Loop around
-            if (idx >= pages) idx = 0;
-            if (idx < 0) idx = pages - 1;
-            currentIdx = idx;
-
-            var slides = track.querySelectorAll('.vid-slide');
-            if (!slides.length) return;
-            var slideW = slides[0].offsetWidth;
-            var gap = 16;
-            var pp = perPage();
-            var offset = currentIdx * pp * (slideW + gap);
-            var maxOff = (slides.length - pp) * (slideW + gap);
-            if (maxOff < 0) maxOff = 0;
-            offset = Math.min(offset, maxOff);
-
-            track.style.transform = 'translateX(-' + offset + 'px)';
-            updateDots();
-            btnPrev.disabled = false; // always enabled because we loop
-            btnNext.disabled = false;
-        }
-
-        function startAuto() {
-            stopAuto();
-            autoTimer = setInterval(function() {
-                goTo(currentIdx + 1);
-            }, AUTOPLAY_MS);
-        }
-
-        function stopAuto() {
-            if (autoTimer) {
-                clearInterval(autoTimer);
-                autoTimer = null;
-            }
-        }
-
-        // Pause on hover
-        track.addEventListener('mouseenter', stopAuto);
-        track.addEventListener('mouseleave', startAuto);
-
-        btnPrev.addEventListener('click', function() {
-            stopAuto();
-            goTo(currentIdx - 1);
-            startAuto();
-        });
-        btnNext.addEventListener('click', function() {
-            stopAuto();
-            goTo(currentIdx + 1);
-            startAuto();
-        });
-
-        // Touch / swipe
-        var touchStartX = 0;
-        track.addEventListener('touchstart', function(e) {
-            touchStartX = e.touches[0].clientX;
-            stopAuto();
-        }, {
-            passive: true
-        });
-        track.addEventListener('touchend', function(e) {
-            var diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 40) goTo(diff > 0 ? currentIdx + 1 : currentIdx - 1);
-            startAuto();
-        }, {
-            passive: true
-        });
-
-        // Pause when tab is hidden, resume when visible
-        document.addEventListener('visibilitychange', function() {
-            document.hidden ? stopAuto() : startAuto();
-        });
-
-        // Rebuild on resize
-        var resizeTimer;
-        window.addEventListener('resize', function() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function() {
-                stopAuto();
-                currentIdx = 0;
-                buildDots();
-                goTo(0);
-                startAuto();
-            }, 200);
-        });
-
-        // Init
-        buildDots();
-        goTo(0);
-        startAuto();
-
-        // ── Modal ──
-        window.openVideo = function(id) {
-            stopAuto(); // pause while modal is open
-            var v = videos.find(function(x) {
-                return x.id === id;
-            });
-            document.getElementById('videoFrame').src =
-                'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
-            document.getElementById('videoTitle').textContent = v ? v.title : '';
-
-            var recList = document.getElementById('recommendedList');
-            recList.innerHTML = '';
-            videos.filter(function(x) {
-                return x.id !== id;
-            }).slice(0, 6).forEach(function(rv) {
-                var div = document.createElement('div');
-                div.style.cssText =
-                    'display:flex;gap:10px;align-items:center;margin-bottom:12px;cursor:pointer;';
-                div.innerHTML =
-                    '<img src="' + rv.thumb +
-                    '" style="width:80px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0;" />' +
-                    '<div style="font-size:12px;color:#fff;font-weight:500;line-height:1.4;">' + rv
-                    .title + '</div>';
-                div.addEventListener('click', function() {
-                    openVideo(rv.id);
-                });
-                recList.appendChild(div);
-            });
-
-            document.getElementById('videoModal').classList.add('open');
-            document.body.style.overflow = 'hidden';
-        };
-
-        window.closeVideo = function(e) {
-            if (e && e.target !== document.getElementById('videoModal')) return;
-            document.getElementById('videoFrame').src = '';
-            document.getElementById('videoModal').classList.remove('open');
-            document.body.style.overflow = '';
-            startAuto(); // resume after modal closes
-        };
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.getElementById('videoFrame').src = '';
-                document.getElementById('videoModal').classList.remove('open');
-                document.body.style.overflow = '';
-                startAuto();
-            }
-        });
-    })();
-</script>

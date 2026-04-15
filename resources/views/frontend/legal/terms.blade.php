@@ -2,8 +2,10 @@
 @section('title', 'Terms & Conditions – Act To Action')
 
 @section('content')
-<style>
-    .legal-page {
+
+
+    <style>
+.legal-page {
         min-height: 60vh;
         padding-top: 185px;
         padding-bottom: 80px;
@@ -77,12 +79,13 @@
     }
     .legal-card strong { color: var(--heading-color); }
     @media (max-width: 576px) {
-        .legal-card { padding: 28px 22px; }
+        .legal-card { padding: 24px 18px; }
+        .legal-card h2 { font-size: 1.1rem; }
+        .legal-card p, .legal-card li { font-size: 0.9rem; }
         .legal-header { padding: 30px 24px; }
         .legal-header h1 { font-size: 1.5rem; }
     }
-</style>
-
+    </style>
 <main class="main">
     <div class="legal-page">
         <div class="legal-wrap">

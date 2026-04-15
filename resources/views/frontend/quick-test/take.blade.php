@@ -1,7 +1,9 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
     <style>
-        *,
+*,
         *::before,
         *::after {
             box-sizing: border-box;
@@ -1496,6 +1498,36 @@
                 font-size: 15px;
             }
         }
+    
+
+
+        .ina-scale-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: 600;
+            margin-top: 4px;
+            padding: 0 2px;
+        }
+
+        .ina-btn.sel-low {
+            background: #fee2e2;
+            color: #dc2626;
+            border-color: #fca5a5;
+        }
+
+        .ina-btn.sel-mid {
+            background: #fef9c3;
+            color: #ca8a04;
+            border-color: #fde047;
+        }
+
+        .ina-btn.sel-high {
+            background: #dcfce7;
+            color: #16a34a;
+            border-color: #86efac;
+        }
     </style>
     <main class="main">
         <div class="section-title"></div>
@@ -1988,33 +2020,5 @@
         renderStep(0);
     </script>
 
-    <style>
-        .ina-scale-legend {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: #9ca3af;
-            font-weight: 600;
-            margin-top: 4px;
-            padding: 0 2px;
-        }
-
-        .ina-btn.sel-low {
-            background: #fee2e2;
-            color: #dc2626;
-            border-color: #fca5a5;
-        }
-
-        .ina-btn.sel-mid {
-            background: #fef9c3;
-            color: #ca8a04;
-            border-color: #fde047;
-        }
-
-        .ina-btn.sel-high {
-            background: #dcfce7;
-            color: #16a34a;
-            border-color: #86efac;
-        }
-    </style>
+    
 @endsection

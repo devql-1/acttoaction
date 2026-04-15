@@ -3,7 +3,9 @@
 @section('title', 'Register – ' . $school->name . ' – Act To Action')
 
 @section('content')
-<style>
+
+
+    <style>
 /* ── Page wrapper ── */
 .reg-page {
     min-height: 100vh;
@@ -438,7 +440,7 @@
 .btn-confirm-close.success { background: var(--accent-color); }
 .btn-confirm-close.failure { background: #dc2626; }
 .btn-confirm-close:hover { opacity: 0.9; transform: translateY(-2px); }
-</style>
+    </style>
 <main class="main">
 <div class="reg-page">
 <div class="container">

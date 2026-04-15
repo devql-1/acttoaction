@@ -1,7 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
+
     <style>
-        * {
+* {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -959,8 +962,25 @@
                 text-align: center;
             }
         }
-    </style>
+    
 
+
+        .like-btn.liked {
+            background: rgba(239, 68, 68, .1);
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, .3);
+        }
+
+        .like-btn.liked svg {
+            fill: #ef4444;
+            stroke: none;
+        }
+
+        .category-list a.active {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+    </style>
     <main class="main">
 
         {{-- ===== BLOG HERO ===== --}}
@@ -1397,21 +1417,5 @@
     </script>
 
     {{-- Liked state style --}}
-    <style>
-        .like-btn.liked {
-            background: rgba(239, 68, 68, .1);
-            color: #ef4444;
-            border-color: rgba(239, 68, 68, .3);
-        }
-
-        .like-btn.liked svg {
-            fill: #ef4444;
-            stroke: none;
-        }
-
-        .category-list a.active {
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-    </style>
+    
 @endsection

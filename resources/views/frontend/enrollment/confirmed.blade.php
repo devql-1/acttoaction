@@ -1,8 +1,10 @@
 @extends('frontend.course.layout')
 
 @section('content')
-<style>
-    .confirmed-wrap {
+
+
+    <style>
+.confirmed-wrap {
         min-height: 80vh;
         display: flex;
         align-items: center;
@@ -47,8 +49,18 @@
         transition: opacity .2s;
     }
     .btn-home:hover { opacity: .88; color: #fff; }
-</style>
 
+    @media (max-width: 576px) {
+        .confirmed-wrap { padding: 140px 14px 32px; min-height: 70vh; }
+        .confirmed-card { padding: 32px 22px; border-radius: 16px; }
+        .confirmed-icon { width: 64px; height: 64px; font-size: 28px; margin-bottom: 18px; }
+        .confirmed-title { font-size: 22px; }
+        .confirmed-sub { font-size: 14px; }
+        .ref-value { font-size: 18px; }
+        .detail-row { font-size: 13px; flex-wrap: wrap; }
+        .btn-home { padding: 12px 24px; font-size: 14px; }
+    }
+    </style>
 <div class="confirmed-wrap">
     <div class="confirmed-card">
         <div class="confirmed-icon">✅</div>

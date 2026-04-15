@@ -1,7 +1,9 @@
 @extends('frontend.course.layout')
 @section('content')
+    
+
     <style>
-        /* ===================== CSS VARIABLES (inherit from main) ===================== */
+/* ===================== CSS VARIABLES (inherit from main) ===================== */
         /* These variables must be defined in :root of your main CSS:
            --accent-color, --heading-color, --default-color, --surface-color,
            --background-color, --contrast-color, --heading-font, --nav-font, --default-font

@@ -1,7 +1,8 @@
 @include('frontend.partialspages.head')
 
+<body class="index-page">
 <style>
-    /* ── Announcement bar ── */
+/* ── Announcement bar ── */
     :root { --ann-h: 40px; }
 
     body {
@@ -69,8 +70,6 @@
         .ann-msg { font-size: 10.5px; max-width: 100%; }
     }
 </style>
-
-<body class="index-page">
     {{-- ── Announcement bar ── --}}
     @include('frontend.partialspages.ann_bar')
 

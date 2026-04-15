@@ -14,6 +14,8 @@
 <script src="{{ asset('courseassets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('courseassets/js/main.js') }}"></script>
 <script>
+    });
+
     // Filter Featured Courses
     function filterFeatured(catId, btn) {
         document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));

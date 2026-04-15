@@ -21,7 +21,7 @@
 
 {{-- ── Styles (scoped to this partial only) ── --}}
 <style>
-    /* Hero banner — pure image, no text */
+/* Hero banner — pure image, no text */
     .hero {
         width: 100%;
         height: 92vh;

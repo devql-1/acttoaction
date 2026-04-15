@@ -1,11 +1,8 @@
 @extends('frontend.course.layout')
 @section('content')
-    {{-- ══════════════════════════════════════════════════════
-     EVENTS PAGE — Dynamic blade (design from static HTML)
-══════════════════════════════════════════════════════ --}}
 
     <style>
-        /* ─── CSS Variable System ─── */
+/* ─── CSS Variable System ─── */
 
         .light-background {
             background: color-mix(in srgb, var(--accent-color), transparent 96%) !important;
@@ -991,7 +988,42 @@
                 margin-bottom: 8px;
             }
         }
+
+        /* Video modal responsive layout */
+        .video-modal-inner {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+        .video-modal-main { flex: 1; min-width: 0; }
+        .video-modal-recs {
+            width: 300px;
+            flex-shrink: 0;
+            max-height: 75vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,.2) transparent;
+        }
+        @media (max-width: 900px) {
+            .video-modal-inner { flex-direction: column; gap: 12px; }
+            .video-modal-recs {
+                width: 100%;
+                max-height: 40vh;
+                flex-shrink: 1;
+            }
+        }
+        @media (max-width: 576px) {
+            #videoModal { padding: 12px !important; }
+        }
     </style>
+    {{-- ══════════════════════════════════════════════════════
+     EVENTS PAGE — Dynamic blade (design from static HTML)
+══════════════════════════════════════════════════════ --}}
+
+    
 
     <main class="main">
 
@@ -1330,13 +1362,12 @@
   ══════════════════════ --}}
         <div id="videoModal" onclick="closeVideo(event)"
             style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:20px;">
-            <div style="position:relative;width:100%;max-width:1100px;display:flex;gap:16px;align-items:flex-start;"
-                onclick="event.stopPropagation()">
+            <div class="video-modal-inner" onclick="event.stopPropagation()">
                 <button onclick="closeVideo()"
                     style="position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;line-height:1;z-index:1;">
                     <i class="fas fa-times"></i>
                 </button>
-                <div style="flex:1;min-width:0;">
+                <div class="video-modal-main">
                     <div
                         style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5);">
                         <iframe id="videoFrame" src=""
@@ -1347,8 +1378,7 @@
                     <p id="videoTitle" style="color:#fff;font-size:14px;font-weight:600;margin-top:12px;line-height:1.4;">
                     </p>
                 </div>
-                <div
-                    style="width:300px;flex-shrink:0;max-height:75vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent;">
+                <div class="video-modal-recs">
                     <p
                         style="color:rgba(255,255,255,.6);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">
                         Recommended</p>

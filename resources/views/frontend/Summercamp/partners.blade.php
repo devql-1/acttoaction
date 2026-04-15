@@ -4,99 +4,8 @@
 @include('frontend.Summercamp.partials.nav')
 
 <body>
-    <!-- ===== ANNOUNCEMENT BAR ===== -->
-    @include('frontend.partialspages.ann_bar')
-
-    <!-- ===== HEADER ===== -->
-    @include('frontend.Summercamp.partials.header')
-
-    <!-- ===== HERO ===== -->
-    <section class="hero"
-        style="height:380px;margin-top:0;background:linear-gradient(135deg,#112344 0%,#1e3a6e 60%,#ff6a00 100%);display:flex;align-items:center;justify-content:center;text-align:center;">
-        <div>
-            <div
-                style="display:inline-block;background:rgba(255,106,0,.15);color:#ff6a00;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;">
-                Summer Camp 2025
-            </div>
-            <h1
-                style="font-size:clamp(2.2rem,6vw,4rem);font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;margin:0 0 16px;">
-                Our Partners
-            </h1>
-            <p style="color:rgba(255,255,255,.75);font-size:16px;max-width:520px;margin:0 auto;line-height:1.7;">
-                The organisations and institutions who made Summer Camp 2025 possible.
-            </p>
-        </div>
-    </section>
-
-    <!-- ===== PARTNERS ===== -->
-    <section class="partner-sec">
-        <div class="container">
-
-            @php
-                $hasAny = collect($partners)->filter(fn($cat) => $cat['partners']->isNotEmpty())->isNotEmpty();
-            @endphp
-
-            @if (!$hasAny)
-                <div class="text-center py-5 text-muted">
-                    <i class="bi bi-people" style="font-size:3rem;opacity:.3;"></i>
-                    <p class="mt-3">Partner details coming soon.</p>
-                </div>
-            @else
-                @php $visibleCategories = collect($partners)->filter(fn($cat) => $cat['partners']->isNotEmpty()); @endphp
-
-                @foreach ($visibleCategories as $slug => $cat)
-                    @php $isLast = $loop->last; @endphp
-
-                    <div class="partner-category">
-                        <h3 class="category-title">{{ $cat['label'] }}</h3>
-                        <div class="partner-logos-grid">
-                            @foreach ($cat['partners'] as $partner)
-                                <div class="partner-logo-item">
-                                    @if ($partner->website_url)
-                                        <a href="{{ $partner->website_url }}" target="_blank" rel="noopener">
-                                            <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}" />
-                                        </a>
-                                    @else
-                                        <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}" />
-                                    @endif
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    @if (!$isLast)
-                        <hr class="divider" />
-                    @endif
-                @endforeach
-            @endif
-
-        </div>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
-    @include('frontend.Summercamp.partials.footer')
-
-    <!-- Scroll to Top -->
-    <a href="#" class="scroll-top" id="scrollTop"><i class="bi bi-arrow-up-short"></i></a>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const scrollTopBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            scrollTopBtn.classList.toggle('show', window.scrollY > 120);
-        });
-        scrollTopBtn.addEventListener('click', e => {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
-</body>
-
-<style>
-    /* ===== PARTNER PAGE STYLES ===== */
+    <style>
+/* ===== PARTNER PAGE STYLES ===== */
     .partner-sec {
         padding: 80px 0;
         background: white;
@@ -312,6 +221,97 @@
             margin: 40px 0;
         }
     }
-</style>
+    </style>
+
+    <!-- ===== ANNOUNCEMENT BAR ===== -->
+    @include('frontend.partialspages.ann_bar')
+
+    <!-- ===== HEADER ===== -->
+    @include('frontend.Summercamp.partials.header')
+
+    <!-- ===== HERO ===== -->
+    <section class="hero"
+        style="height:380px;margin-top:0;background:linear-gradient(135deg,#112344 0%,#1e3a6e 60%,#ff6a00 100%);display:flex;align-items:center;justify-content:center;text-align:center;">
+        <div>
+            <div
+                style="display:inline-block;background:rgba(255,106,0,.15);color:#ff6a00;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;">
+                Summer Camp 2025
+            </div>
+            <h1
+                style="font-size:clamp(2.2rem,6vw,4rem);font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;margin:0 0 16px;">
+                Our Partners
+            </h1>
+            <p style="color:rgba(255,255,255,.75);font-size:16px;max-width:520px;margin:0 auto;line-height:1.7;">
+                The organisations and institutions who made Summer Camp 2025 possible.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== PARTNERS ===== -->
+    <section class="partner-sec">
+        <div class="container">
+
+            @php
+                $hasAny = collect($partners)->filter(fn($cat) => $cat['partners']->isNotEmpty())->isNotEmpty();
+            @endphp
+
+            @if (!$hasAny)
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-people" style="font-size:3rem;opacity:.3;"></i>
+                    <p class="mt-3">Partner details coming soon.</p>
+                </div>
+            @else
+                @php $visibleCategories = collect($partners)->filter(fn($cat) => $cat['partners']->isNotEmpty()); @endphp
+
+                @foreach ($visibleCategories as $slug => $cat)
+                    @php $isLast = $loop->last; @endphp
+
+                    <div class="partner-category">
+                        <h3 class="category-title">{{ $cat['label'] }}</h3>
+                        <div class="partner-logos-grid">
+                            @foreach ($cat['partners'] as $partner)
+                                <div class="partner-logo-item">
+                                    @if ($partner->website_url)
+                                        <a href="{{ $partner->website_url }}" target="_blank" rel="noopener">
+                                            <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}" />
+                                        </a>
+                                    @else
+                                        <img src="{{ $partner->logo_url }}" alt="{{ $partner->name }}" />
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    @if (!$isLast)
+                        <hr class="divider" />
+                    @endif
+                @endforeach
+            @endif
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    @include('frontend.Summercamp.partials.footer')
+
+    <!-- Scroll to Top -->
+    <a href="#" class="scroll-top" id="scrollTop"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('show', window.scrollY > 120);
+        });
+        scrollTopBtn.addEventListener('click', e => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
 
 </html>
