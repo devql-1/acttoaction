@@ -1340,6 +1340,110 @@
                 padding: 36px 20px;
             }
         }
+
+        /* ─── IMPORTANT DISCLAIMER ─── */
+        .disclaimer-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #fef3c7 0%, #fef08a 100%);
+            border-top: 2px solid #fde047;
+            border-bottom: 2px solid #fde047;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .disclaimer-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1460925895917-adf4ee868993?w=900&q=50') center/cover;
+            opacity: .02;
+        }
+
+        .disclaimer-box {
+            background: #fff;
+            border-left: 5px solid #d97706;
+            border-radius: 12px;
+            padding: 40px 36px;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(217, 119, 6, .08);
+        }
+
+        .disclaimer-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .disclaimer-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #fef3c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .disclaimer-box h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--heading-color);
+            margin: 0;
+            font-family: var(--heading-font);
+        }
+
+        .disclaimer-box p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4b5563;
+            margin: 16px 0 0 0;
+        }
+
+        .disclaimer-footer {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid #fef08a;
+            font-size: 12px;
+            color: #9ca3af;
+            font-weight: 600;
+            letter-spacing: .4px;
+        }
+
+        .disclaimer-footer span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .disclaimer-footer i {
+            color: #d97706;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .disclaimer-box {
+                padding: 28px 20px;
+            }
+
+            .disclaimer-box h3 {
+                font-size: 18px;
+            }
+
+            .disclaimer-box p {
+                font-size: 14px;
+            }
+
+            .disclaimer-footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
     </style>
     <main class="main">
         <div class="page-title"></div>
@@ -1571,9 +1675,10 @@
                             <h3>Built for real child development understanding
                             </h3>
                             <div class="accent-line"></div>
-                            <p>Every question is co-designed with Dr. Bhumika Soni (Child Neuro Therapist), Kritesh Agarwal
-                                (Filmmaker & Acting Coach), and child psychology professionals — not generic quiz templates.
-                                Each assessment measures real developmental indicators.</p>
+                            <p>Each assessment is designed to look beyond labels and help identify broader patterns in how a
+                                child thinks, expresses, responds, performs, and learns. The goal is not to box a child into
+                                a category, but to open a clearer path for mentoring, counselling, and growth.
+                            </p>
                             <div class="why-pill-row">
                                 <div class="why-pill"><i class="bi bi-brain"></i> Child development–informed</div>
                                 <div class="why-pill"><i class="bi bi-award"></i>Parent-friendly
@@ -1589,14 +1694,17 @@
                                     <div class="why-feat-icon" style="background:#eff6ff;color:var(--accent-color);"><i
                                             class="bi bi-lightning-charge-fill"></i></div>
                                     <h5>Short, focused & meaningful</h5>
-                                    <p>No 50-question marathon. Each test is 5–10 minutes — designed to get a precise,
-                                        reliable result without losing a child's attention. Every question earns its place.
+                                    <p>Each test is intentionally designed to stay brief, engaging, and age-sensitive — so
+                                        families get useful insight without overwhelming the child.
+
                                     </p>
                                     <ul class="feat-check-list">
                                         <li><i class="bi bi-check-circle-fill"></i> 5–10 minutes per test</li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Age-appropriate language at every level
+                                        <li><i class="bi bi-check-circle-fill"></i> Simple and guided response style
                                         </li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Immediate, detailed result report</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Suitable for parent-assisted completion
+                                            where needed
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -1605,12 +1713,16 @@
                                     <div class="why-feat-icon" style="background:#ecfdf5;color:#059669;"><i
                                             class="bi bi-graph-up-arrow"></i></div>
                                     <h5>Actionable Results, Not Just Labels</h5>
-                                    <p>We don't just tell you your child is "creative." We show you exactly which Act to
-                                        Action course matches their profile — so every test leads to a real next step.</p>
+                                    <p>The result is designed to help parents and mentors understand broad strengths, growth
+                                        areas, and likely comfort zones — with direction toward relevant learning tracks and
+                                        support.</p>
                                     <ul class="feat-check-list">
-                                        <li><i class="bi bi-check-circle-fill"></i> Personalised course recommendation</li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Strength & growth area breakdown</li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Shareable PDF result report</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Strength and growth-area view
+                                        </li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Easier counselling conversations
+                                        </li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Course-direction support
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -1624,43 +1736,46 @@
                             <div class="why-feat-icon mx-auto" style="background:#f5f3ff;color:#7c3aed;"><i
                                     class="bi bi-shield-check"></i></div>
                             <h5>100% Free, Always</h5>
-                            <p>Every single test on this page is completely free to take — no hidden fees, no credit card,
-                                no trial. Because every child deserves to discover their potential.</p>
+                            <p> Every assessment on this page is free to attempt, so more families can access structured
+                                developmental insight without barriers.
+                            </p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-feat-card text-center">
                             <div class="why-feat-icon mx-auto" style="background:#fffbeb;color:#d97706;"><i
                                     class="bi bi-people-fill"></i></div>
-                            <h5>Trusted by 1000+ Families</h5>
-                            <p>Parents across Jaipur and India have used our assessments to find the perfect course,
-                                discover hidden talent, and unlock their child's confidence.</p>
+                            <h5>Trusted by Families</h5>
+                            <p> Designed for children and supported by parent-friendly language, these tools are built to
+                                encourage clarity, not confusion.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-feat-card text-center">
                             <div class="why-feat-icon mx-auto" style="background:#fdf2f8;color:#db2777;"><i
                                     class="bi bi-mortarboard-fill"></i></div>
-                            <h5>Aligned with NEP 2020</h5>
-                            <p>Our assessments are built around the National Education Policy 2020 framework — holistic
-                                child development, skill-based learning, and creative intelligence.</p>
+                            <h5>Aligned with Holistic Development</h5>
+                            <p>The assessments are built around expression, confidence, communication, emotional growth,
+                                creativity, and performance-linked readiness.
+                            </p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-feat-card text-center">
                             <div class="why-feat-icon mx-auto" style="background:#ecfeff;color:#0891b2;"><i
                                     class="bi bi-phone-fill"></i></div>
-                            <h5>Works on Any Device</h5>
-                            <p>Take the test on a phone, tablet, or laptop — our tests are fully mobile-optimised so
-                                children can complete them comfortably from anywhere.</p>
+                            <h5>Works Across Devices</h5>
+                            <p> Parents and learners can complete the assessments easily on phone, tablet, or laptop.
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="comparison-wrap">
                     <h3 class="text-center mb-2" style="font-size:26px;font-weight:800;">How We Compare</h3>
-                    <p class="text-center mb-4" style="color:#6b7280;font-size:15px;">See why Act to Action tests go far
-                        beyond generic online quizzes.</p>
+                    <p class="text-center mb-4" style="color:#6b7280;font-size:15px;">See why Act to Action assessments go
+                        beyond generic online quizzes.
+                    </p>
                     <div class="comparison-table">
                         <div class="comp-header">
                             <div class="ch">Feature</div>
@@ -1671,41 +1786,46 @@
                         @php
                             $compRows = [
                                 [
-                                    'label' => 'Expert-designed questions',
+                                    'label' => 'Expert-designed developmental questions',
                                     'ata' => '✔ Yes',
-                                    'generic' => '✘',
-                                    'paid' => '✔',
-                                ],
-                                ['label' => '100% Free', 'ata' => '✔ Yes', 'generic' => '✔', 'paid' => '✘ Paid'],
-                                [
-                                    'label' => 'Child-specific (age 3–29)',
-                                    'ata' => '✔ Yes',
-                                    'generic' => '✘',
-                                    'paid' => '✘',
+                                    'generic' => '✘ Rarely',
+                                    'paid' => '✔ Sometimes',
                                 ],
                                 [
-                                    'label' => 'Course recommendation included',
+                                    'label' => '100% Free to attempt',
                                     'ata' => '✔ Yes',
-                                    'generic' => '✘',
-                                    'paid' => '✘',
+                                    'generic' => '✔ Sometimes',
+                                    'paid' => '✔ Usually paid',
                                 ],
                                 [
-                                    'label' => 'Neuro-psychology backed',
+                                    'label' => 'Built for children and families',
                                     'ata' => '✔ Yes',
-                                    'generic' => '✘',
-                                    'paid' => 'Sometimes',
+                                    'generic' => '✘ Not always',
+                                    'paid' => '✔ Sometimes',
                                 ],
                                 [
-                                    'label' => 'Links to real coaching & castings',
+                                    'label' => 'Course-direction support',
                                     'ata' => '✔ Yes',
-                                    'generic' => '✘',
-                                    'paid' => '✘',
+                                    'generic' => '✘ No',
+                                    'paid' => '✔ Limited',
                                 ],
                                 [
-                                    'label' => 'Shareable PDF result report',
+                                    'label' => 'Performance & creative skill orientation',
                                     'ata' => '✔ Yes',
-                                    'generic' => '✘',
-                                    'paid' => 'Paid only',
+                                    'generic' => '✘ No',
+                                    'paid' => '✘ Rarely',
+                                ],
+                                [
+                                    'label' => 'Parent-friendly result direction',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘ Limited',
+                                    'paid' => '✔ Sometimes',
+                                ],
+                                [
+                                    'label' => 'Shareable report-ready structure',
+                                    'ata' => '✔ Yes',
+                                    'generic' => '✘ Rarely',
+                                    'paid' => '✔ Sometimes',
                                 ],
                             ];
                         @endphp
@@ -1729,36 +1849,53 @@
                         <h3 style="font-size:24px;font-weight:800;margin-bottom:30px;">How It Works — 3 Simple Steps</h3>
                         <div class="process-section">
                             <div style="position:relative;">
+                                <!-- Step 1 -->
                                 <div class="process-step">
                                     <div class="step-num">1</div>
                                     <div class="step-body">
-                                        <h5>Choose Your Test</h5>
-                                        <p>Pick the assessment that matches what you want to discover — acting talent,
-                                            confidence level, personality type, or the right course. All free, no sign-up
-                                            needed.</p>
+                                        <h5>Choose your assessment</h5>
+                                        <p>
+                                            Pick the test that matches what you want to understand better — communication,
+                                            emotional resilience, personality style, stagecraft, content creation, or acting
+                                            readiness.
+                                        </p>
                                     </div>
                                 </div>
+
+                                <!-- Step 1 Line -->
                                 <div class="process-line" style="top:46px;height:60px;"></div>
+
+                                <!-- Step 2 -->
                                 <div class="process-step" style="margin-top:8px;">
                                     <div class="step-num">2</div>
                                     <div class="step-body">
-                                        <h5>Answer 10–20 Quick Questions</h5>
-                                        <p>Fun, engaging questions designed for children and parents to answer together.
-                                            Takes just 5–10 minutes. No wrong answers — just honest responses!</p>
+                                        <h5>Answer quick guided questions</h5>
+                                        <p>
+                                            Complete a short set of age-sensitive questions. For younger children, parents
+                                            or facilitators can assist. The process is simple, reflective, and designed to
+                                            take only a few minutes.
+                                        </p>
                                     </div>
                                 </div>
+
+                                <!-- Step 2 Line -->
                                 <div class="process-line" style="top:130px;height:60px;left:23px;position:absolute;">
                                 </div>
+
+                                <!-- Step 3 -->
                                 <div class="process-step" style="margin-top:8px;">
                                     <div class="step-num">3</div>
                                     <div class="step-body">
-                                        <h5>Get Your Personalised Report</h5>
-                                        <p>Instantly receive a detailed result — your child's strengths, growth areas,
+                                        <h5>Get your insight direction</h5>
+                                        <p>
+                                            Instantly receive a detailed result — your child's strengths, growth areas,
                                             personality profile, and the exact Act to Action course recommended for them.
                                         </p>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Call-to-Action -->
                             <a href="#tests" class="btn-primary-solid mt-3" style="display:inline-flex;">
                                 <i class="bi bi-play-circle-fill"></i> Start a Free Test Now
                             </a>
@@ -1767,9 +1904,11 @@
                     <div class="col-lg-6">
                         <div class="result-preview">
                             <div class="rp-icon">📊</div>
-                            <h4>Your Child's Result Report</h4>
-                            <p>After completing any test, you get an instant, personalised report like this — broken down
-                                into easy-to-understand scores and clear next steps.</p>
+                            <h4>Your Child’s Result Snapshot
+                            </h4>
+                            <p>A simple developmental insight summary that helps you understand broad strengths, comfort
+                                patterns, and possible next-step direction.
+                            </p>
                             <div
                                 style="background:#fff;border-radius:14px;padding:20px;margin-bottom:18px;border:1.5px solid #dbeafe;text-align:left;">
                                 <div
@@ -1804,18 +1943,42 @@
                                 </div>
                             </div>
                             <p style="font-size:13px;color:#16a34a;font-weight:600;margin-bottom:14px;"><i
-                                    class="bi bi-star-fill me-1"></i> Recommended: Screen Acting + Personality Development
-                                Course</p>
+                                    class="bi bi-star-fill me-1"></i>Communication, Acting, Theatre, Content, or
+                                Personality Development pathway</p>
                             <div class="result-tag-row">
                                 <span class="result-tag">Natural Performer</span>
                                 <span class="result-tag">Visual Thinker</span>
-                                <span class="result-tag">Empathetic Leader</span>
+                                <span class="result-tag">Emotionally Aware</span>
                                 <span class="result-tag">Camera-Ready</span>
+                                <span class="result-tag">Emerging Speaker</span>
+                                <span class="result-tag">Creative Explorer</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
+            </div>
+        </section>
+        {{-- ── IMPORTANT DISCLAIMER ── --}}
+        <section class="disclaimer-section">
+            <div class="container">
+                <div class="disclaimer-box">
+                    <div class="disclaimer-header">
+                        <div class="disclaimer-icon">⚠️</div>
+                        <h3>Important Note</h3>
+                    </div>
+                    <p>
+                        These assessments are developmental and educational insight tools, not medical or diagnostic
+                        instruments. They are designed to provide broad directional understanding and should be used to
+                        support reflection, counselling, and growth planning.
+                    </p>
+                    <div class="disclaimer-footer">
+                        <span><i class="bi bi-lock-fill"></i> Confidential response handling</span>
+                        <span><i class="bi bi-book-fill"></i> Developmental use only</span>
+                        <span><i class="bi bi-shield-check"></i> Report framework protected under applicable intellectual
+                            property rights</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1952,7 +2115,8 @@
                 <div class="section-title">
                     <h2>What people are saying about us</h2>
                     <span class="divider-line"></span>
-                    <p>From child development experts to parents and students — here's what they say.</p>
+                    <p>A simple developmental insight summary that helps you understand broad strengths, comfort patterns,
+                        and possible next-step direction.</p>
                 </div>
                 <div class="row g-4">
                     @php

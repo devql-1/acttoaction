@@ -156,13 +156,14 @@ class EnrollmentController extends Controller
             ]);
 
             session(['rzp_amount' => $fee * 100]);
+            session(['rzp_order_id' => $order['id'] ?? null]);
+            session(['rzp_enrollment_id' => $enrollment->id]);
 
             return response()->json([
                 'success' => true,
                 'order_id' => $order['id'],
                 'amount' => $fee * 100,
                 'enrollment_id' => $enrollment->id,
-                'razorpay_key' => config('services.razorpay.key'),
             ]);
         } catch (\Exception $e) {
             return response()->json(
@@ -274,6 +275,13 @@ class EnrollmentController extends Controller
      */
     public function verifyPayment(Request $request)
     {
+        $request->validate([
+            'razorpay_order_id' => 'required|string',
+            'razorpay_payment_id' => 'required|string',
+            'razorpay_signature' => 'required|string',
+            'enrollment_id' => 'required|integer|exists:enrollments,id',
+        ]);
+
         $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         try {
@@ -286,6 +294,17 @@ class EnrollmentController extends Controller
 
             $api->utility->verifyPaymentSignature($attributes);
 
+            // Prevent cross-enrollment/order replay by strictly matching the checkout session.
+            if ((int) session('rzp_enrollment_id') !== (int) $request->enrollment_id || (string) session('rzp_order_id') !== (string) $request->razorpay_order_id) {
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'Payment verification failed',
+                    ],
+                    422,
+                );
+            }
+
             // Check if payment already processed
             $existingPayment = Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->first();
             if ($existingPayment) {
@@ -297,6 +316,16 @@ class EnrollmentController extends Controller
 
             // Fetch payment details from Razorpay
             $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
+
+            if ((string) ($rzpPayment->order_id ?? '') !== (string) $request->razorpay_order_id) {
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'Payment verification failed',
+                    ],
+                    422,
+                );
+            }
 
             // Process payment atomically
             DB::transaction(function () use ($request, $rzpPayment) {

@@ -1890,6 +1890,8 @@
     {{-- ===================== Scripts ===================== --}}
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
+        const RAZORPAY_PUBLIC_KEY = @json(config('services.razorpay.key'));
+
         var CENTRE_DATA = @json($centresByState);
         var COURSE_STATES = @json($courseStates);
 
@@ -2416,7 +2418,7 @@
                 .then(function(data) {
                     if (!data || !data.success) return;
                     var rzp = new Razorpay({
-                        key: data.razorpay_key,
+                        key: RAZORPAY_PUBLIC_KEY,
                         amount: data.amount,
                         currency: 'INR',
                         name: 'Act To Action',
@@ -3037,7 +3039,7 @@
                     if (!data || !data.success) return;
 
                     var rzp = new Razorpay({
-                        key: data.razorpay_key,
+                        key: RAZORPAY_PUBLIC_KEY,
                         amount: data.amount,
                         currency: 'INR',
                         name: 'Act To Action',
