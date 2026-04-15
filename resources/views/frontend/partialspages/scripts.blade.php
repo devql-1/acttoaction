@@ -1,3 +1,10 @@
+<!-- jQuery + Toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- Newsletter AJAX handler -->
+<script src="{{ asset('js/newsletter.js') }}"></script>
+
 <!-- Vendor JS Files -->
 <script src="{{ asset('courseassets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('courseassets/vendor/php-email-form/validate.js') }}"></script>
@@ -6,20 +13,6 @@
 <script src="{{ asset('courseassets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
 <script src="{{ asset('courseassets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('courseassets/js/main.js') }}"></script>
-<script>
-    // Simple Announcement Bar Close (Current Tab Only - No Storage)
-    document.addEventListener('DOMContentLoaded', function() {
-        const annBar = document.getElementById('annBar');
-        const annCloseBtn = document.getElementById('annClose');
-
-        if (!annBar || !annCloseBtn) return;
-
-        annCloseBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            annBar.classList.add('hidden'); // Closes only for current tab
-        });
-    });
-</script>
 <script>
     // Filter Featured Courses
     function filterFeatured(catId, btn) {

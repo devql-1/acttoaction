@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\Event;
@@ -10,11 +10,10 @@ use App\Models\PsychTest;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\YoutubeVideo;
-use App\Http\Controllers\Admin\EnrollmentController;
-use App\Http\Controllers\Admin\VolunteerController;
 use App\Models\PageCategory;
 use App\Models\BlogTag;
 use App\Models\ActionItem;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -113,15 +112,14 @@ class HomeController extends Controller
     /**
      * Show courses by category
      */
-    public function cat_course($id)
+    public function cat_course(CourseCategory $courseCategory)
     {
-        $currentCategory = CourseCategory::with([
+        $courseCategory->load([
             'courses' => function ($q) {
                 $q->with(['sessions', 'documents', 'centers'])->latest();
             },
-        ])
-            ->where('id', $id)
-            ->firstOrFail();
+        ]);
+        $currentCategory = $courseCategory;
 
         // All categories for the switcher bar (with course count)
         $allCategories = CourseCategory::with('courses')->where('status', 1)->get();
@@ -191,14 +189,26 @@ class HomeController extends Controller
             ];
         }
 
-        $events = Event::with('subEvents')->latest('event_date')->get();
+        $events = Event::with('subEvents')
+            ->whereNull('type')
+            ->latest('event_date')
+            ->get();
 
         return view('frontend.event.event', compact('events', 'videos', 'galleryImages', 'galleryCategories'));
     }
-    public function subevent($id)
+
+    public function subevent(Event $event)
     {
-        $event = Event::with('subEvents')->findOrFail($id);
-        $otherEvents = Event::with('subEvents')->where('id', '!=', $id)->latest('event_date')->take(3)->get();
+        abort_if($event->type === 'summer-event', 404);
+
+        $event->load('subEvents');
+
+        $otherEvents = Event::with('subEvents')
+            ->whereNull('type')
+            ->where('id', '!=', $event->id)
+            ->latest('event_date')
+            ->take(3)
+            ->get();
 
         return view('frontend.event.subevent', compact('event', 'otherEvents'));
     }
@@ -252,31 +262,31 @@ class HomeController extends Controller
         return view('frontend.quick-test.quicktest', compact('tests', 'categories', 'totalBlogs', 'featured', 'blogs', 'recentPosts', 'tags'));
     }
 
-    public function show($id)
+    public function show(PsychTest $psychTest)
     {
-        $test = PsychTest::withCount(['categories', 'questions'])->findOrFail($id);
+        $test = $psychTest->loadCount(['categories', 'questions']);
 
         $categories = $test->categories()->withCount('questions')->get();
         if ($categories->isEmpty() || $test->questions()->count() === 0) {
             return abort(404);
         }
-        return view('frontend.quick-test.quizdetails', compact('tests', 'categories'));
+        return view('frontend.quick-test.quizdetails', compact('test', 'categories'));
     }
 
-    public function take($id)
+    public function take(PsychTest $psychTest)
     {
-        $test = PsychTest::with([
+        $test = $psychTest->load([
             'categories' => fn($q) => $q->orderBy('id'),
             'categories.questions' => fn($q) => $q->orderBy('id'),
-        ])->findOrFail($id);
+        ]);
 
         $allQuestions = $test->categories->flatMap(fn($cat) => $cat->questions);
         $totalQuestions = $allQuestions->count();
 
         if ($totalQuestions === 0) {
-            return redirect()->route('frontend.tests.show', $id)->with('error', 'This test has no questions yet.');
+            return redirect()->route('frontend.tests.show', $psychTest->slug)->with('error', 'This test has no questions yet.');
         }
-        if (!$test || $test->categories->isEmpty() || $totalQuestions === 0) {
+        if ($test->categories->isEmpty() || $totalQuestions === 0) {
             return abort(404);
         }
         return view('frontend.quick-test.take', [
@@ -350,16 +360,16 @@ class HomeController extends Controller
     //         'totalAnswered'
     //     ));
     // }
-    public function submit(Request $request, $id)
+    public function submit(Request $request, PsychTest $psychTest)
     {
         $request->validate([
             'answers' => 'required|string',
         ]);
 
-        $test = PsychTest::with([
+        $test = $psychTest->load([
             'categories' => fn($q) => $q->orderBy('id'),
             'categories.questions' => fn($q) => $q->orderBy('id'),
-        ])->findOrFail($id);
+        ]);
 
         $rawAnswers = json_decode($request->answers, true);
         $allQuestions = $test->categories->flatMap(fn($cat) => $cat->questions)->values();
@@ -412,16 +422,16 @@ class HomeController extends Controller
         $topTypeKey = array_key_first($typeScores);
 
         // Match result range
-        $range = \App\Models\TestResultRange::where('test_id', $id)->where('min_percent', '<=', $overallPercent)->where('max_percent', '>=', $overallPercent)->first();
+        $range = \App\Models\TestResultRange::where('test_id', $psychTest->id)->where('min_percent', '<=', $overallPercent)->where('max_percent', '>=', $overallPercent)->first();
 
         // Graph config
-        $graphConfig = \App\Models\TestGraphConfig::where('test_id', $id)->first();
-        $graphType = $graphConfig ? $graphConfig->graph_type : 'hello';
+        $graphConfig = \App\Models\TestGraphConfig::where('test_id', $psychTest->id)->first();
+        $graphType = $graphConfig ? $graphConfig->graph_type : 'none';
 
         // ── Store everything in session ──
         session([
             'quiz_result' => [
-                'test_id' => $id,
+                'test_id' => $psychTest->id,
                 'answers' => $rawAnswers,
                 'category_scores' => $categoryScores,
                 'overall_percent' => $overallPercent,
@@ -444,21 +454,21 @@ class HomeController extends Controller
             ],
         ]);
 
-        return redirect()->route('test.result', $id);
+        return redirect()->route('test.result', $psychTest->slug);
     }
-    public function result($id)
+    public function result(PsychTest $psychTest)
     {
         // Guard — if no session, send back to test
         if (!session()->has('quiz_result')) {
-            return redirect()->route('frontend.tests.show', $id)->with('error', 'No result found. Please take the test first.');
+            return redirect()->route('frontend.tests.show', $psychTest->slug)->with('error', 'No result found. Please take the test first.');
         }
 
         $data = session('quiz_result');
 
-        $test = PsychTest::with([
+        $test = $psychTest->load([
             'categories' => fn($q) => $q->orderBy('id'),
             'categories.questions' => fn($q) => $q->orderBy('id'),
-        ])->findOrFail($id);
+        ]);
 
         $chartData = collect($data['category_scores']);
 
@@ -474,26 +484,110 @@ class HomeController extends Controller
         ]);
     }
 
+    public function downloadPdf(PsychTest $psychTest)
+    {
+        if (!session()->has('quiz_result')) {
+            return redirect()->route('test.result', $psychTest->slug)
+                ->with('error', 'No result found. Please take the test first.');
+        }
+
+        $data = session('quiz_result');
+
+        $test = $psychTest->load([
+            'categories'           => fn($q) => $q->orderBy('id'),
+            'categories.questions' => fn($q) => $q->orderBy('id'),
+        ]);
+
+        $chartData = collect($data['category_scores']);
+
+        /* Talent type fallback definitions (mirrors quiz-result.blade.php) */
+        $talentTypes = [
+            'performer' => ['name' => 'The Performer', 'emoji' => '🎭', 'tagline' => 'Natural On-Screen Magnetism',
+                'desc' => 'Your child has exceptional natural charisma and camera presence. They light up every room, command attention instinctively, and make every performance feel alive and genuine.',
+                'course' => 'Screen Acting + Camera Techniques', 'tags' => ['Charismatic', 'Camera-Ready', 'Energetic', 'Scene-Stealer'], 'color' => '#175cdd'],
+            'empath'    => ['name' => 'The Empath',     'emoji' => '💙', 'tagline' => 'Deep Emotional Expression',
+                'desc' => 'Your child feels emotions profoundly and channels them into powerful, believable performances. Their ability to connect emotionally with characters and audiences is rare and extremely valuable.',
+                'course' => 'Screen Acting + Personality Development', 'tags' => ['Deeply Feeling', 'Expressive', 'Authentic', 'Emotionally Intelligent'], 'color' => '#7c3aed'],
+            'creator'   => ['name' => 'The Creator',    'emoji' => '✨', 'tagline' => 'Storytelling & Wild Imagination',
+                'desc' => "Your child's imagination is extraordinary. They invent entire worlds, create vivid characters, and bring total originality to everything they do. Storytelling is their superpower.",
+                'course' => 'Theatre & Stage + Filmmaking', 'tags' => ['Imaginative', 'Inventive', 'Original', 'Storyteller'], 'color' => '#059669'],
+            'leader'    => ['name' => 'The Leader',     'emoji' => '👑', 'tagline' => 'Stage Presence & Command',
+                'desc' => 'Your child naturally commands attention the moment they enter a room. They have powerful stage presence and the natural ability to lead an audience through any performance with total confidence.',
+                'course' => 'Screen Acting + Public Speaking', 'tags' => ['Commanding', 'Confident', 'Authoritative', 'Natural Leader'], 'color' => '#d97706'],
+            'voice'     => ['name' => 'The Voice',      'emoji' => '🎤', 'tagline' => 'Powerful Speech & Expression',
+                'desc' => "Your child's greatest performing gift is their voice — its tone, clarity, and expressive range. They excel in dialogue delivery, public speaking, and voice-led performance.",
+                'course' => 'Public Speaking + Theatre & Stage', 'tags' => ['Articulate', 'Persuasive', 'Expressive', 'Clear Communicator'], 'color' => '#db2777'],
+            'director'  => ['name' => 'The Director',   'emoji' => '🎬', 'tagline' => 'Vision, Craft & Filmmaking',
+                'desc' => 'Your child has the eye of a born director. They see the bigger picture, understand narrative structure, and have a natural gift for guiding the creative process.',
+                'course' => 'Filmmaking + Screen Acting', 'tags' => ['Visionary', 'Strategic', 'Detail-Oriented', 'Big-Picture Thinker'], 'color' => '#0891b2'],
+        ];
+
+        $tt           = $talentTypes[$data['top_type_key']] ?? $talentTypes['performer'];
+        $range        = $data['range'];
+        $hasRange     = !empty($range);
+
+        $displayLabel  = $range['label']              ?? $tt['name'];
+        $displayEmoji  = $range['emoji']              ?? $tt['emoji'];
+        $displayTagline= $range['tagline']            ?? $tt['tagline'];
+        $displayDesc   = $range['description']        ?? $tt['desc'];
+        $displayCourse = $range['recommended_course'] ?? $tt['course'];
+        $displayTags   = !empty($range['tags'])        ? $range['tags'] : $tt['tags'];
+        $displayColor  = $range['color']              ?? $tt['color'];
+        $rangeMin      = $range['min_percent']        ?? null;
+        $rangeMax      = $range['max_percent']        ?? null;
+
+        $pdf = Pdf::loadView('frontend.quick-test.quiz-result-pdf', [
+            'test'          => $test,
+            'chartData'     => $chartData,
+            'overallPct'    => $data['overall_percent'],
+            'answers'       => $data['answers'],
+            'hasRange'      => $hasRange,
+            'displayLabel'  => $displayLabel,
+            'displayEmoji'  => $displayEmoji,
+            'displayTagline'=> $displayTagline,
+            'displayDesc'   => $displayDesc,
+            'displayCourse' => $displayCourse,
+            'displayTags'   => $displayTags,
+            'displayColor'  => $displayColor,
+            'rangeMin'      => $rangeMin,
+            'rangeMax'      => $rangeMax,
+            'graphType'     => $data['graph_type'] ?? 'none',
+        ])->setPaper('a4', 'portrait');
+
+        $filename = 'talent-result-' . \Illuminate\Support\Str::slug($displayLabel) . '.pdf';
+
+        return $pdf->download($filename);
+    }
+
     public function about()
     {
         return view('frontend.about.about');
     }
+
+    public function contactus()
+    {
+        return view('frontend.contact.contact');
+    }
+
     public function volunteer()
     {
         return view('frontend.volunteer.volunteer');
     }
-    public function course_details($slug)
-    {
-        // dd($slug);
-        $course = Course::with(['category', 'centers.state', 'sessions', 'documents'])
-            ->where('slug', $slug)
-            ->firstOrFail();
 
-        // Get related courses (same category)
-        $otherCourses = Course::with('category', 'centers')->where('category_id', $course->category_id)->where('id', '!=', $course->id)->latest()->take(3)->get();
+    public function course_details(Course $course)
+    {
+        $course->load(['category', 'centers.state', 'sessions', 'documents']);
+
+        $otherCourses = Course::with('category', 'centers')
+            ->where('category_id', $course->category_id)
+            ->where('id', '!=', $course->id)
+            ->latest()
+            ->take(3)
+            ->get();
 
         return view('frontend.course.coursedetails', compact('course', 'otherCourses'));
     }
+
     public function blog(Request $request)
     {
         $categories = BlogCategory::where('status', 1)
@@ -536,6 +630,7 @@ class HomeController extends Controller
 
         return view('frontend.blog.blog', compact('categories', 'totalBlogs', 'featured', 'blogs', 'recentPosts', 'tags'));
     }
+
     public function blog_details($slug)
     {
         $blog = Blog::with(['author', 'category'])
@@ -565,6 +660,7 @@ class HomeController extends Controller
 
         return view('frontend.blog.blogdetails', compact('blog', 'related', 'recentPosts', 'categories', 'tags'));
     }
+
     public function blog_category($slug)
     {
         $currentCategory = BlogCategory::where('slug', $slug)->where('status', 1)->firstOrFail();
@@ -588,5 +684,20 @@ class HomeController extends Controller
         $featured = $blogs->first();
 
         return view('frontend.blog.blog', compact('categories', 'totalBlogs', 'featured', 'blogs', 'recentPosts', 'tags', 'currentCategory'));
+    }
+
+    public function privacy()
+    {
+        return view('frontend.legal.privacy');
+    }
+
+    public function terms()
+    {
+        return view('frontend.legal.terms');
+    }
+
+    public function refund()
+    {
+        return view('frontend.legal.refund');
     }
 }

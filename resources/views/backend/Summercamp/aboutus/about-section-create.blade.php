@@ -193,8 +193,6 @@ function previewImg(input) {
     };
     reader.readAsDataURL(input.files[0]);
 }
-@if(session('error'))
-    Swal.fire({ icon: 'error', title: 'Error!', text: '{{ session('error') }}' });
-@endif
+
 </script>
 @endsection

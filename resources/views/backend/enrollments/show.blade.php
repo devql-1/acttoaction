@@ -15,12 +15,7 @@
                 </a>
             </div>
 
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show">
-                    <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
+            
 
             <div class="row">
 
@@ -44,8 +39,7 @@
                                         'Email' => $enrollment->email,
                                         'School' => $enrollment->school,
                                         'Class/Grade' => $enrollment->grade,
-                                        'State' => $enrollment->state,
-                                        'City' => $enrollment->city ?? '—',
+                                        'City' => $enrollment->state,
                                         'Centre' => $enrollment->centre,
                                         'Mode' => $enrollment->mode,
                                         'Course' => $enrollment->course,

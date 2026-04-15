@@ -10,23 +10,19 @@
     .swiper-slide {
         height: auto !important;
     }
+
+    /* Push body content below the fixed announcement bar */
+    body {
+        padding-top: var(--ann-h, 40px);
+        transition: padding-top 0.3s ease;
+    }
 </style>
 
 <body>
     <div id="preloader"></div>
 
     <!-- ===== ANNOUNCEMENT BAR ===== -->
-    <div class="ann-bar" id="annBar">
-        <div class="container">
-            <div class="inner">
-                <span class="dot"></span>
-                <span class="msg">🎭 &nbsp;<strong>Summer Camp 2026</strong> — Jaipur's Biggest Performing Arts Camp
-                    is Coming! &nbsp;|&nbsp; Drama · Dance · Music · Storytelling</span>
-                <a href="tel:9119118844" class="cta">Register Interest</a>
-                <button class="close-btn" id="annClose" title="Close"><i class="bi bi-x-lg"></i></button>
-            </div>
-        </div>
-    </div>
+    @include('frontend.partialspages.ann_bar')
 
     <!-- ===== HEADER ===== -->
     @include('frontend.Summercamp.partials.header')
@@ -199,7 +195,7 @@
                 <h2>Camp Themes &amp; Categories</h2>
                 <p>Explore the diverse performing arts disciplines and creative streams at Summer Camp 2025.</p>
             </div>
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
                         <div class="theme-ico" style="background:rgba(255,106,0,.1)">🎭</div>
@@ -275,33 +271,7 @@
                 <h2>Camp Activities &amp; Programs</h2>
                 <p>Rich performing arts disciplines designed to nurture every child's unique talent and confidence.</p>
             </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="act-card">
-                        <div class="act-ico"><i class="bi bi-mask"></i></div>
-                        <h4>Drama &amp; Acting</h4>
-                        <p>Stage performances, character building and improvisation for all ages.</p>
-                        <ul class="act-list">
-                            <li>Character development</li>
-                            <li>Stage confidence</li>
-                            <li>Script &amp; dialogue</li>
-                            <li>Live performances</li>
-                        </ul><a href="tel:9119118844" class="act-cta">Enroll Now →</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="act-card">
-                        <div class="act-ico"><i class="bi bi-music-note-beamed"></i></div>
-                        <h4>Music &amp; Singing</h4>
-                        <p>Vocal training, rhythm and ensemble performance in a fun setting.</p>
-                        <ul class="act-list">
-                            <li>Vocal technique</li>
-                            <li>Rhythm &amp; melody</li>
-                            <li>Group harmony</li>
-                            <li>Recitals &amp; showcases</li>
-                        </ul><a href="tel:9119118844" class="act-cta">Enroll Now →</a>
-                    </div>
-                </div>
+            <div class="row g-4 justify-content-center">
                 <div class="col-lg-3 col-md-6">
                     <div class="act-card">
                         <div class="act-ico"><i class="bi bi-person-hearts"></i></div>
@@ -312,7 +282,7 @@
                             <li>Choreography skills</li>
                             <li>Body coordination</li>
                             <li>Stage performances</li>
-                        </ul><a href="tel:9119118844" class="act-cta">Enroll Now →</a>
+                        </ul><a href="{{ route('curriculum') }}" class="act-cta">Enroll Now</a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
@@ -325,7 +295,7 @@
                             <li>Oral narration</li>
                             <li>Imagination exercises</li>
                             <li>Public speaking</li>
-                        </ul><a href="tel:9119118844" class="act-cta">Enroll Now →</a>
+                        </ul><a href="{{ route('curriculum') }}" class="act-cta">Enroll Now →</a>
                     </div>
                 </div>
             </div>
@@ -380,7 +350,7 @@
                         src="https://static.wixstatic.com/media/495d44_3d0904880d89405289048b015862cffc~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/495d44_3d0904880d89405289048b015862cffc~mv2.jpg"
                         loading="lazy" alt="" />
                     <div class="gf-over"><i class="bi bi-zoom-in"></i></div>
-                    <div class="gf-caption">🏛️ Exhibition Gate — Opening Day</div>
+                    <div class="gf-caption">🏛ï¸ Exhibition Gate — Opening Day</div>
                 </div>
                 <div class="gf-item"><img
                         src="https://static.wixstatic.com/media/495d44_163571d9312a4ca7a5c6fbdf118e969d~mv2.jpg"
@@ -581,90 +551,50 @@
             </div>
             <div class="swiper ppl-swiper" id="mentorSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="ppl-card">
-                            <div class="ppl-photo"><span class="ppl-role-badge">Chief Mentor</span><img
-                                    src="https://static.wixstatic.com/media/495d44_aa799d19592843bdb0447450efa3e356~mv2.jpg/v1/fill/w_490,h_327,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/download%20(4).jpg"
-                                    alt="" />
-                                <div class="ppl-hover-overlay">
-                                    <div class="ppl-hover-name">Sh. Premchand Bairwa</div>
-                                    <div class="ppl-hover-links"><a href="https://dainik.bhaskar.com/NYl94V9hPSb"
-                                            target="_blank" class="ppl-link"><i
-                                                class="bi bi-newspaper"></i>Press</a><a
-                                            href="https://www.instagram.com/acttoaction_" target="_blank"
-                                            class="ppl-link"><i class="bi bi-instagram"></i>Instagram</a></div>
+                    @forelse($people['mentors'] as $mentor)
+                        <div class="swiper-slide">
+                            <div class="ppl-card">
+                                <div class="ppl-photo">
+                                    <span class="ppl-role-badge">{{ $mentor->role_badge }}</span>
+                                    <img src="{{ $mentor->photo_url }}" alt="{{ $mentor->name }}" />
+                                    <div class="ppl-hover-overlay">
+                                        <div class="ppl-hover-name">{{ $mentor->name }}</div>
+                                        <div class="ppl-hover-links">
+                                            @if ($mentor->press_url)
+                                                <a href="{{ $mentor->press_url }}" target="_blank" class="ppl-link">
+                                                    <i
+                                                        class="bi bi-newspaper"></i>{{ $mentor->press_label ?: 'Press' }}
+                                                </a>
+                                            @endif
+                                            @if ($mentor->instagram_url)
+                                                <a href="{{ $mentor->instagram_url }}" target="_blank"
+                                                    class="ppl-link">
+                                                    <i class="bi bi-instagram"></i>Instagram
+                                                </a>
+                                            @endif
+                                            @if ($mentor->youtube_url)
+                                                <a href="{{ $mentor->youtube_url }}" target="_blank"
+                                                    class="ppl-link">
+                                                    <i class="bi bi-youtube"></i>YouTube
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ppl-body">
+                                    <h4>{{ $mentor->name }}</h4>
+                                    <span class="ppl-desig">{{ $mentor->designation }}</span>
+                                    @if ($mentor->bio)
+                                        <p>{{ $mentor->bio }}</p>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="ppl-body">
-                                <h4>Sh. Premchand Bairwa</h4><span class="ppl-desig">Deputy Chief Minister,
-                                    Rajasthan</span>
-                                <p>Personally graced the camp and inspired hundreds of young artists with his vision for
-                                    creative education.</p>
-                            </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="ppl-card">
-                            <div class="ppl-photo"><span class="ppl-role-badge">Policy Mentor</span><img
-                                    src="https://static.wixstatic.com/media/495d44_5bfd7fe09d924795b3aeec24eba8217d~mv2.jpg/v1/crop/x_0,y_176,w_1600,h_1044/fill/w_490,h_320,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/download%20(5).jpg"
-                                    alt="" />
-                                <div class="ppl-hover-overlay">
-                                    <div class="ppl-hover-name">Sh. Madan Dilawar</div>
-                                    <div class="ppl-hover-links"><a href="https://dainik.bhaskar.com/eLW8C7eqFSb"
-                                            target="_blank" class="ppl-link"><i
-                                                class="bi bi-newspaper"></i>Press</a><a
-                                            href="https://www.instagram.com/acttoaction_" target="_blank"
-                                            class="ppl-link"><i class="bi bi-instagram"></i>Instagram</a></div>
-                                </div>
-                            </div>
-                            <div class="ppl-body">
-                                <h4>Sh. Madan Dilawar</h4><span class="ppl-desig">Education Minister, Rajasthan</span>
-                                <p>Attended the grand finale and praised children's performances — a state-level
-                                    milestone.</p>
-                            </div>
+                    @empty
+                        <div class="swiper-slide">
+                            <p class="text-center text-muted py-4">No mentors added yet.</p>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="ppl-card">
-                            <div class="ppl-photo"><span class="ppl-role-badge">Creative Mentor</span><img
-                                    src="https://static.wixstatic.com/media/495d44_64b07e4b9b3d48b4836d731743282713~mv2.jpg/v1/fill/w_490,h_327,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/495d44_64b07e4b9b3d48b4836d731743282713~mv2.jpg"
-                                    alt="" />
-                                <div class="ppl-hover-overlay">
-                                    <div class="ppl-hover-name">Act To Action Director</div>
-                                    <div class="ppl-hover-links"><a href="https://www.instagram.com/acttoaction_"
-                                            target="_blank" class="ppl-link"><i
-                                                class="bi bi-instagram"></i>Instagram</a><a
-                                            href="https://youtube.com/@risingpassion" target="_blank"
-                                            class="ppl-link"><i class="bi bi-youtube"></i>YouTube</a></div>
-                                </div>
-                            </div>
-                            <div class="ppl-body">
-                                <h4>Act To Action Director</h4><span class="ppl-desig">Founder, Rising Passion
-                                    Studio</span>
-                                <p>The visionary behind the camp's curriculum — 10+ years building performing arts
-                                    education in Jaipur.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="ppl-card">
-                            <div class="ppl-photo"><span class="ppl-role-badge">Lead Mentor</span><img
-                                    src="https://static.wixstatic.com/media/495d44_42fb48ae47be4e809a3015afee67e25d~mv2.jpg/v1/fill/w_490,h_327,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/495d44_42fb48ae47be4e809a3015afee67e25d~mv2.jpg"
-                                    alt="" />
-                                <div class="ppl-hover-overlay">
-                                    <div class="ppl-hover-name">Senior Arts Trainer</div>
-                                    <div class="ppl-hover-links"><a href="https://www.instagram.com/acttoaction_"
-                                            target="_blank" class="ppl-link"><i
-                                                class="bi bi-instagram"></i>Instagram</a></div>
-                                </div>
-                            </div>
-                            <div class="ppl-body">
-                                <h4>Senior Performing Arts Trainer</h4><span class="ppl-desig">Drama &amp; Script
-                                    Coach</span>
-                                <p>Guided 200+ children through drama and storytelling with passion and creativity.</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -675,7 +605,7 @@
                         <p>Discover our trusted partners and find the perfect summer camp for your child.</p>
                     </div>
                     <div class="col-md-4 text-md-end">
-                        <a href="#" class="act-btn">
+                        <a href="{{ route('summercamp.partners') }}" class="act-btn">
                             <i class="bi bi-people-fill"></i>
                             View Partners
                         </a>
@@ -858,7 +788,8 @@
                         <div class="ci-icon"><i class="bi bi-building"></i></div>
                         <div>
                             <h3>School &amp; Institutional Partners</h3>
-                            <p>Mayoor · Vedanta · The Little Starlings · Xavier · SRN School · Kalaneri · Remana · MGIS
+                            <p>Mayoor · Vedanta · The Little Starlings · Xavier · SRN School · Kalaneri · Remana
+                                · MGIS
                                 · Riya International · Royal · Sanskar · Creative Cubs</p>
                         </div>
                     </div>
@@ -926,20 +857,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-
-            /* ── ANNOUNCEMENT BAR ── */
-            const annBar = document.getElementById('annBar');
-            const annClose = document.getElementById('annClose');
-            const siteHdr = document.getElementById('siteHeader');
-
-            if (annClose && annBar && siteHdr) {
-                annClose.addEventListener('click', () => {
-                    annBar.classList.add('hidden');
-                    siteHdr.classList.add('ann-gone');
-                    document.body.classList.add('ann-gone');
-                    document.documentElement.style.setProperty('--ann-h', '0px');
-                });
-            }
 
             /* ── SCROLL TOP ── */
             const scrollTopBtn = document.getElementById('scrollTop');

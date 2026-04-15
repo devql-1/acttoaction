@@ -52,7 +52,7 @@
         /* ─── TEST HERO ─── */
         .test-hero {
             background: linear-gradient(135deg, #f0f6ff 0%, #e8f0fe 60%, #f4f8ff 100%);
-            padding: 60px 0 50px;
+            padding: 145px 0 50px;
             border-bottom: 2px solid #dbeafe;
         }
 
@@ -1631,7 +1631,7 @@
                 </div>
 
                 {{-- Hidden Form --}}
-                <form id="quiz-submit-form" method="POST" action="{{ route('test.submit', $test->id) }}"
+                <form id="quiz-submit-form" method="POST" action="{{ route('test.submit', $test->slug) }}"
                     style="display:none;">
                     @csrf
                     <input type="hidden" id="hidden-answers" name="answers">

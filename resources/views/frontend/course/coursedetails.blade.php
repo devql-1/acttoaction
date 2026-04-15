@@ -52,6 +52,7 @@
             inset: 0;
             display: flex;
             align-items: center;
+            padding-top: 185px;
         }
 
         .course-hero .hero-content .badge-cat {
@@ -1002,7 +1003,7 @@
                                     <li><i class="bi bi-award-fill"></i> <span><strong>Certificate:</strong> On
                                             Completion</span></li>
                                 </ul>
-                                <a href="{{ route('enrollment.enroll', $course->id) }}" target="_blank"
+                                <a href="{{ route('enrollment.enroll', $course->slug) }}" target="_blank"
                                     class="btn-enroll-big">
                                     <i class="bi bi-person-plus-fill"></i> Enroll Now
                                 </a>
@@ -1036,7 +1037,7 @@
                                             &nbsp;|&nbsp; ₹{{ number_format($other->fees) }}
                                         </div>
                                         <h5>{{ $other->title }}</h5>
-                                        <a href="{{ route('course.details', $other->id) }}" class="btn-oc">
+                                        <a href="{{ route('course.details', $other->slug) }}" class="btn-oc">
                                             View Details <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>

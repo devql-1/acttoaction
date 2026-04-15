@@ -1,31 +1,16 @@
+@php
+    $notifBanners = \App\Models\NotificationBanner::active()->get()->map(function ($b) {
+        return [
+            'id'    => $b->id,
+            'image' => $b->image ? asset($b->image) : null,
+            'title' => $b->title,
+            'url'   => $b->url ?: '#',
+        ];
+    })->values()->toArray();
+@endphp
 <script>
-    // Banner Slides Data - Static
-    const bannerSlidesData = [{
-            id: 1,
-
-            image: "{{ asset('courseassets/img/notificationbanner/banner1course.JPEG') }}",
-            title: "Courses",
-            url: "{{ route('index.course') }}"
-        },
-        {
-            id: 2,
-            image: "{{ asset('courseassets/img/notificationbanner/banner2skill.JPEG') }}",
-            title: "Free Skill Assessment",
-            url: "{{ route('frontend.tests') }}"
-        },
-        // {
-        //     id: 3,
-        //     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
-        //     title: "Summer Camp 2026",
-        //     url: "{{ route('summercamp') }}"
-        // },
-        // {
-        //     id: 4,
-        //     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
-        //     title: "Special Offer - 30% Off",
-        //     url: "{{ route('index.course') }}"
-        // }
-    ];
+    // Banner Slides Data - loaded from database
+    const bannerSlidesData = @json($notifBanners);
 
     let currentSlideIndex = 0;
     let isDragging = false;
@@ -34,6 +19,9 @@
 
     // Create Draggable Bell + Banner Slider
     function createBellAndSlider() {
+
+        if (!bannerSlidesData || bannerSlidesData.length === 0) return;
+
         const bellHTML = `
             <div class="bell-notification-wrapper" id="bellWrapper" draggable="false">
                 <button class="bell-icon" id="bellIcon" aria-label="Notifications">
@@ -43,42 +31,47 @@
             </div>
         `;
 
-        const sliderHTML = `
-            <!-- Banner Slider Modal -->
-            <div class="banner-slider-backdrop" id="bannerBackdrop" onclick="closeBannerSlider(event)"></div>
-            
-            <div class="banner-slider-container" id="bannerSliderContainer">
-                <!-- Close Button -->
-                <button class="banner-slider-close" onclick="closeBannerSlider(event)" aria-label="Close">✕</button>
-
-                <!-- Slider Wrapper -->
-                <div class="banner-slider-wrapper">
-                    <div class="banner-slides" id="bannerSlides">
-                        ${bannerSlidesData.map((slide, index) => `
-                            <div class="banner-slide" onclick="goToBannerPage('${slide.url}')">
-                                <img src="${slide.image}" alt="${slide.title}">
-                                <div class="banner-slide-overlay">
-                                    <p>${slide.title}</p>
-                                </div>
-                            </div>
-                        `).join('')}
+        const slides = bannerSlidesData.map((slide) => {
+            if (slide.image) {
+                // blurred background layer + crisp contain image on top
+                return `
+                <div class="banner-slide" onclick="goToBannerPage('${slide.url}')">
+                    <div class="banner-slide-blur" style="background-image:url('${slide.image}')"></div>
+                    <img src="${slide.image}" alt="${slide.title}">
+                    <div class="banner-slide-overlay">
+                        <p>${slide.title}</p>
                     </div>
+                </div>`;
+            } else {
+                return `
+                <div class="banner-slide" onclick="goToBannerPage('${slide.url}')">
+                    <div class="banner-slide-empty"><i class="fa fa-image"></i></div>
+                    <div class="banner-slide-overlay">
+                        <p>${slide.title}</p>
+                    </div>
+                </div>`;
+            }
+        }).join('');
 
-                    <!-- Navigation Arrows -->
+        const dots = bannerSlidesData.map((_, i) =>
+            `<span class="banner-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></span>`
+        ).join('');
+
+        const sliderHTML = `
+            <div class="banner-slider-backdrop" id="bannerBackdrop" onclick="closeBannerSlider(event)"></div>
+            <div class="banner-slider-container" id="bannerSliderContainer">
+                <button class="banner-slider-close" onclick="closeBannerSlider(event)" aria-label="Close">✕</button>
+                <div class="banner-slider-wrapper">
+                    <div class="banner-slides" id="bannerSlides">${slides}</div>
+                    ${bannerSlidesData.length > 1 ? `
                     <button class="banner-arrow banner-arrow-prev" onclick="prevBannerSlide()">
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <button class="banner-arrow banner-arrow-next" onclick="nextBannerSlide()">
                         <i class="fas fa-chevron-right"></i>
-                    </button>
+                    </button>` : ''}
                 </div>
-
-                <!-- Dots Indicator -->
-                <div class="banner-dots" id="bannerDots">
-                    ${bannerSlidesData.map((_, index) => `
-                        <span class="banner-dot ${index === 0 ? 'active' : ''}" onclick="goToSlide(${index})"></span>
-                    `).join('')}
-                </div>
+                ${bannerSlidesData.length > 1 ? `<div class="banner-dots" id="bannerDots">${dots}</div>` : ''}
             </div>
         `;
 
@@ -87,7 +80,6 @@
         addBellAndSliderStyles();
         setupDragListeners();
 
-        // Add click listener to bell icon
         const bellIcon = document.getElementById('bellIcon');
         if (bellIcon) {
             bellIcon.addEventListener('click', (e) => {
@@ -162,12 +154,8 @@
             }
 
             @keyframes bellPulse {
-                0%, 100% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.15);
-                }
+                0%, 100% { transform: scale(1); }
+                50%       { transform: scale(1.15); }
             }
 
             /* ===== BANNER SLIDER MODAL ===== */
@@ -178,278 +166,196 @@
                 z-index: 998;
                 opacity: 0;
                 pointer-events: none;
-                transition: opacity 0.35s ease, pointer-events 0.35s ease;
+                transition: opacity 0.35s ease;
             }
-
             .banner-slider-backdrop.open {
                 opacity: 1;
                 pointer-events: auto;
             }
 
+            /* ── Container: fluid width + aspect-ratio so no fixed height needed ── */
             .banner-slider-container {
                 position: fixed;
                 top: 50%;
                 left: 50%;
-                transform: translate(-50%, -50%);
-                width: 100%;
-                max-width: 900px;
-                height: 500px;
-                background: #ffffff;
+                transform: translate(-50%, -50%) scale(0.95);
+                /* fluid: 92vw on small screens, capped at 860px on desktop */
+                width: min(92vw, 860px);
+                /* 16:9 aspect ratio — adjusts height automatically with the width */
+                aspect-ratio: 16 / 9;
+                /* never taller than 88% of viewport so it stays on screen */
+                max-height: 88vh;
+                background: #111;
                 border-radius: 20px;
                 z-index: 999;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
                 display: flex;
                 flex-direction: column;
                 opacity: 0;
                 pointer-events: none;
                 overflow: hidden;
-                transition: opacity 0.4s ease, pointer-events 0.4s ease;
+                transition: opacity 0.35s ease, transform 0.35s ease;
             }
-
             .banner-slider-container.open {
                 opacity: 1;
                 pointer-events: auto;
+                transform: translate(-50%, -50%) scale(1);
             }
 
             .banner-slider-close {
                 position: absolute;
-                top: 15px;
-                right: 15px;
-                background: #0f2747;
+                top: 12px;
+                right: 12px;
+                background: rgba(15, 39, 71, 0.85);
                 color: #ffffff;
                 border: none;
-                width: 36px;
-                height: 36px;
+                width: 34px; height: 34px;
                 border-radius: 50%;
-                font-size: 20px;
+                font-size: 18px;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 z-index: 10;
+                backdrop-filter: blur(4px);
                 transition: background 0.2s ease;
             }
-
-            .banner-slider-close:hover {
-                background: #ff6a00;
-            }
+            .banner-slider-close:hover { background: #ff6a00; }
 
             .banner-slider-wrapper {
                 flex: 1;
                 position: relative;
                 overflow: hidden;
+                /* min-height:0 needed so flex child doesn't overflow */
+                min-height: 0;
             }
 
             .banner-slides {
                 display: flex;
                 height: 100%;
-                transition: transform 0.5s ease;
+                transition: transform 0.5s cubic-bezier(.4,0,.2,1);
             }
 
+            /* ── Each slide ── */
             .banner-slide {
                 min-width: 100%;
                 height: 100%;
                 position: relative;
                 cursor: pointer;
                 overflow: hidden;
+                background: #111;
             }
 
+            /* Blurred background layer — fills the letterbox areas */
+            .banner-slide-blur {
+                position: absolute;
+                inset: -20px;           /* slightly larger than container */
+                background-size: cover;
+                background-position: center;
+                filter: blur(18px) brightness(0.45);
+                transform: scale(1.05); /* hide blur edge artefacts */
+                z-index: 0;
+            }
+
+            /* Crisp image sits on top, fully visible with contain */
             .banner-slide img {
+                position: relative;
+                z-index: 1;
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
-                transition: transform 0.5s ease;
+                object-fit: contain;    /* never crops — full image always visible */
+                display: block;
             }
 
-            .banner-slide:hover img {
-                transform: scale(1.05);
+            /* Placeholder when no image */
+            .banner-slide-empty {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #e9ecef;
+                font-size: 2rem;
+                color: #aaa;
+                z-index: 0;
             }
 
             .banner-slide-overlay {
                 position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: linear-gradient(transparent, rgba(15, 39, 71, 0.8));
-                padding: 30px 20px 20px;
+                bottom: 0; left: 0; right: 0;
+                background: linear-gradient(transparent, rgba(10, 20, 40, 0.82));
+                padding: clamp(14px, 3vw, 28px) clamp(14px, 3vw, 24px) clamp(12px, 2vw, 20px);
                 color: #ffffff;
+                z-index: 2;
             }
-
             .banner-slide-overlay p {
-                font-size: 18px;
+                font-size: clamp(13px, 2vw, 18px);
                 font-weight: 600;
                 margin: 0;
+                text-shadow: 0 1px 4px rgba(0,0,0,.6);
             }
 
-            /* Navigation Arrows */
+            /* ── Arrows ── */
             .banner-arrow {
                 position: absolute;
                 top: 50%;
                 transform: translateY(-50%);
-                background: rgba(255, 106, 0, 0.85);
+                background: rgba(255, 106, 0, 0.82);
                 color: #ffffff;
                 border: none;
-                width: 45px;
-                height: 45px;
+                width: clamp(32px, 4vw, 44px);
+                height: clamp(32px, 4vw, 44px);
                 border-radius: 50%;
-                font-size: 18px;
+                font-size: clamp(14px, 1.8vw, 18px);
                 cursor: pointer;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 z-index: 5;
-                transition: all 0.3s ease;
+                backdrop-filter: blur(4px);
+                transition: all 0.25s ease;
             }
-
             .banner-arrow:hover {
                 background: #ff6a00;
                 transform: translateY(-50%) scale(1.1);
             }
+            .banner-arrow-prev { left: clamp(8px, 2vw, 16px); }
+            .banner-arrow-next { right: clamp(8px, 2vw, 16px); }
 
-            .banner-arrow-prev {
-                left: 15px;
-            }
-
-            .banner-arrow-next {
-                right: 15px;
-            }
-
-            /* Dots Indicator */
+            /* ── Dots ── */
             .banner-dots {
                 display: flex;
                 justify-content: center;
-                gap: 8px;
-                padding: 16px;
-                background: #f8f9fb;
+                gap: 7px;
+                padding: clamp(8px, 1.2vw, 14px);
+                background: rgba(0,0,0,0.65);
+                flex-shrink: 0;
             }
-
             .banner-dot {
-                width: 10px;
-                height: 10px;
+                width: 8px; height: 8px;
                 border-radius: 50%;
-                background: #d0d5dd;
+                background: rgba(255,255,255,0.4);
                 cursor: pointer;
                 transition: all 0.3s ease;
             }
-
             .banner-dot.active {
                 background: #ff6a00;
-                width: 28px;
-                border-radius: 5px;
+                width: 24px;
+                border-radius: 4px;
             }
+            .banner-dot:hover { background: rgba(255,255,255,0.8); }
 
-            .banner-dot:hover {
-                background: #ff6a00;
-            }
-
-            /* ===== MOBILE RESPONSIVE ===== */
-            @media (max-width: 900px) {
-                .bell-icon {
-                    width: 45px;
-                    height: 45px;
-                    font-size: 18px;
-                }
-
-                .banner-slider-container {
-                    height: 350px;
-                    max-width: 85%;
-                }
-
-                .banner-slide-overlay {
-                    padding: 20px 15px 15px;
-                }
-
-                .banner-slide-overlay p {
-                    font-size: 15px;
-                }
-
-                .banner-arrow {
-                    width: 38px;
-                    height: 38px;
-                    font-size: 16px;
-                }
-            }
-
+            /* ── Mobile: bell size only (layout already handled by min/clamp) ── */
             @media (max-width: 600px) {
-                .bell-icon {
-                    width: 44px;
-                    height: 44px;
-                    font-size: 16px;
-                }
-
-                .bell-badge {
-                    width: 20px;
-                    height: 20px;
-                    font-size: 10px;
-                }
-
-                .banner-slider-container {
-                    height: 300px;
-                    width: 95%;
-                    max-width: none;
-                    border-radius: 16px;
-                }
-
-                .banner-arrow {
-                    width: 34px;
-                    height: 34px;
-                    font-size: 14px;
-                }
-
-                .banner-arrow-prev {
-                    left: 8px;
-                }
-
-                .banner-arrow-next {
-                    right: 8px;
-                }
-
-                .banner-slide-overlay {
-                    padding: 16px 12px 12px;
-                }
-
-                .banner-slide-overlay p {
-                    font-size: 13px;
-                }
-
-                .banner-dots {
-                    padding: 12px;
-                    gap: 6px;
-                }
-
-                .banner-dot {
-                    width: 8px;
-                    height: 8px;
-                }
-
-                .banner-dot.active {
-                    width: 24px;
-                }
+                .bell-icon { width: 44px; height: 44px; font-size: 16px; }
+                .bell-badge { width: 20px; height: 20px; font-size: 10px; }
+                .banner-slider-container { border-radius: 14px; }
             }
-
             @media (max-width: 380px) {
-                .bell-icon {
-                    width: 40px;
-                    height: 40px;
-                    font-size: 14px;
-                }
-
-                .bell-badge {
-                    width: 18px;
-                    height: 18px;
-                    font-size: 9px;
-                }
-
-                .banner-slider-container {
-                    height: 250px;
-                }
-
-                .banner-slide-overlay p {
-                    font-size: 12px;
-                }
+                .bell-icon { width: 40px; height: 40px; font-size: 14px; }
+                .bell-badge { width: 18px; height: 18px; font-size: 9px; }
             }
         `;
-
         const styleTag = document.createElement('style');
         styleTag.textContent = styles;
         document.head.appendChild(styleTag);
@@ -460,27 +366,10 @@
         const bellWrapper = document.getElementById('bellWrapper');
         if (!bellWrapper) return;
 
-        let clickCount = 0;
-        let clickTimeout;
-
         // Mouse drag
         bellWrapper.addEventListener('mousedown', (e) => {
-            if (e.button !== 0) return; // Only left click
-
-            clickCount++;
-            if (clickCount === 1) {
-                clickTimeout = setTimeout(() => {
-                    // Single click - just toggle modal
-                    clickCount = 0;
-                }, 300);
-                return;
-            }
-
-            // Prevent default drag behavior
+            if (e.button !== 0) return;
             e.preventDefault();
-            clearTimeout(clickTimeout);
-            clickCount = 0;
-
             isDragging = true;
             offsetX = e.clientX - bellWrapper.getBoundingClientRect().left;
             offsetY = e.clientY - bellWrapper.getBoundingClientRect().top;
@@ -489,166 +378,109 @@
 
         document.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
-
-            const bellWrapper = document.getElementById('bellWrapper');
-            if (!bellWrapper) return;
-
-            let newX = e.clientX - offsetX;
-            let newY = e.clientY - offsetY;
-
-            // Keep bell within viewport
-            const maxX = window.innerWidth - 50;
-            const maxY = window.innerHeight - 50;
-
-            newX = Math.max(0, Math.min(newX, maxX));
-            newY = Math.max(0, Math.min(newY, maxY));
-
-            bellWrapper.style.left = newX + 'px';
-            bellWrapper.style.top = newY + 'px';
-            bellWrapper.style.bottom = 'auto';
+            const w = document.getElementById('bellWrapper');
+            if (!w) return;
+            let newX = Math.max(0, Math.min(e.clientX - offsetX, window.innerWidth - 50));
+            let newY = Math.max(0, Math.min(e.clientY - offsetY, window.innerHeight - 50));
+            w.style.left   = newX + 'px';
+            w.style.top    = newY + 'px';
+            w.style.bottom = 'auto';
         });
 
         document.addEventListener('mouseup', () => {
             if (isDragging) {
                 isDragging = false;
-                const bellWrapper = document.getElementById('bellWrapper');
-                if (bellWrapper) {
-                    bellWrapper.classList.remove('dragging');
-                }
+                const w = document.getElementById('bellWrapper');
+                if (w) w.classList.remove('dragging');
             }
         });
 
-        // Touch support for mobile
+        // Touch
         bellWrapper.addEventListener('touchstart', (e) => {
             isDragging = true;
-            const touch = e.touches[0];
-            const rect = bellWrapper.getBoundingClientRect();
-            offsetX = touch.clientX - rect.left;
-            offsetY = touch.clientY - rect.top;
+            const t = e.touches[0];
+            const r = bellWrapper.getBoundingClientRect();
+            offsetX = t.clientX - r.left;
+            offsetY = t.clientY - r.top;
             bellWrapper.classList.add('dragging');
-        }, false);
+        }, { passive: true });
 
         document.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
-
-            const bellWrapper = document.getElementById('bellWrapper');
-            if (!bellWrapper) return;
-
-            const touch = e.touches[0];
-            let newX = touch.clientX - offsetX;
-            let newY = touch.clientY - offsetY;
-
-            const maxX = window.innerWidth - 50;
-            const maxY = window.innerHeight - 50;
-
-            newX = Math.max(0, Math.min(newX, maxX));
-            newY = Math.max(0, Math.min(newY, maxY));
-
-            bellWrapper.style.left = newX + 'px';
-            bellWrapper.style.top = newY + 'px';
-            bellWrapper.style.bottom = 'auto';
-        }, false);
+            const w = document.getElementById('bellWrapper');
+            if (!w) return;
+            const t = e.touches[0];
+            let newX = Math.max(0, Math.min(t.clientX - offsetX, window.innerWidth - 50));
+            let newY = Math.max(0, Math.min(t.clientY - offsetY, window.innerHeight - 50));
+            w.style.left   = newX + 'px';
+            w.style.top    = newY + 'px';
+            w.style.bottom = 'auto';
+        }, { passive: true });
 
         document.addEventListener('touchend', () => {
             isDragging = false;
-            const bellWrapper = document.getElementById('bellWrapper');
-            if (bellWrapper) {
-                bellWrapper.classList.remove('dragging');
-            }
-        }, false);
+            const w = document.getElementById('bellWrapper');
+            if (w) w.classList.remove('dragging');
+        });
     }
 
-    // Toggle Banner Slider
     function toggleBannerSlider() {
-        const container = document.getElementById('bannerSliderContainer');
-        const backdrop = document.getElementById('bannerBackdrop');
-
-        if (container && backdrop) {
-            const isOpen = container.classList.contains('open');
-            if (isOpen) {
-                container.classList.remove('open');
-                backdrop.classList.remove('open');
-            } else {
-                container.classList.add('open');
-                backdrop.classList.add('open');
-            }
-        }
+        const c = document.getElementById('bannerSliderContainer');
+        const b = document.getElementById('bannerBackdrop');
+        if (!c || !b) return;
+        c.classList.toggle('open');
+        b.classList.toggle('open');
     }
 
-    // Close Banner Slider
     function closeBannerSlider(e) {
-        if (e) {
-            e.stopPropagation();
-        }
-
-        const container = document.getElementById('bannerSliderContainer');
-        const backdrop = document.getElementById('bannerBackdrop');
-
-        if (container) container.classList.remove('open');
-        if (backdrop) backdrop.classList.remove('open');
+        if (e) e.stopPropagation();
+        document.getElementById('bannerSliderContainer')?.classList.remove('open');
+        document.getElementById('bannerBackdrop')?.classList.remove('open');
     }
 
-    // Next Slide
     function nextBannerSlide() {
         currentSlideIndex = (currentSlideIndex + 1) % bannerSlidesData.length;
         updateSlide();
     }
 
-    // Previous Slide
     function prevBannerSlide() {
         currentSlideIndex = (currentSlideIndex - 1 + bannerSlidesData.length) % bannerSlidesData.length;
         updateSlide();
     }
 
-    // Go to Specific Slide
     function goToSlide(index) {
         currentSlideIndex = index;
         updateSlide();
     }
 
-    // Update Slide Display
     function updateSlide() {
-        const slidesContainer = document.getElementById('bannerSlides');
-        const dots = document.querySelectorAll('.banner-dot');
-
-        if (slidesContainer) {
-            slidesContainer.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-        }
-
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentSlideIndex);
+        const s = document.getElementById('bannerSlides');
+        if (s) s.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        document.querySelectorAll('.banner-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === currentSlideIndex);
         });
     }
 
-    // Go to Banner Page
     function goToBannerPage(url) {
-        if (url && url !== '#') {
-            window.location.href = url;
-        }
+        if (url && url !== '#') window.location.href = url;
     }
 
-    // Initialize on Page Load
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         createBellAndSlider();
 
-        // Auto-advance slides every 5 seconds (only when modal is open)
+        // Auto-advance when open
         setInterval(() => {
-            try {
-                const container = document.getElementById('bannerSliderContainer');
-                if (container && container.classList.contains('open')) {
-                    nextBannerSlide();
-                }
-            } catch (err) {
-                console.log('Auto-advance error:', err);
+            const c = document.getElementById('bannerSliderContainer');
+            if (c && c.classList.contains('open') && bannerSlidesData.length > 1) {
+                nextBannerSlide();
             }
         }, 5000);
 
-        // Make functions globally accessible
         window.toggleBannerSlider = toggleBannerSlider;
-        window.closeBannerSlider = closeBannerSlider;
-        window.nextBannerSlide = nextBannerSlide;
-        window.prevBannerSlide = prevBannerSlide;
-        window.goToSlide = goToSlide;
-        window.goToBannerPage = goToBannerPage;
+        window.closeBannerSlider  = closeBannerSlider;
+        window.nextBannerSlide    = nextBannerSlide;
+        window.prevBannerSlide    = prevBannerSlide;
+        window.goToSlide          = goToSlide;
+        window.goToBannerPage     = goToBannerPage;
     });
 </script>

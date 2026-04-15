@@ -12,7 +12,32 @@ class PsychTest extends Model
 
     protected $table = 'psych_tests';
 
-    protected $fillable = ['test_name', 'description', 'duration', 'status', 'age'];
+    protected $fillable = ['test_name', 'slug', 'description', 'duration', 'status', 'age'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->slug)) {
+                $model->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($model->test_name) ?: 'test');
+            }
+        });
+        static::updating(function ($model) {
+            if ($model->isDirty('test_name') && empty($model->getOriginal('slug'))) {
+                $model->slug = static::uniqueSlug(\Illuminate\Support\Str::slug($model->test_name) ?: 'test', $model->id);
+            }
+        });
+    }
+
+    protected static function uniqueSlug(string $base, int $excludeId = 0): string
+    {
+        $slug  = $base;
+        $count = 1;
+        while (static::where('slug', $slug)->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))->exists()) {
+            $slug = $base . '-' . $count++;
+        }
+        return $slug;
+    }
 
     // One test has many categories
     public function categories()

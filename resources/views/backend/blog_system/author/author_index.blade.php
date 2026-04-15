@@ -30,12 +30,7 @@
 
 
 {{-- Success Message --}}
-@if(session('success'))
-  <div class="alert alert-success alert-dismissible fade show">
-    {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-  </div>
-@endif
+
 
 
 <div class="row">
@@ -252,9 +247,7 @@ toastr.options = {
     "timeOut": "3000"
 };
 
-@if(session('success'))
-    toastr.success("{{ session('success') }}");
-@endif
+
 
 
 // Toggle status
@@ -325,23 +318,9 @@ $(document).on('click','.btn-delete',function(){
     }
 
     // SweetAlert for session success/error (auto popup)
-    @if(session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: '{{ session('success') }}',
-            timer: 2500,
-            showConfirmButton: false,
-        });
-    @endif
+    
 
-    @if(session('error'))
-        Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: '{{ session('error') }}',
-        });
-    @endif
+    
 </script>
 @endsection
 

@@ -141,7 +141,7 @@
 
         /* ===================== PAGE TITLE ===================== */
         .page-title {
-            padding: 70px 0 55px;
+            padding: 185px 0 55px;
             text-align: center;
             position: relative;
             background: linear-gradient(135deg, #0d1f4a 0%, #175cdd 100%);
@@ -747,6 +747,26 @@
             .volunteer-form-section .role-checkbox-group {
                 grid-template-columns: 1fr;
             }
+
+            .business-section h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .business-section {
+                padding: 50px 0;
+            }
+
+            .business-section h2 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title h1 {
+                font-size: 28px;
+            }
         }
 
         /* ─── FOR SCHOOLS / BUSINESS ─── */
@@ -894,7 +914,7 @@
     </style>
 
     <main class="main">
-        <div style="margin-top: 100px;"></div>
+        <div style="margin-top: 195px;"></div>
         <section class="business-section ">
             <div class="container position-relative">
                 <div class="row align-items-center g-5">
@@ -1176,8 +1196,11 @@
 
                                     <div class="col-md-6">
                                         <label class="form-label">Phone Number <span class="req">*</span></label>
-                                        <input type="tel" name="phone" class="form-control"
-                                            placeholder="+91 98765 43210">
+                                        <div class="input-group">
+                                            <span class="input-group-text" style="font-weight:600;font-size:14px;">+91</span>
+                                            <input type="tel" name="phone" id="volunteerPhone" class="form-control"
+                                                placeholder="10-digit number" maxlength="10" inputmode="numeric">
+                                        </div>
                                         <small class="text-danger phone_error"></small>
                                     </div>
 
@@ -1454,11 +1477,24 @@
     <script>
         $(document).ready(function() {
 
+            // Restrict phone to digits only
+            $('#volunteerPhone').on('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
+
             $('#volunteerForm').submit(function(e) {
 
                 e.preventDefault();
 
+                // Prepend +91 before building FormData
+                var phoneEl = document.getElementById('volunteerPhone');
+                var rawDigits = phoneEl.value.replace(/\D/g, '');
+                phoneEl.value = '+91' + rawDigits;
+
                 let formData = new FormData(this);
+
+                // Restore input display value
+                phoneEl.value = rawDigits;
 
                 $('.text-danger').text('');
 

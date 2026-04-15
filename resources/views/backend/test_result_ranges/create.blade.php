@@ -1,5 +1,6 @@
 {{-- resources/views/backend/test_result_ranges/create.blade.php --}}
-@extends('backend.layout.app')@section('title', 'Add Result Range')
+@extends('backend.layout.app')
+@section('title', 'Add Result Range')
 
 @section('content')
     <div class="container-fluid py-4">

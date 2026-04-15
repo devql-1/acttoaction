@@ -140,7 +140,7 @@
                     </div>
 
                     <div class="action-group">
-                        <a href="{{ route('frontend.tests.take', $test->id) }}" class="btn-primary">
+                        <a href="{{ route('quicktest.take', $test->slug) }}" class="btn-primary">
                             <i class="bi bi-play-circle me-2"></i>Start Test
                         </a>
                         <a href="#" class="btn-secondary">
@@ -298,7 +298,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <a href="{{ route('frontend.tests.take', $test->id) }}"
+                            <a href="{{ route('quicktest.take', $test->slug) }}"
                                class="btn-primary" style="display:inline-flex;
                                align-items:center;gap:8px;">
                                 <i class="bi bi-play-circle-fill"></i>

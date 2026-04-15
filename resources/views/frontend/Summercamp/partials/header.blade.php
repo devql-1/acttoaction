@@ -4,7 +4,7 @@
 
             {{-- Logo --}}
             <a href="{{ url('/') }}" class="sh-logo">
-                <img src="{{ asset('img/logo/IMG_1658.JPG-removebg-preview.png') }}" alt="ActToAction Logo">
+                <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
             </a>
 
             {{-- Right side: socials + nav + hamburger --}}
@@ -25,14 +25,16 @@
                         <button class="sh-close" id="shClose" aria-label="Close menu">&#x2715;</button>
 
                         <ul class="sh-menu">
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('index.course') }}">Courses</a></li>
-                            <li><a href="{{ url('/workshops') }}">Workshops</a></li>
-                            <li><a href="{{ route('event.summercamp') }}">Event</a></li>
-                            <li><a href="{{ route('frontend.blog.index') }}">Blog</a></li>
+                            <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'sh-active' : '' }}">Home</a></li>
+                            <li><a href="{{ route('index.course') }}" class="{{ request()->routeIs('index.course') ? 'sh-active' : '' }}">Courses</a></li>
+                            <li><a href="{{ route('workshops') }}" class="{{ request()->routeIs('workshops', 'workshops.show') ? 'sh-active' : '' }}">Workshops</a></li>
+                            <li><a href="{{ route('summercamp') }}" class="{{ request()->routeIs('summercamp', 'summercamp.partners', 'event.summercamp', 'summercamp.event', 'frontend.events.subevent-detail') ? 'sh-active' : '' }}">Summer</a></li>
+                            <li><a href="{{ route('event.summercamp') }}" class="{{ request()->routeIs('event.summercamp', 'summercamp.event', 'frontend.events.subevent-detail') ? 'sh-active' : '' }}">Event</a></li>
+                            <li><a href="{{ route('frontend.blog.index') }}" class="{{ request()->routeIs('frontend.blog.*') ? 'sh-active' : '' }}">Blog</a></li>
+                            <li><a href="{{ route('summercamp.partners') }}" class="{{ request()->routeIs('summercamp.partners') ? 'sh-active' : '' }}">Partners</a></li>
                             <li>
-                                <a href="{{ route('frontend.tests') }}"
-                                    class="sh-cta {{ request()->routeIs('frontend.tests') ? 'sh-active' : '' }}">
+                                <a href="{{ route('quiz-test') }}"
+                                    class="sh-cta {{ request()->routeIs('quiz-test') ? 'sh-active' : '' }}">
                                     Quiz-Test <i class="bi bi-arrow-right"></i>
                                 </a>
                             </li>
@@ -69,9 +71,9 @@
         border-bottom: 1px solid #efefef;
         box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
         position: sticky;
-        top: 0;
+        top: var(--ann-h, 0px);
         z-index: 1000;
-        transition: box-shadow .3s;
+        transition: box-shadow .3s, top .3s;
     }
 
     /* ── Inner container ── */

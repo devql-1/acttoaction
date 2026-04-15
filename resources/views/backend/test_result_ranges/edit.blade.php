@@ -10,7 +10,7 @@
                 <i class="bi bi-arrow-left"></i>
             </a>
             <div>
-                <h4 class="fw-bold mb-0">✏️ Edit Result Range</h4>
+                <h4 class="fw-bold mb-0">✏ï¸ Edit Result Range</h4>
                 <p class="text-muted small mb-0">
                     Test: <strong>{{ $test->test_name }}</strong> —
                     Range: <strong>{{ $range->min_percent }}%–{{ $range->max_percent }}%</strong>
@@ -39,12 +39,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
 
-                        @if(session('success'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        @endif
+                        
 
                         @if($errors->any())
                             <div class="alert alert-danger">

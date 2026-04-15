@@ -16,6 +16,10 @@ use App\Models\AboutSection;
 use App\Models\SubEvent;
 use App\Models\Event;
 use App\Models\YoutubeVideo;
+use App\Models\SummerPartner;
+use App\Models\SchoolPartner;
+use App\Models\SchoolPartnerCategory;
+use App\Models\SchoolSection;
 class SummerController extends Controller
 {
     public function index(): View
@@ -112,22 +116,59 @@ class SummerController extends Controller
 
         return view('frontend.Summercamp.event.event', compact('events', 'videos', 'galleryImages', 'galleryCategories'));
     }
-    public function subEventDetail($id)
+    public function subEventDetail(SubEvent $subEvent)
     {
-        $sub = SubEvent::with(['event.subEvents', 'centersWithState.state'])->findOrFail($id);
+        $subEvent->load(['event.subEvents', 'centersWithState.state']);
+        $sub = $subEvent;
 
         return view('frontend.Summercamp.event.subeventdetails', compact('sub'));
     }
-    public function subevent($id)
+    public function subevent(Event $event)
     {
-        $event = Event::with('subEvents')->where('type', 'summer-event')->findOrFail($id);
+        $event->load('subEvents');
 
-        $otherEvents = Event::with('subEvents')->where('type', 'summer-event')->where('id', '!=', $id)->latest('event_date')->take(3)->get();
+        $otherEvents = Event::with('subEvents')->where('type', 'summer-event')->where('id', '!=', $event->id)->latest('event_date')->take(3)->get();
 
         return view('frontend.Summercamp.event.subevent', compact('event', 'otherEvents'));
     }
+    public function partners()
+    {
+        $partners = SummerPartner::getByCategory();
+
+        return view('frontend.Summercamp.partners', compact('partners'));
+    }
+
     public function curriculum()
     {
-        return view('frontend.Summercamp.cirulum');
+        $schoolsByCategory = SchoolPartner::getByCategory();
+        $activeCategory    = null;
+        $activeSection     = null;
+
+        return view('frontend.Summercamp.cirulum', compact('schoolsByCategory', 'activeCategory', 'activeSection'));
+    }
+
+    // ── Dynamic section pages:  /{section}  and  /{section}/{category} ──
+
+    public function schoolSection(SchoolSection $section)
+    {
+        abort_unless($section->status, 404);
+
+        $schoolsByCategory = SchoolPartner::getByCategory($section->id);
+        $activeSection     = $section;
+        $activeCategory    = null;
+
+        return view('frontend.Summercamp.school-section', compact('schoolsByCategory', 'activeSection', 'activeCategory'));
+    }
+
+    public function schoolSectionCategory(SchoolSection $section, SchoolPartnerCategory $category)
+    {
+        abort_unless($section->status, 404);
+        abort_unless($category->school_section_id === $section->id, 404);
+
+        $schoolsByCategory = SchoolPartner::getByCategory($section->id);
+        $activeSection     = $section;
+        $activeCategory    = $category;
+
+        return view('frontend.Summercamp.school-section', compact('schoolsByCategory', 'activeSection', 'activeCategory'));
     }
 }

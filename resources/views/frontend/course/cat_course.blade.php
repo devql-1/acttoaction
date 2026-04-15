@@ -1728,7 +1728,7 @@
                             </div>
                         @endif
                         <div class="hero-actions">
-                            <a href="{{ route('course.details', $heroCourse->id ?? 0) }}" class="btn-enroll">
+                            <a href="{{ route('course.details', $heroCourse->slug ?? 'course') }}" class="btn-enroll">
                                 <i class="bi bi-person-plus-fill"></i> Enroll Now
                             </a>
                             <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-wa" target="_blank">
@@ -1749,7 +1749,7 @@
                     <div class="sb-inner">
                         @foreach ($allCategories as $cat)
                             <button class="sw-btn {{ $cat->id === $currentCategory->id ? 'active' : '' }}"
-                                onclick="window.location='{{ route('course.show', $cat->id) }}'">
+                                onclick="window.location='{{ route('course.show', $cat->slug) }}'">
                                 <i class="bi bi-mortarboard-fill sw-icon"></i>
                                 {{ $cat->name }}
                                 @php $cnt = $cat->courses->count(); @endphp
@@ -2057,7 +2057,7 @@
                 <h2>Ready to Start the Journey?</h2>
                 <p>Join 1000+ students already performing, growing and shining across Jaipur.</p>
                 <div class="cta-btns">
-                    <a href="{{ route('course.details', $course->id) }}" class="btn-cta-solid">
+                    <a href="{{ route('course.details', $course->slug) }}" class="btn-cta-solid">
                         <i class="bi bi-person-plus-fill"></i> Enroll Now
                     </a>
                     <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-cta-ghost" target="_blank">

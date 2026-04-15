@@ -3,6 +3,18 @@
         height: 120px;
     }
 
+    @media (max-width: 768px) {
+        .logo img {
+            height: 60px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .logo img {
+            height: 50px;
+        }
+    }
+
     /* ===== ANNOUNCEMENT BAR (Below Header) ===== */
     .ann-bar {
         background: #0e1c38;
@@ -199,15 +211,7 @@
 </style>
 
 <header id="header" class="header fixed-top">
-    <div class="ann-bar" id="annBar">
-        <div class="ann-inner">
-            <span class="ann-dot"></span>
-            <span class="ann-msg">🎭 &nbsp;<strong>Summer Camp 2026</strong> — Jaipur's Biggest Performing Arts Camp is
-                Coming! &nbsp;|&nbsp; Drama · Dance · Music · Storytelling</span>
-            <a href="{{ route('event') }}" class="ann-cta">Register Interest</a>
-            <button class="ann-close" id="annClose" title="Close"><i class="fas fa-times"></i></button>
-        </div>
-    </div>
+    @include('frontend.partialspages.ann_bar')
     <div class="topbar d-flex align-items-center dark-background">
         <div class="container d-flex justify-content-center justify-content-md-between">
             <div class="contact-info d-flex align-items-center">
@@ -232,7 +236,7 @@
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="logo d-flex align-items-center">
                 <div class="logo">
-                    <img src="{{ asset('img/logo/IMG_6008.PNG') }}" alt="ActToAction Logo">
+                    <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
                 </div>
             </a>
 
@@ -260,8 +264,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('frontend.tests') }}"
-                            class="{{ request()->routeIs('frontend.tests') ? 'active' : '' }}">
+                        <a href="{{ route('quiz-test') }}"
+                            class="{{ request()->routeIs('quiz-test') ? 'active' : '' }}">
                             Skill Assessment
                         </a>
                     </li>
@@ -290,11 +294,12 @@
                         </ul>
                     </li> --}}
 
-                    {{-- <li>
-                        <a href="contact.html" class="{{ request()->is('contact.html') ? 'active' : '' }}">
-                            Contact
+                    <li>
+                        <a href="{{ route('contactus') }}"
+                            class="{{ request()->routeIs('contactus') ? 'active' : '' }}">
+                            Contact Us
                         </a>
-                    </li> --}}
+                    </li>
                     <li>
                         <a href="{{ route('summercamp') }}"
                             class="{{ request()->routeIs('summercamp') ? 'active' : '' }}"

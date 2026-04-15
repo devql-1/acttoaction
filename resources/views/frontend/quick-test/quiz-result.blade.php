@@ -59,9 +59,9 @@
         }
 
         .rh-hero .container {
-            margin-top: 70px;
+            margin-top: 185px;
             position: relative;
-            padding: 72px 0;
+            padding: 40px 0 72px;
         }
 
         /* Eyebrow */
@@ -997,7 +997,84 @@
                 print-color-adjust: exact;
             }
         }
+
+        /* ── GRAPH card body padding ── */
+        .graph-card-body {
+            padding: 28px;
+        }
+
+        /* ── GRAPH responsive heights ── */
+        .graph-wrap {
+            position: relative;
+            height: 320px;
+        }
+
+        .graph-wrap.graph-radar {
+            height: 380px;
+        }
+
+        .graph-wrap.graph-line {
+            height: 300px;
+        }
+
+        @media (max-width: 576px) {
+            .graph-wrap {
+                height: 210px;
+            }
+
+            .graph-wrap.graph-radar {
+                height: 250px;
+            }
+
+            .graph-wrap.graph-line {
+                height: 190px;
+            }
+
+            .graph-card-body {
+                padding: 14px;
+            }
+        }
+    /* ══════════════════════════════════════════════════════
+       @media print  –  "Save as PDF" stylesheet
+       Trigger: Ctrl+P  OR  the Download PDF button below.
+       In Chrome / Edge print dialog → set Destination to
+       "Save as PDF" and Margins to "None" for best output.
+    ══════════════════════════════════════════════════════ */
+    @media print {
+        @page { size: A4 portrait; margin: 0; }
+
+        /* Force background colours / images to print */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust:         exact !important;
+            color-adjust:               exact !important;
+        }
+
+        /* ── Hide site chrome ── */
+        #header, #footer, .ann-bar,
+        #scrollTopBtn, .rh-actions      { display: none !important; }
+
+        /* ── Remove margin added to compensate for fixed nav ── */
+        main.main                       { margin-top: 0 !important; padding-top: 0 !important; }
+
+        /* ── Score ring: replace conic-gradient with plain border ─
+           (conic-gradient prints unreliably; border is exact)   ── */
+        #score-ring {
+            background:  none !important;
+            border:      14px solid var(--print-ring-color, #175cdd) !important;
+            box-shadow:  none !important;
+        }
+
+        /* ── Keep key cards intact across pages ── */
+        .rh-hero, .res-section,
+        .type-spotlight, .res-card,
+        .graph-card, .cat-score-row,
+        .qa-block, .qa-item             { break-inside: avoid; page-break-inside: avoid; }
+    }
     </style>
+
+    {{-- Chart.js must load before any graph @include partial runs --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @php
         /* ════════════════════════════════════════════
@@ -1067,7 +1144,7 @@
             ],
         ];
 
-        $tt = $talentTypes[$topTypeKey] ?? $talentTypes['performer'];
+        $tt = $talentTypes[$topTypeKey ?? 'performer'] ?? $talentTypes['performer'];
 
         /* ════════════════════════════════════════════
                                                                                                            TestResultRange DATA
@@ -1162,8 +1239,8 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                         @endif
 
                         <div class="rh-actions au au-3">
-                            <button class="rh-btn-primary" onclick="window.print()">
-                                <i class="bi bi-printer"></i> Download Report
+                            <button type="button" class="rh-btn-primary" id="downloadBtn" onclick="printResult()">
+                                <i class="bi bi-file-earmark-pdf"></i> Download PDF
                             </button>
                             <a href="https://wa.me/?text={{ urlencode('🎭 ' . $displayEmoji . ' ' . $displayLabel . ' — ' . $displayTagline . '! Free test: acttoaction.com') }}"
                                 target="_blank" class="rh-btn-ghost">
@@ -1403,7 +1480,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                                 <p class="sch-sub">Visual representation of the full talent profile</p>
                             </div>
                         </div>
-                        <div style="padding:28px;">
+                        <div class="graph-card-body">
                             @include('frontend.graph.' . $graphType, ['chartData' => $chartData])
                         </div>
                     </div>
@@ -1515,7 +1592,6 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
         <i class="bi bi-arrow-up"></i>
     </button>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const OVERALL = {{ $overallPct }};
 
@@ -1562,6 +1638,38 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
             document.getElementById('scrollTopBtn')
                 .classList.toggle('show', window.scrollY > 500);
         });
+    </script>
+
+    <script>
+    /* ══════════════════════════════════════════════════════
+       printResult()
+       Uses the browser's built-in print engine — zero deps,
+       always works, pixel-perfect output.
+       Steps:
+         1. Set CSS variable --print-ring-color so @media print
+            CSS can draw a solid border on the score ring.
+         2. Scroll to top (so print starts from y=0).
+         3. Call window.print() → browser opens print dialog.
+            User selects "Save as PDF" + Margins: None → Done.
+         4. afterprint event fires → restore ring colour var.
+    ══════════════════════════════════════════════════════ */
+    function printResult() {
+        const color = '{{ $displayColor }}';
+
+        /* Expose ring colour to @media print CSS */
+        document.documentElement.style.setProperty('--print-ring-color', color);
+
+        /* Scroll to top so the printout begins at the hero */
+        window.scrollTo(0, 0);
+
+        /* Restore CSS variable once the dialog closes */
+        window.addEventListener('afterprint', function cleanup() {
+            document.documentElement.style.removeProperty('--print-ring-color');
+            window.removeEventListener('afterprint', cleanup);
+        });
+
+        window.print();
+    }
     </script>
 
 @endsection

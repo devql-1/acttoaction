@@ -137,8 +137,6 @@ function confirmDelete(id, name, schools) {
         confirmButtonText: 'Yes, delete it!',
     }).then(r => { if (r.isConfirmed) document.getElementById(`delete-form-${id}`).submit(); });
 }
-@if(session('success'))
-    Swal.fire({ icon: 'success', title: 'Success!', text: '{{ session('success') }}', timer: 2500, showConfirmButton: false });
-@endif
+
 </script>
 @endsection

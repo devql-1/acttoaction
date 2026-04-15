@@ -19,6 +19,7 @@ class Volunteer extends Model
         'availability',
         'hear_about',
         'motivation',
-        'experience'
+        'experience',
+        'status',
     ];
 }

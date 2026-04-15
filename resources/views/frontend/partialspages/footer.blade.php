@@ -59,9 +59,9 @@
                                 <div class="nav-column">
                                     <h6>Legal</h6>
                                     <nav class="footer-nav">
-                                        <a href="#!">Privacy Policy</a>
-                                        <a href="#!">Terms & Conditions</a>
-                                        <a href="#!">Refund Policy</a>
+                                        <a href="{{ route('privacy') }}">Privacy Policy</a>
+                                        <a href="{{ route('terms') }}">Terms & Conditions</a>
+                                        <a href="{{ route('refund') }}">Refund Policy</a>
                                     </nav>
                                 </div>
                             </div>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Models\AnnouncementBar;
 use App\Models\ContactInfo;
 use Illuminate\Support\Facades\Schema;
 use App\Models\WorkshopAgeGroup;
@@ -41,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
 
         if (Schema::hasTable('contact_infos')) {
             view()->share('contactInfo', ContactInfo::first());
+        }
+
+        if (Schema::hasTable('announcement_bars')) {
+            view()->share('activeAnnouncement', AnnouncementBar::active()->latest()->first());
         }
     }
 }

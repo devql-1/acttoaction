@@ -113,7 +113,7 @@
                                        class="form-control @error('photo') is-invalid @enderror"
                                        onchange="previewPhoto(this)">
                                 <div class="form-text text-muted">
-                                    JPG, PNG, WEBP — max 3MB. Recommended: square or portrait (490×490px).
+                                    JPG, PNG, WEBP — max 3MB. Recommended: square or portrait (490Ã—490px).
                                 </div>
                                 @error('photo')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -257,7 +257,7 @@
                         </div>
                         <hr>
                         <ul class="list-unstyled small text-muted mb-0" style="line-height:2.2">
-                            <li><i class="fa fa-check text-success me-2"></i>Photo: square preferred (490×490px)</li>
+                            <li><i class="fa fa-check text-success me-2"></i>Photo: square preferred (490Ã—490px)</li>
                             <li><i class="fa fa-check text-success me-2"></i>Role badge is the small orange tag on photo</li>
                             <li><i class="fa fa-check text-success me-2"></i>Use Sort Order to control card sequence</li>
                         </ul>
@@ -281,9 +281,7 @@ function previewPhoto(input) {
     reader.readAsDataURL(input.files[0]);
 }
 
-@if(session('error'))
-    Swal.fire({ icon: 'error', title: 'Error!', text: '{{ session('error') }}' });
-@endif
+
 </script>
 
 @endsection

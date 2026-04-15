@@ -82,7 +82,7 @@
 
                                         @foreach($tests as $test)
 
-                                            <option value="{{ $test->id }}" {{ old('test_id') == $test->id ? 'selected' : '' }}>
+                                            <option value="{{ $test->id }}" {{ (string) old('test_id', $selectedTestId ?? '') === (string) $test->id ? 'selected' : '' }}>
 
                                                 {{ $test->test_name }}
 

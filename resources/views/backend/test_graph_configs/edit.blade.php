@@ -8,7 +8,7 @@
             <i class="bi bi-arrow-left"></i>
         </a>
         <div>
-            <h4 class="fw-bold mb-0">✏️ Edit Graph Config</h4>
+            <h4 class="fw-bold mb-0">✏ï¸ Edit Graph Config</h4>
             <p class="text-muted small mb-0">
                 Updating config for: <strong>{{ $config->test->test_name }}</strong>
             </p>
@@ -30,12 +30,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-body p-4">
 
-                    @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show">
-                            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    @endif
+                    
 
                     @if($errors->any())
                         <div class="alert alert-danger">
@@ -43,7 +38,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('test-graph-configs.update', $config->id) }}"
+                    <form id="graph-config-form" action="{{ route('test-graph-configs.update', $config->id) }}"
                           method="POST">
                         @csrf
                         @method('PUT')
@@ -57,7 +52,7 @@
                                 @php
                                     $graphOptions = [
                                         'bar'   => ['icon'=>'📊','label'=>'Bar Chart',    'desc'=>'Side-by-side column comparison'],
-                                        'radar' => ['icon'=>'🕸️','label'=>'Radar/Spider', 'desc'=>'Spider web talent profile'],
+                                        'radar' => ['icon'=>'🕸ï¸','label'=>'Radar/Spider', 'desc'=>'Spider web talent profile'],
                                         'pie'   => ['icon'=>'🥧','label'=>'Pie/Doughnut', 'desc'=>'Percentage share distribution'],
                                         'line'  => ['icon'=>'📈','label'=>'Line/Area',    'desc'=>'Score flow across sections'],
                                         'none'  => ['icon'=>'🚫','label'=>'No Graph',     'desc'=>'Text result only, no chart'],
@@ -110,25 +105,29 @@
                             </div>
                         </div>
 
-                        <div class="d-flex gap-2">
+                        <div class="d-flex gap-2 align-items-center">
                             <button type="submit" class="btn btn-primary px-4">
                                 <i class="bi bi-floppy me-1"></i> Update Config
                             </button>
                             <a href="{{ route('test-graph-configs.index') }}"
                                class="btn btn-light border px-4">Cancel</a>
 
-                            {{-- Quick delete --}}
-                            <form method="POST"
-                                  action="{{ route('test-graph-configs.destroy', $config->id) }}"
-                                  class="ms-auto"
-                                  onsubmit="return confirm('Delete this config?')">
-                                @csrf @method('DELETE')
-                                <button class="btn btn-outline-danger px-3">
-                                    <i class="bi bi-trash"></i> Delete
-                                </button>
-                            </form>
+                            <button type="submit"
+                                form="graph-config-delete-form"
+                                class="btn btn-outline-danger px-3 ms-auto"
+                                onclick="return confirm('Delete this config?')">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
                         </div>
 
+                    </form>
+
+                    <form id="graph-config-delete-form"
+                        method="POST"
+                        action="{{ route('test-graph-configs.destroy', $config->id) }}"
+                        class="d-none">
+                        @csrf
+                        @method('DELETE')
                     </form>
                 </div>
             </div>

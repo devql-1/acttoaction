@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Merchandise;
 use App\Models\Payment;
 use App\Models\WorkshopRegistration;
 use App\Models\WorkshopSchool;
@@ -21,75 +22,127 @@ class WorkshopRegistrationController extends Controller
         }
 
         $data = $request->validate([
-            'parent_name' => 'required|string|max:120',
-            'email' => 'required|email|max:150',
-            'phone' => 'required|string|max:20',
-            'whatsapp' => 'nullable|string|max:20',
-            'children' => 'required|array|min:1|max:5',
-            'children.*.student_name' => 'required|string|max:120',
-            'children.*.dob' => 'nullable|date|before:today',
-            'children.*.school_name' => 'nullable|string|max:150',
-            'children.*.experience' => 'nullable|in:none,beginner,intermediate,advanced',
-            'message' => 'nullable|string|max:1000',
+            'parent_name'               => 'required|string|max:120',
+            'email'                     => 'required|email|max:150',
+            'phone'    => ['required', 'string', 'max:15', function ($attr, $val, $fail) {
+                if (!preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('Phone must be a valid Indian 10-digit number.');
+                }
+            }],
+            'whatsapp' => ['nullable', 'string', 'max:15', function ($attr, $val, $fail) {
+                if (!empty($val) && !preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('WhatsApp must be a valid Indian 10-digit number.');
+                }
+            }],
+            'children'                  => 'required|array|min:1|max:5',
+            'children.*.student_name'   => 'required|string|max:120',
+            'children.*.dob'            => 'nullable|date|before:today',
+            'children.*.school_name'    => 'nullable|string|max:150',
+            'children.*.experience'     => 'nullable|in:none,beginner,intermediate,advanced',
+            'message'                   => 'nullable|string|max:1000',
+            'merchandise'               => 'nullable|array|max:20',
+            'merchandise.*.id'          => 'required_with:merchandise|integer|exists:merchandises,id',
+            'merchandise.*.qty'         => 'required_with:merchandise|integer|min:1|max:10',
         ]);
 
-        $amount = (float) $school->fees;
-        $childCount = count($data['children']);
-        $totalAmount = $amount * $childCount;
+        // ── Resolve merchandise items and compute subtotal ────────────────────
+        $merchandiseItems = [];
+        $merchandiseTotal = 0.0;
+
+        if (!empty($data['merchandise'])) {
+            $ids         = collect($data['merchandise'])->pluck('id')->unique();
+            $merchModels = Merchandise::whereIn('id', $ids)->where('status', true)->get()->keyBy('id');
+
+            foreach ($data['merchandise'] as $entry) {
+                $model = $merchModels->get($entry['id']);
+                if (!$model) continue;
+
+                $qty   = (int) $entry['qty'];
+                $price = (float) $model->price;
+
+                $merchandiseItems[] = [
+                    'id'    => $model->id,
+                    'name'  => $model->name,
+                    'price' => $price,
+                    'qty'   => $qty,
+                ];
+                $merchandiseTotal += $price * $qty;
+            }
+        }
+
+        $amount      = (float) $school->fees;
+        $childCount  = count($data['children']);
+        $totalAmount = ($amount * $childCount) + $merchandiseTotal;
 
         $registrations = [];
 
-        DB::transaction(function () use ($data, $school, $amount, &$registrations) {
+        DB::transaction(function () use ($data, $school, $amount, $merchandiseItems, $merchandiseTotal, &$registrations) {
             foreach ($data['children'] as $child) {
                 $registrations[] = WorkshopRegistration::create([
                     'workshop_school_id' => $school->id,
-                    'age_group_id' => $school->age_group_id,
-                    'city_id' => $school->city_id,
+                    'age_group_id'       => $school->age_group_id,
+                    'city_id'            => $school->city_id,
 
-                    'participant_name' => $data['parent_name'],
+                    'participant_name'  => $data['parent_name'],
                     'participant_email' => $data['email'],
                     'participant_phone' => $data['phone'],
-                    'parent_name' => $data['parent_name'],
-                    'parent_phone' => $data['phone'],
-                    'email' => $data['email'],
-                    'phone' => $data['phone'],
-                    'whatsapp' => $data['whatsapp'] ?? null,
+                    'parent_name'       => $data['parent_name'],
+                    'parent_phone'      => $data['phone'],
+                    'email'             => $data['email'],
+                    'phone'             => $data['phone'],
+                    'whatsapp'          => $data['whatsapp'] ?? null,
 
                     'student_name' => $child['student_name'],
-                    'dob' => $child['dob'] ?? null,
-                    'school_name' => $child['school_name'] ?? null,
-                    'experience' => $child['experience'] ?? null,
+                    'dob'          => $child['dob'] ?? null,
+                    'school_name'  => $child['school_name'] ?? null,
+                    'experience'   => $child['experience'] ?? null,
 
-                    'workshop_name' => $school->name,
-                    'city_name' => $school->city?->name,
+                    'workshop_name'  => $school->name,
+                    'city_name'      => $school->city?->name,
                     'age_group_name' => $school->ageGroup?->name,
 
-                    'amount' => $amount,
-                    'status' => 'pending',
-                    'message' => $data['message'] ?? null,
-                    'ip_address' => request()->ip(),
+                    'amount'             => $amount,
+                    'merchandise_items'  => !empty($merchandiseItems) ? $merchandiseItems : null,
+                    'merchandise_total'  => $merchandiseTotal,
+                    'status'             => 'pending',
+                    'message'            => $data['message'] ?? null,
+                    'ip_address'         => request()->ip(),
                 ]);
             }
         });
 
         // ── FREE WORKSHOP ─────────────────────────────────────────────────────
-        if ($amount == 0) {
+        if ($amount <= 0) {
             foreach ($registrations as $reg) {
                 $reg->update(['status' => 'confirmed']);
             }
 
-            // Send free confirmation email
             $this->sendConfirmationEmail(registrations: $registrations, totalAmount: 0, paymentId: 'FREE', isFree: true);
 
             return response()->json([
-                'is_free' => true,
+                'is_free'          => true,
                 'registration_ids' => collect($registrations)->pluck('id'),
-                'child_count' => $childCount,
-                'message' => $childCount > 1 ? "All {$childCount} children registered successfully!" : 'Registration confirmed!',
+                'child_count'      => $childCount,
+                'message'          => $childCount > 1 ? "All {$childCount} children registered successfully!" : 'Registration confirmed!',
             ]);
         }
 
-        return $this->createRazorpayOrder($registrations, $school, $totalAmount, $childCount);
+        // ── PAID WORKSHOP — create Razorpay order ────────────────────────────
+        // If Razorpay order creation fails, delete the pending registrations so
+        // the user doesn't end up with orphaned records they can never pay for.
+        try {
+            return $this->createRazorpayOrder($registrations, $school, $totalAmount, $childCount);
+        } catch (\Exception $e) {
+            $ids = collect($registrations)->pluck('id');
+            WorkshopRegistration::whereIn('id', $ids)->delete();
+
+            Log::error('Workshop Razorpay order creation failed', [
+                'school_id' => $school->id,
+                'error'     => $e->getMessage(),
+            ]);
+
+            return response()->json(['error' => 'Payment setup failed. Please try again.'], 500);
+        }
     }
 
     // ── CREATE RAZORPAY ORDER ─────────────────────────────────────────────────
@@ -131,74 +184,144 @@ class WorkshopRegistrationController extends Controller
     public function verifyPayment(Request $request, WorkshopRegistration $registration): JsonResponse
     {
         $request->validate([
-            'razorpay_order_id' => 'required|string',
+            'razorpay_order_id'  => 'required|string',
             'razorpay_payment_id' => 'required|string',
             'razorpay_signature' => 'required|string',
         ]);
 
-        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
-
-        // 1. Verify signature — throws on mismatch
-        $api->utility->verifyPaymentSignature([
-            'razorpay_order_id' => $request->razorpay_order_id,
-            'razorpay_payment_id' => $request->razorpay_payment_id,
-            'razorpay_signature' => $request->razorpay_signature,
-        ]);
-
-        // 2. Prevent duplicate processing
-        if (Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->exists()) {
-            return response()->json(['success' => true, 'message' => 'Payment already processed']);
+        // Fix 5: Validate that the registration in the URL actually owns this order.
+        // Prevents someone from using a random registration ID in the URL with a
+        // different user's payment.
+        if ($registration->razorpay_order_id !== $request->razorpay_order_id) {
+            return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
         }
 
-        // 3. Fetch payment method details from Razorpay
-        $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
-        // 4. Load all registrations tied to this order (one per child)
-        $registrations = WorkshopRegistration::where('razorpay_order_id', $request->razorpay_order_id)->where('status', 'pending')->get();
-
-        $confirmedCount = $registrations->count();
-        $totalAmount = $registrations->sum('amount'); // sum of all children's fees
-
-        // 5. DB transaction: confirm all registrations + save payment record
-        DB::transaction(function () use ($request, $rzpPayment, $registrations, $totalAmount) {
-            // Confirm every child registration under this order
-            WorkshopRegistration::where('razorpay_order_id', $request->razorpay_order_id)
-                ->where('status', 'pending')
-                ->update([
-                    'status' => 'confirmed',
-                    'razorpay_payment_id' => $request->razorpay_payment_id,
-                    'razorpay_signature' => $request->razorpay_signature,
-                ]);
-
-            // Save payment record — linked to the primary (first) registration
-            Payment::create([
-                'event_registration_id' => null, // not an event registration
-                'enrollment_id' => null,
-                'razorpay_order_id' => $request->razorpay_order_id,
+        // Fix 1: Wrap signature verification in a try-catch so a bad signature
+        // returns 422 + audit log instead of an unhandled 500.
+        try {
+            $api->utility->verifyPaymentSignature([
+                'razorpay_order_id'  => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
                 'razorpay_signature' => $request->razorpay_signature,
-                'amount' => $totalAmount,
-                'currency' => 'INR',
-                'status' => 'success',
-                'transaction_type' => $rzpPayment->method,
-                'type' => 'workshop_registration',
-                'paid_at' => now(),
-                'contact' => $rzpPayment->contact ?? null,
-                'email' => $rzpPayment->email ?? null,
             ]);
-        });
+        } catch (\Razorpay\Api\Errors\SignatureVerificationError $e) {
+            Log::warning('Workshop payment signature mismatch', [
+                'order_id'   => $request->razorpay_order_id,
+                'payment_id' => $request->razorpay_payment_id,
+                'ip'         => $request->ip(),
+            ]);
+            return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
+        }
 
-        // 6. Reload confirmed registrations for email (fresh after update)
-        $confirmedRegistrations = WorkshopRegistration::where('razorpay_order_id', $request->razorpay_order_id)->get();
+        try {
+            // Fix 2: Fetch authoritative payment details from Razorpay BEFORE the
+            // transaction so we can verify the amount without holding DB locks during
+            // a network call.
+            $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
 
-        // 7. Send confirmation email
-        $this->sendConfirmationEmail(registrations: $confirmedRegistrations->all(), totalAmount: $totalAmount, paymentId: $request->razorpay_payment_id, isFree: false);
+            $alreadyProcessed = false;
+            $confirmedCount   = 0;
+            $totalAmount      = 0.0;
 
-        return response()->json([
-            'success' => true,
-            'child_count' => $confirmedCount,
-            'message' => $confirmedCount > 1 ? "Payment confirmed! All {$confirmedCount} children registered." : 'Payment verified. Registration confirmed!',
-        ]);
+            // Fix 3: Move idempotency check + all DB writes into one transaction
+            // with row-level locks to eliminate the TOCTOU race condition.
+            DB::transaction(function () use ($request, $rzpPayment, &$alreadyProcessed, &$confirmedCount, &$totalAmount) {
+
+                // Idempotency check INSIDE the lock — prevents two concurrent
+                // requests both slipping past the check and double-confirming.
+                if (Payment::where('razorpay_payment_id', $request->razorpay_payment_id)
+                    ->lockForUpdate()->exists()) {
+                    $alreadyProcessed = true;
+                    return;
+                }
+
+                // Lock all pending registrations for this order atomically.
+                $registrations = WorkshopRegistration::where('razorpay_order_id', $request->razorpay_order_id)
+                    ->where('status', 'pending')
+                    ->lockForUpdate()
+                    ->get();
+
+                // If none are pending the order was already confirmed.
+                if ($registrations->isEmpty()) {
+                    $alreadyProcessed = true;
+                    return;
+                }
+
+                $totalAmount = (float) $registrations->sum('amount');
+
+                // Fix 2: Verify the amount Razorpay actually charged matches the
+                // sum of the registration fees stored in the DB.
+                // Prevents a user paying ₹1 to confirm a ₹5000 registration.
+                $expectedPaise = (int) round($totalAmount * 100);
+                $receivedPaise = (int) $rzpPayment->amount;
+
+                if ($receivedPaise !== $expectedPaise) {
+                    throw new \Exception(
+                        "Amount mismatch: expected {$expectedPaise} paise, received {$receivedPaise} paise."
+                    );
+                }
+
+                // Confirm every child registration under this order.
+                WorkshopRegistration::where('razorpay_order_id', $request->razorpay_order_id)
+                    ->where('status', 'pending')
+                    ->update([
+                        'status'               => 'confirmed',
+                        'razorpay_payment_id'  => $request->razorpay_payment_id,
+                        'razorpay_signature'   => $request->razorpay_signature,
+                    ]);
+
+                // Save payment record — use the authoritative amount from Razorpay.
+                Payment::create([
+                    'event_registration_id' => null,
+                    'enrollment_id'         => null,
+                    'razorpay_order_id'     => $request->razorpay_order_id,
+                    'razorpay_payment_id'   => $request->razorpay_payment_id,
+                    'razorpay_signature'    => $request->razorpay_signature,
+                    'amount'                => $rzpPayment->amount / 100, // authoritative from Razorpay
+                    'currency'              => 'INR',
+                    'status'                => 'success',
+                    'transaction_type'      => $rzpPayment->method,
+                    'type'                  => 'workshop_registration',
+                    'paid_at'               => now(),
+                    'contact'               => $rzpPayment->contact ?? null,
+                    'email'                 => $rzpPayment->email ?? null,
+                ]);
+
+                $confirmedCount = $registrations->count();
+            });
+
+            if ($alreadyProcessed) {
+                return response()->json(['success' => true, 'message' => 'Payment already processed']);
+            }
+
+            // Reload confirmed registrations for the email (fresh state after update).
+            $confirmedRegistrations = WorkshopRegistration::where('razorpay_order_id', $request->razorpay_order_id)->get();
+
+            $this->sendConfirmationEmail(
+                registrations: $confirmedRegistrations->all(),
+                totalAmount:   $totalAmount,
+                paymentId:     $request->razorpay_payment_id,
+                isFree:        false,
+            );
+
+            return response()->json([
+                'success'     => true,
+                'child_count' => $confirmedCount,
+                'message'     => $confirmedCount > 1
+                    ? "Payment confirmed! All {$confirmedCount} children registered."
+                    : 'Payment verified. Registration confirmed!',
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Workshop payment verification error', [
+                'order_id'   => $request->razorpay_order_id,
+                'payment_id' => $request->razorpay_payment_id,
+                'error'      => $e->getMessage(),
+            ]);
+            return response()->json(['success' => false, 'message' => 'Payment verification failed'], 500);
+        }
     }
 
     // ── SEND CONFIRMATION EMAIL ───────────────────────────────────────────────
@@ -285,19 +408,61 @@ class WorkshopRegistrationController extends Controller
             </table>';
         }
 
+        // ── Build merchandise section HTML ────────────────────────────────────
+        $merchandiseHtml = '';
+        $merchandiseItems = $first->merchandise_items ?? [];
+        $merchandiseTotal = (float) $first->merchandise_total;
+
+        if (!empty($merchandiseItems) && $merchandiseTotal > 0) {
+            $rows = '';
+            foreach ($merchandiseItems as $item) {
+                $itemTotal = number_format((float)$item['price'] * (int)$item['qty'], 2);
+                $rows .= '<tr>
+                    <td style="padding:8px 12px;font-size:13px;color:#374151;border-bottom:1px solid #f3f4f6;">' . htmlspecialchars($item['name']) . '</td>
+                    <td style="padding:8px 12px;font-size:13px;color:#374151;border-bottom:1px solid #f3f4f6;text-align:center;">' . (int)$item['qty'] . '</td>
+                    <td style="padding:8px 12px;font-size:13px;color:#374151;border-bottom:1px solid #f3f4f6;text-align:right;">₹' . number_format((float)$item['price'], 2) . '</td>
+                    <td style="padding:8px 12px;font-size:13px;font-weight:600;color:#111827;border-bottom:1px solid #f3f4f6;text-align:right;">₹' . $itemTotal . '</td>
+                </tr>';
+            }
+
+            $merchandiseHtml = '
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #e0f2fe;border-radius:8px;background:#f0f9ff;margin-top:16px;">
+              <tr>
+                <td colspan="4" style="padding:10px 12px;background:#0ea5e9;border-radius:7px 7px 0 0;">
+                  <span style="font-size:13px;font-weight:700;color:#fff;letter-spacing:0.3px;">🛍️ Merchandise Ordered</span>
+                </td>
+              </tr>
+              <tr style="background:#e0f2fe;">
+                <th style="padding:8px 12px;font-size:12px;color:#0369a1;text-align:left;font-weight:600;">Item</th>
+                <th style="padding:8px 12px;font-size:12px;color:#0369a1;text-align:center;font-weight:600;">Qty</th>
+                <th style="padding:8px 12px;font-size:12px;color:#0369a1;text-align:right;font-weight:600;">Price</th>
+                <th style="padding:8px 12px;font-size:12px;color:#0369a1;text-align:right;font-weight:600;">Total</th>
+              </tr>
+              ' . $rows . '
+              <tr>
+                <td colspan="3" style="padding:10px 12px;font-size:13px;font-weight:700;color:#111827;text-align:right;">Merchandise Total:</td>
+                <td style="padding:10px 12px;font-size:14px;font-weight:700;color:#0ea5e9;text-align:right;">₹' . number_format($merchandiseTotal, 2) . '</td>
+              </tr>
+            </table>';
+        }
+
         // ── Build [key] => value placeholders ────────────────────────────────
+        $workshopFees  = $totalAmount - $merchandiseTotal;
         $placeholders = [
-            'parent_name' => $first->parent_name ?? 'Parent',
-            'registration_id' => $first->id,
-            'workshop_name' => $first->workshop_name ?? 'Workshop',
-            'age_group_name' => $first->age_group_name ?? '',
-            'city_name' => $first->city_name ?? '',
-            'phone' => $first->phone ?? '',
-            'child_count' => $childCount,
-            'amount_paid' => $isFree ? 'Free' : '₹' . number_format($totalAmount, 2),
-            'payment_id' => $isFree ? 'N/A (Free Workshop)' : $paymentId,
+            'parent_name'          => $first->parent_name ?? 'Parent',
+            'registration_id'      => $first->id,
+            'workshop_name'        => $first->workshop_name ?? 'Workshop',
+            'age_group_name'       => $first->age_group_name ?? '',
+            'city_name'            => $first->city_name ?? '',
+            'phone'                => $first->phone ?? '',
+            'child_count'          => $childCount,
+            'workshop_fees'        => $isFree ? 'Free' : '₹' . number_format($workshopFees, 2),
+            'merchandise_total'    => $merchandiseTotal > 0 ? '₹' . number_format($merchandiseTotal, 2) : '—',
+            'amount_paid'          => $isFree ? 'Free' : '₹' . number_format($totalAmount, 2),
+            'payment_id'           => $isFree ? 'N/A (Free Workshop)' : $paymentId,
             'payment_status_label' => $isFree ? 'Registration Free' : 'Payment Successful',
-            'child_cards' => $childCardsHtml,
+            'child_cards'          => $childCardsHtml,
+            'merchandise_section'  => $merchandiseHtml,
         ];
 
         try {

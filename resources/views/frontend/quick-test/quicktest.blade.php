@@ -59,7 +59,7 @@
         /* ─── HERO ─── */
         .hero-tests {
             background: var(--background-color);
-            padding: 114px 0 48px;
+            padding: 25px 0 48px;
             border-bottom: 2px solid #eef3fb;
         }
 
@@ -1444,6 +1444,7 @@
                 gap: 10px;
             }
         }
+
     </style>
     <main class="main">
         <div class="page-title"></div>
@@ -1638,7 +1639,7 @@
 
                                     <div class="test-card-footer">
                                         <span class="badge-free">Free</span>
-                                        <a href="{{ route('quicktest.take', $test->id) }}" class="take-test-btn">
+                                        <a href="{{ route('quicktest.take', $test->slug) }}" class="take-test-btn">
                                             Take Test <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>
@@ -2267,13 +2268,13 @@
         {{-- ── NEWSLETTER ── --}}
         <section class="newsletter-section">
             <div class="container">
-                <div class="newsletter-box">
+                <div class="newsletter-box" data-newsletter data-source="quicktest">
                     <h3>Get Our Newsletter</h3>
                     <p>Monthly tips on child acting, personality development, casting opportunities, and event updates —
                         straight to your inbox.</p>
                     <div class="newsletter-form">
-                        <input type="email" placeholder="Enter your email address..." />
-                        <button class="btn-primary-solid" type="button">
+                        <input type="email" class="newsletter-email-input" placeholder="Enter your email address..." />
+                        <button type="button" class="btn-primary-solid newsletter-subscribe-btn">
                             <i class="bi bi-send-fill"></i> Subscribe
                         </button>
                     </div>

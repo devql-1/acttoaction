@@ -59,6 +59,7 @@
             background: #f4f8ff;
             border-bottom: 1px solid #e4ecf8;
             padding: 11px 0;
+            margin-top: 185px;
             font-size: 13px;
             color: #6b7280;
         }
@@ -1114,7 +1115,7 @@
                                                             <div class="{{ $subDot }}"></div>{{ $subStatus }}
                                                         </div>
                                                         @if ($subDot !== 'dot-closed')
-                                                            <a href="{{ route('frontend.events.register', $sub->id) }}"
+                                                            <a href="{{ route('frontend.events.register', $sub->slug) }}"
                                                                 class="btn-register">
                                                                 Register <i class="bi bi-arrow-right"></i>
                                                             </a>
@@ -1347,7 +1348,7 @@
                                                 <i class="bi bi-collection-fill"></i>{{ $oCount }}
                                                 session{{ $oCount != 1 ? 's' : '' }}
                                             </div>
-                                            <a href="{{ route('frontend.events.subevent', $other->id) }}"
+                                            <a href="{{ route('frontend.events.subevent', $other->slug) }}"
                                                 class="oe-link">
                                                 View <i class="bi bi-arrow-right"></i>
                                             </a>

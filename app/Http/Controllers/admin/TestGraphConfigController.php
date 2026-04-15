@@ -12,15 +12,17 @@ class TestGraphConfigController extends Controller
     public function index()
     {
         $tests = PsychTest::with('graphConfig')->latest()->paginate(15);
+
         return view('backend.test_graph_configs.index', compact('tests'));
     }
 
     /** Show create form for a specific test */
-    public function create()
+    public function create(Request $request)
     {
-
         $tests = PsychTest::whereDoesntHave('graphConfig')->latest()->get();
-        return view('backend.test_graph_configs.create', compact('tests'));
+        $selectedTestId = $request->integer('test_id');
+
+        return view('backend.test_graph_configs.create', compact('tests', 'selectedTestId'));
     }
 
     /** Store new graph config */
@@ -34,6 +36,7 @@ class TestGraphConfigController extends Controller
         TestGraphConfig::create([
             'test_id' => $request->test_id,
             'graph_type' => $request->graph_type,
+            'is_active' => $request->boolean('is_active'),
         ]);
 
         return redirect()->route('test-graph-configs.index')
@@ -59,7 +62,7 @@ class TestGraphConfigController extends Controller
 
         $config->update([
             'graph_type' => $request->graph_type,
-            'is_active' => $request->boolean('is_active', true),
+            'is_active' => $request->boolean('is_active'),
         ]);
 
         return redirect()->route('test-graph-configs.index')

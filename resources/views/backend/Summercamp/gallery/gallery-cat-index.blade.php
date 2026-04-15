@@ -105,6 +105,6 @@ function confirmDelete(id, name) {
         showCancelButton:true, confirmButtonColor:'#d33', cancelButtonColor:'#6c757d', confirmButtonText:'Yes, delete!'
     }).then(r => { if(r.isConfirmed) document.getElementById(`del-cat-${id}`).submit(); });
 }
-@if(session('success')) Swal.fire({ icon:'success', title:'Success!', text:'{{ session('success') }}', timer:2500, showConfirmButton:false }); @endif
+
 </script>
 @endsection

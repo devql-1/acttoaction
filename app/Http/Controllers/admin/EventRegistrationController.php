@@ -18,9 +18,10 @@ use Razorpay\Api\Api;
 class EventRegistrationController extends Controller
 {
     // ── SHOW ──────────────────────────────────────────────────────────────────
-    public function show($sub_event_id)
+    public function show(SubEvent $subEvent)
     {
-        $sub = SubEvent::with(['event', 'centersWithState.state'])->findOrFail($sub_event_id);
+        $subEvent->load(['event', 'centersWithState.state']);
+        $sub = $subEvent;
 
         $booked = EventRegistration::where('sub_event_id', $sub->id)
             ->whereIn('status', ['pending', 'confirmed'])
@@ -34,9 +35,10 @@ class EventRegistrationController extends Controller
     }
 
     // ── STORE ─────────────────────────────────────────────────────────────────
-    public function store(Request $request, $sub_event_id)
+    public function store(Request $request, SubEvent $subEvent)
     {
-        $sub = SubEvent::with('event')->findOrFail($sub_event_id);
+        $subEvent->load('event');
+        $sub = $subEvent;
         $ticketCount = (int) $request->input('tickets', 1);
         $primaryIdx = (int) $request->input('primary_ticket', 0);
 
@@ -52,10 +54,18 @@ class EventRegistrationController extends Controller
             'center_id' => 'nullable|exists:centers,id',
             'attendees' => 'required|array|min:1',
             'attendees.*.name' => 'required|string|min:2|max:100',
-            'attendees.*.phone' => 'nullable|digits_between:10,13',
+            'attendees.*.phone' => ['nullable', 'string', 'max:15', function ($attr, $val, $fail) {
+                if (!empty($val) && !preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('Phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
+                }
+            }],
         ];
 
-        $rules["attendees.{$primaryIdx}.phone"] = 'required|digits_between:10,13';
+        $rules["attendees.{$primaryIdx}.phone"] = ['required', 'string', 'max:15', function ($attr, $val, $fail) {
+            if (!preg_match('/^\+91\d{10}$/', $val)) {
+                $fail('Primary contact phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
+            }
+        }];
         $rules["attendees.{$primaryIdx}.email"] = 'required|email|max:150';
         $rules["attendees.{$primaryIdx}.dob"] = 'nullable|date|before:today';
         $rules["attendees.{$primaryIdx}.gender"] = 'nullable|in:male,female,other,prefer_not_to_say';
@@ -63,8 +73,6 @@ class EventRegistrationController extends Controller
 
         $messages = [
             'attendees.*.name.required' => 'Name is required for every attendee.',
-            'attendees.*.phone.digits_between' => 'Phone must be 10–13 digits.',
-            "attendees.{$primaryIdx}.phone.required" => 'Primary contact phone is required.',
             "attendees.{$primaryIdx}.email.required" => 'Primary contact email is required.',
             "attendees.{$primaryIdx}.email.email" => 'Please enter a valid email address.',
             "attendees.{$primaryIdx}.dob.before" => 'Date of birth must be in the past.',
@@ -151,10 +159,14 @@ class EventRegistrationController extends Controller
     // ── ADMIN INDEX ───────────────────────────────────────────────────────────
     public function adminIndex(Request $request)
     {
-        $query = EventRegistration::with(['event', 'subEvent', 'attendees', 'center'])->latest();
+        $query = EventRegistration::with(['event', 'subEvent', 'primary', 'center'])->latest();
 
         if ($request->filled('event_id')) {
             $query->where('event_id', $request->event_id);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
         }
 
         if ($request->filled('search')) {
@@ -171,8 +183,16 @@ class EventRegistrationController extends Controller
         }
 
         $registrations = $query->paginate(20);
-        $events = Event::orderBy('title')->get();
-        return view('backend.registrations.registrations-index', compact('registrations', 'events'));
+        $events        = Event::orderBy('title')->get();
+
+        $stats = [
+            'total'     => EventRegistration::count(),
+            'confirmed' => EventRegistration::where('status', 'confirmed')->count(),
+            'pending'   => EventRegistration::where('status', 'pending')->count(),
+            'cancelled' => EventRegistration::where('status', 'cancelled')->count(),
+        ];
+
+        return view('backend.registrations.registrations-index', compact('registrations', 'events', 'stats'));
     }
 
     // ── ADMIN SHOW ────────────────────────────────────────────────────────────
@@ -181,6 +201,87 @@ class EventRegistrationController extends Controller
         $registration = EventRegistration::with(['event', 'subEvent', 'attendees', 'center.state'])->findOrFail($id);
 
         return view('backend.registrations.show', compact('registration'));
+    }
+
+    // ── EXPORT CSV ────────────────────────────────────────────────────────────
+    public function export(Request $request)
+    {
+        // If a single record is requested
+        if ($request->filled('reg_id')) {
+            $registrations = EventRegistration::with(['event', 'subEvent', 'primary', 'center'])
+                ->where('id', $request->reg_id)
+                ->get();
+        } else {
+            $query = EventRegistration::with(['event', 'subEvent', 'primary', 'center'])->latest();
+
+            if ($request->filled('event_id')) {
+                $query->where('event_id', $request->event_id);
+            }
+            if ($request->filled('status')) {
+                $query->where('status', $request->status);
+            }
+            if ($request->filled('search')) {
+                $search = substr(trim($request->search), 0, 100);
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('attendees', fn($a) => $a
+                        ->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('phone', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%')
+                    )->orWhere('registration_number', 'like', '%' . $search . '%');
+                });
+            }
+
+            $registrations = $query->get();
+        }
+
+        $filename = 'event_registrations_' . now()->format('Y-m-d_H-i-s') . '.csv';
+
+        $headers = [
+            'Content-Type'        => 'text/csv; charset=utf-8',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function () use ($registrations) {
+            $file = fopen('php://output', 'w');
+
+            // UTF-8 BOM so Excel opens it correctly
+            fputs($file, "\xEF\xBB\xBF");
+
+            fputcsv($file, [
+                'Registration #', 'Status', 'Event', 'Session',
+                'Primary Name', 'Primary Phone', 'Primary Email',
+                'Gender', 'DOB', 'Institution',
+                'Total Tickets', 'Amount (₹)',
+                'City', 'State', 'Center',
+                'Registered At',
+            ]);
+
+            foreach ($registrations as $reg) {
+                $p = $reg->primary;
+                fputcsv($file, [
+                    $reg->registration_number,
+                    ucfirst($reg->status),
+                    optional($reg->event)->title ?? '',
+                    optional($reg->subEvent)->title ?? '',
+                    $p?->name ?? '',
+                    $p?->phone ?? '',
+                    $p?->email ?? '',
+                    $p?->gender ? ucfirst(str_replace('_', ' ', $p->gender)) : '',
+                    $p?->dob ? $p->dob->format('d M Y') : '',
+                    $p?->institution ?? '',
+                    $reg->tickets,
+                    $reg->total_amount,
+                    $reg->city ?? '',
+                    $reg->state ?? '',
+                    optional($reg->center)->name ?? '',
+                    $reg->created_at->format('d M Y h:i A'),
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     // ── ADMIN UPDATE STATUS ───────────────────────────────────────────────────
@@ -193,12 +294,12 @@ class EventRegistrationController extends Controller
     }
 
     // ── CREATE RAZORPAY ORDER ─────────────────────────────────────────────────
-    public function createOrder(Request $request, $sub_event_id)
+    public function createOrder(Request $request, SubEvent $subEvent)
     {
         $request->validate(['tickets' => 'required|integer|min:1|max:10']);
 
         $tickets = (int) $request->tickets;
-        $sub = SubEvent::findOrFail($sub_event_id);
+        $sub = $subEvent;
 
         if ($sub->fees == 0) {
             return response()->json(['error' => 'This event is free.'], 400);
@@ -241,50 +342,92 @@ class EventRegistrationController extends Controller
     // ── VERIFY PAYMENT ────────────────────────────────────────────────────────
     public function verifyPayment(Request $request, $registration_id)
     {
-        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
-
-        // 1. Verify Razorpay signature — throws SignatureVerificationError on mismatch
-        $api->utility->verifyPaymentSignature([
-            'razorpay_order_id' => $request->razorpay_order_id,
-            'razorpay_payment_id' => $request->razorpay_payment_id,
-            'razorpay_signature' => $request->razorpay_signature,
+        $request->validate([
+            'razorpay_order_id'   => 'required|string',
+            'razorpay_payment_id' => 'required|string',
+            'razorpay_signature'  => 'required|string',
         ]);
 
-        // 2. Prevent duplicate payment processing
-        if (Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->exists()) {
-            return response()->json(['success' => true, 'message' => 'Payment already processed']);
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+
+        // 1. Verify signature FIRST — wrapped in try-catch so a bad sig returns 422,
+        //    not an unhandled 500, and no info leaks before verification.
+        try {
+            $api->utility->verifyPaymentSignature([
+                'razorpay_order_id'   => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'razorpay_signature'  => $request->razorpay_signature,
+            ]);
+        } catch (\Razorpay\Api\Errors\SignatureVerificationError $e) {
+            Log::warning('Event payment signature mismatch', [
+                'order_id'   => $request->razorpay_order_id,
+                'payment_id' => $request->razorpay_payment_id,
+                'ip'         => $request->ip(),
+            ]);
+            return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
         }
 
-        // 3. Fetch payment method details from Razorpay
+        // 2. Fetch authoritative payment details from Razorpay BEFORE acquiring DB locks
+        //    (avoids holding a lock during a network call).
         $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
 
-        // 4. Load registration with all relationships needed for email
-        $registration = EventRegistration::with(['event', 'subEvent', 'attendees', 'center.state'])->findOrFail($registration_id);
+        // 3. Load registration with all relationships needed for the email.
+        $registration = EventRegistration::with(['event', 'subEvent', 'attendees', 'center.state'])
+            ->findOrFail($registration_id);
 
-        // 5. DB transaction: confirm registration & record payment
-        DB::transaction(function () use ($request, $registration_id, $rzpPayment, $registration) {
+        $alreadyProcessed = false;
+
+        // 4. Atomic transaction with row-level locking — eliminates the TOCTOU
+        //    race condition that allowed double-payment processing.
+        DB::transaction(function () use ($request, $rzpPayment, $registration, &$alreadyProcessed) {
+            // Idempotency check INSIDE the lock — both concurrent requests can no
+            // longer both pass before either inserts the Payment row.
+            if (Payment::where('razorpay_payment_id', $request->razorpay_payment_id)
+                ->lockForUpdate()->exists()) {
+                $alreadyProcessed = true;
+                return;
+            }
+
+            // Lock the registration row for the duration of this transaction.
+            $registration = EventRegistration::lockForUpdate()->findOrFail($registration->id);
+
+            // 4a. Verify the amount Razorpay actually charged matches the DB fee.
+            //     Prevents a user paying ₹1 to confirm a ₹5000 registration.
+            $expectedPaise = (int) round($registration->total_amount * 100);
+            $receivedPaise = (int) $rzpPayment->amount;
+            if ($receivedPaise !== $expectedPaise) {
+                throw new \Exception(
+                    "Amount mismatch: expected {$expectedPaise} paise, received {$receivedPaise} paise."
+                );
+            }
+
             if ($registration->status !== 'confirmed') {
                 $registration->update(['status' => 'confirmed']);
             }
 
-            Payment::create([
-                'event_registration_id' => $registration_id,
-                'enrollment_id' => null,
-                'razorpay_order_id' => $request->razorpay_order_id,
-                'razorpay_payment_id' => $request->razorpay_payment_id,
-                'razorpay_signature' => $request->razorpay_signature,
-                'amount' => session('rzp_amount') / 100,
-                'currency' => 'INR',
-                'status' => 'success',
-                'transaction_type' => $rzpPayment->method,
-                'type' => 'event_registration',
-                'paid_at' => now(),
-                'contact' => $rzpPayment->contact ?? null,
-                'email' => $rzpPayment->email ?? null,
-            ]);
+            // Use direct property assignment — 'status' is not in $fillable
+            // to prevent mass-assignment bypassing payment verification.
+            $payment = new Payment();
+            $payment->enrollment_id       = null;
+            $payment->razorpay_order_id   = $request->razorpay_order_id;
+            $payment->razorpay_payment_id = $request->razorpay_payment_id;
+            $payment->razorpay_signature  = $request->razorpay_signature;
+            $payment->amount              = $rzpPayment->amount / 100; // authoritative from Razorpay, not session
+            $payment->currency            = 'INR';
+            $payment->status              = 'success';
+            $payment->transaction_type    = $rzpPayment->method;
+            $payment->type                = 'event_registration';
+            $payment->paid_at             = now();
+            $payment->contact             = $rzpPayment->contact ?? null;
+            $payment->email               = $rzpPayment->email ?? null;
+            $payment->save();
         });
 
-        // 6. Refresh so updated status is reflected
+        if ($alreadyProcessed) {
+            return response()->json(['success' => true, 'message' => 'Payment already processed']);
+        }
+
+        // 5. Refresh so updated status is reflected
         $registration->refresh();
 
         // 7. Resolve primary attendee

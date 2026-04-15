@@ -288,15 +288,11 @@ toastr.options = {
 
 
 // SUCCESS MESSAGE
-@if(session('success'))
-toastr.success("{{ session('success') }}"); 
-@endif
+
 
 
 // ERROR MESSAGE
-@if(session('error'))
-toastr.error("{{ session('error') }}");
-@endif
+
 
 
 

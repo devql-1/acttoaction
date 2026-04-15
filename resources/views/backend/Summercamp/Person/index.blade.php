@@ -191,23 +191,28 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // ── Section filter tabs ──────────────────────────────────
+        function applySection(section) {
+            document.querySelectorAll('#sectionTabs .nav-link').forEach(t => t.classList.remove('active'));
+            const activeTab = document.querySelector(`#sectionTabs .nav-link[data-section="${section}"]`);
+            if (activeTab) activeTab.classList.add('active');
+
+            document.querySelectorAll('tbody tr[data-section]').forEach(row => {
+                row.style.display = (section === 'all' || row.dataset.section === section) ? '' : 'none';
+            });
+        }
+
         document.querySelectorAll('#sectionTabs .nav-link').forEach(tab => {
             tab.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelectorAll('#sectionTabs .nav-link').forEach(t => t.classList.remove(
-                    'active'));
-                this.classList.add('active');
-
-                const section = this.dataset.section;
-                document.querySelectorAll('tbody tr[data-section]').forEach(row => {
-                    if (section === 'all' || row.dataset.section === section) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
+                applySection(this.dataset.section);
             });
         });
+
+        // Auto-activate section from URL ?section= parameter
+        const urlSection = new URLSearchParams(window.location.search).get('section');
+        if (urlSection) {
+            applySection(urlSection);
+        }
 
         // ── Delete confirm ───────────────────────────────────────
         function confirmDelete(id, name) {
@@ -227,21 +232,7 @@
             });
         }
 
-        @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '{{ session('success') }}',
-                timer: 2500,
-                showConfirmButton: false
-            });
-        @endif
-        @if (session('error'))
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: '{{ session('error') }}'
-            });
-        @endif
+        
+        
     </script>
 @endsection

@@ -134,12 +134,7 @@
                             </form>
                         </div>
 
-                        @if (session('success'))
-                            <div class="mx-3 mt-3 alert alert-success alert-dismissible fade show">
-                                <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        @endif
+                        
 
                         <div class="card-body p-0">
                             <div class="table-responsive">
@@ -371,16 +366,6 @@
             });
         }
 
-        @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Done!',
-                text: '{{ session('success') }}',
-                timer: 2500,
-                showConfirmButton: false,
-                toast: true,
-                position: 'top-end',
-            });
-        @endif
+        
     </script>
 @endsection

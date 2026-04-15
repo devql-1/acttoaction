@@ -33,7 +33,7 @@
         .hero-content {
             position: relative;
             z-index: 2;
-            padding: 100px 0 80px;
+            padding: 195px 0 80px;
         }
 
         .hero-eyebrow {
@@ -2127,7 +2127,7 @@
                                 strtoupper(substr($category->name, 0, 3));
                         @endphp
 
-                        <a href="{{ route('course.show', $category->id) }}" class="cat-card">
+                        <a href="{{ route('course.show', $category->slug) }}" class="cat-card">
                             <div class="card-img">
                                 @if ($firstCourse && $firstCourse->banner_image)
                                     <img src="{{ asset($firstCourse->banner_image) }}" alt="{{ $category->name }}" />

@@ -56,7 +56,7 @@
             top: 8px;
             right: -34px;
 
-            background: linear-gradient(45deg, #ff3b3b, #ff0000);
+            background: #e00000;
             color: #fff;
 
             font-size: 11px;
@@ -69,23 +69,15 @@
             text-transform: uppercase;
 
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-
-            animation: glow 1.5s infinite alternate;
-
             white-space: nowrap;
-            /* prevent breaking */
         }
 
         @media (max-width: 600px) {
             .badge-free {
                 top: 6px;
                 right: -26px;
-
                 font-size: 9px;
                 padding: 3px 20px;
-
-                transform: rotate(45deg);
             }
         }
 
@@ -95,34 +87,6 @@
                 right: -29px;
                 font-size: 7px;
                 padding: 2px 14px;
-            }
-        }
-
-        .badge-free::before,
-        .badge-free::after {
-            content: "";
-            position: absolute;
-            bottom: -6px;
-            border-top: 6px solid #b30000;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-        }
-
-        .badge-free::before {
-            left: 0;
-        }
-
-        .badge-free::after {
-            right: 0;
-        }
-
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-            }
-
-            to {
-                box-shadow: 0 0 12px rgba(255, 0, 0, 0.9);
             }
         }
 
@@ -733,60 +697,6 @@
             }
         }
 
-        .ann-bar {
-            background: #0e1c38;
-            height: var(--ann-h);
-            display: flex;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1002;
-            font-family: var(--ff-nav);
-            font-size: 11.5px;
-            border-bottom: 1px solid rgba(255, 106, 0, .25);
-            transition: height .3s, opacity .3s;
-        }
-
-        .ann-bar.hidden {
-            height: 0;
-            opacity: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .ann-bar .inner {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            gap: 12px;
-            position: relative;
-            padding: 0 40px;
-        }
-
-        .ann-bar .dot {
-            width: 6px;
-            height: 6px;
-            background: #ff6a00;
-            border-radius: 50%;
-            flex-shrink: 0;
-            animation: dotPulse 1.8s infinite;
-        }
-
-        @keyframes dotPulse {
-
-            0%,
-            100% {
-                opacity: 1
-            }
-
-            50% {
-                opacity: .25
-            }
-        }
-
         /* ===== ANNOUNCEMENT BAR (Below Header) ===== */
         .ann-bar {
             background: #0e1c38;
@@ -985,19 +895,11 @@
 
 <body>
 
-    <div class="ann-bar" id="annBar">
-        <div class="ann-inner">
-            <span class="ann-dot"></span>
-            <span class="ann-msg">🎭 &nbsp;<strong>Summer Camp 2026</strong> — Jaipur's Biggest Performing Arts Camp is
-                Coming! &nbsp;|&nbsp; Drama · Dance · Music · Storytelling</span>
-            <a href="{{ route('event') }}" class="ann-cta">Register Interest</a>
-            <button class="ann-close" id="annClose" title="Close"><i class="fas fa-times"></i></button>
-        </div>
-    </div>
+    @include('frontend.partialspages.ann_bar')
     <!-- HEADER -->
     <header class="topbar">
         <div class="logo">
-            <img src="{{ asset('img/logo/IMG_6008.PNG') }}" alt="ActToAction Logo">
+            <img src="{{ asset('img/logo/logo.PNG') }}" alt="ActToAction Logo">
         </div>
     </header>
 
@@ -1011,8 +913,6 @@
         </div>
     </section>
 
-    <!-- DEAL POPUP -->
-    <span class="bell-badge">5</span>
     <!-- MAIN ACTION SECTION -->
     <section class="container">
         <div class="action add">
@@ -1023,8 +923,8 @@
         </div>
 
         <div class="action send">
-            <span class="badge-free">FREE*</span>
-            <a href="{{ route('frontend.tests') }}" class="action-link">
+            <span class="badge-free">FREE</span>
+            <a href="{{ route('quiz-test') }}" class="action-link">
                 <div class="icon"><i class="fas fa-file-alt"></i></div>
                 <h1>Skill Assessment</h1>
             </a>
@@ -1060,7 +960,6 @@
             <span id="hb1"></span>
             <span id="hb2"></span>
             <span id="hb3"></span>
-            <span id="hb4"></span>
         </div>
         Menu
     </button>
@@ -1079,20 +978,6 @@
     <div class="support">
         <button class="pill-btn">&#128172; Support</button>
     </div>
-    <script>
-        // Simple Announcement Bar Close (Current Tab Only - No Storage)
-        document.addEventListener('DOMContentLoaded', function() {
-            const annBar = document.getElementById('annBar');
-            const annCloseBtn = document.getElementById('annClose');
-
-            if (!annBar || !annCloseBtn) return;
-
-            annCloseBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                annBar.classList.add('hidden'); // Closes only for current tab
-            });
-        });
-    </script>
     <script>
         function toggleMenu() {
             var menu = document.getElementById('mobileMenu');

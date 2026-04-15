@@ -11,13 +11,15 @@ return new class extends Migration {
     // database/migrations/create_galleries_table.php
     public function up()
     {
-        Schema::create('galleries', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('gallery_category_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->string('image'); // stored path
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('galleries')) {
+            Schema::create('galleries', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('gallery_category_id')->constrained()->onDelete('cascade');
+                $table->string('title');
+                $table->string('image'); // stored path
+                $table->timestamps();
+            });
+        }
     }
     /**
      * Reverse the migrations.

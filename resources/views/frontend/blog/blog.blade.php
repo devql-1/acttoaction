@@ -165,7 +165,7 @@
         /* ===================== BLOG HERO ===================== */
         .blog-hero {
             background: linear-gradient(135deg, var(--heading-color) 0%, color-mix(in srgb, var(--accent-color), #112344 40%) 100%);
-            padding: 90px 0 0;
+            padding: 145px 0 0;
             position: relative;
             overflow: hidden;
         }
@@ -1288,7 +1288,7 @@
         /* ===================== RESPONSIVE UTILITIES ===================== */
         @media (max-width: 768px) {
             .blog-hero {
-                padding-top: 70px;
+                padding-top: 145px;
             }
 
             .blog-hero .hero-stats {
@@ -1656,11 +1656,11 @@
                         </div>
 
                         {{-- Newsletter --}}
-                        <div class="sidebar-newsletter">
+                        <div class="sidebar-newsletter" data-newsletter data-source="blog">
                             <h5>Stay Updated</h5>
                             <p>Get the latest stories, casting news and workshop updates delivered to your inbox.</p>
-                            <input type="email" class="ns-input" placeholder="Your email address" />
-                            <button class="ns-btn"><i class="bi bi-send-fill me-2"></i>Subscribe</button>
+                            <input type="email" class="ns-input newsletter-email-input" placeholder="Your email address" />
+                            <button type="button" class="ns-btn newsletter-subscribe-btn"><i class="bi bi-send-fill me-2"></i>Subscribe</button>
                         </div>
 
                     </aside>
@@ -1678,9 +1678,9 @@
                     </div>
                     <h2>Get the Latest from<br>Act to Action</h2>
                     <p>Casting wins, workshops, student spotlights &amp; school updates — delivered fresh.</p>
-                    <div class="nl-form">
-                        <input type="email" placeholder="Enter your email address" />
-                        <button><i class="bi bi-send-fill me-2"></i> Subscribe Free</button>
+                    <div class="nl-form" data-newsletter data-source="blog">
+                        <input type="email" class="newsletter-email-input" placeholder="Enter your email address" />
+                        <button type="button" class="newsletter-subscribe-btn"><i class="bi bi-send-fill me-2"></i> Subscribe Free</button>
                     </div>
                     <p style="font-size:12px;color:rgba(255,255,255,.45);margin-top:14px;">
                         No spam. Unsubscribe anytime. 500+ parents already subscribed.

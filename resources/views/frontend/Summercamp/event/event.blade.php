@@ -989,7 +989,7 @@
                                         @else
                                             <div></div>
                                         @endif
-                                        <a href="{{ route('summercamp.event', $event->id) }}" class="view-details-link">
+                                        <a href="{{ route('summercamp.event', $event->slug) }}" class="view-details-link">
                                             View Details <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>
@@ -1191,13 +1191,13 @@
   ══════════════════════ --}}
         <section class="newsletter-section">
             <div class="container">
-                <div class="newsletter-box">
+                <div class="newsletter-box" data-newsletter data-source="summercamp">
                     <h3>Stay Updated on All Events</h3>
                     <p>Get notified about upcoming events, new sub-events, and early registration slots before anyone else.
                     </p>
                     <div class="newsletter-form">
-                        <input type="email" placeholder="Enter your email address" />
-                        <button class="btn-primary-solid"><i class="bi bi-send-fill"></i> Subscribe</button>
+                        <input type="email" class="newsletter-email-input" placeholder="Enter your email address" />
+                        <button type="button" class="btn-primary-solid newsletter-subscribe-btn"><i class="bi bi-send-fill"></i> Subscribe</button>
                     </div>
                 </div>
             </div>

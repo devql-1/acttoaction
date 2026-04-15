@@ -388,7 +388,7 @@
 
         /* ===================== PAGE TITLE ===================== */
         .page-title {
-            padding: 70px 0 55px;
+            padding: 185px 0 55px;
             text-align: center;
             position: relative;
             background: linear-gradient(135deg, #0d1f4a 0%, #175cdd 100%);
@@ -828,6 +828,140 @@
             font-weight: 500;
         }
 
+        /* ===================== PARTNER CATEGORY TABS ===================== */
+        .partner-cat-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 18px 0 28px;
+        }
+
+        .pcat-btn {
+            padding: 7px 22px;
+            border-radius: 50px;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.25s, color 0.25s;
+        }
+
+        .pcat-btn:hover,
+        .pcat-btn.active {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        /* ===================== SCHOOL CATEGORY GRID ===================== */
+        .school-cat-section {
+            padding: 70px 0 50px;
+            background: #f8faff;
+        }
+
+        .school-cat-section .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: color-mix(in srgb, var(--accent-color), transparent 88%);
+            color: var(--accent-color);
+            border-radius: 50px;
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            margin-bottom: 14px;
+        }
+
+        .school-cat-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 28px 0 36px;
+        }
+
+        .scat-btn {
+            display: inline-block;
+            padding: 9px 26px;
+            border-radius: 50px;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.25s, color 0.25s, transform 0.2s;
+        }
+
+        .scat-btn:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .scat-btn.active {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .scat-btn.active:hover { color: #fff; }
+
+        .school-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 20px;
+        }
+
+        .school-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0,0,0,.07);
+            transition: transform 0.25s, box-shadow 0.25s;
+            text-align: center;
+            cursor: default;
+        }
+
+        .school-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 32px rgba(0,0,0,.12);
+        }
+
+        .school-card .sc-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .school-card .sc-body {
+            padding: 12px 10px 14px;
+        }
+
+        .school-card .sc-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--heading-color);
+            line-height: 1.4;
+        }
+
+        .school-card .sc-cat-badge {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            background: color-mix(in srgb, var(--accent-color), transparent 88%);
+            color: var(--accent-color);
+            border-radius: 50px;
+            padding: 2px 10px;
+        }
+
+        @media (max-width: 576px) {
+            .school-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        }
+
         /* ===================== VOLUNTEER FORM ===================== */
         .volunteer-form-section .form-wrapper {
             background: #fff;
@@ -1090,7 +1224,7 @@
     </style>
 
     <main class="main">
-        <div style="margin-top: 80px;"></div>
+        <div style="margin-top: 185px;"></div>
 
         {{-- =================== JAIPUR WORKSHOP BANNER =================== --}}
 
@@ -1263,168 +1397,152 @@
             </div>
         </section>
 
-        {{-- =================== SCHOOL PARTNERSHIPS (replaces Team Voices) =================== --}}
+        {{-- =================== SCHOOLS BY CATEGORY GRID =================== --}}
+        <section class="school-cat-section" data-aos="fade-up">
+            <div class="container">
+                <div class="text-center mb-2">
+                    <span class="school-cat-section section-badge">
+                        <i class="bi bi-buildings"></i> Our School Network
+                    </span>
+                    <h2 class="fw-bold mt-1" style="color:var(--heading-color)">Schools We Work With</h2>
+                    <p class="text-muted mx-auto" style="max-width:560px;font-size:.95rem;">
+                        Browse our partner schools by category — every school represents a community we proudly serve.
+                    </p>
+                </div>
+
+                @if($schoolsByCategory)
+                    @php
+                        $totalSchools = collect($schoolsByCategory)->flatMap(fn($c) => $c['schools']->all())->count();
+                    @endphp
+
+                    {{-- Category tabs --}}
+                    <div class="school-cat-tabs" data-aos="fade-up" data-aos-delay="60">
+                        @foreach($schoolsByCategory as $slug => $cat)
+                            @if($cat['schools']->count() > 0)
+                                <span class="scat-btn active">
+                                    {{ $cat['label'] }}
+                                    <span style="font-size:11px;opacity:.75;margin-left:4px;">({{ $cat['schools']->count() }})</span>
+                                </span>
+                            @endif
+                        @endforeach
+                    </div>
+
+                    <div class="school-grid" data-aos="fade-up" data-aos-delay="120">
+                        @forelse($schoolsByCategory as $slug => $cat)
+                            @foreach($cat['schools'] as $school)
+                                <div class="school-card">
+                                    @if($school->logo_path)
+                                        <img class="sc-img" src="{{ $school->logo_url }}"
+                                             alt="{{ $school->name }}" loading="lazy"
+                                             onerror="this.src='https://placehold.co/400x240?text={{ urlencode($school->name) }}'">
+                                    @else
+                                        <div class="sc-img d-flex align-items-center justify-content-center"
+                                             style="background:color-mix(in srgb,var(--accent-color),transparent 90%);">
+                                            <i class="bi bi-building" style="font-size:2.5rem;color:var(--accent-color);opacity:.5;"></i>
+                                        </div>
+                                    @endif
+                                    <div class="sc-body">
+                                        <div class="sc-name">{{ $school->name }}</div>
+                                        <span class="sc-cat-badge">{{ $cat['label'] }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @empty
+                            <div class="text-center text-muted py-5 col-span-full" style="font-size:.9rem;grid-column:1/-1;">
+                                No schools found in this category yet.
+                            </div>
+                        @endforelse
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        {{-- =================== SCHOOL PARTNERSHIPS (marquee) =================== --}}
         <section class="school-partners" data-aos="fade-up">
+            @php
+                $allSchools = collect($schoolsByCategory)->flatMap(fn($c) => $c['schools']->all());
+            @endphp
+
             <div class="container">
                 <div class="section-title">
                     <div class="partner-badge">
                         <i class="bi bi-building"></i> School Partnerships
                     </div>
-                    <h2>Trusted by 25+ Schools Across India</h2>
+                    <h2>Trusted by {{ $allSchools->count() > 0 ? $allSchools->count() . '+' : '25+' }} Schools Across India</h2>
                     <p>Act to Action proudly collaborates with leading schools, educational institutes, and child
                         development organisations to nurture every child's potential.</p>
                 </div>
+
+                {{-- Category filter tabs — shown only when 2+ categories have schools --}}
+                @if(count($schoolsByCategory) > 1)
+                    <div class="partner-cat-tabs" data-aos="fade-up" data-aos-delay="80">
+                        <button class="pcat-btn active" data-cat="all">All</button>
+                        @foreach($schoolsByCategory as $slug => $cat)
+                            @if($cat['schools']->count() > 0)
+                                <button class="pcat-btn" data-cat="{{ $slug }}">{{ $cat['label'] }}</button>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
             </div>
 
-            {{-- Auto-scrolling logo marquee --}}
-            <div class="partners-marquee-wrap">
-                <div class="partners-marquee" id="partnersMarquee">
-
-                    {{-- ── ROW 1 (original set) ── --}}
-                    {{-- Replace src with your real school logo/photo URLs when available --}}
-
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=60"
-                            alt="Maharaja School">
-                        <div class="ph-name">Maharaja School</div>
+            {{-- Auto-scrolling marquee tracks --}}
+            @if($allSchools->count())
+                {{-- ALL track (visible by default) --}}
+                <div class="partners-marquee-wrap" data-cat-wrap="all">
+                    <div class="partners-marquee">
+                        @foreach($allSchools as $school)
+                            <div class="partner-logo-card">
+                                <img src="{{ $school->logo_url }}" alt="{{ $school->name }}"
+                                    loading="lazy" onerror="this.style.display='none'">
+                                <div class="ph-name">{{ $school->name }}</div>
+                            </div>
+                        @endforeach
+                        {{-- duplicate for seamless loop --}}
+                        @foreach($allSchools as $school)
+                            <div class="partner-logo-card" aria-hidden="true">
+                                <img src="{{ $school->logo_url }}" alt="{{ $school->name }}"
+                                    loading="lazy" onerror="this.style.display='none'">
+                                <div class="ph-name">{{ $school->name }}</div>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=60"
-                            alt="Delhi Public School">
-                        <div class="ph-name">Delhi Public School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=60"
-                            alt="Ryan Int'l School">
-                        <div class="ph-name">Ryan Int'l School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=60"
-                            alt="St. Xavier's School">
-                        <div class="ph-name">St. Xavier's School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=60"
-                            alt="Tagore Public School">
-                        <div class="ph-name">Tagore Public School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&q=60"
-                            alt="Modern School">
-                        <div class="ph-name">Modern School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&q=60"
-                            alt="Bal Bharati School">
-                        <div class="ph-name">Bal Bharati School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=60"
-                            alt="Vidyashram School">
-                        <div class="ph-name">Vidyashram School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=400&q=60"
-                            alt="Seedling School">
-                        <div class="ph-name">Seedling School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1598618443855-232ee0f819f6?w=400&q=60"
-                            alt="Cambridge School">
-                        <div class="ph-name">Cambridge School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?w=400&q=60"
-                            alt="Podar World School">
-                        <div class="ph-name">Podar World School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1584697964358-3e14ca57658b?w=400&q=60"
-                            alt="Apex Academy">
-                        <div class="ph-name">Apex Academy</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1567168544813-cc03465b4fa8?w=400&q=60"
-                            alt="Heritage School">
-                        <div class="ph-name">Heritage School</div>
-                    </div>
-
-                    {{-- ── ROW 2 (duplicate for seamless loop) ── --}}
-
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=60"
-                            alt="Maharaja School">
-                        <div class="ph-name">Maharaja School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=60"
-                            alt="Delhi Public School">
-                        <div class="ph-name">Delhi Public School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&q=60"
-                            alt="Ryan Int'l School">
-                        <div class="ph-name">Ryan Int'l School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=60"
-                            alt="St. Xavier's School">
-                        <div class="ph-name">St. Xavier's School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&q=60"
-                            alt="Tagore Public School">
-                        <div class="ph-name">Tagore Public School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=400&q=60"
-                            alt="Modern School">
-                        <div class="ph-name">Modern School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&q=60"
-                            alt="Bal Bharati School">
-                        <div class="ph-name">Bal Bharati School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=60"
-                            alt="Vidyashram School">
-                        <div class="ph-name">Vidyashram School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=400&q=60"
-                            alt="Seedling School">
-                        <div class="ph-name">Seedling School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1598618443855-232ee0f819f6?w=400&q=60"
-                            alt="Cambridge School">
-                        <div class="ph-name">Cambridge School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1540553016722-983e48a2cd10?w=400&q=60"
-                            alt="Podar World School">
-                        <div class="ph-name">Podar World School</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1584697964358-3e14ca57658b?w=400&q=60"
-                            alt="Apex Academy">
-                        <div class="ph-name">Apex Academy</div>
-                    </div>
-                    <div class="partner-logo-card">
-                        <img src="https://images.unsplash.com/photo-1567168544813-cc03465b4fa8?w=400&q=60"
-                            alt="Heritage School">
-                        <div class="ph-name">Heritage School</div>
-                    </div>
-
                 </div>
-            </div>
+
+                {{-- Per-category tracks (hidden by default) --}}
+                @foreach($schoolsByCategory as $slug => $cat)
+                    @if($cat['schools']->count() > 0)
+                        <div class="partners-marquee-wrap" data-cat-wrap="{{ $slug }}" style="display:none;">
+                            <div class="partners-marquee">
+                                @foreach($cat['schools'] as $school)
+                                    <div class="partner-logo-card">
+                                        <img src="{{ $school->logo_url }}" alt="{{ $school->name }}"
+                                            loading="lazy" onerror="this.style.display='none'">
+                                        <div class="ph-name">{{ $school->name }}</div>
+                                    </div>
+                                @endforeach
+                                @foreach($cat['schools'] as $school)
+                                    <div class="partner-logo-card" aria-hidden="true">
+                                        <img src="{{ $school->logo_url }}" alt="{{ $school->name }}"
+                                            loading="lazy" onerror="this.style.display='none'">
+                                        <div class="ph-name">{{ $school->name }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            @else
+                <div class="container text-center py-4" style="color:#999;font-size:.9rem;">
+                    School partners coming soon.
+                </div>
+            @endif
 
             {{-- Partner stats --}}
             <div class="container">
                 <div class="partners-stats" data-aos="fade-up" data-aos-delay="150">
                     <div class="ps-item">
-                        <span class="ps-num">25+</span>
+                        <span class="ps-num">{{ $allSchools->count() > 0 ? $allSchools->count() . '+' : '25+' }}</span>
                         <span class="ps-lbl">Partner Schools</span>
                     </div>
                     <div class="ps-item">
@@ -1442,6 +1560,26 @@
                 </div>
             </div>
         </section>
+
+        {{-- Category-tab switching JS --}}
+        <script>
+        (function () {
+            const btns = document.querySelectorAll('.pcat-btn');
+            const wraps = document.querySelectorAll('[data-cat-wrap]');
+            if (!btns.length) return;
+
+            btns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const cat = this.dataset.cat;
+                    btns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    wraps.forEach(w => {
+                        w.style.display = (w.dataset.catWrap === cat) ? '' : 'none';
+                    });
+                });
+            });
+        })();
+        </script>
 
 
         {{-- =================== Workshop Banner (replaces Team Voices) =================== --}}

@@ -25,7 +25,7 @@
         font-family: var(--reg-font-body);
         display: flex;
         align-items: center;
-        padding: 60px 0;
+        padding: 200px 0 60px;
     }
 
     .success-card {

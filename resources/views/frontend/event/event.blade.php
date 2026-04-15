@@ -24,7 +24,7 @@
         /* ─── HERO ─── */
         .hero-events {
             background: linear-gradient(135deg, var(--heading-color) 0%, #1a3a72 50%, var(--accent-color) 100%);
-            padding: 150px 0 56px;
+            padding: 195px 0 56px;
             position: relative;
             overflow: hidden;
         }
@@ -827,6 +827,13 @@
             padding: 20px;
         }
 
+        /* ─── VIDEO SECTION ─── */
+        .video-section {
+            padding: 70px 0;
+            background: var(--background-color);
+        }
+
+        /* ─── RESPONSIVE ─── */
         @media (max-width: 768px) {
             .hero-mosaic {
                 display: none !important;
@@ -834,6 +841,154 @@
 
             .biz-stats-grid {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .business-section h2 {
+                font-size: 26px;
+            }
+
+            .stat-box .num {
+                font-size: 32px;
+            }
+
+            .section-title h2 {
+                font-size: 26px;
+            }
+
+            .newsletter-box {
+                padding: 36px 24px;
+            }
+
+            /* Filter bar: scrollable row on tablet/mobile */
+            .filter-bar {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+
+            #filterBtns {
+                flex-wrap: nowrap !important;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                max-width: 100%;
+            }
+
+            #filterBtns::-webkit-scrollbar {
+                display: none;
+            }
+
+            .events-section {
+                padding: 50px 0;
+            }
+
+            .why-section {
+                padding: 50px 0;
+            }
+
+            .testimonials-section {
+                padding: 54px 0;
+            }
+
+            .gallery-section {
+                padding: 50px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .business-section h2 {
+                font-size: 22px;
+            }
+
+            .stat-box .num {
+                font-size: 28px;
+            }
+
+            .section-title h2 {
+                font-size: 22px;
+            }
+
+            .hero-events {
+                padding: 195px 0 40px;
+            }
+
+            .hero-events h1 {
+                font-size: clamp(24px, 7vw, 36px);
+            }
+
+            .hero-events .hero-sub {
+                font-size: 15px;
+            }
+
+            .hero-trust-row {
+                gap: 10px;
+            }
+
+            .hero-trust-item {
+                font-size: 12px;
+            }
+
+            .filter-btn {
+                font-size: 12px;
+                padding: 6px 14px;
+                white-space: nowrap;
+            }
+
+            .event-card-body {
+                padding: 16px;
+            }
+
+            .event-card-body h5 {
+                font-size: 16px;
+            }
+
+            .newsletter-box {
+                padding: 28px 16px;
+            }
+
+            .newsletter-box h3 {
+                font-size: 22px;
+            }
+
+            .newsletter-form input {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .events-section {
+                padding: 40px 0;
+            }
+
+            .why-section {
+                padding: 40px 0;
+            }
+
+            .gallery-section {
+                padding: 40px 0;
+            }
+
+            .video-section {
+                padding: 40px 0;
+            }
+
+            .business-section {
+                padding: 52px 0;
+            }
+
+            .testimonials-section {
+                padding: 44px 0;
+            }
+
+            .newsletter-section {
+                padding: 44px 0;
+            }
+
+            .stats-band {
+                padding: 36px 0;
+            }
+
+            .stat-box {
+                margin-bottom: 8px;
             }
         }
     </style>
@@ -1000,7 +1155,7 @@
                                         @else
                                             <div></div>
                                         @endif
-                                        <a href="{{ route('frontend.events.subevent', $event->id) }}"
+                                        <a href="{{ route('frontend.events.subevent', $event->slug) }}"
                                             class="view-details-link">
                                             View Details <i class="bi bi-arrow-right"></i>
                                         </a>
@@ -1028,7 +1183,6 @@
             <div class="container">
                 <div class="section-title">
                     <h2>Why Join Our Events</h2>
-                    <span class="divider-line"></span>
                     <p>More than just an event — an experience worth remembering</p>
                 </div>
                 <div class="row g-4">
@@ -1170,7 +1324,6 @@
                 @include('frontend.partialspages.youtube', ['videos' => $videos])
             </div>
         </section>
-        </section>
 
         {{-- ══════════════════════
        VIDEO MODAL
@@ -1209,13 +1362,13 @@
   ══════════════════════ --}}
         <section class="newsletter-section">
             <div class="container">
-                <div class="newsletter-box">
+                <div class="newsletter-box" data-newsletter data-source="event">
                     <h3>Stay Updated on All Events</h3>
                     <p>Get notified about upcoming events, new sub-events, and early registration slots before anyone else.
                     </p>
                     <div class="newsletter-form">
-                        <input type="email" placeholder="Enter your email address" />
-                        <button class="btn-primary-solid"><i class="bi bi-send-fill"></i> Subscribe</button>
+                        <input type="email" class="newsletter-email-input" placeholder="Enter your email address" />
+                        <button type="button" class="btn-primary-solid newsletter-subscribe-btn"><i class="bi bi-send-fill"></i> Subscribe</button>
                     </div>
                 </div>
             </div>

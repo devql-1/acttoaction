@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use App\Models\Course;
 use Razorpay\Api\Api;
@@ -17,14 +18,14 @@ class EnrollmentController extends Controller
     /**
      * Show the multi-step enrollment form
      */
-    public function enroll($id)
+    public function enroll(Course $course)
     {
-        $course = Course::with([
+        $course->load([
             'category',
             'centers' => function ($q) {
                 $q->active()->with('state');
             },
-        ])->findOrFail($id);
+        ]);
 
         $centresByState = [];
         foreach ($course->centers as $center) {
@@ -48,7 +49,7 @@ class EnrollmentController extends Controller
         }
 
         $courseStates = array_keys($centresByState);
-        $otherCourses = Course::with('category')->where('id', '!=', $id)->latest()->take(5)->get();
+        $otherCourses = Course::with('category')->where('id', '!=', $course->id)->latest()->take(5)->get();
 
         return view('frontend.enrollment.create', compact('course', 'otherCourses', 'centresByState', 'courseStates'));
     }
@@ -58,71 +59,136 @@ class EnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'centre_id' => 'required|integer|exists:centers,id',
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'dob' => 'required|date',
-            'gender' => 'required|in:Male,Female,Other',
-            'father_name' => 'required|string|max:100',
-            'mother_name' => 'required|string|max:100',
-            'phone' => 'required|string|min:10|max:15',
-            'email' => 'required|email|max:150',
-            'school' => 'required|string|max:200',
-            'grade' => 'required|string|max:50',
-            'state' => 'required|string|max:100',
-            'centre' => 'required|string|max:200',
-            'mode' => 'required|string|max:50',
-            'course' => 'required|string|max:200',
-        ]);
-
         $isLead = $request->boolean('is_lead');
+
+        $rules = [
+            'centre_id'    => 'required|integer|exists:centers,id',
+            'first_name'   => 'required|string|max:100',
+            'last_name'    => 'required|string|max:100',
+            'dob'          => ['required', 'date', 'before:today', 'after:' . now()->subYears(100)->toDateString()],
+            'gender'       => 'required|in:Male,Female,Other',
+            'father_name'  => 'required|string|max:100',
+            'mother_name'  => 'required|string|max:100',
+            'parent_phone' => ['required', 'string', 'max:20', function ($attr, $val, $fail) {
+                if (!preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('The parent phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
+                }
+            }],
+            'parent_email' => 'required|email|max:150',
+            'mother_phone' => ['nullable', 'string', 'max:20', function ($attr, $val, $fail) {
+                if (!empty($val) && !preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('The mother phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
+                }
+            }],
+            'phone'        => ['required', 'string', 'max:20', function ($attr, $val, $fail) {
+                if (!preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('The phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
+                }
+            }],
+            'email'        => 'required|email|max:150',
+            'address'      => 'required|string|max:500',
+            'school'       => 'required|string|max:200',
+            'grade'        => ['required', 'string', Rule::in([
+                'Nursery / Pre-School', 'KG (Kindergarten)',
+                'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6',
+                'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12',
+                'Undergraduate (College)', 'Postgraduate', 'Working Professional', 'Other',
+            ])],
+            'achievements' => 'nullable|string|max:1000',
+            'state'        => 'required|string|max:100',
+            'city'         => 'nullable|string|max:100',
+            'centre'       => 'required|string|max:200',
+            'mode'         => ['required', 'string', Rule::in([
+                'Online — Live Classes',
+                'Offline — At Centre',
+                'Hybrid — Online + Centre',
+            ])],
+            'course'              => 'required|string|max:200',
+            'newsletter_subscribed' => 'boolean',
+        ];
+
+        if (!$isLead) {
+            $rules['terms_accepted'] = 'required|accepted';
+        }
+
+        $validated = $request->validate($rules);
         $age = Carbon::parse($validated['dob'])->age;
 
         $course = Course::where('title', $validated['course'])->first();
 
         // Fetch fee from pivot table using course + centre
-        $centreId = $request->input('centre_id'); // add this hidden field to your form
+        $centreId = $request->input('centre_id');
         $fee = 0;
 
         if ($course && $centreId) {
             $pivotFee = $course->centers()->where('centers.id', $centreId)->first()?->pivot?->fees;
-
             $fee = $pivotFee ?? 0;
         }
 
-        // Update existing enrollment if upgrading from lead
+        // Validate fee before creating any record (non-leads must have a configured fee)
+        if (!$isLead && $fee <= 0) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Course fee not configured properly for the selected centre.',
+                ],
+                422,
+            );
+        }
+
+        // Update existing enrollment if upgrading from lead.
+        // Ownership is verified by matching phone to prevent arbitrary ID injection.
         if ($request->filled('enrollment_id') && !$isLead) {
-            $enrollment = Enrollment::find($request->enrollment_id);
+            $enrollment = Enrollment::where('id', $request->enrollment_id)
+                ->where('status', 'lead')
+                ->where('phone', $validated['phone'])
+                ->first();
+
             if ($enrollment) {
                 $enrollment->update([
-                    'course' => $validated['course'],
-                    'fee' => $fee,
-                    'status' => 'pending',
+                    'mother_phone'          => $validated['mother_phone'] ?? null,
+                    'parent_phone'          => $validated['parent_phone'],
+                    'parent_email'          => $validated['parent_email'],
+                    'address'               => $validated['address'],
+                    'city'                  => $validated['city'] ?? null,
+                    'achievements'          => $validated['achievements'] ?? null,
+                    'newsletter_subscribed' => $request->boolean('newsletter_subscribed'),
+                    'course'                => $validated['course'],
+                    'fee'                   => $fee,
+                    'terms_accepted'        => true,
+                    'status'                => 'pending',
                 ]);
             }
         }
 
-        // Create new enrollment if not exists
+        // Create new enrollment if none was found/updated above
         if (!isset($enrollment) || !$enrollment) {
             $enrollment = Enrollment::create([
-                'first_name' => $validated['first_name'],
-                'last_name' => $validated['last_name'],
-                'dob' => $validated['dob'],
-                'age' => $age,
-                'gender' => $validated['gender'],
-                'father_name' => $validated['father_name'],
-                'mother_name' => $validated['mother_name'],
-                'phone' => $validated['phone'],
-                'email' => $validated['email'],
-                'school' => $validated['school'],
-                'grade' => $validated['grade'],
-                'state' => $validated['state'],
-                'centre' => $validated['centre'],
-                'mode' => $validated['mode'],
-                'course' => $validated['course'],
-                'fee' => $fee,
-                'status' => $isLead ? 'lead' : 'pending',
+                'first_name'            => $validated['first_name'],
+                'last_name'             => $validated['last_name'],
+                'dob'                   => $validated['dob'],
+                'age'                   => $age,
+                'gender'                => $validated['gender'],
+                'father_name'           => $validated['father_name'],
+                'mother_name'           => $validated['mother_name'],
+                'mother_phone'          => $validated['mother_phone'] ?? null,
+                'parent_phone'          => $validated['parent_phone'],
+                'parent_email'          => $validated['parent_email'],
+                'phone'                 => $validated['phone'],
+                'email'                 => $validated['email'],
+                'address'               => $validated['address'],
+                'school'                => $validated['school'],
+                'grade'                 => $validated['grade'],
+                'achievements'          => $validated['achievements'] ?? null,
+                'state'                 => $validated['state'],
+                'city'                  => $validated['city'] ?? null,
+                'centre'                => $validated['centre'],
+                'mode'                  => $validated['mode'],
+                'course'                => $validated['course'],
+                'fee'                   => $fee,
+                'terms_accepted'        => !$isLead,
+                'newsletter_subscribed' => $request->boolean('newsletter_subscribed'),
+                'status'                => $isLead ? 'lead' : 'pending',
             ]);
         }
 
@@ -134,42 +200,42 @@ class EnrollmentController extends Controller
             ]);
         }
 
-        // Validate fee is configured
-        if ($fee <= 0) {
-            return response()->json(
-                [
-                    'success' => false,
-                    'message' => 'Course fee not configured properly',
-                ],
-                422,
-            );
-        }
-
-        // Create Razorpay order
+        // Create Razorpay Payment Link (key stays 100% server-side, no key sent to browser)
         try {
-            $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
-
-            $order = $api->order->create([
-                'receipt' => $enrollment->reference_id,
-                'amount' => $fee * 100,
-                'currency' => 'INR',
+            $api  = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+            $link = $api->paymentLink->create([
+                'amount'           => $fee * 100,
+                'currency'         => 'INR',
+                'accept_partial'   => false,
+                'reference_id'     => $enrollment->reference_id,
+                'description'      => 'Course Enrollment: ' . $enrollment->course,
+                'customer'         => [
+                    'name'    => $enrollment->first_name . ' ' . $enrollment->last_name,
+                    'email'   => $enrollment->email,
+                    'contact' => $enrollment->phone,
+                ],
+                'notify'           => ['sms' => false, 'email' => false],
+                'reminder_enable'  => false,
+                'callback_url'     => route('enrollment.payment.callback'),
+                'callback_method'  => 'get',
+                'expire_by'        => now()->addHours(2)->timestamp,
             ]);
 
-            session(['rzp_amount' => $fee * 100]);
-            session(['rzp_order_id' => $order['id'] ?? null]);
+            // Store enrollment ID in session to verify callback ownership
             session(['rzp_enrollment_id' => $enrollment->id]);
+            session(['rzp_link_id'       => $link->id]);
+            session(['rzp_amount'        => $fee * 100]);
 
             return response()->json([
-                'success' => true,
-                'order_id' => $order['id'],
-                'amount' => $fee * 100,
-                'enrollment_id' => $enrollment->id,
+                'success'      => true,
+                'payment_url'  => $link->short_url, // e.g. https://rzp.io/l/xxxxx
+                'enrollment_id'=> $enrollment->id,
             ]);
         } catch (\Exception $e) {
             return response()->json(
                 [
                     'success' => false,
-                    'message' => 'Failed to create payment order. Please try again.',
+                    'message' => 'Failed to create payment link. Please try again.',
                 ],
                 500,
             );
@@ -180,22 +246,21 @@ class EnrollmentController extends Controller
         $field = $request->input('field');
         $value = $request->input('value');
 
+        // Whitelist — only these two fields are valid to check
+        if (!in_array($field, ['phone', 'email'], true)) {
+            return response()->json(['valid' => true]);
+        }
+
         if ($field === 'phone') {
-            $digits = preg_replace('/\D/', '', $value);
-            $exists = Enrollment::where('phone', $value)->where('status', '!=', 'lead')->exists();
-            if (strlen($digits) < 10) {
-                return response()->json(['valid' => false, 'message' => 'Enter a valid 10-digit phone number']);
-            }
-            if ($exists) {
-                return response()->json(['valid' => false, 'message' => 'This phone is already enrolled']);
+            if (!preg_match('/^\+91\d{10}$/', $value)) {
+                return response()->json(['valid' => false, 'message' => 'Enter a valid 10-digit Indian phone number']);
             }
             return response()->json(['valid' => true]);
         }
 
         if ($field === 'email') {
-            $exists = Enrollment::where('email', $value)->where('status', '!=', 'lead')->exists();
-            if ($exists) {
-                return response()->json(['valid' => false, 'message' => 'This email is already enrolled']);
+            if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                return response()->json(['valid' => false, 'message' => 'Enter a valid email address']);
             }
             return response()->json(['valid' => true]);
         }
@@ -285,131 +350,263 @@ class EnrollmentController extends Controller
         $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         try {
-            // Verify payment signature
-            $attributes = [
-                'razorpay_order_id' => $request->razorpay_order_id,
+            // Step 1: Verify Razorpay signature FIRST before any other logic.
+            $api->utility->verifyPaymentSignature([
+                'razorpay_order_id'   => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
-                'razorpay_signature' => $request->razorpay_signature,
-            ];
+                'razorpay_signature'  => $request->razorpay_signature,
+            ]);
 
-            $api->utility->verifyPaymentSignature($attributes);
-
-            // Prevent cross-enrollment/order replay by strictly matching the checkout session.
-            if ((int) session('rzp_enrollment_id') !== (int) $request->enrollment_id || (string) session('rzp_order_id') !== (string) $request->razorpay_order_id) {
-                return response()->json(
-                    [
-                        'success' => false,
-                        'message' => 'Payment verification failed',
-                    ],
-                    422,
-                );
+            // Step 2: Prevent cross-enrollment/order replay by matching the checkout session.
+            if (
+                (int) session('rzp_enrollment_id') !== (int) $request->enrollment_id ||
+                (string) session('rzp_order_id') !== (string) $request->razorpay_order_id
+            ) {
+                return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
             }
 
-            // Check if payment already processed
-            $existingPayment = Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->first();
-            if ($existingPayment) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Payment already processed',
-                ]);
-            }
-
-            // Fetch payment details from Razorpay
+            // Step 3: Fetch authoritative payment details from Razorpay.
             $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
 
+            // Step 4: Confirm the order ID on the Razorpay payment matches what we expect.
             if ((string) ($rzpPayment->order_id ?? '') !== (string) $request->razorpay_order_id) {
-                return response()->json(
-                    [
-                        'success' => false,
-                        'message' => 'Payment verification failed',
-                    ],
-                    422,
-                );
+                return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
             }
 
-            // Process payment atomically
-            DB::transaction(function () use ($request, $rzpPayment) {
-                $enrollment = Enrollment::findOrFail($request->enrollment_id);
+            // Step 5: Process payment atomically inside a transaction with row-level locking
+            // to prevent race conditions from concurrent requests.
+            $alreadyProcessed = false;
+
+            DB::transaction(function () use ($request, $rzpPayment, &$alreadyProcessed) {
+                // Lock the enrollment row for the duration of this transaction.
+                $enrollment = Enrollment::lockForUpdate()->findOrFail($request->enrollment_id);
+
+                // Step 5a: Idempotency check inside the transaction (with lock held).
+                if (Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->exists()) {
+                    $alreadyProcessed = true;
+                    return;
+                }
+
+                // Step 5b: Verify the amount Razorpay actually charged matches the fee on record.
+                // This prevents a user paying ₹1 to confirm a ₹5000 enrollment.
+                $expectedPaise = (int) ($enrollment->fee * 100);
+                $receivedPaise = (int) $rzpPayment->amount;
+                if ($receivedPaise !== $expectedPaise) {
+                    throw new \Exception("Amount mismatch: expected {$expectedPaise} paise, received {$receivedPaise} paise.");
+                }
 
                 // Update enrollment status
                 if ($enrollment->status !== 'confirmed') {
                     $enrollment->update(['status' => 'confirmed']);
                 }
 
-                // Create payment record
-                Payment::create([
-                    'enrollment_id' => $enrollment->id,
-                    'razorpay_order_id' => $request->razorpay_order_id,
-                    'razorpay_payment_id' => $request->razorpay_payment_id,
-                    'razorpay_signature' => $request->razorpay_signature,
-                    'amount' => session('rzp_amount') ? session('rzp_amount') / 100 : $enrollment->fee,
-                    'currency' => 'INR',
-                    'status' => 'success',
-                    'transaction_type' => $rzpPayment->method,
-                    'type' => 'course_enrollment',
-                    'paid_at' => now(),
-                    'contact' => $rzpPayment->contact ?? $enrollment->phone,
-                    'email' => $rzpPayment->email ?? $enrollment->email,
-                ]);
+                // Create payment record using the verified Razorpay amount as the source of truth.
+                $payment = new Payment();
+                $payment->enrollment_id       = $enrollment->id;
+                $payment->razorpay_order_id   = $request->razorpay_order_id;
+                $payment->razorpay_payment_id = $request->razorpay_payment_id;
+                $payment->razorpay_signature  = $request->razorpay_signature;
+                $payment->amount              = $rzpPayment->amount / 100; // authoritative from Razorpay
+                $payment->currency            = 'INR';
+                $payment->status              = 'success';
+                $payment->transaction_type    = $rzpPayment->method;
+                $payment->type                = 'course_enrollment';
+                $payment->paid_at             = now();
+                $payment->contact             = $rzpPayment->contact ?? $enrollment->phone;
+                $payment->email               = $rzpPayment->email ?? $enrollment->email;
+                $payment->save();
 
-                // Send confirmation email
+                // Send confirmation email (failure does not roll back the payment)
                 try {
                     app(EmailService::class)->send(
                         'enrollment-confirmation',
                         $enrollment->email,
                         [
                             'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
-                            'course_name' => $enrollment->course,
-                            'centre' => $enrollment->centre,
+                            'course_name'  => $enrollment->course,
+                            'centre'       => $enrollment->centre,
                             'reference_id' => $enrollment->reference_id,
-                            'amount' => '₹' . number_format($enrollment->fee),
-                            'payment_id' => $request->razorpay_payment_id,
+                            'amount'       => '₹' . number_format($enrollment->fee),
+                            'payment_id'   => $request->razorpay_payment_id,
                         ],
                         $enrollment->first_name,
                     );
                 } catch (\Exception $e) {
-                    // Email failure doesn't fail the payment
+                    // Log but do not fail — payment is already confirmed
+                    \Illuminate\Support\Facades\Log::warning('Enrollment confirmation email failed', [
+                        'enrollment_id' => $enrollment->id,
+                        'error'         => $e->getMessage(),
+                    ]);
                 }
             });
 
+            $enrollment = Enrollment::find($request->enrollment_id);
             return response()->json([
-                'success' => true,
-                'message' => 'Payment successful',
+                'success'      => true,
+                'message'      => $alreadyProcessed ? 'Payment already processed' : 'Payment successful',
+                'reference_id' => $enrollment?->reference_id,
             ]);
+
         } catch (\Razorpay\Api\Errors\SignatureVerificationError $e) {
-            Payment::create([
-                'enrollment_id' => $request->enrollment_id,
-                'razorpay_payment_id' => $request->razorpay_payment_id ?? '',
-                'amount' => 0,
-                'status' => 'failed',
-                'error_code' => 'SIGNATURE_MISMATCH',
-                'error_reason' => $e->getMessage(),
+            // Record failed attempt for audit trail with real fee and order ID
+            $failedEnrollment = Enrollment::find($request->enrollment_id);
+            Payment::insert([
+                'enrollment_id'       => $request->enrollment_id,
+                'razorpay_order_id'   => $request->razorpay_order_id ?? null,
+                'razorpay_payment_id' => $request->razorpay_payment_id ?: null, // null not '' — unique index allows multiple NULLs
+                'amount'              => $failedEnrollment?->fee ?? 0,
+                'currency'            => 'INR',
+                'status'              => 'failed',
+                'error_code'          => 'SIGNATURE_MISMATCH',
+                'error_reason'        => $e->getMessage(),
+                'type'                => 'course_enrollment',
+                'created_at'          => now(),
+                'updated_at'          => now(),
             ]);
 
-            return response()->json(
-                [
-                    'success' => false,
-                    'message' => 'Payment verification failed',
-                ],
-                422,
-            );
+            return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
+
         } catch (\Exception $e) {
-            Payment::create([
-                'enrollment_id' => $request->enrollment_id ?? null,
-                'razorpay_payment_id' => $request->razorpay_payment_id ?? '',
-                'amount' => 0,
-                'status' => 'failed',
-                'error_code' => class_basename($e),
-                'error_reason' => $e->getMessage(),
+            // Record failed attempt for audit trail with real fee and order ID
+            $failedEnrollment = Enrollment::find($request->enrollment_id ?? null);
+            Payment::insert([
+                'enrollment_id'       => $request->enrollment_id ?? null,
+                'razorpay_order_id'   => $request->razorpay_order_id ?? null,
+                'razorpay_payment_id' => $request->razorpay_payment_id ?: null, // null not '' — unique index allows multiple NULLs
+                'amount'              => $failedEnrollment?->fee ?? 0,
+                'currency'            => 'INR',
+                'status'              => 'failed',
+                'error_code'          => class_basename($e),
+                'error_reason'        => $e->getMessage(),
+                'type'                => 'course_enrollment',
+                'created_at'          => now(),
+                'updated_at'          => now(),
             ]);
 
-            return response()->json(
-                [
-                    'success' => false,
-                    'message' => 'Payment verification failed',
-                ],
-                500,
-            );
+            return response()->json(['success' => false, 'message' => 'Payment verification failed'], 500);
         }
+    }
+
+    /**
+     * Razorpay Payment Link callback (GET redirect after payment)
+     * Key never touches the browser — verification is fully server-side.
+     */
+    public function paymentCallback(Request $request)
+    {
+        // Razorpay sends these as GET params on redirect
+        $paymentId     = $request->query('razorpay_payment_id');
+        $linkId        = $request->query('razorpay_payment_link_id');
+        $referenceId   = $request->query('razorpay_payment_link_reference_id'); // = enrollment reference_id
+        $linkStatus    = $request->query('razorpay_payment_link_status');
+        $signature     = $request->query('razorpay_signature');
+
+        // Step 1: Verify the payment link signature server-side
+        // Payload = link_id|reference_id|status|payment_id
+        $payload          = $linkId . '|' . $referenceId . '|' . $linkStatus . '|' . $paymentId;
+        $expectedSig      = hash_hmac('sha256', $payload, config('services.razorpay.secret'));
+
+        if (!hash_equals($expectedSig, (string) $signature)) {
+            return redirect()->route('home')->with('error', 'Payment verification failed. Please contact support.');
+        }
+
+        // Step 2: Confirm payment was actually paid
+        if ($linkStatus !== 'paid') {
+            return redirect()->route('home')->with('error', 'Payment was not completed.');
+        }
+
+        // Step 3: Find enrollment by reference_id (server-side — no user input trusted)
+        $enrollment = Enrollment::where('reference_id', $referenceId)->first();
+
+        if (!$enrollment) {
+            return redirect()->route('home')->with('error', 'Enrollment not found.');
+        }
+
+        // Step 4: Fetch and verify amount from Razorpay API
+        try {
+            $api        = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+            $rzpPayment = $api->payment->fetch($paymentId);
+
+            $expectedPaise = (int) ($enrollment->fee * 100);
+            $receivedPaise = (int) $rzpPayment->amount;
+
+            if ($receivedPaise !== $expectedPaise) {
+                \Illuminate\Support\Facades\Log::error('Payment amount mismatch on callback', [
+                    'enrollment_id' => $enrollment->id,
+                    'expected'      => $expectedPaise,
+                    'received'      => $receivedPaise,
+                ]);
+                return redirect()->route('home')->with('error', 'Payment amount mismatch. Contact support.');
+            }
+
+            // Step 5: Process atomically with lock
+            DB::transaction(function () use ($paymentId, $signature, $rzpPayment, $enrollment) {
+                $enrollment = Enrollment::lockForUpdate()->find($enrollment->id);
+
+                // Idempotency — skip if already processed
+                if (Payment::where('razorpay_payment_id', $paymentId)->exists()) {
+                    return;
+                }
+
+                if ($enrollment->status !== 'confirmed') {
+                    $enrollment->update(['status' => 'confirmed']);
+                }
+
+                $payment                      = new Payment();
+                $payment->enrollment_id       = $enrollment->id;
+                $payment->razorpay_order_id   = $rzpPayment->order_id ?? null;
+                $payment->razorpay_payment_id = $paymentId;
+                $payment->razorpay_signature  = $signature;
+                $payment->amount              = $rzpPayment->amount / 100;
+                $payment->currency            = 'INR';
+                $payment->status              = 'success';
+                $payment->transaction_type    = $rzpPayment->method;
+                $payment->type                = 'course_enrollment';
+                $payment->paid_at             = now();
+                $payment->contact             = $rzpPayment->contact ?? $enrollment->phone;
+                $payment->email               = $rzpPayment->email ?? $enrollment->email;
+                $payment->save();
+
+                try {
+                    app(EmailService::class)->send(
+                        'enrollment-confirmation',
+                        $enrollment->email,
+                        [
+                            'student_name' => $enrollment->first_name . ' ' . $enrollment->last_name,
+                            'course_name'  => $enrollment->course,
+                            'centre'       => $enrollment->centre,
+                            'reference_id' => $enrollment->reference_id,
+                            'amount'       => '₹' . number_format($enrollment->fee),
+                            'payment_id'   => $paymentId,
+                        ],
+                        $enrollment->first_name,
+                    );
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::warning('Enrollment confirmation email failed', [
+                        'enrollment_id' => $enrollment->id,
+                        'error'         => $e->getMessage(),
+                    ]);
+                }
+            });
+
+            return redirect()->route('enrollment.payment.confirmed', [
+                'ref' => $enrollment->reference_id,
+            ]);
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Payment callback error', ['error' => $e->getMessage()]);
+            return redirect()->route('home')->with('error', 'Payment processing error. Contact support with ref: ' . $referenceId);
+        }
+    }
+
+    /**
+     * Payment confirmed success page
+     */
+    public function paymentConfirmed(Request $request)
+    {
+        $enrollment = Enrollment::where('reference_id', $request->query('ref'))
+            ->where('status', 'confirmed')
+            ->firstOrFail();
+
+        return view('frontend.enrollment.confirmed', compact('enrollment'));
     }
 }

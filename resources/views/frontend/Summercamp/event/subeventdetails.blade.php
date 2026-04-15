@@ -73,6 +73,7 @@
             background: #f4f8ff;
             border-bottom: 1px solid #e4ecf8;
             padding: 11px 0;
+            margin-top: 185px;
             font-size: 13px;
             color: #6b7280
         }
@@ -748,7 +749,7 @@
                 <span class="bc-sep">/</span>
                 <a href="#">Events</a>
                 <span class="bc-sep">/</span>
-                <a href="{{ route('frontend.events.subevent', $sub->event_id) }}">{{ $sub->event->title }}</a>
+                <a href="{{ route('summercamp.event', $sub->event->slug) }}">{{ $sub->event->title }}</a>
                 <span class="bc-sep">/</span>
                 <span class="bc-current">{{ $sub->title }}</span>
             </div>
@@ -785,7 +786,7 @@
                         <i class="bi {{ $pillIcon }}" style="font-size:8px"></i>{{ $statusLabel }}
                     </div>
 
-                    <a href="{{ route('frontend.events.subevent', $sub->event_id) }}"
+                    <a href="{{ route('summercamp.event', $sub->event->slug) }}"
                         class="sd-parent-link d-inline-flex mb-2">
                         <i class="bi bi-arrow-left"></i>{{ $sub->event->title }}
                     </a>
@@ -973,7 +974,7 @@
                                                         <div class="sib-status">
                                                             <div class="{{ $sd }}"></div>{{ $sl }}
                                                         </div>
-                                                        <a href="{{ route('frontend.events.subevent-detail', $sib->id) }}"
+                                                        <a href="{{ route('frontend.events.subevent-detail', $sib->slug) }}"
                                                             class="sib-link">
                                                             View <i class="bi bi-arrow-right"></i>
                                                         </a>
@@ -1022,7 +1023,7 @@
                             <div class="sc">
                                 <div class="sc-body">
                                     @if ($canRegister)
-                                        <a href="{{ route('frontend.events.register', $sub->id) }}" class="btn-reg-cta">
+                                        <a href="{{ route('frontend.events.register', $sub->slug) }}" class="btn-reg-cta">
                                             <i class="bi bi-check2-circle"></i>
                                             {{ $sub->is_free ? 'Register Free' : 'Register — ₹' . number_format($sub->fees, 0) }}
                                         </a>
@@ -1099,7 +1100,7 @@
                                         {{ $sub->event->subEvents->count() }}
                                         session{{ $sub->event->subEvents->count() != 1 ? 's' : '' }} in total
                                     </div>
-                                    <a href="{{ route('frontend.events.subevent', $sub->event_id) }}"
+                                    <a href="{{ route('summercamp.event', $sub->event->slug) }}"
                                         style="display:inline-flex;align-items:center;gap:5px;color:var(--accent-color);font-weight:700;font-size:13px;text-decoration:none">
                                         View All Sessions <i class="bi bi-arrow-right"></i>
                                     </a>

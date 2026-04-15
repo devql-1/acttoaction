@@ -22,6 +22,7 @@ use App\Http\Controllers\admin\CenterController;
 use App\Http\Controllers\admin\ContactInfoController;
 use App\Http\Controllers\admin\CourseCategoryController;
 use App\Http\Controllers\admin\CourseController;
+use App\Http\Controllers\admin\EmailLogController;
 use App\Http\Controllers\admin\EmailTemplateController;
 use App\Http\Controllers\admin\EnquiryController;
 use App\Http\Controllers\admin\EnrollmentController;
@@ -51,6 +52,7 @@ use App\Http\Controllers\admin\TestGraphConfigController;
 use App\Http\Controllers\admin\TestResultRangeController;
 use App\Http\Controllers\admin\TestimonialController;
 use App\Http\Controllers\admin\TestimonialVideoController;
+use App\Http\Controllers\admin\NotificationBannerController;
 use App\Http\Controllers\admin\VideoGalleryController;
 use App\Http\Controllers\admin\VolunteerController;
 use App\Http\Controllers\admin\YoutubeVideoController;
@@ -66,13 +68,25 @@ use App\Http\Controllers\admin\Summercamp\SummerEventController;
 use App\Http\Controllers\admin\Summercamp\SummerSubEventController;
 use App\Http\Controllers\admin\Summercamp\ThemeController;
 use App\Http\Controllers\admin\Summercamp\WorkshopController as SummerWorkshopController;
+use App\Http\Controllers\admin\Summercamp\PartnerController as SummerPartnerController;
+use App\Http\Controllers\admin\Summercamp\PartnerCategoryController as SummerPartnerCategoryController;
+use App\Http\Controllers\admin\Summercamp\SchoolPartnerController;
+use App\Http\Controllers\admin\Summercamp\SchoolPartnerCategoryController;
+use App\Http\Controllers\admin\Summercamp\SchoolSectionController;
 use App\Http\Controllers\admin\WorkshopAgeGroupController;
 use App\Http\Controllers\admin\WorkshopCityController;
 use App\Http\Controllers\admin\WorkshopSchoolController;
+use App\Http\Controllers\admin\WorkshopRegistrationAdminController;
 use App\Http\Controllers\admin\ActionItemController;
+use App\Http\Controllers\admin\MerchandiseController;
+use App\Http\Controllers\admin\AnnouncementBarController;
+use App\Http\Controllers\admin\ChatbotFaqController;
+use App\Http\Controllers\admin\ChatbotSupportTicketController;
+use App\Http\Controllers\admin\NewsletterController as AdminNewsletterController;
 
 // Frontend Controllers
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\BecomePartnerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
@@ -84,10 +98,15 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SummerController;
 use App\Http\Controllers\WorkshopRegistrationController;
 use App\Http\Controllers\frontend\indexController;
+use App\Http\Controllers\ChatbotController;
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                         PUBLIC FRONTEND ROUTES                            ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
+
+// ── Chatbot Public API ──────────────────────────────────────────────────────
+Route::get('/chatbot/faqs', [ChatbotController::class, 'faqs'])->name('chatbot.faqs');
+Route::post('/chatbot/support', [ChatbotController::class, 'submitTicket'])->name('chatbot.support');
 
 // Home & Main Pages
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -95,6 +114,8 @@ Route::get('/aboutus', [HomeController::class, 'about'])->name('aboutus');
 Route::get('/team', [HomeController::class, 'team'])->name('team');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/privacy', [HomeController::class, 'privacy'])->name('privacy');
+Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
+Route::get('/refund', [HomeController::class, 'refund'])->name('refund');
 
 // Services
 Route::get('/service', [HomeController::class, 'service'])->name('service');
@@ -119,63 +140,71 @@ Route::post('/admin/volunteer-submit', [VolunteerController::class, 'store'])->n
 Route::get('/contactus', [HomeController::class, 'contactus'])->name('contactus');
 Route::post('/contactus/listing', [FrontendContactusController::class, 'contactus_store'])->name('home.contactus.store');
 
+// Newsletter
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->middleware('throttle:10,1')->name('newsletter.subscribe');
+
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                           COURSES ROUTES                                  ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
 Route::get('/course', [HomeController::class, 'course'])->name('index.course');
-Route::get('/cat_course/{id}', [HomeController::class, 'cat_course'])->name('course.show');
-Route::get('/course/{id}', [HomeController::class, 'course_details'])->name('course.details');
+Route::get('/cat_course/{courseCategory:slug}', [HomeController::class, 'cat_course'])->name('course.show');
+Route::get('/course/{course:slug}', [HomeController::class, 'course_details'])->name('course.details');
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                           EVENTS ROUTES                                   ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
 Route::get('/event', [HomeController::class, 'event'])->name('event');
-Route::get('/events/{id}', [HomeController::class, 'subevent'])->name('frontend.events.subevent');
+Route::get('/events/{event:slug}', [HomeController::class, 'subevent'])->name('frontend.events.subevent');
 
-// Event Registration
-Route::get('/events/register/{sub_event_id}', [EventRegistrationController::class, 'show'])->name('frontend.events.register');
-Route::post('/events/register/{sub_event_id}', [EventRegistrationController::class, 'store'])->name('frontend.events.register.store');
-Route::post('/events/register/{sub_event_id}/create-order', [EventRegistrationController::class, 'createOrder'])->name('frontend.events.register.create-order');
-Route::post('/events/register/{registration_id}/verify-payment', [EventRegistrationController::class, 'verifyPayment'])->name('frontend.events.register.verify-payment');
+// Event Registration (success must be before {subEvent:slug} to avoid slug collision)
 Route::get('/events/register/success/{id}', [EventRegistrationController::class, 'success'])->name('frontend.events.register.success');
-Route::get('/sub-event/{sub_event_id}/details', [EventRegistrationController::class, 'subEventDetails'])->name('subevent.details');
+Route::get('/events/register/{subEvent:slug}', [EventRegistrationController::class, 'show'])->name('frontend.events.register');
+Route::post('/events/register/{subEvent:slug}', [EventRegistrationController::class, 'store'])->name('frontend.events.register.store');
+Route::post('/events/register/{subEvent:slug}/create-order', [EventRegistrationController::class, 'createOrder'])->name('frontend.events.register.create-order');
+Route::post('/events/register/{registration_id}/verify-payment', [EventRegistrationController::class, 'verifyPayment'])->name('frontend.events.register.verify-payment');
+Route::get('/sub-event/{subEvent:slug}/details', [EventRegistrationController::class, 'subEventDetails'])->name('subevent.details');
 Route::get('/register/success/{id}', [EventRegistrationController::class, 'success'])->name('register.success');
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                           QUIZ/TESTS ROUTES                               ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
-Route::get('/quiz-test', [HomeController::class, 'quicktest'])->name('frontend.tests');
-Route::get('/tests/{id}', [HomeController::class, 'show'])->name('frontend.tests.show');
-Route::get('/take-test/{id}', [HomeController::class, 'take'])->name('quicktest.take');
-Route::post('/test/{id}/submit', [HomeController::class, 'submit'])->name('test.submit');
-Route::get('/test/{id}/result', [HomeController::class, 'result'])->name('test.result');
+Route::get('/skill-assessment', [HomeController::class, 'quicktest'])->name('quiz-test');
+Route::get('/tests/{psychTest:slug}', [HomeController::class, 'show'])->name('frontend.tests.show');
+Route::get('/take-test/{psychTest:slug}', [HomeController::class, 'take'])->name('quicktest.take');
+Route::post('/test/{psychTest:slug}/submit', [HomeController::class, 'submit'])->name('test.submit');
+Route::get('/test/{psychTest:slug}/result', [HomeController::class, 'result'])->name('test.result');
+Route::get('/test/{psychTest:slug}/download-pdf', [HomeController::class, 'downloadPdf'])->name('test.pdf');
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                           ENROLLMENT ROUTES                               ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
-Route::get('/enrollment/{id}', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
-Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->name('enrollment.store');
-Route::post('/verify-payment', [EnrollmentController::class, 'verifyPayment'])->name('enrollment.verify');
-Route::post('/enrollment/validate', [EnrollmentController::class, 'validateField'])->name('enrollment.validate');
+Route::get('/enrollment/{course:slug}', [EnrollmentController::class, 'enroll'])->name('enrollment.enroll');
+Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->middleware('throttle:20,1')->name('enrollment.store');
+Route::post('/verify-payment', [EnrollmentController::class, 'verifyPayment'])->middleware('throttle:10,1')->name('enrollment.verify');
+Route::post('/enrollment/validate', [EnrollmentController::class, 'validateField'])->middleware('throttle:30,1')->name('enrollment.validate');
+Route::get('/enrollment/payment/callback', [EnrollmentController::class, 'paymentCallback'])->name('enrollment.payment.callback');
+Route::get('/enrollment/payment/confirmed', [EnrollmentController::class, 'paymentConfirmed'])->name('enrollment.payment.confirmed');
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                           SUMMER CAMP ROUTES                              ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
 Route::get('/summer-camp', [SummerController::class, 'index'])->name('summercamp');
+Route::get('/summer-camp/partners', [SummerController::class, 'partners'])->name('summercamp.partners');
 Route::get('/summer-camp/events', [SummerController::class, 'event'])->name('event.summercamp');
-Route::get('summercamp/events/{id}', [SummerController::class, 'subevent'])->name('summercamp.event');
-Route::get('summercamp/events/sub/{id}', [SummerController::class, 'subEventDetail'])->name('frontend.events.subevent-detail');
+Route::get('summercamp/events/sub/{subEvent:slug}', [SummerController::class, 'subEventDetail'])->name('frontend.events.subevent-detail');
+Route::get('summercamp/events/{event:slug}', [SummerController::class, 'subevent'])->name('summercamp.event');
 
 // Workshops
 Route::get('/workshops', [SummerWorkshopController::class, 'index'])->name('workshops');
 Route::get('/workshops/{school}', [SummerWorkshopController::class, 'workshopdetails'])->name('workshops.show');
-Route::post('/workshops/{school}/register', [WorkshopRegistrationController::class, 'register'])->name('frontend.summercamp.register.submit');
-Route::post('/register/{registration}/verify', [WorkshopRegistrationController::class, 'verifyPayment'])->name('frontend.summercamp.register.verify');
+Route::get('/workshops/{school}/register', [SummerWorkshopController::class, 'registerPage'])->name('workshops.register');
+Route::post('/workshops/{school}/register', [WorkshopRegistrationController::class, 'register'])->middleware('throttle:10,1')->name('frontend.summercamp.register.submit');
+Route::post('/register/{registration}/verify', [WorkshopRegistrationController::class, 'verifyPayment'])->middleware('throttle:10,1')->name('frontend.summercamp.register.verify');
 
 Route::get('/curriculum', [SummerController::class, 'curriculum'])->name('curriculum');
 
@@ -248,9 +277,19 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('contactus/listing', [FrontendContactusController::class, 'contactus_enquiry'])->name('admin.contactus_enquiry');
         Route::get('/contactus/enquiry-destroy/{id}', [FrontendContactusController::class, 'contactus_destroy'])->name('admin.contactus-destroy');
 
+        // Volunteer Applications
+        Route::get('/volunteers', [VolunteerController::class, 'index'])->name('admin.volunteers.index');
+        Route::post('/volunteers/{id}/status', [VolunteerController::class, 'updateStatus'])->name('admin.volunteers.status');
+        Route::get('/volunteers/destroy/{id}', [VolunteerController::class, 'destroy'])->name('admin.volunteers.destroy');
+
         // Admission Short Form
         Route::get('/admission/short-form/listing', [AdmissionController::class, 'admission_short_form_listing'])->name('admin.admission_short_form');
         Route::get('/admission/short-form/enquiry-destroy/{id}', [AdmissionController::class, 'admission_short_form_destroy'])->name('admin.admission_short_form-destroy');
+
+        // Newsletter Subscribers
+        Route::get('/newsletters', [AdminNewsletterController::class, 'index'])->name('admin.newsletters.index');
+        Route::get('/newsletters/export', [AdminNewsletterController::class, 'exportCsv'])->name('admin.newsletters.export');
+        Route::delete('/newsletters/{id}', [AdminNewsletterController::class, 'destroy'])->name('admin.newsletters.destroy');
 
         // ════════════════════════════════════════════════════════════════════════════
         // SLIDER MANAGEMENT
@@ -261,6 +300,20 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('slider-edit', [SliderController::class, 'update'])->name('admin.slider-update');
         Route::get('slider-destroy/{id}', [SliderController::class, 'destroy'])->name('admin.slider-destroy');
         Route::post('slider/toggle-status', [SliderController::class, 'slider_toggleStatus'])->name('admin.slider-status');
+
+        // Announcement Bar (top strip shown on every frontend page)
+        Route::get('announcement-bar', [AnnouncementBarController::class, 'index'])->name('admin.announcement-bar.index');
+        Route::post('announcement-bar', [AnnouncementBarController::class, 'store'])->name('admin.announcement-bar.store');
+        Route::post('announcement-bar/toggle-status', [AnnouncementBarController::class, 'toggleStatus'])->name('admin.announcement-bar.toggle');
+        Route::post('announcement-bar/{id}', [AnnouncementBarController::class, 'update'])->name('admin.announcement-bar.update');
+        Route::delete('announcement-bar/{id}', [AnnouncementBarController::class, 'destroy'])->name('admin.announcement-bar.destroy');
+
+        // Notification Banners (Bell popup)
+        Route::get('notification-banners', [NotificationBannerController::class, 'index'])->name('admin.notification-banners.index');
+        Route::post('notification-banners', [NotificationBannerController::class, 'store'])->name('admin.notification-banners.store');
+        Route::post('notification-banners/{id}', [NotificationBannerController::class, 'update'])->name('admin.notification-banners.update');
+        Route::post('notification-banners/toggle-status', [NotificationBannerController::class, 'toggleStatus'])->name('admin.notification-banners.toggle');
+        Route::delete('notification-banners/{id}', [NotificationBannerController::class, 'destroy'])->name('admin.notification-banners.destroy');
 
         // ════════════════════════════════════════════════════════════════════════════
         // HERO BANNER MANAGEMENT
@@ -586,6 +639,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Event Registrations
         Route::get('/event-registrations', [EventRegistrationController::class, 'adminIndex'])->name('event-registrations.index');
+        Route::get('/event-registrations/export', [EventRegistrationController::class, 'export'])->name('event-registrations.export');
         Route::get('/event-registrations/{id}', [EventRegistrationController::class, 'adminShow'])->name('event-registrations.show');
         Route::patch('/event-registrations/{id}/status', [EventRegistrationController::class, 'adminUpdateStatus'])->name('event-registrations.status');
 
@@ -652,6 +706,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('admin/email-templates/{id}/test', [EmailTemplateController::class, 'sendTest'])->name('email-templates.test');
 
         // ════════════════════════════════════════════════════════════════════════════
+        // EMAIL LOGS
+        // ════════════════════════════════════════════════════════════════════════════
+
+        Route::get('/email-logs', [EmailLogController::class, 'index'])->name('email-logs.index');
+        Route::delete('/email-logs/{id}', [EmailLogController::class, 'destroy'])->name('email-logs.destroy');
+        Route::post('/email-logs/clear', [EmailLogController::class, 'clearAll'])->name('email-logs.clear');
+
+        // ════════════════════════════════════════════════════════════════════════════
         // SUMMER CAMP MANAGEMENT
         // ════════════════════════════════════════════════════════════════════════════
 
@@ -663,6 +725,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/people/{person}/update', [PersonController::class, 'update'])->name('people-update');
         Route::post('/people/status', [PersonController::class, 'status'])->name('people-status');
         Route::delete('/people/{person}', [PersonController::class, 'destroy'])->name('people-destroy');
+
+        // Summer Camp Partners
+        Route::get('/summer-partners', [SummerPartnerController::class, 'index'])->name('summer-partners.index');
+        Route::get('/summer-partners/create', [SummerPartnerController::class, 'create'])->name('summer-partners.create');
+        Route::post('/summer-partners', [SummerPartnerController::class, 'store'])->name('summer-partners.store');
+        Route::get('/summer-partners/{partner}/edit', [SummerPartnerController::class, 'edit'])->name('summer-partners.edit');
+        Route::put('/summer-partners/{partner}', [SummerPartnerController::class, 'update'])->name('summer-partners.update');
+        Route::post('/summer-partners/status', [SummerPartnerController::class, 'status'])->name('summer-partners.status');
+        Route::delete('/summer-partners/{partner}', [SummerPartnerController::class, 'destroy'])->name('summer-partners.destroy');
 
         // Workshop Age Groups
         Route::get('/workshop-age-groups', [WorkshopAgeGroupController::class, 'index'])->name('workshop-age-groups-index');
@@ -681,6 +752,21 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/workshop-cities/{workshopCity}', [WorkshopCityController::class, 'update'])->name('workshop-cities-update');
         Route::post('/workshop-cities/status', [WorkshopCityController::class, 'status'])->name('workshop-cities-status');
         Route::delete('/workshop-cities/{workshopCity}', [WorkshopCityController::class, 'destroy'])->name('workshop-cities-destroy');
+
+        // Merchandise
+        Route::get('/merchandise', [MerchandiseController::class, 'index'])->name('merchandise.index');
+        Route::get('/merchandise/create', [MerchandiseController::class, 'create'])->name('merchandise.create');
+        Route::post('/merchandise/store', [MerchandiseController::class, 'store'])->name('merchandise.store');
+        Route::get('/merchandise/{merchandise}/edit', [MerchandiseController::class, 'edit'])->name('merchandise.edit');
+        Route::put('/merchandise/{merchandise}', [MerchandiseController::class, 'update'])->name('merchandise.update');
+        Route::post('/merchandise/status', [MerchandiseController::class, 'status'])->name('merchandise.status');
+        Route::delete('/merchandise/{merchandise}', [MerchandiseController::class, 'destroy'])->name('merchandise.destroy');
+
+        // Workshop Registrations
+        Route::get('/workshop-registrations', [WorkshopRegistrationAdminController::class, 'index'])->name('workshop-registrations.index');
+        Route::get('/workshop-registrations/export', [WorkshopRegistrationAdminController::class, 'export'])->name('workshop-registrations.export');
+        Route::get('/workshop-registrations/{id}', [WorkshopRegistrationAdminController::class, 'show'])->name('workshop-registrations.show');
+        Route::patch('/workshop-registrations/{id}/status', [WorkshopRegistrationAdminController::class, 'updateStatus'])->name('workshop-registrations.status');
 
         // Workshop Schools
         Route::get('/workshop-schools', [WorkshopSchoolController::class, 'index'])->name('workshop-schools-index');
@@ -752,6 +838,51 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('summer-sub-events/{id}', [SummerSubEventController::class, 'destroy'])->name('summer-sub-events.destroy');
         Route::post('summer-sub-events/status', [SummerSubEventController::class, 'status'])->name('summer-sub-events.status');
 
+        // Summer Camp Partners
+        Route::get('summer-partners', [SummerPartnerController::class, 'index'])->name('summer-partners.index');
+        Route::get('summer-partners/create', [SummerPartnerController::class, 'create'])->name('summer-partners.create');
+        Route::post('summer-partners', [SummerPartnerController::class, 'store'])->name('summer-partners.store');
+        Route::post('summer-partners/status', [SummerPartnerController::class, 'status'])->name('summer-partners.status');
+        Route::get('summer-partners/{partner}/edit', [SummerPartnerController::class, 'edit'])->name('summer-partners.edit');
+        Route::put('summer-partners/{partner}', [SummerPartnerController::class, 'update'])->name('summer-partners.update');
+        Route::delete('summer-partners/{partner}', [SummerPartnerController::class, 'destroy'])->name('summer-partners.destroy');
+
+        // Summer Camp Partner Categories
+        Route::get('summer-partner-categories', [SummerPartnerCategoryController::class, 'index'])->name('summer-partner-categories.index');
+        Route::get('summer-partner-categories/create', [SummerPartnerCategoryController::class, 'create'])->name('summer-partner-categories.create');
+        Route::post('summer-partner-categories', [SummerPartnerCategoryController::class, 'store'])->name('summer-partner-categories.store');
+        Route::post('summer-partner-categories/status', [SummerPartnerCategoryController::class, 'status'])->name('summer-partner-categories.status');
+        Route::get('summer-partner-categories/{summerPartnerCategory}/edit', [SummerPartnerCategoryController::class, 'edit'])->name('summer-partner-categories.edit');
+        Route::put('summer-partner-categories/{summerPartnerCategory}', [SummerPartnerCategoryController::class, 'update'])->name('summer-partner-categories.update');
+        Route::delete('summer-partner-categories/{summerPartnerCategory}', [SummerPartnerCategoryController::class, 'destroy'])->name('summer-partner-categories.destroy');
+
+        // School Sections (parent pages like Curriculum, DFD)
+        Route::get('school-sections', [SchoolSectionController::class, 'index'])->name('school-sections.index');
+        Route::get('school-sections/create', [SchoolSectionController::class, 'create'])->name('school-sections.create');
+        Route::post('school-sections', [SchoolSectionController::class, 'store'])->name('school-sections.store');
+        Route::post('school-sections/status', [SchoolSectionController::class, 'status'])->name('school-sections.status');
+        Route::get('school-sections/{schoolSection}/edit', [SchoolSectionController::class, 'edit'])->name('school-sections.edit');
+        Route::put('school-sections/{schoolSection}', [SchoolSectionController::class, 'update'])->name('school-sections.update');
+        Route::delete('school-sections/{schoolSection}', [SchoolSectionController::class, 'destroy'])->name('school-sections.destroy');
+
+        // School Partners (under sections)
+        Route::get('school-partners', [SchoolPartnerController::class, 'index'])->name('school-partners.index');
+        Route::get('school-partners/create', [SchoolPartnerController::class, 'create'])->name('school-partners.create');
+        Route::post('school-partners', [SchoolPartnerController::class, 'store'])->name('school-partners.store');
+        Route::post('school-partners/status', [SchoolPartnerController::class, 'status'])->name('school-partners.status');
+        Route::get('school-partners/{schoolPartner}/edit', [SchoolPartnerController::class, 'edit'])->name('school-partners.edit');
+        Route::put('school-partners/{schoolPartner}', [SchoolPartnerController::class, 'update'])->name('school-partners.update');
+        Route::delete('school-partners/{schoolPartner}', [SchoolPartnerController::class, 'destroy'])->name('school-partners.destroy');
+
+        // School Partner Categories
+        Route::get('school-partner-categories', [SchoolPartnerCategoryController::class, 'index'])->name('school-partner-categories.index');
+        Route::get('school-partner-categories/create', [SchoolPartnerCategoryController::class, 'create'])->name('school-partner-categories.create');
+        Route::post('school-partner-categories', [SchoolPartnerCategoryController::class, 'store'])->name('school-partner-categories.store');
+        Route::post('school-partner-categories/status', [SchoolPartnerCategoryController::class, 'status'])->name('school-partner-categories.status');
+        Route::get('school-partner-categories/{schoolPartnerCategory}/edit', [SchoolPartnerCategoryController::class, 'edit'])->name('school-partner-categories.edit');
+        Route::put('school-partner-categories/{schoolPartnerCategory}', [SchoolPartnerCategoryController::class, 'update'])->name('school-partner-categories.update');
+        Route::delete('school-partner-categories/{schoolPartnerCategory}', [SchoolPartnerCategoryController::class, 'destroy'])->name('school-partner-categories.destroy');
+
         Route::get('action-items', [ActionItemController::class, 'index'])->name('action-items.index');
         Route::get('action-items/create', [ActionItemController::class, 'create'])->name('action-items.create');
         Route::post('action-items', [ActionItemController::class, 'store'])->name('action-items.store');
@@ -764,6 +895,22 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('galleryCategories', \App\Http\Controllers\admin\GalleryCategoryController::class);
 
         Route::resource('galleries', \App\Http\Controllers\admin\GalleryController::class);
+
+        // ── Chatbot FAQ Management ──────────────────────────────────────────────
+        Route::get('chatbot/faq', [ChatbotFaqController::class, 'index'])->name('admin.chatbot-faq');
+        Route::get('chatbot/faq/create', [ChatbotFaqController::class, 'create'])->name('admin.chatbot-faq-create');
+        Route::post('chatbot/faq/store', [ChatbotFaqController::class, 'store'])->name('admin.chatbot-faq-store');
+        Route::get('chatbot/faq/{id}/edit', [ChatbotFaqController::class, 'edit'])->name('admin.chatbot-faq-edit');
+        Route::post('chatbot/faq/{id}/update', [ChatbotFaqController::class, 'update'])->name('admin.chatbot-faq-update');
+        Route::get('chatbot/faq/{id}/destroy', [ChatbotFaqController::class, 'destroy'])->name('admin.chatbot-faq-destroy');
+        Route::post('chatbot/faq/toggle-status', [ChatbotFaqController::class, 'toggleStatus'])->name('admin.chatbot-faq-status');
+
+        // ── Chatbot Support Tickets ─────────────────────────────────────────────
+        Route::get('chatbot/tickets', [ChatbotSupportTicketController::class, 'index'])->name('admin.chatbot-tickets');
+        Route::get('chatbot/tickets/{id}', [ChatbotSupportTicketController::class, 'show'])->name('admin.chatbot-tickets-show');
+        Route::post('chatbot/tickets/{id}/status', [ChatbotSupportTicketController::class, 'updateStatus'])->name('admin.chatbot-tickets-status');
+        Route::get('chatbot/tickets/{id}/destroy', [ChatbotSupportTicketController::class, 'destroy'])->name('admin.chatbot-tickets-destroy');
+        Route::get('chatbot/tickets/new-count', [ChatbotSupportTicketController::class, 'newCount'])->name('admin.chatbot-tickets-count');
 
         Route::get('payments/', [App\Http\Controllers\admin\PaymentController::class, 'index'])->name('payments.index');
 
@@ -803,3 +950,14 @@ Route::get('/test-mail', function () {
 
     return 'Mail sent!';
 });
+
+// ── Dynamic school section pages (placed LAST to avoid shadowing other routes) ──
+// URL: /{section-slug}              e.g. /curriculum, /dfd
+// URL: /{section-slug}/{cat-slug}   e.g. /curriculum/cbse-schools, /dfd/icse-schools
+Route::get('/{section:slug}', [SummerController::class, 'schoolSection'])
+    ->name('school.section')
+    ->where('section', '[a-z0-9\-]+');
+
+Route::get('/{section:slug}/{category:slug}', [SummerController::class, 'schoolSectionCategory'])
+    ->name('school.section.category')
+    ->where(['section' => '[a-z0-9\-]+', 'category' => '[a-z0-9\-]+']);

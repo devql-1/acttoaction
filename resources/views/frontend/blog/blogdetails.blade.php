@@ -167,7 +167,7 @@
         /* Blog Hero */
         .blog-hero {
             background: linear-gradient(135deg, var(--heading-color) 0%, #1a3a5c 50%, #0f172a 100%);
-            padding: 4rem 0;
+            padding: 12rem 0 4rem;
             position: relative;
             overflow: hidden;
         }
@@ -1276,14 +1276,13 @@
 
                         {{-- Newsletter --}}
                         <div class="sidebar-card"
-                            style="background:linear-gradient(135deg,rgba(23,92,221,.05),rgba(23,92,221,.02));border-color:rgba(23,92,221,.2);">
+                            style="background:linear-gradient(135deg,rgba(23,92,221,.05),rgba(23,92,221,.02));border-color:rgba(23,92,221,.2);"
+                            data-newsletter data-source="blogdetails">
                             <h3>Newsletter</h3>
-                            <form class="newsletter-form" onsubmit="subscribeNewsletter(event,this)">
-                                <p>Get the latest tips, success stories, and exclusive workshop updates delivered to your
-                                    inbox.</p>
-                                <input type="email" placeholder="Your email address" required>
-                                <button type="submit" class="btn btn-primary">Subscribe</button>
-                            </form>
+                            <p>Get the latest tips, success stories, and exclusive workshop updates delivered to your
+                                inbox.</p>
+                            <input type="email" class="newsletter-email-input" placeholder="Your email address">
+                            <button type="button" class="btn btn-primary newsletter-subscribe-btn">Subscribe</button>
                         </div>
 
                     </aside>
@@ -1339,14 +1338,14 @@
         {{-- ===== NEWSLETTER CTA ===== --}}
         <section class="newsletter-cta">
             <div class="container">
-                <div class="newsletter-cta-content">
+                <div class="newsletter-cta-content" data-newsletter data-source="blogdetails">
                     <h2>Stay Updated with Our Latest News</h2>
                     <p>Subscribe to our newsletter for exclusive tips, success stories, and updates on workshops and events.
                     </p>
-                    <form class="newsletter-cta-form" onsubmit="subscribeNewsletter(event,this)">
-                        <input type="email" placeholder="Enter your email address" required>
-                        <button type="submit" class="btn btn-primary">Subscribe Now</button>
-                    </form>
+                    <div class="newsletter-cta-form">
+                        <input type="email" class="newsletter-email-input" placeholder="Enter your email address">
+                        <button type="button" class="btn btn-primary newsletter-subscribe-btn">Subscribe Now</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1381,28 +1380,6 @@
 
             // Optional: persist to server via AJAX
             // fetch('/blog/{{ $blog->id }}/like', { method:'POST', headers:{'X-CSRF-TOKEN':'{{ csrf_token() }}'} });
-        }
-
-        // ── Newsletter ─────────────────────────────────────────────────────────────
-        function subscribeNewsletter(e, form) {
-            e.preventDefault();
-            const btn = form.querySelector('button[type="submit"]');
-            const input = form.querySelector('input[type="email"]');
-            const orig = btn.textContent;
-
-            btn.textContent = 'Subscribing…';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.textContent = '✓ Subscribed!';
-                btn.style.background = '#16a34a';
-                input.value = '';
-                setTimeout(() => {
-                    btn.textContent = orig;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                }, 3000);
-            }, 800);
         }
 
         // ── Reading progress bar ───────────────────────────────────────────────────

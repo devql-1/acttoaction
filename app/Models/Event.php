@@ -4,12 +4,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Event extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'event_date', 'event_end_date', 'banner_image', 'instagram_link', 'highlights_link', 'status', 'type'];
+    protected $fillable = ['title', 'slug', 'description', 'event_date', 'event_end_date', 'banner_image', 'instagram_link', 'highlights_link', 'status', 'type'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->slug)) {
+                $model->slug = static::uniqueSlug(Str::slug($model->title) ?: 'event');
+            }
+        });
+        static::updating(function ($model) {
+            if ($model->isDirty('title') && empty($model->getOriginal('slug'))) {
+                $model->slug = static::uniqueSlug(Str::slug($model->title) ?: 'event', $model->id);
+            }
+        });
+    }
+
+    protected static function uniqueSlug(string $base, int $excludeId = 0): string
+    {
+        $slug  = $base;
+        $count = 1;
+        while (static::where('slug', $slug)->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))->exists()) {
+            $slug = $base . '-' . $count++;
+        }
+        return $slug;
+    }
 
     protected $casts = [
         'event_date' => 'date',

@@ -1153,6 +1153,47 @@
                 font-size: 12px;
             }
         }
+
+        /* ── Phone prefix wrapper ── */
+        .phone-pfx-wrap {
+            display: flex;
+            align-items: stretch;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .phone-pfx {
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            background: #f3f6fb;
+            border-right: 1.5px solid var(--border);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+            white-space: nowrap;
+            gap: 4px;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        .phone-pfx-wrap .fi {
+            border: none !important;
+            border-radius: 0 !important;
+            flex: 1;
+            min-width: 0;
+        }
+        .phone-pfx-wrap:focus-within {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 4px rgba(23, 92, 221, .1);
+        }
+        .phone-pfx-wrap.has-error {
+            border-color: var(--error);
+            background: #fff8f8;
+        }
+        .phone-pfx-wrap.is-valid {
+            border-color: var(--success);
+        }
     </style>
 
     @php
@@ -1389,13 +1430,28 @@
                         </div>
                         <div class="row-2">
                             <div class="field-group">
-                                <label>Parent Phone <span class="req">*</span></label>
-                                <input class="fi" type="tel" id="parentPhone" placeholder="e.g. 98765 43210"
-                                    maxlength="15" />
+                                <label>Father's Phone <span class="req">*</span></label>
+                                <div class="phone-pfx-wrap" id="wrap-parentPhone">
+                                    <span class="phone-pfx">+91</span>
+                                    <input class="fi" type="tel" id="parentPhone" placeholder="10-digit number"
+                                        maxlength="10" inputmode="numeric" />
+                                </div>
                                 <div class="field-hint">We'll send updates via WhatsApp</div>
                                 <div class="field-error" id="err-parentPhone"><i class="bi bi-exclamation-circle"></i> A
                                     valid 10-digit phone number is required</div>
                             </div>
+                            <div class="field-group">
+                                <label>Mother's Phone <span class="opt">(optional)</span></label>
+                                <div class="phone-pfx-wrap" id="wrap-motherPhone">
+                                    <span class="phone-pfx">+91</span>
+                                    <input class="fi" type="tel" id="motherPhone" placeholder="10-digit number"
+                                        maxlength="10" inputmode="numeric" />
+                                </div>
+                                <div class="field-error" id="err-motherPhone"><i class="bi bi-exclamation-circle"></i>
+                                    Enter a valid 10-digit phone number</div>
+                            </div>
+                        </div>
+                        <div class="row-2">
                             <div class="field-group">
                                 <label>Parent Email <span class="req">*</span></label>
                                 <input class="fi" type="email" id="parentEmail"
@@ -1433,9 +1489,10 @@
                         <div class="row-2">
                             <div class="field-group">
                                 <label>Phone Number <span class="req">*</span></label>
-                                <div style="position:relative;">
-                                    <input class="fi" type="tel" id="phone" placeholder="e.g. 93520 23276"
-                                        maxlength="15" />
+                                <div class="phone-pfx-wrap" id="wrap-phone" style="position:relative;">
+                                    <span class="phone-pfx">+91</span>
+                                    <input class="fi" type="tel" id="phone" placeholder="10-digit number"
+                                        maxlength="10" inputmode="numeric" />
                                     <span class="ajax-indicator" id="ajax-phone"></span>
                                 </div>
                                 <div class="field-error" id="err-phone"><i class="bi bi-exclamation-circle"></i> A valid
@@ -1527,24 +1584,16 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div class="row-2">
-                            <div class="field-group">
-                                <label>State <span class="req">*</span></label>
-                                <select class="fi" id="state" onchange="updateCentres()">
-                                    <option value="">— Select State —</option>
-                                    @foreach ($courseStates as $sName)
-                                        <option value="{{ $sName }}">{{ $sName }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="field-error" id="err-state"><i class="bi bi-exclamation-circle"></i> Please
-                                    select your state</div>
-                            </div>
-                            <div class="field-group">
-                                <label>Preferred City <span class="req">*</span></label>
-                                <input class="fi" type="text" id="city" placeholder="Your city name" />
-                                <div class="field-error" id="err-city"><i class="bi bi-exclamation-circle"></i> Please
-                                    enter your city</div>
-                            </div>
+                        <div class="field-group">
+                            <label>City <span class="req">*</span></label>
+                            <select class="fi" id="state" onchange="updateCentres()">
+                                <option value="">— Select City —</option>
+                                @foreach ($courseStates as $sName)
+                                    <option value="{{ $sName }}">{{ $sName }}</option>
+                                @endforeach
+                            </select>
+                            <div class="field-error" id="err-state"><i class="bi bi-exclamation-circle"></i> Please
+                                select your state</div>
                         </div>
                         <div class="field-group">
                             <label>Act to Action Centre <span class="req">*</span></label>
@@ -1675,8 +1724,8 @@
                                         </span>
                                     </div>
                                     @if ($course->description)
-                                        <p style="font-size:13px;color:#6b7280;line-height:1.6;margin:0;">
-                                            {{ Str::limit($course->description, 120) }}</p>
+                                        <div style="font-size:13px;color:#6b7280;line-height:1.6;margin:0;">
+                                            {!! Str::limit(strip_tags($course->description), 120) !!}</div>
                                     @endif
                                 </div>
                                 {{-- Dynamic fee box — updated by JS when centre is chosen --}}
@@ -1818,6 +1867,10 @@
                         </div>
                         <div class="field-error" id="err-terms"><i class="bi bi-exclamation-circle"></i> You must agree
                             to the Terms &amp; Conditions to continue</div>
+                        <div id="submit-error-box" style="display:none;margin-top:14px;background:#fef2f2;border:1.5px solid #fecaca;border-radius:12px;padding:14px 18px;font-size:13px;color:#dc2626;line-height:1.6;">
+                            <div style="font-weight:700;margin-bottom:6px;"><i class="bi bi-exclamation-triangle-fill"></i> Please fix the following:</div>
+                            <div id="submit-error-list"></div>
+                        </div>
                     </div>
                     <div class="panel-footer">
                         <button class="btn-back" onclick="prevStep(5)"><i class="bi bi-arrow-left"></i> <span
@@ -1888,10 +1941,8 @@
     </main>
 
     {{-- ===================== Scripts ===================== --}}
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    {{-- checkout.js removed: Payment Link flow keeps Razorpay key server-side only --}}
     <script>
-        const RAZORPAY_PUBLIC_KEY = @json(config('services.razorpay.key'));
-
         var CENTRE_DATA = @json($centresByState);
         var COURSE_STATES = @json($courseStates);
 
@@ -1971,7 +2022,8 @@
         }
 
         document.getElementById('phone').addEventListener('blur', function() {
-            if (this.value.replace(/\D/g, '').length >= 10) ajaxValidateField('phone', this.value);
+            var digits = this.value.replace(/\D/g, '');
+            if (digits.length === 10) ajaxValidateField('phone', '+91' + digits);
         });
         document.getElementById('phone').addEventListener('input', function() {
             var ind = document.getElementById('ajax-phone');
@@ -1981,6 +2033,14 @@
             _ajaxCache = Object.fromEntries(Object.entries(_ajaxCache).filter(function(e) {
                 return !e[0].startsWith('phone:');
             }));
+        });
+
+        // Restrict phone inputs to digits only
+        ['parentPhone', 'motherPhone', 'phone'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
         });
 
         document.getElementById('email').addEventListener('blur', function() {
@@ -2086,14 +2146,12 @@
 
         // ── Coupon ─────────────────────────────────────────────────────────────
         function applyCoupon() {
-            var code = document.getElementById('coupon').value.trim().toUpperCase();
+            var code = document.getElementById('coupon').value.trim();
             var badge = document.getElementById('couponBadge');
-            var valid = ['WELCOME20', 'ATA100', 'TRYACT', 'FREE50'];
-            if (valid.indexOf(code) !== -1) {
+            if (code.length > 0) {
                 badge.style.display = 'inline-flex';
             } else {
                 badge.style.display = 'none';
-                if (code) alert('Invalid coupon code. Try WELCOME20 for ₹200 off.');
             }
         }
 
@@ -2150,6 +2208,8 @@
             if (el) el.classList.toggle('show', show);
             var fi = document.getElementById(id);
             if (fi) fi.classList.toggle('has-error', show);
+            var wrap = document.getElementById('wrap-' + id);
+            if (wrap) wrap.classList.toggle('has-error', show);
         }
 
         // ── Validation ─────────────────────────────────────────────────────────
@@ -2180,12 +2240,14 @@
             } else if (step === 1) {
                 req('fatherName', document.getElementById('fatherName').value.trim() !== '');
                 req('motherName', document.getElementById('motherName').value.trim() !== '');
-                req('parentPhone', document.getElementById('parentPhone').value.replace(/\D/g, '').length >= 10);
+                req('parentPhone', document.getElementById('parentPhone').value.replace(/\D/g, '').length === 10);
+                var mPh = document.getElementById('motherPhone').value.replace(/\D/g, '');
+                req('motherPhone', mPh === '' || mPh.length === 10);
                 req('parentEmail', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('parentEmail').value.trim()));
 
             } else if (step === 2) {
                 var ph = document.getElementById('phone').value.replace(/\D/g, '');
-                req('phone', ph.length >= 10);
+                req('phone', ph.length === 10);
                 req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
                 req('address', document.getElementById('address').value.trim() !== '');
                 req('school', document.getElementById('school').value.trim() !== '');
@@ -2195,7 +2257,6 @@
             } else if (step === 3) {
                 req('state', document.getElementById('state').value !== '');
                 req('centre', document.getElementById('centre').value !== '');
-                req('city', document.getElementById('city').value.trim() !== '');
 
             } else if (step === 4) {
                 req('course', document.querySelector('input[name="course"]:checked') !== null);
@@ -2251,16 +2312,17 @@
                         gender: radioVal('gender'),
                         father_name: getVal('fatherName'),
                         mother_name: getVal('motherName'),
-                        parent_phone: getVal('parentPhone'),
+                        mother_phone: getVal('motherPhone') ? '+91' + getVal('motherPhone').replace(/\D/g, '') : null,
+                        parent_phone: '+91' + getVal('parentPhone').replace(/\D/g, ''),
                         parent_email: getVal('parentEmail'),
-                        phone: getVal('phone'),
+                        phone: '+91' + getVal('phone').replace(/\D/g, ''),
                         email: getVal('email'),
                         address: getVal('address'),
                         school: getVal('school'),
                         grade: getVal('grade'),
                         achievements: getVal('achievements'),
                         state: getVal('state'),
-                        city: getVal('city'),
+                        city: getVal('state'),
                         centre: getVal('centre'),
                         centre_id: centre.id,
                         centre_fees: centre.fees,
@@ -2293,19 +2355,19 @@
                 ['Gender', radioVal('gender')],
                 ["Father's Name", getVal('fatherName')],
                 ["Mother's Name", getVal('motherName')],
-                ['Parent Phone', getVal('parentPhone')],
+                ["Father's Phone", getVal('parentPhone') ? '+91 ' + getVal('parentPhone').replace(/\D/g, '') : '—'],
+                ["Mother's Phone", getVal('motherPhone') ? '+91 ' + getVal('motherPhone').replace(/\D/g, '') : '—'],
                 ['Parent Email', getVal('parentEmail')],
-                ['Phone', getVal('phone')],
+                ['Phone', getVal('phone') ? '+91 ' + getVal('phone').replace(/\D/g, '') : '—'],
                 ['Email', getVal('email')],
                 ['Address', getVal('address')],
                 ['School', getVal('school')],
                 ['Class', getVal('grade')],
                 ['Achievements', getVal('achievements')],
                 ['State', getVal('state')],
-                ['City', getVal('city')],
                 ['Centre', getVal('centre')],
                 ['Mode', radioVal('mode')],
-                ['Course', radioVal('course')],
+                ['Course', '{{ $course->title }}'],
                 ['Course Fee', feeText],
                 ['Coupon', (getVal('coupon') && getVal('coupon') !== '—') ? getVal('coupon') : 'None'],
             ];
@@ -2315,10 +2377,19 @@
             for (var i = 0; i < items.length; i++) {
                 var div = document.createElement('div');
                 div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
-                div.innerHTML =
-                    '<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;">' +
-                    items[i][0] + '</div>' +
-                    '<div style="font-size:14px;font-weight:600;color:var(--ink);">' + items[i][1] + '</div>';
+
+                // Use textContent (not innerHTML) to prevent DOM XSS from user-typed values
+                var label = document.createElement('div');
+                label.style.cssText =
+                    'font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;';
+                label.textContent = items[i][0];
+
+                var value = document.createElement('div');
+                value.style.cssText = 'font-size:14px;font-weight:600;color:var(--ink);';
+                value.textContent = items[i][1];
+
+                div.appendChild(label);
+                div.appendChild(value);
                 grid.appendChild(div);
             }
         }
@@ -2363,23 +2434,25 @@
                 gender: radioVal('gender'),
                 father_name: getVal('fatherName'),
                 mother_name: getVal('motherName'),
-                parent_phone: getVal('parentPhone'),
+                mother_phone: getVal('motherPhone') ? '+91' + getVal('motherPhone').replace(/\D/g, '') : null,
+                parent_phone: '+91' + getVal('parentPhone').replace(/\D/g, ''),
                 parent_email: getVal('parentEmail'),
-                phone: getVal('phone'),
+                phone: '+91' + getVal('phone').replace(/\D/g, ''),
                 email: getVal('email'),
                 address: getVal('address'),
                 school: getVal('school'),
                 grade: getVal('grade'),
                 achievements: getVal('achievements'),
                 state: getVal('state'),
-                city: getVal('city'),
+                city: getVal('state'),
                 centre: getVal('centre'),
                 centre_id: centre.id,
                 centre_fees: centre.fees,
                 mode: radioVal('mode'),
-                course: radioVal('course'),
+                course: '{{ $course->title }}',
                 coupon: getVal('coupon'),
-                newsletter: document.getElementById('newsletter').checked ? 1 : 0,
+                newsletter_subscribed: document.getElementById('newsletter').checked ? 1 : 0,
+                terms_accepted: document.getElementById('terms').checked ? 1 : 0,
                 enrollment_id: _enrollmentId,
             };
 
@@ -2399,16 +2472,22 @@
                 .then(function(res) {
                     if (res.status === 422) {
                         return res.json().then(function(data) {
-                            var msgs = data.errors ? Object.values(data.errors).flat().join('\n') :
-                                'Validation failed.';
-                            alert('Please fix the following:\n\n' + msgs);
+                            var lines = [];
+                            if (data.errors) {
+                                lines = Object.values(data.errors).flat();
+                            } else if (data.message) {
+                                lines = [data.message];
+                            } else {
+                                lines = ['Validation failed. Please check all fields.'];
+                            }
+                            showSubmitError(lines);
                             btn.disabled = false;
                             btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
                         });
                     }
                     if (!res.ok) {
                         return res.text().then(function() {
-                            alert('Server error (' + res.status + '). Please try again.');
+                            showSubmitError(['Server error (' + res.status + '). Please try again.']);
                             btn.disabled = false;
                             btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
                         });
@@ -2417,41 +2496,31 @@
                 })
                 .then(function(data) {
                     if (!data || !data.success) return;
-                    var rzp = new Razorpay({
-                        key: RAZORPAY_PUBLIC_KEY,
-                        amount: data.amount,
-                        currency: 'INR',
-                        name: 'Act To Action',
-                        description: 'Course Enrollment',
-                        order_id: data.order_id,
-                        handler: function(response) {
-                            verifyPayment(response, data.enrollment_id);
-                        },
-                        prefill: {
-                            name: payload.first_name + ' ' + payload.last_name,
-                            email: payload.email,
-                            contact: payload.phone,
-                        },
-                        theme: {
-                            color: '#175cdd'
-                        },
-                        modal: {
-                            ondismiss: function() {
-                                btn.disabled = false;
-                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                            }
-                        }
-                    });
-                    rzp.open();
+                    hideSubmitError();
+                    window.location.href = data.payment_url;
                 })
                 .catch(function() {
-                    alert('Network error. Please check your connection and try again.');
+                    showSubmitError(['Network error. Please check your connection and try again.']);
                     btn.disabled = false;
                     btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
                 });
         }
 
-        // ── Verify payment ─────────────────────────────────────────────────────
+        function showSubmitError(lines) {
+            var box = document.getElementById('submit-error-box');
+            var list = document.getElementById('submit-error-list');
+            if (!box || !list) return;
+            list.innerHTML = lines.map(function(l) { return '<div>• ' + l + '</div>'; }).join('');
+            box.style.display = 'block';
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function hideSubmitError() {
+            var box = document.getElementById('submit-error-box');
+            if (box) box.style.display = 'none';
+        }
+
+        // ── Verify payment (kept for backward compatibility, no longer called) ──
         function verifyPayment(response, enrollmentId) {
             fetch('{{ route('enrollment.verify') }}', {
                     method: 'POST',
@@ -2643,7 +2712,7 @@
 
         document.getElementById('phone').addEventListener('blur', function() {
             var val = this.value.replace(/\D/g, '');
-            if (val.length >= 10) ajaxValidateField('phone', this.value, {});
+            if (val.length === 10) ajaxValidateField('phone', '+91' + val, {});
         });
 
         document.getElementById('phone').addEventListener('input', function() {
@@ -2737,14 +2806,12 @@
         }
 
         function applyCoupon() {
-            var code = document.getElementById('coupon').value.trim().toUpperCase();
+            var code = document.getElementById('coupon').value.trim();
             var badge = document.getElementById('couponBadge');
-            var valid = ['WELCOME20', 'ATA100', 'TRYACT', 'FREE50'];
-            if (valid.indexOf(code) !== -1) {
+            if (code.length > 0) {
                 badge.style.display = 'inline-flex';
             } else {
                 badge.style.display = 'none';
-                if (code) alert('Invalid coupon code. Try WELCOME20 for \u20b9200 off.');
             }
         }
 
@@ -2798,6 +2865,8 @@
             if (el) el.classList.toggle('show', show);
             var fi = document.getElementById(id);
             if (fi) fi.classList.toggle('has-error', show);
+            var wrap = document.getElementById('wrap-' + id);
+            if (wrap) wrap.classList.toggle('has-error', show);
         }
 
         function validateStep(step) {
@@ -2830,7 +2899,7 @@
 
             } else if (step === 2) {
                 var ph = document.getElementById('phone').value.replace(/\D/g, '');
-                req('phone', ph.length >= 10);
+                req('phone', ph.length === 10);
                 req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
                 req('school', document.getElementById('school').value.trim() !== '');
                 req('grade', document.getElementById('grade').value !== '');
@@ -2890,16 +2959,16 @@
                         gender: radioVal('gender'),
                         father_name: getVal('fatherName'),
                         mother_name: getVal('motherName'),
-                        parent_phone: getVal('parentPhone'),
+                        parent_phone: '+91' + getVal('parentPhone').replace(/\D/g, ''),
                         parent_email: getVal('parentEmail'),
-                        phone: getVal('phone'),
+                        phone: '+91' + getVal('phone').replace(/\D/g, ''),
                         email: getVal('email'),
                         address: getVal('address'),
                         school: getVal('school'),
                         grade: getVal('grade'),
                         achievements: getVal('achievements'),
                         state: getVal('state'),
-                        city: getVal('city'),
+                        city: getVal('state'),
                         centre: getVal('centre'),
                         mode: radioVal('mode'),
                         course: '{{ $course->title }}',
@@ -2925,14 +2994,14 @@
                 ['Gender', radioVal('gender')],
                 ["Father's Name", getVal('fatherName')],
                 ["Mother's Name", getVal('motherName')],
-                ['Phone', getVal('phone')],
+                ['Phone', getVal('phone') ? '+91 ' + getVal('phone').replace(/\D/g, '') : '—'],
                 ['Email', getVal('email')],
                 ['School', getVal('school')],
                 ['Class', getVal('grade')],
                 ['State', getVal('state')],
                 ['Centre', getVal('centre')],
                 ['Mode', radioVal('mode')],
-                ['Course', radioVal('course')],
+                ['Course', '{{ $course->title }}'],
                 ['Coupon', (getVal('coupon') && getVal('coupon') !== '\u2014') ? getVal('coupon') : 'None'],
             ];
             var grid = document.getElementById('summary-grid');
@@ -2940,10 +3009,18 @@
             for (var i = 0; i < items.length; i++) {
                 var div = document.createElement('div');
                 div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
-                div.innerHTML =
-                    '<div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;">' +
-                    items[i][0] + '</div>' +
-                    '<div style="font-size:14px;font-weight:600;color:var(--ink);">' + items[i][1] + '</div>';
+
+                // Use textContent (not innerHTML) to prevent DOM XSS from user-typed values
+                var label = document.createElement('div');
+                label.style.cssText = 'font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;';
+                label.textContent = items[i][0];
+
+                var value = document.createElement('div');
+                value.style.cssText = 'font-size:14px;font-weight:600;color:var(--ink);';
+                value.textContent = items[i][1];
+
+                div.appendChild(label);
+                div.appendChild(value);
                 grid.appendChild(div);
             }
         }
@@ -2985,21 +3062,23 @@
                 gender: radioVal('gender'),
                 father_name: getVal('fatherName'),
                 mother_name: getVal('motherName'),
-                parent_phone: getVal('parentPhone'),
+                parent_phone: '+91' + getVal('parentPhone').replace(/\D/g, ''),
                 parent_email: getVal('parentEmail'),
-                phone: getVal('phone'),
+                phone: '+91' + getVal('phone').replace(/\D/g, ''),
                 email: getVal('email'),
                 address: getVal('address'),
                 school: getVal('school'),
                 grade: getVal('grade'),
                 achievements: getVal('achievements'),
                 state: getVal('state'),
-                city: getVal('city'),
+                city: getVal('state'),
                 centre: getVal('centre'),
+                centre_id: getSelectedCentre().id,
                 mode: radioVal('mode'),
-                course: radioVal('course'),
+                course: '{{ $course->title }}',
                 coupon: getVal('coupon'),
-                newsletter: document.getElementById('newsletter').checked ? 1 : 0,
+                newsletter_subscribed: document.getElementById('newsletter').checked ? 1 : 0,
+                terms_accepted: document.getElementById('terms').checked ? 1 : 0,
                 enrollment_id: _enrollmentId,
             };
 
@@ -3019,8 +3098,14 @@
                 .then(function(res) {
                     if (res.status === 422) {
                         return res.json().then(function(data) {
-                            var msgs = data.errors ? Object.values(data.errors).flat().join('\n') :
-                                'Validation failed.';
+                            var msgs;
+                            if (data.errors) {
+                                msgs = Object.values(data.errors).flat().join('\n');
+                            } else if (data.message) {
+                                msgs = data.message;
+                            } else {
+                                msgs = 'Validation failed. Please check all fields.';
+                            }
                             alert('Please fix the following:\n\n' + msgs);
                             btn.disabled = false;
                             btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
@@ -3039,7 +3124,7 @@
                     if (!data || !data.success) return;
 
                     var rzp = new Razorpay({
-                        key: RAZORPAY_PUBLIC_KEY,
+                        key: data.rzp_key,
                         amount: data.amount,
                         currency: 'INR',
                         name: 'Act To Action',

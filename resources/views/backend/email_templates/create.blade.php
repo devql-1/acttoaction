@@ -414,16 +414,6 @@
             updatePreview();
         });
 
-        @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Done!',
-                text: "{{ session('success') }}",
-                timer: 2500,
-                showConfirmButton: false,
-                toast: true,
-                position: 'top-end',
-            });
-        @endif
+        
     </script>
 @endsection

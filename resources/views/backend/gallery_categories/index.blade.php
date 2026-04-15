@@ -17,19 +17,9 @@
             </div>
 
             <!-- Success and Error Messages -->
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissible fade show">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
+            
 
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible fade show">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            @endif
+            
 
             <div class="row">
                 <div class="col-md-12">
@@ -129,22 +119,8 @@
         }
 
         // SweetAlert for session success/error (auto popup)
-        @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: '{{ session('success') }}',
-                timer: 2500,
-                showConfirmButton: false,
-            });
-        @endif
+        
 
-        @if (session('error'))
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: '{{ session('error') }}',
-            });
-        @endif
+        
     </script>
 @endsection

@@ -12,7 +12,10 @@ class Payment extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['enrollment_id', 'razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature', 'amount', 'currency', 'status', 'method', 'bank', 'wallet', 'vpa', 'email', 'contact', 'description', 'error_code', 'error_reason', 'paid_at', 'transaction_type', 'type'];
+    protected $fillable = ['enrollment_id', 'razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature', 'amount', 'currency', 'method', 'bank', 'wallet', 'vpa', 'email', 'contact', 'description', 'error_code', 'error_reason', 'paid_at', 'transaction_type', 'type'];
+
+    // 'status' is intentionally excluded from fillable — set it only via explicit assignment
+    // to prevent mass-assignment from bypassing payment verification logic.
 
     /**
      * The attributes that should be cast to native types.

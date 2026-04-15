@@ -40,9 +40,9 @@
                     <div class="col-6 col-md-3 mb-4">
                         <h6>Legal</h6>
                         <ul class="fn-list">
-                            <li><a href="https://www.acttoaction.com/privacy-policy">Privacy Policy</a></li>
-                            <li><a href="https://www.acttoaction.com/terms-and-conditions">Terms</a></li>
-                            <li><a href="https://www.acttoaction.com/refund-policy">Refund Policy</a></li>
+                            <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
+                            <li><a href="{{ route('terms') }}">Terms</a></li>
+                            <li><a href="{{ route('refund') }}">Refund Policy</a></li>
                         </ul>
                     </div>
                     <div class="col-6 col-md-3 mb-4">

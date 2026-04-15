@@ -1,16 +1,15 @@
 {{-- resources/views/partials/graphs/pie.blade.php --}}
 <div class="row align-items-center g-4">
     <div class="col-md-6">
-        <div style="position:relative; height:320px;">
+        <div class="graph-wrap">
             <canvas id="dynamicChart"></canvas>
         </div>
     </div>
     <div class="col-md-6">
-        <div style="display:flex; flex-direction:column; gap:12px;" id="pieLegend"></div>
+        <div style="display:flex; flex-direction:column; gap:10px;" id="pieLegend"></div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const pieData = @json($chartData);
     const pieLabels = pieData.map(d => d.name);

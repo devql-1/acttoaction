@@ -22,7 +22,7 @@
             --accent: #ff6a00;
             --surface: #ffffff;
             --white: #ffffff;
-            /* --ann-h: 36px; */
+            --ann-h: 40px;
             scroll-behavior: smooth;
         }
 
@@ -99,7 +99,7 @@
             pointer-events: none;
         }
 
-        .ann-bar .inner {
+        .ann-inner {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -109,7 +109,7 @@
             padding: 0 40px;
         }
 
-        .ann-bar .dot {
+        .ann-dot {
             width: 6px;
             height: 6px;
             background: #ff6a00;
@@ -130,7 +130,7 @@
             }
         }
 
-        .ann-bar .msg {
+        .ann-msg {
             font-weight: 500;
             color: rgba(255, 255, 255, .8);
             white-space: nowrap;
@@ -139,11 +139,11 @@
             max-width: 640px;
         }
 
-        .ann-bar .msg strong {
+        .ann-msg strong {
             color: #ff6a00;
         }
 
-        .ann-bar .cta {
+        .ann-cta {
             background: var(--accent);
             color: #fff;
             border: none;
@@ -157,13 +157,16 @@
             flex-shrink: 0;
             transition: .2s;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .ann-bar .cta:hover {
+        .ann-cta:hover {
             background: color-mix(in srgb, var(--accent), black 15%);
+            color: #fff;
         }
 
-        .ann-bar .close-btn {
+        .ann-close {
             background: none;
             border: none;
             color: rgba(255, 255, 255, .35);
@@ -174,18 +177,23 @@
             right: 12px;
             line-height: 1;
             transition: .2s;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .ann-bar .close-btn:hover {
+        .ann-close:hover {
             color: #fff;
         }
 
         @media(max-width:575px) {
-            .ann-bar .cta {
+            .ann-cta {
                 display: none;
             }
 
-            .ann-bar .msg {
+            .ann-msg {
                 font-size: 10.5px;
             }
         }

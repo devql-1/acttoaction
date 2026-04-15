@@ -1,5 +1,6 @@
 @extends('backend.layout.app')
 @section('content')
+    <div id="formErrorBox" class="alert alert-danger d-none mb-3"></div>
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
@@ -172,7 +173,7 @@
                                                                 value="{{ $center['id'] }}"
                                                                 data-center-id="{{ $center['id'] }}"
                                                                 id="center_{{ $center['id'] }}" checked
-                                                                onchange="toggleFeeInput({{ $center['id'] }}, this.checked)">
+                                                                onchange="toggleFeeInput({{ $center['id'] }}, this.checked, this)">
                                                             <label class="form-check-label"
                                                                 for="center_{{ $center['id'] }}">
                                                                 <strong>{{ $center['name'] }}</strong>
@@ -386,7 +387,7 @@
                                             value="${center.id}"
                                             data-center-id="${center.id}"
                                             id="center_${center.id}_${rowId}"
-                                            onchange="toggleFeeInput(${center.id}, this.checked)">
+                                            onchange="toggleFeeInput(${center.id}, this.checked, this)">
                                         <label class="form-check-label" for="center_${center.id}_${rowId}">
                                             <strong>${center.name}</strong>
                                         </label>
@@ -400,13 +401,14 @@
                                         <label class="form-label mb-2">
                                             <small class="text-muted">Course Fees (₹)</small>
                                         </label>
-                                        <input type="number" 
+                                        <input type="number"
                                             class="form-control form-control-sm"
                                             name="center_fees[${center.id}]"
                                             placeholder="Enter fees"
                                             min="0"
                                             step="0.01"
                                             data-center-id="${center.id}"
+                                            disabled
                                             onchange="updateFeeData(${center.id}, this.value)">
                                     </div>
                                 </div>
@@ -422,16 +424,26 @@
                 });
         }
 
-        function toggleFeeInput(centerId, isChecked) {
-            const feeDiv = document.getElementById(`fee_${centerId}`);
-            const feeInput = document.querySelector(`input[data-center-id="${centerId}"][name*="center_fees"]`);
+        function toggleFeeInput(centerId, isChecked, checkboxEl) {
+            // Scope to the closest card so duplicate IDs (existing vs newly added) don't conflict
+            const card = checkboxEl ? checkboxEl.closest('.border.rounded') : null;
+            const feeDiv = card
+                ? card.querySelector(`#fee_${centerId}`)
+                : document.getElementById(`fee_${centerId}`);
+            const feeInput = card
+                ? card.querySelector(`input[data-center-id="${centerId}"][name*="center_fees"]`)
+                : document.querySelector(`input[data-center-id="${centerId}"][name*="center_fees"]`);
+
+            if (!feeDiv || !feeInput) return;
 
             if (isChecked) {
                 feeDiv.style.display = 'block';
                 feeInput.required = true;
+                feeInput.disabled = false;
             } else {
                 feeDiv.style.display = 'none';
                 feeInput.required = false;
+                feeInput.disabled = true;
                 feeInput.value = '';
                 delete centerFeesData[centerId];
             }
@@ -447,31 +459,41 @@
 
         // Form validation
         document.getElementById('courseForm').addEventListener('submit', function(e) {
+
+            const errorBox = document.getElementById('formErrorBox');
+            errorBox.classList.add('d-none');
+            errorBox.innerHTML = '';
+
             const selectedCenters = document.querySelectorAll('.center-checkbox:checked');
 
             if (selectedCenters.length === 0) {
                 e.preventDefault();
-                alert('Please select at least one center.');
+                errorBox.classList.remove('d-none');
+                errorBox.innerHTML = 'Please select at least one center.';
                 return false;
             }
 
             let allFeesProvided = true;
+
             selectedCenters.forEach(checkbox => {
                 const centerId = checkbox.dataset.centerId;
-                const feeInput = document.querySelector(
-                    `input[data-center-id="${centerId}"][name*="center_fees"]`);
+                const card = checkbox.closest('.border.rounded');
+                const feeInput = card
+                    ? card.querySelector(`input[data-center-id="${centerId}"][name*="center_fees"]`)
+                    : document.querySelector(`input[data-center-id="${centerId}"][name*="center_fees"]`);
 
                 if (!feeInput || !feeInput.value || parseFloat(feeInput.value) <= 0) {
                     allFeesProvided = false;
-                    if (feeInput) {
-                        feeInput.classList.add('is-invalid');
-                    }
+                    if (feeInput) feeInput.classList.add('is-invalid');
+                } else {
+                    feeInput.classList.remove('is-invalid');
                 }
             });
 
             if (!allFeesProvided) {
                 e.preventDefault();
-                alert('Please enter fees for all selected centers.');
+                errorBox.classList.remove('d-none');
+                errorBox.innerHTML = 'Please enter fees for all selected centers.';
                 return false;
             }
         });

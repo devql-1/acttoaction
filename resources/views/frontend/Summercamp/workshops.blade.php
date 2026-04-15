@@ -41,7 +41,7 @@
         gap: 10px;
         padding: 16px 42px;
         border-radius: 60px;
-        background: linear-gradient(135deg, #36d1dc, #5b86e5);
+        background: linear-gradient(135deg, #ff6a00, #e85800);
         color: #fff;
         font-size: 1.05rem;
         font-weight: 600;
@@ -50,7 +50,7 @@
         cursor: pointer;
         position: relative;
         transition: all 0.35s ease;
-        box-shadow: 0 10px 25px rgba(91, 134, 229, 0.35);
+        box-shadow: 0 10px 25px rgba(232, 88, 0, 0.35);
     }
 
     .service-btn i {
@@ -60,7 +60,7 @@
 
     .service-btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 14px 35px rgba(91, 134, 229, 0.45);
+        box-shadow: 0 14px 35px rgba(232, 88, 0, 0.45);
     }
 
     .service-btn:hover i {
@@ -76,7 +76,7 @@
         position: absolute;
         inset: 0;
         border-radius: 60px;
-        background: linear-gradient(135deg, #36d1dc, #5b86e5);
+        background: linear-gradient(135deg, #ff6a00, #e85800);
         filter: blur(18px);
         opacity: 0.5;
         z-index: -1;
@@ -89,7 +89,7 @@
         display: flex;
         align-items: center;
         overflow: hidden;
-        background: linear-gradient(135deg, #0f2c5c 0%, #1a4a8a 50%, #0e7490 100%);
+        background: linear-gradient(135deg, #112344 0%, #112344 50%, #1a2e4a 100%);
         padding: 100px 0 70px;
     }
 
@@ -98,8 +98,8 @@
         position: absolute;
         inset: 0;
         background:
-            radial-gradient(ellipse 60% 50% at 80% 50%, rgba(54, 209, 220, 0.18) 0%, transparent 70%),
-            radial-gradient(ellipse 40% 60% at 10% 80%, rgba(91, 134, 229, 0.2) 0%, transparent 60%);
+            radial-gradient(ellipse 60% 50% at 80% 50%, rgba(255, 106, 0, 0.18) 0%, transparent 70%),
+            radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232, 88, 0, 0.2) 0%, transparent 60%);
         pointer-events: none;
     }
 
@@ -118,9 +118,9 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: rgba(54, 209, 220, 0.18);
-        border: 1px solid rgba(54, 209, 220, 0.35);
-        color: #7ee8f0;
+        background: rgba(255, 106, 0, 0.18);
+        border: 1px solid rgba(255, 106, 0, 0.35);
+        color: #ffc4a0;
         font-size: 0.82rem;
         font-weight: 600;
         letter-spacing: 1px;
@@ -134,7 +134,7 @@
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: #36d1dc;
+        background: #ff6a00;
         display: inline-block;
         animation: pulse-dot 1.8s ease-in-out infinite;
     }
@@ -162,7 +162,7 @@
     }
 
     .hero-title .highlight {
-        background: linear-gradient(90deg, #36d1dc, #7ee8f0);
+        background: linear-gradient(90deg, #ff6a00, #ffc4a0);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -234,7 +234,7 @@
         width: 48px;
         height: 48px;
         border-radius: 14px;
-        background: linear-gradient(135deg, #36d1dc, #5b86e5);
+        background: linear-gradient(135deg, #ff6a00, #e85800);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -275,7 +275,7 @@
         width: 38px;
         height: 38px;
         border-radius: 10px;
-        background: rgba(54, 209, 220, 0.25);
+        background: rgba(255, 106, 0, 0.25);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -307,14 +307,14 @@
         font-weight: 700;
         letter-spacing: 2px;
         text-transform: uppercase;
-        color: var(--accent-color, #1a4a8a);
+        color: var(--accent-color, #112344);
         margin-bottom: 14px;
     }
 
     .section-title {
         font-size: clamp(1.6rem, 3.5vw, 2.4rem);
         font-weight: 800;
-        color: var(--heading-color, #1a1a2e);
+        color: var(--heading-color, #112344);
         line-height: 1.2;
         margin-bottom: 16px;
     }
@@ -344,7 +344,7 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, #36d1dc, #5b86e5);
+        background: linear-gradient(90deg, #ff6a00, #e85800);
         transform: scaleX(0);
         transform-origin: left;
         transition: transform 0.35s ease;
@@ -353,8 +353,8 @@
 
     .why-feature-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 20px 50px rgba(26, 74, 138, 0.1);
-        border-color: #c5d4f0;
+        box-shadow: 0 20px 50px rgba(17, 35, 68, 0.1);
+        border-color: #ffbf99;
     }
 
     .why-feature-card:hover::before {
@@ -365,19 +365,19 @@
         width: 62px;
         height: 62px;
         border-radius: 16px;
-        background: linear-gradient(135deg, rgba(54, 209, 220, 0.15), rgba(91, 134, 229, 0.15));
+        background: linear-gradient(135deg, rgba(255, 106, 0, 0.15), rgba(232, 88, 0, 0.15));
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.6rem;
         margin-bottom: 22px;
-        color: #1a4a8a;
+        color: #112344;
     }
 
     .why-feature-card h4 {
         font-size: 1.05rem;
         font-weight: 700;
-        color: var(--heading-color, #1a1a2e);
+        color: var(--heading-color, #112344);
         margin-bottom: 10px;
     }
 
@@ -391,7 +391,7 @@
     /* ── Testimonials ── */
     .testimonials-section {
         padding: 90px 0 80px;
-        background: linear-gradient(135deg, #f0f5ff 0%, #e8f8fa 100%);
+        background: linear-gradient(135deg, #fff4ee 0%, #fff0e8 100%);
         position: relative;
         overflow: hidden;
     }
@@ -404,7 +404,7 @@
         width: 340px;
         height: 340px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(54, 209, 220, 0.12) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 106, 0, 0.12) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -416,7 +416,7 @@
         width: 280px;
         height: 280px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(91, 134, 229, 0.1) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(232, 88, 0, 0.1) 0%, transparent 70%);
         pointer-events: none;
     }
 
@@ -425,21 +425,21 @@
         border-radius: 20px;
         padding: 34px 30px;
         height: 100%;
-        border: 1px solid rgba(91, 134, 229, 0.12);
-        box-shadow: 0 4px 24px rgba(26, 74, 138, 0.06);
+        border: 1px solid rgba(232, 88, 0, 0.12);
+        box-shadow: 0 4px 24px rgba(17, 35, 68, 0.06);
         transition: all 0.3s ease;
         position: relative;
     }
 
     .testimonial-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 16px 48px rgba(26, 74, 138, 0.12);
+        box-shadow: 0 16px 48px rgba(17, 35, 68, 0.12);
     }
 
     .testimonial-quote-icon {
         font-size: 3.5rem;
         line-height: 1;
-        color: #dce7fa;
+        color: #ffd5b8;
         font-family: Georgia, serif;
         margin-bottom: 6px;
         display: block;
@@ -472,7 +472,7 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #36d1dc, #5b86e5);
+        background: linear-gradient(135deg, #ff6a00, #e85800);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -485,7 +485,7 @@
     .testimonial-author-info .name {
         font-size: 0.95rem;
         font-weight: 700;
-        color: #1a1a2e;
+        color: #112344;
         margin-bottom: 2px;
     }
 
@@ -498,13 +498,469 @@
         position: absolute;
         top: 22px;
         right: 22px;
-        background: linear-gradient(135deg, rgba(54, 209, 220, 0.12), rgba(91, 134, 229, 0.12));
-        color: #1a4a8a;
+        background: linear-gradient(135deg, rgba(255, 106, 0, 0.12), rgba(232, 88, 0, 0.12));
+        color: #112344;
         font-size: 0.75rem;
         font-weight: 600;
         padding: 4px 12px;
         border-radius: 20px;
-        border: 1px solid rgba(91, 134, 229, 0.2);
+        border: 1px solid rgba(232, 88, 0, 0.2);
+    }
+
+    /* ── How it works ── */
+    .how-it-works-section {
+        padding: 90px 0 80px;
+        background: #f8faff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .how-it-works-section::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #ff6a00, #e85800);
+    }
+
+    .step-connector {
+        display: none;
+    }
+
+    @media (min-width: 992px) {
+        .step-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 32px;
+        }
+
+        .step-connector-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #ff6a00 0%, #e85800 100%);
+            border-radius: 2px;
+            margin: 0 8px;
+        }
+    }
+
+    .step-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 36px 28px 30px;
+        text-align: center;
+        border: 1px solid #fde8d8;
+        height: 100%;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .step-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 48px rgba(17, 35, 68, 0.1);
+        border-color: #ffbf99;
+    }
+
+    .step-number {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ff6a00, #e85800);
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        box-shadow: 0 8px 20px rgba(232, 88, 0, 0.3);
+    }
+
+    .step-card h4 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #112344;
+        margin-bottom: 10px;
+    }
+
+    .step-card p {
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.65;
+        margin: 0;
+    }
+
+    .step-icon-badge {
+        position: absolute;
+        top: -14px;
+        right: 20px;
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        border: 1px solid #bae6fd;
+        border-radius: 10px;
+        padding: 6px 10px;
+        font-size: 1.3rem;
+        line-height: 1;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+        padding: 90px 0 80px;
+        background: #fff;
+    }
+
+    .faq-accordion .accordion-button {
+        font-weight: 600;
+        font-size: 0.97rem;
+        color: #112344;
+        background: #f8faff;
+        border-radius: 12px !important;
+        box-shadow: none !important;
+    }
+
+    .faq-accordion .accordion-button:not(.collapsed) {
+        color: #112344;
+        background: linear-gradient(135deg, rgba(255, 106, 0, 0.08), rgba(232, 88, 0, 0.08));
+    }
+
+    .faq-accordion .accordion-button::after {
+        filter: none;
+    }
+
+    .faq-accordion .accordion-item {
+        border: 1px solid #fde8d8;
+        border-radius: 12px !important;
+        margin-bottom: 12px;
+        overflow: hidden;
+    }
+
+    .faq-accordion .accordion-body {
+        font-size: 0.93rem;
+        color: #555;
+        line-height: 1.75;
+        background: #fff;
+        padding: 18px 24px;
+    }
+
+    .faq-side-card {
+        background: linear-gradient(135deg, #112344, #1a2e4a);
+        border-radius: 22px;
+        padding: 40px 34px;
+        color: #fff;
+        position: sticky;
+        top: 100px;
+    }
+
+    .faq-side-card h4 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+
+    .faq-side-card p {
+        font-size: 0.93rem;
+        color: rgba(255,255,255,0.78);
+        line-height: 1.7;
+        margin-bottom: 28px;
+    }
+
+    .faq-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 12px;
+        text-decoration: none;
+        color: #fff;
+        transition: background 0.2s;
+    }
+
+    .faq-contact-item:hover {
+        background: rgba(255,255,255,0.18);
+        color: #fff;
+    }
+
+    .faq-contact-item i {
+        font-size: 1.3rem;
+        flex-shrink: 0;
+        color: #ffc4a0;
+    }
+
+    .faq-contact-item span {
+        font-size: 0.9rem;
+    }
+
+    .faq-contact-item strong {
+        display: block;
+        font-size: 0.97rem;
+    }
+
+    /* ── Hero CTA button ── */
+    .hero-cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #ff6a00, #e85800);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 14px 34px;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 24px rgba(232, 88, 0, 0.4);
+        margin-top: 32px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .hero-cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 36px rgba(232, 88, 0, 0.5);
+        color: #fff;
+    }
+
+    .hero-cta-btn i {
+        transition: transform 0.3s;
+    }
+
+    .hero-cta-btn:hover i {
+        transform: translateX(5px);
+    }
+
+    /* ── Workshop Filter Card ── */
+    .wk-filter-wrap {
+        background: #fff;
+        border-radius: 20px;
+        padding: 40px 40px 36px;
+        box-shadow: 0 8px 40px rgba(17,35,68,.1);
+        border: 1px solid #fde8d8;
+        max-width: 760px;
+        margin: 0 auto 48px;
+    }
+    .wk-filter-wrap .filter-label {
+        font-size: .78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: #112344;
+        margin-bottom: 8px;
+        display: block;
+    }
+    .wk-filter-wrap select {
+        width: 100%;
+        padding: 13px 18px;
+        border: 2px solid #e8e8e8;
+        border-radius: 12px;
+        font-size: .95rem;
+        font-weight: 500;
+        color: #333;
+        background: #fafafa;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        transition: border-color .2s, box-shadow .2s;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ff6a00' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        padding-right: 44px;
+    }
+    .wk-filter-wrap select:focus {
+        outline: none;
+        border-color: #ff6a00;
+        box-shadow: 0 0 0 3px rgba(255,106,0,.12);
+        background-color: #fff;
+    }
+    .wk-filter-wrap select:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+    .wk-filter-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 28px;
+        color: #ccc;
+        font-size: 1.3rem;
+    }
+
+    /* ── Workshop Card ── */
+    .wk-card {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid #f0e8e0;
+        box-shadow: 0 4px 20px rgba(17,35,68,.07);
+        transition: transform .3s ease, box-shadow .3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .wk-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 48px rgba(17,35,68,.13);
+    }
+    .wk-card-img-wrap {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #fde8d8, #ffd5b8);
+    }
+    .wk-card-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .4s ease;
+    }
+    .wk-card:hover .wk-card-img-wrap img {
+        transform: scale(1.05);
+    }
+    .wk-card-img-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffbf99;
+        font-size: 3.5rem;
+    }
+    .wk-card-age-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: #112344;
+        color: #fff;
+        font-size: .74rem;
+        font-weight: 700;
+        letter-spacing: .5px;
+        padding: 4px 12px;
+        border-radius: 20px;
+    }
+    .wk-card-body {
+        padding: 22px 24px 20px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .wk-card-timing {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #fff4ee;
+        border: 1px solid #ffd5b8;
+        color: #e85800;
+        font-size: .78rem;
+        font-weight: 600;
+        padding: 4px 11px;
+        border-radius: 20px;
+        margin-bottom: 12px;
+    }
+    .wk-card-title {
+        font-size: 1.12rem;
+        font-weight: 800;
+        color: #112344;
+        margin: 0 0 8px;
+        line-height: 1.3;
+    }
+    .wk-card-desc {
+        font-size: .88rem;
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 14px;
+        flex: 1;
+    }
+    .wk-card-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 18px;
+    }
+    .wk-card-meta-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+        font-size: .84rem;
+        color: #555;
+    }
+    .wk-card-meta-item i {
+        color: #ff6a00;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+    .wk-card-fees {
+        background: #fff4ee;
+        border-radius: 10px;
+        padding: 10px 16px;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .wk-card-fees .fees-label {
+        font-size: .78rem;
+        color: #888;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
+    .wk-card-fees .fees-value {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #e85800;
+        margin-left: auto;
+    }
+    .wk-card-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #ff6a00, #e85800);
+        color: #fff;
+        font-size: .92rem;
+        font-weight: 700;
+        border: none;
+        border-radius: 12px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity .2s, transform .2s;
+    }
+    .wk-card-btn:hover {
+        opacity: .9;
+        transform: translateY(-1px);
+        color: #fff;
+    }
+
+    /* ── Results header ── */
+    .wk-results-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 28px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid #fde8d8;
+    }
+    .wk-results-header h4 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #112344;
+        margin: 0;
+    }
+    .wk-results-header p {
+        font-size: .87rem;
+        color: #888;
+        margin: 4px 0 0;
+    }
+    .wk-count-badge {
+        background: linear-gradient(135deg, #ff6a00, #e85800);
+        color: #fff;
+        font-size: .85rem;
+        font-weight: 700;
+        padding: 6px 18px;
+        border-radius: 20px;
+        white-space: nowrap;
     }
 </style>
 
@@ -545,6 +1001,10 @@
                             <div class="stat-label">Parent Satisfaction</div>
                         </div>
                     </div>
+
+                    <a href="#workshopFilter" class="hero-cta-btn">
+                        Find a Workshop Near You <i class="bi bi-arrow-down-circle"></i>
+                    </a>
                 </div>
 
                 <div class="col-lg-6">
@@ -662,242 +1122,123 @@
         </div>
     </section>
 
-    {{-- ── Page Title ── --}}
-    <div class="page-title" style="padding-top: 10px">
-        <div class="heading">
-            <div class="container">
-                <div class="row d-flex justify-content-center text-center">
-                    <div class="col-lg-8">
-                        <h1>Our Workshops</h1>
-                        <p class="mb-0">
-                            Empowering children with professional skill courses aligned with
-                            Skill India Mission &amp; National Education Policy 2020
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <nav class="breadcrumbs">
-            <div class="container">
-                <ol>
-                    <li><a href="{{ route('home') }}">Home</a></li>
-                    <li class="current">Workshops</li>
-                </ol>
-            </div>
-        </nav>
-    </div>
-
-    {{-- ── Filter Section ── --}}
-    <section class="find-a-doctor section">
+    {{-- ── Workshop Filter + Cards (AJAX) ── --}}
+    <section class="section" id="workshopFilter" style="padding-top:70px;padding-bottom:70px;background:#fff8f4;">
         <div class="container">
 
-            {{-- Search header --}}
-            <div class="search-section text-center">
-                <h2 class="search-title">Find Your Perfect Workshop</h2>
-                <p class="search-subtitle">Select an age group and city to discover workshops near you</p>
-
-                {{-- Filter form --}}
-                <form method="GET" action="{{ route('workshops') }}" id="workshopFilterForm">
-                    <div class="row justify-content-center g-3 mt-2">
-
-                        {{-- Age group select --}}
-                        <div class="col-lg-4 col-md-5">
-                            <div class="search-input-group">
-                                <div class="select-wrapper">
-                                    <i class="bi bi-people"></i>
-                                    <select name="age_group_id" id="ageGroupSelect" class="form-select"
-                                        onchange="this.form.submit()">
-                                        <option value="">Select Age Group</option>
-                                        @foreach ($ageGroups as $group)
-                                            <option value="{{ $group->id }}"
-                                                {{ $selectedAgeGroupId == $group->id ? 'selected' : '' }}>
-                                                {{ $group->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- City select (only after age group chosen) --}}
-                        @if ($selectedAgeGroupId)
-                            <div class="col-lg-4 col-md-5">
-                                <div class="search-input-group">
-                                    <div class="select-wrapper">
-                                        <i class="bi bi-geo-alt"></i>
-                                        @if ($cities->isNotEmpty())
-                                            <select name="city_id" id="citySelect" class="form-select"
-                                                onchange="this.form.submit()">
-                                                <option value="">Select City</option>
-                                                @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}"
-                                                        {{ $selectedCityId == $city->id ? 'selected' : '' }}>
-                                                        {{ $city->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        @else
-                                            <select class="form-select" disabled>
-                                                <option>No cities available yet</option>
-                                            </select>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-
-                    </div>
-                </form>
-
-                {{-- Breadcrumb trail --}}
-                @if ($selectedAgeGroup || $selectedCity)
-                    <div class="mt-3">
-                        <ol class="breadcrumb justify-content-center mb-0">
-                            <li class="breadcrumb-item">
-                                <a href="{{ route('workshops') }}">All Workshops</a>
-                            </li>
-                            @if ($selectedAgeGroup)
-                                <li class="breadcrumb-item {{ !$selectedCity ? 'active' : '' }}">
-                                    @if ($selectedCity)
-                                        <a href="{{ route('workshops', ['age_group_id' => $selectedAgeGroupId]) }}">
-                                            {{ $selectedAgeGroup->name }}
-                                        </a>
-                                    @else
-                                        {{ $selectedAgeGroup->name }}
-                                    @endif
-                                </li>
-                            @endif
-                            @if ($selectedCity)
-                                <li class="breadcrumb-item active">{{ $selectedCity->name }}</li>
-                            @endif
-                        </ol>
-                    </div>
-                @endif
+            {{-- Section heading --}}
+            <div class="text-center mb-5">
+                <span class="section-eyebrow">Explore by Age &amp; Location</span>
+                <h2 class="section-title">Find Your Perfect Workshop</h2>
+                <p class="section-desc mx-auto">Choose an age group and city — we'll show the best workshops near you.</p>
             </div>
 
-            {{-- ── Results ── --}}
-            @if ($selectedAgeGroupId && $selectedCityId)
-
-                {{-- Results header --}}
-                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-5 mb-4">
-                    <div>
-                        <h4 class="fw-bold mb-1">Workshops in {{ $selectedCity->name }}</h4>
-                        <p class="text-muted small mb-0">
-                            Age Group: {{ $selectedAgeGroup->name }}
-                            @if ($selectedAgeGroup->description)
-                                &mdash; {{ $selectedAgeGroup->description }}
-                            @endif
-                        </p>
+            {{-- Filter card --}}
+            <div class="wk-filter-wrap">
+                <div class="row g-4 align-items-end">
+                    <div class="col-md-6">
+                        <label class="filter-label"><i class="bi bi-people-fill me-1" style="color:#ff6a00"></i> Age Group</label>
+                        <select id="ageGroupSelect">
+                            <option value="">— Select Age Group —</option>
+                            @foreach ($ageGroups as $group)
+                                <option value="{{ $group->id }}" data-name="{{ $group->name }}">{{ $group->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <span class="badge bg-primary px-3 py-2" style="font-size: 14px">
-                        {{ $schools->count() }} Workshop{{ $schools->count() !== 1 ? 's' : '' }} Found
-                    </span>
+                    <div class="col-md-1 wk-filter-divider d-none d-md-flex">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="filter-label"><i class="bi bi-geo-alt-fill me-1" style="color:#ff6a00"></i> City</label>
+                        <select id="citySelect" disabled>
+                            <option value="">— Select City —</option>
+                        </select>
+                    </div>
                 </div>
+            </div>
 
-                @if ($schools->isNotEmpty())
+            {{-- Results rendered by JS --}}
+            <div id="workshopResults">
+                <div class="text-center py-5">
+                    <i class="bi bi-search" style="font-size:3rem;color:#ffbf99"></i>
+                    <p class="text-muted mt-3 mb-0">Select an <strong>age group</strong> above to discover workshops.</p>
+                </div>
+            </div>
 
-                    {{-- Workshop cards --}}
-                    <div class="row gy-4">
-                        @foreach ($schools as $school)
-                            <div class="col-lg-4 col-md-6">
-                                <div class="service-item">
+        </div>
+    </section>
 
-                                    {{-- Image --}}
-                                    <div class="service-image">
-                                        @if ($school->image_url)
-                                            <img src="{{ $school->image_url }}" alt="{{ $school->name }}"
-                                                class="img-fluid">
-                                        @else
-                                            <div class="d-flex align-items-center justify-content-center bg-light"
-                                                style="height: 220px">
-                                                <i class="bi bi-building" style="font-size: 3.5rem; color: #ccc"></i>
-                                            </div>
-                                        @endif
-                                        <div class="service-overlay">
-                                            <i class="bi bi-building"></i>
-                                        </div>
-                                    </div>
+    {{-- ── How It Works ── --}}
+    <section class="how-it-works-section">
+        <div class="container">
 
-                                    {{-- Details --}}
-                                    <div class="service-content">
-                                        <div class="mb-3">
-                                            <span class="badge bg-primary">
-                                                {{ $selectedAgeGroup->name }}
-                                            </span>
-                                            @if ($school->timings)
-                                                <span class="badge bg-success ms-2">
-                                                    <i class="bi bi-clock me-1"></i>{{ $school->timings }}
-                                                </span>
-                                            @endif
-                                        </div>
-
-                                        <h3>{{ $school->name }}</h3>
-
-                                        @if ($school->description)
-                                            <p>{{ Str::limit($school->description, 501) }}</p>
-                                        @endif
-
-                                        <div class="service-features">
-                                            <div class="feature-item">
-                                                <i class="bi bi-geo-alt-fill"></i>
-                                                <span>{{ $selectedCity->name }}</span>
-                                            </div>
-                                            @if ($school->address)
-                                                <div class="feature-item">
-                                                    <i class="bi bi-pin-map-fill"></i>
-                                                    <span>{{ $school->address }}</span>
-                                                </div>
-                                            @endif
-                                        </div>
-
-                                        <a href="{{ route('workshops.show', $school->id) }}" target="_blank"
-                                            rel="noopener">
-                                            <button type="button" class="register-btn">
-                                                Register Now
-                                                <i class="bi bi-arrow-right"></i>
-                                            </button>
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    {{-- No results --}}
-                    <div class="text-center py-5">
-                        <i class="bi bi-search" style="font-size: 3.5rem; color: #ccc"></i>
-                        <h4 class="mt-3">No Workshops Found</h4>
-                        <p class="text-muted">
-                            No workshops are available in <strong>{{ $selectedCity->name }}</strong>
-                            for <strong>{{ $selectedAgeGroup->name }}</strong> yet.<br>
-                            Please check back soon or contact us directly.
-                        </p>
-                        <a href="tel:9119118844" class="btn btn-primary mt-2">
-                            <i class="bi bi-telephone-fill me-1"></i> Call Us
-                        </a>
-                    </div>
-
-                @endif
-            @elseif ($selectedAgeGroupId && !$selectedCityId)
-                {{-- Age chosen, awaiting city --}}
-                <div class="text-center py-5 mt-4">
-                    <i class="bi bi-geo-alt" style="font-size: 3rem; color: #ddd"></i>
-                    <p class="text-muted mt-3">
-                        Now select a <strong>city</strong> above to see available workshops
-                        for <strong>{{ $selectedAgeGroup->name ?? '' }}</strong>.
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-7">
+                    <span class="section-eyebrow">Simple 4-Step Process</span>
+                    <h2 class="section-title">How to Register for a Workshop</h2>
+                    <p class="section-desc mx-auto">
+                        Enrolling your child takes less than 3 minutes. Here's how it works.
                     </p>
                 </div>
-            @else
-                {{-- Nothing selected --}}
-                <div class="text-center py-5 mt-4">
-                    <i class="bi bi-arrow-up-circle" style="font-size: 3rem; color: #ddd"></i>
-                    <p class="text-muted mt-3">
-                        Please select an <strong>age group</strong> above to get started.
-                    </p>
+            </div>
+
+            <div class="row g-4 align-items-start">
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-icon-badge">👶</span>
+                        <div class="step-number">1</div>
+                        <h4>Choose Age Group</h4>
+                        <p>Select the right age category for your child — workshops are designed for specific developmental stages.</p>
+                    </div>
                 </div>
 
-            @endif
+                <div class="col-lg-auto d-none d-lg-flex step-connector">
+                    <div class="step-connector-line"></div>
+                    <i class="bi bi-chevron-right" style="color:#e85800;font-size:1.1rem;"></i>
+                    <div class="step-connector-line"></div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-icon-badge">📍</span>
+                        <div class="step-number">2</div>
+                        <h4>Select Your City</h4>
+                        <p>Pick the city nearest to you. We have workshops running across 20+ locations all over India.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-auto d-none d-lg-flex step-connector">
+                    <div class="step-connector-line"></div>
+                    <i class="bi bi-chevron-right" style="color:#e85800;font-size:1.1rem;"></i>
+                    <div class="step-connector-line"></div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-icon-badge">🏫</span>
+                        <div class="step-number">3</div>
+                        <h4>Pick a Workshop</h4>
+                        <p>Browse the available workshops for your chosen city and age group, check timings and fees.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-auto d-none d-lg-flex step-connector">
+                    <div class="step-connector-line"></div>
+                    <i class="bi bi-chevron-right" style="color:#e85800;font-size:1.1rem;"></i>
+                    <div class="step-connector-line"></div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="step-card">
+                        <span class="step-icon-badge">✅</span>
+                        <div class="step-number">4</div>
+                        <h4>Register &amp; Pay</h4>
+                        <p>Fill in your child's details and complete the secure payment online. Get confirmation instantly by email.</p>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
     </section>
@@ -1036,6 +1377,143 @@
         </div>
     </section>
 
+    {{-- ── FAQ Section ── --}}
+    <section class="faq-section">
+        <div class="container">
+
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-7">
+                    <span class="section-eyebrow">FAQ</span>
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-desc mx-auto">
+                        Everything parents ask before registering their child.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-4 align-items-start">
+
+                {{-- Accordion --}}
+                <div class="col-lg-8">
+                    <div class="accordion faq-accordion" id="workshopFaq">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    What age groups are the workshops designed for?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#workshopFaq">
+                                <div class="accordion-body">
+                                    Our workshops are organised into specific age groups — typically ranging from early childhood (4–7 years) through to pre-teens and teens (13–17 years). Each group has a tailored curriculum so the pace, activities and complexity are always just right for your child's stage of development.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    How long does each workshop last?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#workshopFaq">
+                                <div class="accordion-body">
+                                    Most workshops run over 2–3 days (typically on a weekend), with sessions of 3–4 hours per day. Specific timings are shown on each workshop listing. Some intensive programs run over a full week — details are mentioned on the individual workshop page.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Can I register more than one child at a time?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#workshopFaq">
+                                <div class="accordion-body">
+                                    Yes! You can register up to 5 children in a single booking. Each child's details are entered separately during the registration process and a combined payment is made in one step. Sibling discounts may apply — contact us for details.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Is online payment secure?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#workshopFaq">
+                                <div class="accordion-body">
+                                    Absolutely. All payments are processed through Razorpay — India's most trusted payment gateway — using bank-grade 256-bit SSL encryption. We never store your card details. You'll receive an instant email confirmation with a payment receipt once the transaction is complete.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    What is the refund or cancellation policy?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#workshopFaq">
+                                <div class="accordion-body">
+                                    Registrations can be cancelled up to 48 hours before the workshop start date for a full refund. Cancellations within 48 hours are eligible for a credit note valid for 6 months. For queries, contact us at <a href="mailto:info@acttoaction.in">info@acttoaction.in</a> or call our helpline.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    Do children receive a certificate after completing the workshop?
+                                </button>
+                            </h2>
+                            <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#workshopFaq">
+                                <div class="accordion-body">
+                                    Yes! Every child who completes a workshop receives a digitally signed Certificate of Achievement from Act To Action. The certificate mentions the skill area, hours completed, and is aligned with the Skill India Mission framework — making it a meaningful addition to your child's portfolio.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {{-- Side contact card --}}
+                <div class="col-lg-4">
+                    <div class="faq-side-card">
+                        <h4>Still have questions?</h4>
+                        <p>Our team is available Mon–Sat, 9 AM to 7 PM. We're happy to help you pick the right workshop for your child.</p>
+
+                        <a href="tel:9119118844" class="faq-contact-item">
+                            <i class="bi bi-telephone-fill"></i>
+                            <span>
+                                <strong>+91 91191 88844</strong>
+                                Call our helpline
+                            </span>
+                        </a>
+
+                        <a href="https://wa.me/919119118844" target="_blank" rel="noopener" class="faq-contact-item">
+                            <i class="bi bi-whatsapp"></i>
+                            <span>
+                                <strong>WhatsApp Us</strong>
+                                Quick replies on WhatsApp
+                            </span>
+                        </a>
+
+                        <a href="mailto:info@acttoaction.in" class="faq-contact-item">
+                            <i class="bi bi-envelope-fill"></i>
+                            <span>
+                                <strong>info@acttoaction.in</strong>
+                                Email us anytime
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     {{-- ── CTA ── --}}
     <section class="call-to-action section light-background">
         <div class="container">
@@ -1060,5 +1538,170 @@
             </div>
         </div>
     </section>
+
+<script>
+(function () {
+    'use strict';
+
+    var WORKSHOPS_URL = '{{ route('workshops') }}';
+
+    var ageGroupSelect = document.getElementById('ageGroupSelect');
+    var citySelect     = document.getElementById('citySelect');
+    var resultsEl      = document.getElementById('workshopResults');
+
+    // ── Age-group dropdown change ─────────────────────────────────────────────
+    ageGroupSelect.addEventListener('change', function () {
+        var ageGroupId = this.value;
+
+        // Reset city
+        citySelect.innerHTML = '<option value="">— Select City —</option>';
+        citySelect.disabled = true;
+
+        if (!ageGroupId) {
+            showPlaceholder('<i class="bi bi-search" style="font-size:3rem;color:#ffbf99"></i><p class="text-muted mt-3 mb-0">Select an <strong>age group</strong> above to discover workshops.</p>');
+            return;
+        }
+
+        var ageName = ageGroupSelect.options[ageGroupSelect.selectedIndex].dataset.name;
+        showPlaceholder('<div class="spinner-border" style="color:#ff6a00;width:2rem;height:2rem;" role="status"></div><p class="text-muted mt-3">Loading cities…</p>');
+
+        fetch(WORKSHOPS_URL + '?age_group_id=' + ageGroupId, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            if (!data.cities || data.cities.length === 0) {
+                showPlaceholder('<i class="bi bi-geo-alt" style="font-size:3rem;color:#ffbf99"></i><p class="text-muted mt-3">No cities available for <strong>' + esc(ageName) + '</strong> yet.</p>');
+                return;
+            }
+            data.cities.forEach(function (city) {
+                var opt = document.createElement('option');
+                opt.value = city.id;
+                opt.textContent = city.name;
+                citySelect.appendChild(opt);
+            });
+            citySelect.disabled = false;
+            showPlaceholder('<i class="bi bi-geo-alt-fill" style="font-size:3rem;color:#ffbf99"></i><p class="text-muted mt-3">Now select a <strong>city</strong> to see workshops for <strong>' + esc(ageName) + '</strong>.</p>');
+        })
+        .catch(function () {
+            showPlaceholder('<i class="bi bi-exclamation-circle" style="font-size:3rem;color:#ccc"></i><p class="text-muted mt-3">Could not load cities. Please try again.</p>');
+        });
+    });
+
+    // ── City select → load workshops ──────────────────────────────────────────
+    citySelect.addEventListener('change', function () {
+        var cityId     = this.value;
+        var ageGroupId = ageGroupSelect.value;
+
+        if (!cityId || !ageGroupId) return;
+
+        showLoading();
+
+        fetch(WORKSHOPS_URL + '?age_group_id=' + ageGroupId + '&city_id=' + cityId, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) { renderWorkshops(data); })
+        .catch(function () {
+            showPlaceholder('<i class="bi bi-exclamation-circle" style="font-size:3rem;color:#ccc"></i><p class="text-muted mt-3">Could not load workshops. Please try again.</p>');
+        });
+    });
+
+    // ── Render workshop cards ──────────────────────────────────────────────────
+    function renderWorkshops(data) {
+        if (data.count === 0) {
+            resultsEl.innerHTML =
+                '<div class="text-center py-5">' +
+                '<i class="bi bi-building-x" style="font-size:3.5rem;color:#ffbf99"></i>' +
+                '<h4 class="mt-3" style="color:#112344">No Workshops Found</h4>' +
+                '<p class="text-muted">No workshops in <strong>' + esc(data.city_name) + '</strong> for <strong>' + esc(data.age_group_name) + '</strong> yet. Check back soon!</p>' +
+                '<a href="tel:9119118844" class="wk-card-btn d-inline-block mt-2" style="width:auto;padding:12px 28px"><i class="bi bi-telephone-fill me-2"></i>Call Us</a>' +
+                '</div>';
+            return;
+        }
+
+        // Results header
+        var html =
+            '<div class="wk-results-header">' +
+            '<div>' +
+            '<h4>Workshops in ' + esc(data.city_name) + '</h4>' +
+            '<p>Age Group: <strong>' + esc(data.age_group_name) + '</strong>' + (data.age_group_desc ? ' &mdash; ' + esc(data.age_group_desc) : '') + '</p>' +
+            '</div>' +
+            '<span class="wk-count-badge"><i class="bi bi-grid-3x3-gap-fill me-1"></i>' + data.count + ' Workshop' + (data.count !== 1 ? 's' : '') + '</span>' +
+            '</div>' +
+            '<div class="row g-4">';
+
+        data.schools.forEach(function (s) {
+            // Image or placeholder
+            var imgHtml = s.image_url
+                ? '<img src="' + esc(s.image_url) + '" alt="' + esc(s.name) + '">'
+                : '<div class="wk-card-img-placeholder"><i class="bi bi-building"></i></div>';
+
+            // Timing badge
+            var timingHtml = s.timings
+                ? '<span class="wk-card-timing"><i class="bi bi-clock-fill"></i>' + esc(s.timings) + '</span>'
+                : '';
+
+            // Description (truncated)
+            var descHtml = s.description
+                ? '<p class="wk-card-desc">' + esc(s.description).substring(0, 130) + (s.description.length > 130 ? '…' : '') + '</p>'
+                : '<p class="wk-card-desc" style="color:#bbb;font-style:italic">No description available.</p>';
+
+            // Address
+            var addrHtml = s.address
+                ? '<div class="wk-card-meta-item"><i class="bi bi-pin-map-fill"></i><span>' + esc(s.address) + '</span></div>'
+                : '';
+
+            // City line
+            var cityHtml = '<div class="wk-card-meta-item"><i class="bi bi-geo-alt-fill"></i><span>' + esc(data.city_name) + '</span></div>';
+
+            // Fees
+            var feesHtml = s.fees
+                ? '<div class="wk-card-fees"><span class="fees-label"><i class="bi bi-tag-fill me-1"></i>Fees</span><span class="fees-value">' + esc(s.fees) + '</span></div>'
+                : '';
+
+            html +=
+                '<div class="col-lg-4 col-md-6">' +
+                '<div class="wk-card">' +
+                '<div class="wk-card-img-wrap">' + imgHtml + '<span class="wk-card-age-badge">' + esc(data.age_group_name) + '</span></div>' +
+                '<div class="wk-card-body">' +
+                timingHtml +
+                '<h3 class="wk-card-title">' + esc(s.name) + '</h3>' +
+                descHtml +
+                '<div class="wk-card-meta">' + cityHtml + addrHtml + '</div>' +
+                feesHtml +
+                '<a href="' + esc(s.url) + '" class="wk-card-btn">Register Now &nbsp;<i class="bi bi-arrow-right"></i></a>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        });
+
+        html += '</div>';
+        resultsEl.innerHTML = html;
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+    function showLoading() {
+        resultsEl.innerHTML =
+            '<div class="text-center py-5">' +
+            '<div class="spinner-border" style="color:#ff6a00;width:2.8rem;height:2.8rem;border-width:3px;" role="status"></div>' +
+            '<p class="text-muted mt-3 mb-0" style="font-size:.95rem">Finding workshops near you…</p>' +
+            '</div>';
+    }
+
+    function showPlaceholder(inner) {
+        resultsEl.innerHTML = '<div class="text-center py-5">' + inner + '</div>';
+    }
+
+    function esc(str) {
+        if (str == null) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+}());
+</script>
 
 @endsection

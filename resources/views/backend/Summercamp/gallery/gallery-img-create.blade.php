@@ -77,9 +77,9 @@
                                 <div class="col-md-4">
                                     <label class="form-label fw-semibold">Strip Size</label>
                                     <select name="size" class="form-select">
-                                        <option value="sm" {{ old('size')=='sm' ? 'selected':'' }}>Small (200×150)</option>
-                                        <option value="md" {{ old('size','md')=='md' ? 'selected':'' }}>Medium (260×175)</option>
-                                        <option value="lg" {{ old('size')=='lg' ? 'selected':'' }}>Large (320×200)</option>
+                                        <option value="sm" {{ old('size')=='sm' ? 'selected':'' }}>Small (200Ã—150)</option>
+                                        <option value="md" {{ old('size','md')=='md' ? 'selected':'' }}>Medium (260Ã—175)</option>
+                                        <option value="lg" {{ old('size')=='lg' ? 'selected':'' }}>Large (320Ã—200)</option>
                                     </select>
                                     <div class="form-text text-muted">Card size in the scrolling strip.</div>
                                 </div>
@@ -87,7 +87,7 @@
                                     <label class="form-label fw-semibold">Strip Row</label>
                                     <select name="strip_row" class="form-select">
                                         <option value="1" {{ old('strip_row','1')=='1' ? 'selected':'' }}>Row 1 (→ forward)</option>
-                                        <option value="2" {{ old('strip_row')=='2' ? 'selected':'' }}>Row 2 (← backward)</option>
+                                        <option value="2" {{ old('strip_row')=='2' ? 'selected':'' }}>Row 2 (â† backward)</option>
                                         <option value="3" {{ old('strip_row')=='3' ? 'selected':'' }}>Row 3 (→ forward slow)</option>
                                     </select>
                                     <div class="form-text text-muted">Which animated row to appear in.</div>
@@ -137,7 +137,7 @@
                         <p class="fw-semibold mb-1">Strip Size:</p>
                         <p class="text-muted mb-2">Controls the width/height of each image card in the strip.</p>
                         <p class="fw-semibold mb-1">Featured:</p>
-                        <p class="text-muted mb-0">Featured images appear in the large grid layout panel (2 col × 2 row hero layout).</p>
+                        <p class="text-muted mb-0">Featured images appear in the large grid layout panel (2 col Ã— 2 row hero layout).</p>
                     </div>
                 </div>
             </div>
@@ -174,6 +174,6 @@ function handleDrop(e) {
     showPreviews(dt.files);
 }
 
-@if(session('error')) Swal.fire({ icon:'error', title:'Error!', text:'{{ session('error') }}' }); @endif
+
 </script>
 @endsection

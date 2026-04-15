@@ -64,8 +64,16 @@ class SummerEventRegistrationController extends Controller
             'center_id' => 'nullable|exists:centers,id',
             'attendees' => 'required|array|min:1',
             'attendees.*.name' => 'required|string|min:2|max:100',
-            'attendees.*.phone' => 'nullable|digits_between:10,13',
-            "attendees.$primaryIdx.phone" => 'required|digits_between:10,13',
+            'attendees.*.phone' => ['nullable', 'string', 'max:15', function ($attr, $val, $fail) {
+                if (!empty($val) && !preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('Phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
+                }
+            }],
+            "attendees.$primaryIdx.phone" => ['required', 'string', 'max:15', function ($attr, $val, $fail) {
+                if (!preg_match('/^\+91\d{10}$/', $val)) {
+                    $fail('Primary contact phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
+                }
+            }],
             "attendees.$primaryIdx.email" => 'required|email|max:150',
         ]);
 
@@ -220,64 +228,96 @@ class SummerEventRegistrationController extends Controller
     // ── VERIFY PAYMENT ───────────────────────────────────
     public function verifyPayment(Request $request, $registration_id)
     {
-        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
-
-        // 1. Verify Razorpay signature — throws SignatureVerificationError on mismatch
-        $api->utility->verifyPaymentSignature([
-            'razorpay_order_id' => $request->razorpay_order_id,
-            'razorpay_payment_id' => $request->razorpay_payment_id,
-            'razorpay_signature' => $request->razorpay_signature,
+        $request->validate([
+            'razorpay_order_id'   => 'required|string',
+            'razorpay_payment_id' => 'required|string',
+            'razorpay_signature'  => 'required|string',
         ]);
 
-        // 2. Prevent duplicate payment processing
-        if (Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->exists()) {
-            return response()->json(['success' => true, 'message' => 'Payment already processed']);
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+
+        // 1. Verify Razorpay signature — wrapped so failures return 422 instead of 500
+        try {
+            $api->utility->verifyPaymentSignature([
+                'razorpay_order_id'   => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'razorpay_signature'  => $request->razorpay_signature,
+            ]);
+        } catch (\Exception $e) {
+            Log::warning('Summer event payment signature mismatch', [
+                'registration_id'     => $registration_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'error'               => $e->getMessage(),
+            ]);
+            return response()->json(['error' => 'Payment verification failed'], 422);
         }
 
-        // 3. Fetch payment method details from Razorpay
+        // 2. Fetch authoritative payment details from Razorpay API (before DB transaction)
         $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
 
-        // 4. Load registration with all relationships needed for email
-        $registration = EventRegistration::with(['event', 'subEvent', 'attendees', 'center.state'])->findOrFail($registration_id);
+        // 3. DB transaction: idempotency + amount verification + confirm + record payment
+        $alreadyProcessed = false;
 
-        // 5. DB transaction: confirm registration & record payment
-        DB::transaction(function () use ($request, $registration_id, $rzpPayment, $registration) {
+        DB::transaction(function () use ($request, $registration_id, $rzpPayment, &$alreadyProcessed) {
+            // Idempotency check INSIDE transaction to prevent race conditions
+            if (Payment::where('razorpay_payment_id', $request->razorpay_payment_id)->exists()) {
+                $alreadyProcessed = true;
+                return;
+            }
+
+            // Lock row to prevent concurrent updates
+            $registration = EventRegistration::lockForUpdate()->findOrFail($registration_id);
+
+            // Verify amount: what Razorpay received must match what we expect
+            $expectedPaise = (int) round($registration->total_amount * 100);
+            $receivedPaise = (int) $rzpPayment->amount;
+
+            if ($expectedPaise !== $receivedPaise) {
+                throw new \Exception(
+                    "Amount mismatch: expected {$expectedPaise} paise, got {$receivedPaise} paise"
+                );
+            }
+
             if ($registration->status !== 'confirmed') {
                 $registration->update(['status' => 'confirmed']);
             }
 
-            Payment::create([
-                'event_registration_id' => $registration_id,
-                'enrollment_id' => null,
-                'razorpay_order_id' => $request->razorpay_order_id,
-                'razorpay_payment_id' => $request->razorpay_payment_id,
-                'razorpay_signature' => $request->razorpay_signature,
-                'amount' => session('rzp_amount') / 100,
-                'currency' => 'INR',
-                'status' => 'success',
-                'transaction_type' => $rzpPayment->method,
-                'type' => 'SUMMER-CAMPEVENT',
-                'paid_at' => now(),
-                'contact' => $rzpPayment->contact ?? null,
-                'email' => $rzpPayment->email ?? null,
-            ]);
+            // Direct property assignment — status is NOT in $fillable
+            $payment = new Payment();
+            $payment->enrollment_id       = null;
+            $payment->razorpay_order_id   = $request->razorpay_order_id;
+            $payment->razorpay_payment_id = $request->razorpay_payment_id;
+            $payment->razorpay_signature  = $request->razorpay_signature;
+            $payment->amount              = $rzpPayment->amount / 100; // authoritative from Razorpay, not session
+            $payment->currency            = 'INR';
+            $payment->status              = 'success';
+            $payment->transaction_type    = $rzpPayment->method;
+            $payment->type                = 'SUMMER-CAMPEVENT';
+            $payment->paid_at             = now();
+            $payment->contact             = $rzpPayment->contact ?? null;
+            $payment->email               = $rzpPayment->email ?? null;
+            $payment->save();
         });
 
-        // 6. Refresh so updated status is reflected
-        $registration->refresh();
+        if ($alreadyProcessed) {
+            return response()->json(['success' => true, 'message' => 'Payment already processed']);
+        }
 
-        // 7. Resolve primary attendee
+        // 4. Load registration with all relationships needed for email (after transaction)
+        $registration = EventRegistration::with(['event', 'subEvent', 'attendees', 'center.state'])->findOrFail($registration_id);
+
+        // 5. Resolve primary attendee
         $primaryAttendee = $registration->attendees->firstWhere('is_primary', true) ?? $registration->attendees->first();
 
         $toEmail = $primaryAttendee?->email ?? ($rzpPayment->email ?? null);
 
-        // 8. Resolve sub-event fields
+        // 6. Resolve sub-event fields
         $subEvent = $registration->subEvent;
         $eventDate = $subEvent->event_date
             ? $subEvent->event_date->format('d M Y, D') // Carbon cast — no parse() needed
             : '';
 
-        // 9. Build dynamic attendee cards HTML
+        // 7. Build dynamic attendee cards HTML
         //    One card per actual ticket — primary card gets purple styling + extra fields,
         //    all other cards get indigo styling + name & phone only.
         $sortedAttendees = $registration->attendees->sortBy('ticket_number')->values();
@@ -346,7 +386,7 @@ class SummerEventRegistrationController extends Controller
             </table>';
         }
 
-        // 10. Build all [key] => value replacements
+        // 8. Build all [key] => value replacements
         //     The EmailService must do:  str_replace('[key]', $value, $templateHtml)
         $placeholders = [
             'primary_name' => $primaryAttendee?->name ?? 'Guest',
@@ -365,7 +405,7 @@ class SummerEventRegistrationController extends Controller
             'attendee_cards' => $attendeeCardsHtml, // raw HTML block — replaces [attendee_cards]
         ];
 
-        // 11. Send confirmation email
+        // 9. Send confirmation email
         if ($toEmail) {
             try {
                 app(EmailService::class)->send(

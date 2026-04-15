@@ -39,12 +39,16 @@ class WorkshopRegistration extends Model
         'razorpay_payment_id',
         'razorpay_signature',
         'message',
+        'merchandise_items',
+        'merchandise_total',
         'ip_address',
     ];
 
     protected $casts = [
-        'dob' => 'date',
-        'amount' => 'decimal:2',
+        'dob'               => 'date',
+        'amount'            => 'decimal:2',
+        'merchandise_items' => 'array',
+        'merchandise_total' => 'decimal:2',
     ];
 
     public function workshopSchool()

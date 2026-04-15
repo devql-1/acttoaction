@@ -1271,6 +1271,28 @@
             .page-title h1 {
                 font-size: 30px;
             }
+
+            .business-section h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .about .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .business-section {
+                padding: 50px 0;
+            }
+
+            .business-section h2 {
+                font-size: 24px;
+            }
+
+            .doctors .doctor-card .img-wrap img {
+                height: 200px;
+            }
         }
     </style>
     <main class="main">
@@ -2371,7 +2393,10 @@
                                     <input type="email" class="form-control" placeholder="Your Email Address" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="tel" class="form-control" placeholder="Phone Number">
+                                    <div class="input-group">
+                                        <span class="input-group-text" style="font-weight:600;font-size:14px;">+91</span>
+                                        <input type="tel" class="form-control" placeholder="10-digit number" maxlength="10" inputmode="numeric">
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <select class="form-control">

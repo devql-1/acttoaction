@@ -60,6 +60,7 @@
             background: var(--w);
             border-bottom: 1px solid var(--bd);
             padding: 10px 0;
+            margin-top: 185px;
             font-size: 12px;
             color: var(--mute);
         }
@@ -112,6 +113,10 @@
         @media(max-width:600px) {
             .hero-inner {
                 padding: 28px 16px 24px;
+            }
+
+            .sp-big {
+                font-size: 32px;
             }
         }
 
@@ -1203,7 +1208,7 @@
                 <a href="{{ url('/') }}"><i class="bi bi-house me-1"></i>Home</a>
                 <span class="s">/</span><a href="#">Events</a>
                 <span class="s">/</span>
-                <a href="{{ route('frontend.events.subevent', $event->id) }}">{{ Str::limit($event->title, 30) }}</a>
+                <a href="{{ route('frontend.events.subevent', $event->slug) }}">{{ Str::limit($event->title, 30) }}</a>
                 <span class="s">/</span>
                 <span style="color:var(--ink);font-weight:700;">{{ Str::limit($sub->title, 26) }}</span>
                 <span class="s">/</span>
@@ -1311,7 +1316,7 @@
                             <ul id="valBannerList"></ul>
                         </div>
 
-                        <form method="POST" action="{{ route('frontend.events.register.store', $sub->id) }}"
+                        <form method="POST" action="{{ route('frontend.events.register.store', $sub->slug) }}"
                             id="regForm" novalidate>
                             @csrf
                             <input type="hidden" name="primary_ticket" id="primaryInput" value="{{ $oldPrimary }}">
@@ -1678,8 +1683,8 @@
             const OLD_ATTS = @json($oldAtts);
             const OLD_PRI = {{ $oldPrimary }};
             const CSRF = '{{ csrf_token() }}';
-            const STORE_URL = '{{ route('frontend.events.register.store', $sub->id) }}';
-            const ORDER_URL = '{{ route('frontend.events.register.create-order', $sub->id) }}';
+            const STORE_URL = '{{ route('frontend.events.register.store', $sub->slug) }}';
+            const ORDER_URL = '{{ route('frontend.events.register.create-order', $sub->slug) }}';
             const SUCCESS_BASE = '{{ url('/events/register/success') }}';
 
             let primaryIdx = OLD_PRI;
@@ -1747,7 +1752,7 @@
                 }
                 if (name.includes('[phone]')) {
                     if (input.required && !val) return 'Phone number is required.';
-                    if (val && !/^\d{10,13}$/.test(val)) return 'Enter a valid 10–13 digit number.';
+                    if (val && val.replace(/\D/g, '').length !== 10) return 'Enter a valid 10-digit number.';
                     return null;
                 }
                 if (name.includes('[email]')) {
@@ -1861,7 +1866,10 @@
                 <div class="col-12 col-sm-6">
                     <div class="fg">
                         <label class="fl">Phone <span class="req">*</span></label>
-                        <input type="tel" name="attendees[${idx}][phone]" class="fi" placeholder="10-digit number" value="${esc(old?.phone)}" maxlength="13" required autocomplete="tel">
+                        <div style="display:flex;align-items:stretch;border:1.5px solid var(--border,#dde5f4);border-radius:8px;overflow:hidden;background:#fff;">
+                            <span style="display:flex;align-items:center;padding:0 10px;background:#f3f6fb;border-right:1.5px solid var(--border,#dde5f4);font-size:13px;font-weight:600;white-space:nowrap;gap:4px;user-select:none;">+91</span>
+                            <input type="tel" name="attendees[${idx}][phone]" class="fi" placeholder="10-digit number" value="${esc(old?.phone)}" maxlength="10" required autocomplete="tel" inputmode="numeric" style="border:none!important;border-radius:0!important;flex:1;">
+                        </div>
                         <div class="f-hint"><i class="bi bi-whatsapp" style="color:#22c55e;"></i> Confirmation sent here</div>
                         <div class="v-msg hidden"></div>
                     </div>
@@ -1956,7 +1964,10 @@
                 <div class="col-12 col-sm-6">
                     <div class="fg">
                         <label class="fl">Phone <span class="opt">(optional)</span></label>
-                        <input type="tel" name="attendees[${idx}][phone]" class="fi" placeholder="10-digit number" value="${esc(old?.phone)}" maxlength="13">
+                        <div style="display:flex;align-items:stretch;border:1.5px solid var(--border,#dde5f4);border-radius:8px;overflow:hidden;background:#fff;">
+                            <span style="display:flex;align-items:center;padding:0 10px;background:#f3f6fb;border-right:1.5px solid var(--border,#dde5f4);font-size:13px;font-weight:600;white-space:nowrap;gap:4px;user-select:none;">+91</span>
+                            <input type="tel" name="attendees[${idx}][phone]" class="fi" placeholder="10-digit number" value="${esc(old?.phone)}" maxlength="10" inputmode="numeric" style="border:none!important;border-radius:0!important;flex:1;">
+                        </div>
                         <div class="v-msg hidden"></div>
                     </div>
                 </div>
@@ -2187,11 +2198,24 @@
             /* ════════════════════════════════════════════════════════════════
                SUBMIT — AJAX for both free and paid
             ════════════════════════════════════════════════════════════════ */
+            // Restrict phone inputs to digits only (runs on new cards as they're added)
+            document.getElementById('attList').addEventListener('input', function(e) {
+                if (e.target && e.target.name && e.target.name.includes('[phone]')) {
+                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+                }
+            });
+
             document.getElementById('regForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
 
                 // Gate 1: client-side validation
                 if (!validateForm()) return;
+
+                // Prepend +91 to all phone inputs before FormData capture
+                document.querySelectorAll('input[name*="[phone]"]').forEach(function(el) {
+                    var d = el.value.replace(/\D/g, '');
+                    if (d) el.value = '+91' + d;
+                });
 
                 // ── FREE EVENT ────────────────────────────────────────────
                 if (IS_FREE) {
