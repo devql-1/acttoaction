@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventRegistration extends Model
 {
-    protected $fillable = ['event_id', 'sub_event_id', 'center_id', 'city', 'state', 'tickets', 'total_amount', 'status', 'registration_number', 'notes', 'type'];
+    protected $fillable = ['event_id', 'sub_event_id', 'center_id', 'city', 'state', 'tickets', 'total_amount', 'status', 'razorpay_order_id', 'registration_number', 'notes', 'type'];
 
     protected static function boot()
     {

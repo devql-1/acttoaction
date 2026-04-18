@@ -509,23 +509,35 @@
         }
 
         function deleteCat(id, name) {
-            if (!confirm(`Delete category "${name}"? This will also remove all its videos.`)) return;
-            fetch(`/admin/page-categories/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': CSRF,
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(r => r.json())
-                .then(() => {
-                    const row = document.getElementById(`catRow${id}`);
-                    if (row) {
-                        row.style.opacity = '0';
-                        setTimeout(() => row.remove(), 300);
-                    }
-                })
-                .catch(() => alert('Delete failed'));
+            Swal.fire({
+                title: 'Delete Category?',
+                text: `"${name}" and all its videos will be permanently removed.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e74a3b',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true,
+            }).then((result) => {
+                if (!result.isConfirmed) return;
+                fetch(`/admin/page-categories/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': CSRF,
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(r => r.json())
+                    .then(() => {
+                        const row = document.getElementById(`catRow${id}`);
+                        if (row) {
+                            row.style.opacity = '0';
+                            setTimeout(() => row.remove(), 300);
+                        }
+                    })
+                    .catch(() => toastr.error('Delete failed'));
+            });
         }
     </script>
 @endpush

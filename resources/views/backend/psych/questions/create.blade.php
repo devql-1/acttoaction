@@ -650,10 +650,10 @@
         .then(r => { if (!r.ok) throw new Error('Server error ' + r.status); return r.json(); })
         .then(data => {
             if (data.success) { allCategories.push(data.category); return data.category; }
-            alert('Could not save: ' + (data.message || 'Name may already exist.'));
+            toastr.error('Could not save: ' + (data.message || 'Name may already exist.'));
             return null;
         })
-        .catch(err => { alert('Error: ' + err.message); return null; });
+        .catch(err => { toastr.error('Error: ' + err.message); return null; });
     }
 
     /* ── HELPERS ── */

@@ -79,7 +79,9 @@
 
                                                 <form action="{{ route('states-destroy', $state->id) }}"
                                                     method="POST" class="d-inline"
-                                                    onsubmit="return confirm('Are you sure you want to delete {{ addslashes($state->name) }}?')">
+                                                    data-confirm="Delete '{{ $state->name }}'? This action cannot be undone."
+                                                    data-confirm-title="Delete State?"
+                                                    data-confirm-button="Yes, delete">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-link btn-danger btn-lg" title="Delete">

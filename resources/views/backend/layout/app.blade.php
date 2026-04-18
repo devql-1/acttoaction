@@ -679,6 +679,56 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+  {{-- Global SweetAlert2 confirm handler: use data-confirm="message" on forms/links/buttons --}}
+  <script>
+    (function ($) {
+      function runConfirm($el, message, onConfirm) {
+        Swal.fire({
+          title: $el.data('confirm-title') || 'Are you sure?',
+          text: message,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#e74a3b',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: $el.data('confirm-button') || 'Yes',
+          cancelButtonText: 'Cancel',
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) onConfirm();
+        });
+      }
+
+      $(document).on('submit', 'form[data-confirm]', function (e) {
+        var $form = $(this);
+        if ($form.data('confirmed')) return true;
+        e.preventDefault();
+        runConfirm($form, $form.data('confirm'), function () {
+          $form.data('confirmed', true);
+          $form[0].submit();
+        });
+      });
+
+      $(document).on('click', 'a[data-confirm]', function (e) {
+        var $a = $(this);
+        if ($a.data('confirmed')) return true;
+        e.preventDefault();
+        runConfirm($a, $a.data('confirm'), function () {
+          window.location.href = $a.attr('href');
+        });
+      });
+
+      $(document).on('click', 'button[data-confirm]:not([type=submit]), [data-confirm-action]', function (e) {
+        var $b = $(this);
+        if ($b.data('confirmed') || $b.is('form, a')) return true;
+        e.preventDefault();
+        runConfirm($b, $b.data('confirm'), function () {
+          $b.data('confirmed', true);
+          $b.trigger('confirmed.sw');
+        });
+      });
+    })(jQuery);
+  </script>
+
   {{-- Page-level scripts that need jQuery/Bootstrap (pushed by individual views) --}}
   @stack('after_scripts')
 </body>

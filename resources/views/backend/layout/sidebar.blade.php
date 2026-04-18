@@ -667,12 +667,12 @@
                 </li> --}}
 
                 {{-- Contact Enquiries --}}
-                {{-- <li class="nav-item {{ request()->routeIs('admin.contactus_enquiry*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('admin.contactus_enquiry*') ? 'active' : '' }}">
                     <a href="{{ route('admin.contactus_enquiry') }}">
                         <i class="fas fa-headset"></i>
                         <p>Contact Enquiries</p>
                     </a>
-                </li> --}}
+                </li>
 
                 {{-- Newsletter Subscribers --}}
                 <li class="nav-item {{ request()->routeIs('admin.newsletters.*') ? 'active' : '' }}">

@@ -36,10 +36,11 @@
                             <a href="{{ route('action-items.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
                             <form action="{{ route('action-items.destroy', $item->id) }}" method="POST"
-                                style="display:inline;">
+                                style="display:inline;" data-confirm="This action item will be permanently removed."
+                                data-confirm-title="Delete Action Item?" data-confirm-button="Yes, delete">
                                 @csrf
                                 @method('DELETE')
-                                <button onclick="return confirm('Delete?')" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </td>
                     </tr>

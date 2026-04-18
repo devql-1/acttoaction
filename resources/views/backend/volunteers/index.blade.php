@@ -195,7 +195,9 @@
                                                 {{-- Delete --}}
                                                 <a href="{{ route('admin.volunteers.destroy', $v->id) }}"
                                                    class="btn btn-sm btn-danger"
-                                                   onclick="return confirm('Delete this application permanently?')"
+                                                   data-confirm="This volunteer application will be permanently removed."
+                                                   data-confirm-title="Delete Application?"
+                                                   data-confirm-button="Yes, delete"
                                                    title="Delete">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
@@ -348,7 +350,9 @@
             <div class="modal-footer">
                 <a id="modal-delete-btn" href="#"
                    class="btn btn-danger btn-sm"
-                   onclick="return confirm('Delete this application permanently?')">
+                   data-confirm="This volunteer application will be permanently removed."
+                   data-confirm-title="Delete Application?"
+                   data-confirm-button="Yes, delete">
                     <i class="fa fa-trash me-1"></i> Delete
                 </a>
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
@@ -430,11 +434,11 @@ $(function () {
                 if (res.status === 200) {
                     setStatusBadge('#status-badge-' + id, status);
                     if (insideModal) setStatusBadge('#modal-status-badge', status);
-                    toastr ? toastr.success(res.message) : alert(res.message);
+                    toastr.success(res.message);
                 }
             },
             error: function () {
-                toastr ? toastr.error('Failed to update status.') : alert('Failed to update status.');
+                toastr.error('Failed to update status.');
             }
         });
     }

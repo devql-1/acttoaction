@@ -225,7 +225,9 @@
 
                                                         <form method="POST"
                                                             action="{{ route('test-result-ranges.destroy', [$test->id, $range->id]) }}"
-                                                            onsubmit="return confirm('Delete this range?')">
+                                                            data-confirm="This result range will be permanently removed."
+                                                            data-confirm-title="Delete Range?"
+                                                            data-confirm-button="Yes, delete">
 
                                                             @csrf
                                                             @method('DELETE')

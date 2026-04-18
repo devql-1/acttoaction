@@ -117,6 +117,14 @@
     </div>
 </header>
 <style>
+/* Keep the orange topbar (email + phone) visible on scroll.
+   Overrides main.css .scrolled .header .topbar { height: 0; visibility: hidden; } */
+.scrolled .header .topbar {
+    height: 40px !important;
+    visibility: visible !important;
+    overflow: visible !important;
+}
+
 .logo img {
         height: 120px;
     }

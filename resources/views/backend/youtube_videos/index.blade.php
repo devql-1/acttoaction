@@ -86,13 +86,14 @@
                                     <!-- Delete -->
                                     <form action="{{ route('youtubeVideos.destroy', $video->id) }}"
                                           method="POST"
-                                          style="display:inline-block;">
+                                          style="display:inline-block;"
+                                          data-confirm="This video will be permanently removed."
+                                          data-confirm-title="Delete Video?"
+                                          data-confirm-button="Yes, delete">
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="submit"
-                                            onclick="return confirm('Are you sure?')"
-                                            class="btn btn-sm btn-danger">
+                                        <button type="submit" class="btn btn-sm btn-danger">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>

@@ -20,8 +20,11 @@ class Enrollment extends Model
     protected static function booted()
     {
         static::creating(function ($enrollment) {
+            // 16 alphanumeric chars via Str::random (CSPRNG) gives ~95 bits of entropy.
+            // Reference id is used as a capability token on the public confirmation page,
+            // so it must not be guessable by enumeration.
             do {
-                $ref = 'ATA-' . strtoupper(Str::random(6));
+                $ref = 'ATA-' . strtoupper(Str::random(16));
             } while (self::where('reference_id', $ref)->exists());
 
             $enrollment->reference_id = $ref;

@@ -83,7 +83,9 @@
                                                 {{-- Delete Button --}}
                                                 <form action="{{ route('admin.blog-tags.destroy', $tag) }}" method="POST"
                                                     class="d-inline"
-                                                    onsubmit="return confirm('Delete tag \'{{ addslashes($tag->name) }}\'? It will be removed from all posts.')">
+                                                    data-confirm="Delete tag '{{ $tag->name }}'? It will be removed from all posts."
+                                                    data-confirm-title="Delete Tag?"
+                                                    data-confirm-button="Yes, delete">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger">

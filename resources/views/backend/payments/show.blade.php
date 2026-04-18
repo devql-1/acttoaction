@@ -5,11 +5,9 @@
             <div class="page-header">
                 <div class="d-flex align-items-center justify-content-between">
                     <h3 class="fw-bold mb-3">Payment Details</h3>
-                    <div class="gap-2">
-                        <a href="{{ route('payments.index') }}" class="btn btn-sm btn-secondary">
-                            <i class="fas fa-arrow-left me-1"></i> Back
-                        </a>
-                    </div>
+                    <a href="{{ route('payments.index') }}" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Back
+                    </a>
                 </div>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
@@ -309,9 +307,9 @@
 
         </div>
     </div>
+@endsection
 
-    {{-- SweetAlert2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@push('after_scripts')
     <script>
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
@@ -326,7 +324,5 @@
                 });
             });
         }
-
-        
     </script>
-@endsection
+@endpush

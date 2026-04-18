@@ -33,10 +33,12 @@
                         <td>
                             <a href="{{ route('themes.edit', $theme->id) }}" class="btn btn-sm btn-warning">Edit</a>
 
-                            <form action="{{ route('themes.delete', $theme->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('themes.delete', $theme->id) }}" method="POST" style="display:inline;"
+                                data-confirm="This theme will be permanently removed." data-confirm-title="Delete Theme?"
+                                data-confirm-button="Yes, delete">
                                 @csrf
                                 @method('DELETE')
-                                <button onclick="return confirm('Delete?')" class="btn btn-sm btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>

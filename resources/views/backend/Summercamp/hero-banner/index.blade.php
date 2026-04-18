@@ -114,7 +114,10 @@
 
                                                     {{-- DELETE --}}
                                                     <form action="{{ route('hero-banner.destroy', $banner) }}"
-                                                        method="POST" onsubmit="return confirm('Delete this banner?')">
+                                                        method="POST"
+                                                        data-confirm="This banner image will be permanently removed."
+                                                        data-confirm-title="Delete Banner?"
+                                                        data-confirm-button="Yes, delete">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-outline-danger"

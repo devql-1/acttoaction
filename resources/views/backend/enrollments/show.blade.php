@@ -10,7 +10,7 @@
                     <h3 class="fw-bold mb-1">Enrollment Detail</h3>
                     <h6 class="text-muted mb-0">{{ $enrollment->reference_id ?? 'No Reference' }}</h6>
                 </div>
-                <a href="#" class="btn btn-light btn-round">
+                <a href="{{ url()->previous() }}" class="btn btn-light btn-round">
                     <i class="fas fa-arrow-left me-1"></i> Back
                 </a>
             </div>
@@ -131,12 +131,19 @@
                             </div>
                             <form action="{{ route('enrollments.updateStatus', $enrollment->id) }}" method="POST">
                                 @csrf
-                                <select name="status" required>
-                                    <option value="pending">Pending</option>
-                                    <option value="confirmed">Confirmed</option>
-                                    <option value="cancelled">Cancelled</option>
+                                <label class="form-label text-muted"
+                                    style="font-size:12px;font-weight:600;">Change Status</label>
+                                <select name="status" class="form-select form-select-sm mb-2" required>
+                                    <option value="pending"
+                                        {{ $enrollment->status === 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="confirmed"
+                                        {{ $enrollment->status === 'confirmed' ? 'selected' : '' }}>Confirmed</option>
+                                    <option value="cancelled"
+                                        {{ $enrollment->status === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                 </select>
-                                <button type="submit">Update Status</button>
+                                <button type="submit" class="btn btn-primary btn-sm w-100">
+                                    <i class="fas fa-sync-alt me-1"></i> Update Status
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -163,10 +170,11 @@
                                 <span style="font-size:13px;">{{ $enrollment->newsletter ? 'Yes' : 'No' }}</span>
                             </div>
                             <hr>
-                            <form method="POST" action="{{ route('enrollments.destroy', $enrollment->id) }}"
-                                onsubmit="return confirm('Permanently delete this enrollment?')">
+                            <form id="delete-enrollment-form" method="POST"
+                                action="{{ route('enrollments.destroy', $enrollment->id) }}">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm w-100">
+                                <button type="button" class="btn btn-danger btn-sm w-100"
+                                    onclick="confirmDeleteEnrollment()">
                                     <i class="fas fa-trash me-1"></i> Delete Enrollment
                                 </button>
                             </form>
@@ -177,3 +185,24 @@
         </div>
     </div>
 @endsection
+
+@push('after_scripts')
+    <script>
+        function confirmDeleteEnrollment() {
+            Swal.fire({
+                title: 'Delete Enrollment?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e74a3b',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="fas fa-trash me-1"></i> Yes, Delete',
+                cancelButtonText: 'Cancel',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-enrollment-form').submit();
+                }
+            });
+        }
+    </script>
+@endpush

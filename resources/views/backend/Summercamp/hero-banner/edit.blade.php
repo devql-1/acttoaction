@@ -157,7 +157,8 @@
                         <p class="small text-muted mb-3">Deleting this banner will permanently remove the image from
                             storage.</p>
                         <form action="{{ route('hero-banner.destroy', $heroBanner) }}" method="POST"
-                            onsubmit="return confirm('Permanently delete this banner?')">
+                            data-confirm="The banner image will be permanently removed from storage."
+                            data-confirm-title="Delete Banner?" data-confirm-button="Yes, delete">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger btn-sm">

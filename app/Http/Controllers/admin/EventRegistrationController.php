@@ -108,7 +108,17 @@ class EventRegistrationController extends Controller
             }
         }
 
-        $registration = DB::transaction(function () use ($sub, $centerId, $city, $state, $ticketCount, $primaryIdx, $request) {
+        // Only bind the session's Razorpay order to this registration if the
+        // session was created for the same sub-event & ticket count. Prevents a
+        // stale session (e.g. abandoned checkout on a different event) from
+        // attaching the wrong order id to this registration.
+        $pendingOrderId = null;
+        if ((int) session('rzp_sub_event_id') === (int) $sub->id
+            && (int) session('rzp_tickets') === $ticketCount) {
+            $pendingOrderId = session('rzp_order_id');
+        }
+
+        $registration = DB::transaction(function () use ($sub, $centerId, $city, $state, $ticketCount, $primaryIdx, $request, $pendingOrderId) {
             $reg = EventRegistration::create([
                 'event_id' => $sub->event_id,
                 'sub_event_id' => $sub->id,
@@ -118,6 +128,7 @@ class EventRegistrationController extends Controller
                 'tickets' => $ticketCount,
                 'total_amount' => round((float) $sub->fees * $ticketCount, 2),
                 'status' => 'pending',
+                'razorpay_order_id' => $pendingOrderId,
             ]);
 
             foreach ($request->attendees as $i => $att) {
@@ -348,6 +359,25 @@ class EventRegistrationController extends Controller
             'razorpay_signature'  => 'required|string',
         ]);
 
+        // Load registration first so we can verify ownership before doing any Razorpay calls.
+        $registration = EventRegistration::with(['event', 'subEvent', 'attendees', 'center.state'])
+            ->findOrFail($registration_id);
+
+        // Ownership check: the order id in the body must match the one this
+        // registration was created with. Prevents misdirecting a valid payment
+        // to a different user's pending registration that happens to have the
+        // same total_amount.
+        if (!$registration->razorpay_order_id
+            || !hash_equals((string) $registration->razorpay_order_id, (string) $request->razorpay_order_id)) {
+            Log::warning('Event payment registration/order mismatch', [
+                'registration_id' => $registration->id,
+                'expected_order'  => $registration->razorpay_order_id,
+                'received_order'  => $request->razorpay_order_id,
+                'ip'              => $request->ip(),
+            ]);
+            return response()->json(['success' => false, 'message' => 'Payment verification failed'], 422);
+        }
+
         $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         // 1. Verify signature FIRST — wrapped in try-catch so a bad sig returns 422,
@@ -370,10 +400,6 @@ class EventRegistrationController extends Controller
         // 2. Fetch authoritative payment details from Razorpay BEFORE acquiring DB locks
         //    (avoids holding a lock during a network call).
         $rzpPayment = $api->payment->fetch($request->razorpay_payment_id);
-
-        // 3. Load registration with all relationships needed for the email.
-        $registration = EventRegistration::with(['event', 'subEvent', 'attendees', 'center.state'])
-            ->findOrFail($registration_id);
 
         $alreadyProcessed = false;
 

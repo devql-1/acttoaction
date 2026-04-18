@@ -3,17 +3,20 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h3 class="fw-bold mb-3">Payments</h3>
-                    <a href="{{ route('payments.export') }}" class="btn btn-sm btn-success">
-                        <i class="fas fa-download me-1"></i> Export CSV
+                <div class="d-flex align-items-start justify-content-between flex-wrap gap-2">
+                    <div>
+                        <h3 class="fw-bold mb-1">Payments</h3>
+                        <ul class="breadcrumbs mb-0">
+                            <li class="nav-home"><a href="{{ url('/admin') }}"><i class="icon-home"></i></a></li>
+                            <li class="separator"><i class="icon-arrow-right"></i></li>
+                            <li class="nav-item"><a href="{{ route('payments.index') }}">Payments</a></li>
+                        </ul>
+                    </div>
+                    <a href="{{ route('payments.export', request()->query()) }}"
+                        class="btn btn-success btn-sm d-inline-flex align-items-center">
+                        <i class="fas fa-file-csv me-2"></i> Export CSV
                     </a>
                 </div>
-                <ul class="breadcrumbs mb-3">
-                    <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
-                    <li class="separator"><i class="icon-arrow-right"></i></li>
-                    <li class="nav-item"><a href="#">Payments</a></li>
-                </ul>
             </div>
 
             {{-- Statistics Cards --}}
@@ -96,41 +99,33 @@
                 </div>
             </div>
 
-            {{-- Payment Type Quick Links --}}
-            <div class="row mb-3">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6 class="fw-bold mb-3">Filter by Payment Type</h6>
-                            <div class="d-flex gap-2 flex-wrap">
-                                <a href="{{ route('payments.index') }}"
-                                    class="btn btn-sm {{ !request('type') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                    <i class="fas fa-th me-1"></i> All Payments
-                                </a>
-                                @foreach ($paymentTypes as $key => $label)
-                                    <a href="{{ route('payments.index', ['type' => $key]) }}"
-                                        class="btn btn-sm {{ request('type') === $key ? 'btn-primary' : 'btn-outline-primary' }}">
-                                        <i class="fas fa-tag me-1"></i> {{ $label }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="card-title">
+                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                                <div class="card-title mb-0">
                                     All Payments
                                     @if (request('type'))
                                         <span
                                             class="badge bg-primary ms-2">{{ $paymentTypes[request('type')] ?? 'Unknown' }}</span>
                                     @endif
                                 </div>
+                                <span class="text-muted" style="font-size:12px;">
+                                    {{ $payments->total() }} record{{ $payments->total() === 1 ? '' : 's' }}
+                                </span>
+                            </div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <a href="{{ route('payments.index') }}"
+                                    class="btn btn-sm {{ !request('type') ? 'btn-primary' : 'btn-outline-primary' }}">
+                                    <i class="fas fa-th me-1"></i> All
+                                </a>
+                                @foreach ($paymentTypes as $key => $label)
+                                    <a href="{{ route('payments.index', ['type' => $key]) }}"
+                                        class="btn btn-sm {{ request('type') === $key ? 'btn-primary' : 'btn-outline-primary' }}">
+                                        {{ $label }}
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
 
@@ -255,10 +250,14 @@
                                                         {{ ucfirst($payment->status) }}
                                                     </span>
                                                 </td>
-                                                <td>
-                                                    <code style="font-size:10px;">
-                                                        {{ substr($payment->razorpay_payment_id, 0, 15) }}...
-                                                    </code>
+                                                                <td>
+                                                    @if ($payment->razorpay_payment_id)
+                                                        <code style="font-size:10px;" title="{{ $payment->razorpay_payment_id }}">
+                                                            {{ \Illuminate\Support\Str::limit($payment->razorpay_payment_id, 15) }}
+                                                        </code>
+                                                    @else
+                                                        <span class="text-muted">—</span>
+                                                    @endif
                                                 </td>
                                                 <td class="text-center" style="font-size:12px;white-space:nowrap;">
                                                     @if ($payment->paid_at)
@@ -406,9 +405,9 @@
 
         </div>
     </div>
+@endsection
 
-    {{-- SweetAlert2 --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@push('after_scripts')
     <script>
         function confirmDelete(id) {
             Swal.fire({
@@ -426,7 +425,5 @@
                 }
             });
         }
-
-        
     </script>
-@endsection
+@endpush

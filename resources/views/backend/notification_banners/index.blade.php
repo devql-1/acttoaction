@@ -99,7 +99,7 @@
                                                     {{ \Illuminate\Support\Str::limit($b->url, 50) }}
                                                 </a>
                                             @else
-                                                <span class=”text-muted”>&mdash;</span>
+                                                <span class="text-muted">&mdash;</span>
                                             @endif
                                         </td>
 
@@ -266,6 +266,9 @@
     </div>
 </div>
 
+@endsection
+
+@push('after_scripts')
 <script>
 $(document).ready(function () {
 
@@ -320,24 +323,44 @@ $(document).ready(function () {
 
     // ── Delete ──
     $(document).on('click', '.btn-delete-banner', function () {
-        if (!confirm('Delete this banner permanently?')) return;
         var id  = $(this).data('id');
         var row = $('#banner-row-' + id);
 
-        $.ajax({
-            url: '{{ url("admin/notification-banners") }}/' + id,
-            method: 'DELETE',
-            data: { _token: csrfToken },
-            success: function (res) {
-                if (res.success) {
-                    row.fadeOut(300, function () { $(this).remove(); });
-                    toastr ? toastr.success('Banner deleted.') : alert('Deleted.');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This banner will be permanently deleted!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then(function (result) {
+            if (!result.isConfirmed) return;
+
+            $.ajax({
+                url: '{{ url("admin/notification-banners") }}/' + id,
+                method: 'DELETE',
+                data: { _token: csrfToken },
+                success: function (res) {
+                    if (res.success) {
+                        row.fadeOut(300, function () { $(this).remove(); });
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'Banner has been deleted.',
+                            timer: 1800,
+                            showConfirmButton: false
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error', 'Failed to delete. Please try again.', 'error');
                 }
-            }
+            });
         });
     });
 
 });
 </script>
-
-@endsection
+@endpush

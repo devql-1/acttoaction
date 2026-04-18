@@ -45,6 +45,8 @@ class BlogController extends Controller
             $create->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
             $create->short_description = $request->short_description;
             $create->description = $request->description;
+            $create->linkedin_post = $request->linkedin_post;
+            $create->instagram_post = $request->instagram_post;
 
             if ($request->hasFile('image')) {
                 $filename = time() . '.' . $request->image->extension();
@@ -85,6 +87,8 @@ class BlogController extends Controller
             $update->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
             $update->short_description = $request->short_description;
             $update->description = $request->description;
+            $update->linkedin_post = $request->linkedin_post;
+            $update->instagram_post = $request->instagram_post;
 
             if ($request->input('remove_image') == '1') {
                 if ($update->image && file_exists(public_path('img/' . $update->image))) {

@@ -114,8 +114,7 @@
 
                             <button type="submit"
                                 form="graph-config-delete-form"
-                                class="btn btn-outline-danger px-3 ms-auto"
-                                onclick="return confirm('Delete this config?')">
+                                class="btn btn-outline-danger px-3 ms-auto">
                                 <i class="bi bi-trash"></i> Delete
                             </button>
                         </div>
@@ -125,7 +124,10 @@
                     <form id="graph-config-delete-form"
                         method="POST"
                         action="{{ route('test-graph-configs.destroy', $config->id) }}"
-                        class="d-none">
+                        class="d-none"
+                        data-confirm="This graph configuration will be permanently removed."
+                        data-confirm-title="Delete Config?"
+                        data-confirm-button="Yes, delete">
                         @csrf
                         @method('DELETE')
                     </form>

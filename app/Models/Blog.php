@@ -13,6 +13,8 @@ class Blog extends Model
         'slug',
         'short_description',
         'description',
+        'linkedin_post',
+        'instagram_post',
         'image',
         'status',
     ];

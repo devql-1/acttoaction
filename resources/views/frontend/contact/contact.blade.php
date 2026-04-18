@@ -455,7 +455,7 @@
         $ci = $contactInfo ?? null;
         $phone = $ci->phone ?? '';
         $whatsapp = $ci->whatsapp ?? '';
-        $email = $ci->email ?: 'info@acttoaction.com';
+        $email = $ci->email ?: 'contact@acttoaction.com';
         $address = $ci->address ?: 'Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar, Jaipur - 302021';
         $mapLink = $ci->map_link ?? '';
         $fbUrl = $ci->fb_url ?? '';
@@ -464,8 +464,8 @@
 
         $chatPhones = ['+91 91191-18844', '+91 91191-87311', '+91 91191-87411'];
         $workingHours = [
-            'Tue – Sat: 11:00 AM – 7:00 PM',
-            'Sunday: 10:00 AM – 4:00 PM',
+            'Tue - Sat: 11am - 7pm',
+            'Sunday: 10am - 4pm',
         ];
 
         $phoneDigits = preg_replace('/\D/', '', $phone);

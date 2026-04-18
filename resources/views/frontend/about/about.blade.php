@@ -1,9 +1,7 @@
 @extends('frontend.course.layout')
 @section('content')
-    
-
     <style>
-/* ─── NEWS / IN THE NEWS ─── */
+        /* ─── NEWS / IN THE NEWS ─── */
         .news-section {
             padding: 60px 0;
             background: #f4f8ff;
@@ -1490,8 +1488,8 @@
                 <div class="row gy-5 align-items-center">
                     <div class="col-lg-4 text-center" data-aos="fade-right">
                         <img src="https://static.wixstatic.com/media/f6a8d9_034eaf05abd04f2291659c9ee18f92ea~mv2.jpg/v1/fill/w_247,h_247,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kritesh%20Image.jpg"
-                            alt="Kritesh Agarwal"
-                            class="founder-avatar" style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
+                            alt="Kritesh Agarwal" class="founder-avatar"
+                            style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
                         <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Kritesh Agarwal</h3>
                         <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Filmmaker
                             &amp; Acting Coach</p>
@@ -1660,8 +1658,8 @@
                 <div class="row gy-5 align-items-center">
                     <div class="col-lg-4 text-center" data-aos="fade-right">
                         <img src="https://static.wixstatic.com/media/495d44_4b14b64cccde4ee797cfd36583c43a9f~mv2.jpg/v1/crop/x_0,y_39,w_408,h_338/fill/w_403,h_334,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kriti%20Gupta.jpg"
-                            alt="Kriti Gupta"
-                            class="founder-avatar" style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
+                            alt="Kriti Gupta" class="founder-avatar"
+                            style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
                         <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Kriti Gupta</h3>
                         <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Filmmaker
                             &amp; Acting Coach</p>
@@ -1681,20 +1679,22 @@
                             <i class="bi bi-stars me-2"></i>Formula-driven pedagogy · Child development science · Holistic
                             mental health
                         </p>
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Kriti Gupta is a trailblazing
-                            expert in child-centric creative education, renowned for his innovative approach to nurturing
-                            young minds through performing arts and holistic development. As the architect of Act to Action,
-                            he merges scientific child psychology with artistic training to foster confidence, creativity,
-                            and emotional resilience in children.</p>
-                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Kritesh's proprietary methodologies
-                            integrate medical insights (via collaborations with child development experts) and theatre
-                            techniques to address physical, mental, emotional, and intellectual growth. His programs use
-                            Shlok Recitation, Theatre exercises, Medical Therapies and Practice protocol to transform
-                            abstract concepts into tangible skills — ensuring learning is experiential and impactful.</p>
-                        <p style="font-size:15px;line-height:1.8;">Over the years, Kritesh has donned multiple hats —
-                            casting head, director, acting coach, mentor, assistant producer, and art director. Currently,
-                            he serves as the Founder &amp; Managing Director of <strong>Rising Passion Pvt. Ltd.</strong>,
-                            actively leading Act to Action with vision and commitment.</p>
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Kriti Gupta is a creative diplomat
+                            and strategic thinker with a strong academic foundation in Journalism and Mass Communication.
+                            Her expertise lies in transforming ideas into impactful experiential learning initiatives
+                            through compelling communication, thoughtful design, and meticulous execution.</p>
+                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Over the past two years with Act to
+                            Action, Kriti has played a pivotal role in shaping and curating innovative programs that foster
+                            creativity, leadership, and cognitive development among young learners. Drawing from her
+                            extensive background in the events ecosystem, she has been a core team member in the successful
+                            execution of more than 15 large - scale events, demonstrating exceptional capabilities in
+                            strategic planning, stakeholder engagement, and seamless implementation.
+                        </p>
+                        <p style="font-size:15px;line-height:1.8;">Recognized for her ability to bridge vision with
+                            execution, Kriti specializes in designing experiential learning formats that create meaningful
+                            and lasting impact. As a creative diplomat, she brings together diverse perspectives, fostering
+                            collaboration and driving initiatives aligned with Act to Action’s mission of building human
+                            intelligence for the future generation.</p>
                     </div>
                 </div>
                 <section class="news-section" style="background: #fff">
@@ -2366,28 +2366,29 @@
                             <div class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></div>
                             <div>
                                 <h5>Our Location</h5>
-                                <p>123 Medical Center Drive<br>New York, NY 10001, USA</p>
+                                <p>Rising Passion Studio, Hoshiar Singh Marg,<br>Moti Nagar, Vaishali Nagar, Jaipur - 302021
+                                </p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-telephone-fill"></i></div>
                             <div>
                                 <h5>Phone Numbers</h5>
-                                <p>General: +1 800 123 4567<br>Emergency: +1 800 911 HELP</p>
+                                <p>+91 91191-18844<br>+91 91191-87311<br>+91 91191-87411</p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-envelope-fill"></i></div>
                             <div>
                                 <h5>Email Address</h5>
-                                <p>info@healthclinic.com<br>appointments@healthclinic.com</p>
+                                <p>contact@acttoaction.com</p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-clock-fill"></i></div>
                             <div>
                                 <h5>Working Hours</h5>
-                                <p>Mon – Fri: 8:00 AM – 8:00 PM<br>Sat: 9:00 AM – 5:00 PM</p>
+                                <p>Tue – Sat: 11:00 AM – 7:00 PM<br>Sunday: 10:00 AM – 4:00 PM</p>
                             </div>
                         </div>
                     </div>
@@ -2404,7 +2405,8 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-text" style="font-weight:600;font-size:14px;">+91</span>
-                                        <input type="tel" class="form-control" placeholder="10-digit number" maxlength="10" inputmode="numeric">
+                                        <input type="tel" class="form-control" placeholder="10-digit number"
+                                            maxlength="10" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="col-md-6">

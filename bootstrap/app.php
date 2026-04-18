@@ -11,7 +11,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
+        // Razorpay server-to-server webhooks don't carry a CSRF token.
+        // Authenticity is enforced by HMAC signature verification inside
+        // RazorpayWebhookController, not CSRF.
+        $middleware->validateCsrfTokens(except: [
+            'webhooks/razorpay',
+        ]);
 
         $middleware->alias([
             'admin.guest' => \App\Http\Middleware\AdminRedirect::class,

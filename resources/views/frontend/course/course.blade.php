@@ -2231,13 +2231,13 @@
 
                 <div class="section-title text-center">
                     <div class="sh-label">Our Memories</div>
-                    <h2>Event <em>Gallery</em></h2>
+                    <h2>Course <em>Gallery</em></h2>
 
                     <p>Moments & highlights from our students, events and performances</p>
                 </div>
                 @include('frontend.partialspages.Gallery', [
                     'images' => $galleryImages,
-                    'sectionTitle' => 'Event Highlights Gallery',
+                    'sectionTitle' => 'Course Highlights Gallery',
                     'sectionDesc' =>
                         'A glimpse into the magic of our past events — the smiles, the performances, and the unforgettable moments captured in every frame.',
                 ])

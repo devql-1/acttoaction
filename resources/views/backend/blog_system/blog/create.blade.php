@@ -142,6 +142,42 @@
                                             </div>
                                         </div>
 
+                                        {{-- LinkedIn Post --}}
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label for="linkedin_post">
+                                                    <i class="fab fa-linkedin" style="color:#0a66c2;"></i>
+                                                    LinkedIn Post
+                                                </label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" name="linkedin_post" id="linkedin_post" rows="4"
+                                                    placeholder="Paste LinkedIn post URL or full embed iframe code">{{ old('linkedin_post') }}</textarea>
+                                                <small class="form-text text-muted">
+                                                    Paste either a LinkedIn post URL (e.g. https://www.linkedin.com/posts/...)
+                                                    or the full embed <code>&lt;iframe&gt;</code> code from LinkedIn.
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        {{-- Instagram Post --}}
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label for="instagram_post">
+                                                    <i class="fab fa-instagram text-danger"></i>
+                                                    Instagram Post
+                                                </label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" name="instagram_post" id="instagram_post" rows="4"
+                                                    placeholder="Paste Instagram post URL or full embed blockquote code">{{ old('instagram_post') }}</textarea>
+                                                <small class="form-text text-muted">
+                                                    Paste either an Instagram post URL (e.g. https://www.instagram.com/p/...)
+                                                    or the full embed <code>&lt;blockquote&gt;</code> code from Instagram.
+                                                </small>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

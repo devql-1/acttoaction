@@ -96,6 +96,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IconController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SummerController;
+use App\Http\Controllers\RazorpayWebhookController;
 use App\Http\Controllers\WorkshopRegistrationController;
 use App\Http\Controllers\frontend\indexController;
 use App\Http\Controllers\ChatbotController;
@@ -136,6 +137,9 @@ Route::get('blogs/search', [HomeController::class, 'blog_search'])->name('home.b
 Route::get('/volunteer', [HomeController::class, 'volunteer'])->name('volunteer');
 Route::post('/admin/volunteer-submit', [VolunteerController::class, 'store'])->name('volunteer.store');
 
+// Merchandise (static page)
+Route::view('/merchandise', 'frontend.product.product')->name('merchandise');
+
 // Contact
 Route::get('/contactus', [HomeController::class, 'contactus'])->name('contactus');
 Route::post('/contactus/listing', [FrontendContactusController::class, 'contactus_store'])->name('home.contactus.store');
@@ -161,9 +165,9 @@ Route::get('/events/{event:slug}', [HomeController::class, 'subevent'])->name('f
 // Event Registration (success must be before {subEvent:slug} to avoid slug collision)
 Route::get('/events/register/success/{id}', [EventRegistrationController::class, 'success'])->name('frontend.events.register.success');
 Route::get('/events/register/{subEvent:slug}', [EventRegistrationController::class, 'show'])->name('frontend.events.register');
-Route::post('/events/register/{subEvent:slug}', [EventRegistrationController::class, 'store'])->name('frontend.events.register.store');
-Route::post('/events/register/{subEvent:slug}/create-order', [EventRegistrationController::class, 'createOrder'])->name('frontend.events.register.create-order');
-Route::post('/events/register/{registration_id}/verify-payment', [EventRegistrationController::class, 'verifyPayment'])->name('frontend.events.register.verify-payment');
+Route::post('/events/register/{subEvent:slug}', [EventRegistrationController::class, 'store'])->middleware('throttle:20,1')->name('frontend.events.register.store');
+Route::post('/events/register/{subEvent:slug}/create-order', [EventRegistrationController::class, 'createOrder'])->middleware('throttle:20,1')->name('frontend.events.register.create-order');
+Route::post('/events/register/{registration_id}/verify-payment', [EventRegistrationController::class, 'verifyPayment'])->middleware('throttle:10,1')->name('frontend.events.register.verify-payment');
 Route::get('/sub-event/{subEvent:slug}/details', [EventRegistrationController::class, 'subEventDetails'])->name('subevent.details');
 Route::get('/register/success/{id}', [EventRegistrationController::class, 'success'])->name('register.success');
 
@@ -187,7 +191,7 @@ Route::post('/enrollment/store', [EnrollmentController::class, 'store'])->middle
 Route::post('/verify-payment', [EnrollmentController::class, 'verifyPayment'])->middleware('throttle:10,1')->name('enrollment.verify');
 Route::post('/enrollment/validate', [EnrollmentController::class, 'validateField'])->middleware('throttle:30,1')->name('enrollment.validate');
 Route::get('/enrollment/payment/callback', [EnrollmentController::class, 'paymentCallback'])->name('enrollment.payment.callback');
-Route::get('/enrollment/payment/confirmed', [EnrollmentController::class, 'paymentConfirmed'])->name('enrollment.payment.confirmed');
+Route::get('/enrollment/payment/confirmed', [EnrollmentController::class, 'paymentConfirmed'])->middleware('throttle:30,1')->name('enrollment.payment.confirmed');
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
 // ║                           SUMMER CAMP ROUTES                              ║
@@ -205,6 +209,13 @@ Route::get('/workshops/{school}', [SummerWorkshopController::class, 'workshopdet
 Route::get('/workshops/{school}/register', [SummerWorkshopController::class, 'registerPage'])->name('workshops.register');
 Route::post('/workshops/{school}/register', [WorkshopRegistrationController::class, 'register'])->middleware('throttle:10,1')->name('frontend.summercamp.register.submit');
 Route::post('/register/{registration}/verify', [WorkshopRegistrationController::class, 'verifyPayment'])->middleware('throttle:10,1')->name('frontend.summercamp.register.verify');
+
+// Razorpay server-to-server webhook. CSRF-exempt (see bootstrap/app.php).
+// Throttled to 120/min — well above Razorpay's retry rate, low enough to
+// blunt abuse if someone blasts the endpoint with unsigned garbage.
+Route::post('/webhooks/razorpay', [RazorpayWebhookController::class, 'handle'])
+    ->middleware('throttle:120,1')
+    ->name('webhooks.razorpay');
 
 Route::get('/curriculum', [SummerController::class, 'curriculum'])->name('curriculum');
 

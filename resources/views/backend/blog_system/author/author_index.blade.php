@@ -267,37 +267,39 @@ $(document).on('change','.toggle-status',function(){
 // Delete Author
 $(document).on('click','.btn-delete',function(){
 
-    if(!confirm('Delete this author? Blog posts will remain but lose the author link.')){
-        return;
-    }
-
     const btn=$(this);
 
-    $.ajax({
-        url:'{{ url("admin/blog-authors/destroy") }}/'+btn.data('id'),
-        type:'DELETE',
-        data:{ _token:'{{ csrf_token() }}' },
+    Swal.fire({
+        title: 'Delete Author?',
+        text: 'Blog posts will remain but lose the author link.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74a3b',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true,
+    }).then((result) => {
+        if (!result.isConfirmed) return;
 
-        success:function(res){
-
-            if(res.success){
-
-                btn.closest('tr').fadeOut(300,function(){
-                    $(this).remove();
-                });
-
-                toastr.success('Author deleted successfully');
-
+        $.ajax({
+            url:'{{ url("admin/blog-authors/destroy") }}/'+btn.data('id'),
+            type:'DELETE',
+            data:{ _token:'{{ csrf_token() }}' },
+            success:function(res){
+                if(res.success){
+                    btn.closest('tr').fadeOut(300,function(){
+                        $(this).remove();
+                    });
+                    toastr.success('Author deleted successfully');
+                }
             }
-
-        }
-
+        });
     });
 
 });
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     function confirmDelete(id, name) {
@@ -337,13 +339,25 @@ $(document).on('change', '.toggle-status', function () {
 
 // Delete
 $(document).on('click', '.btn-delete', function () {
-    if (!confirm('Delete this author? Blog posts will remain but lose the author link.')) return;
     const btn = $(this);
-    $.ajax({
-        url:  '{{ url("admin/blog-authors/destroy") }}/' + btn.data('id'),
-        type: 'DELETE',
-        data: { _token: '{{ csrf_token() }}' },
-        success: res => { if (res.success) btn.closest('tr').fadeOut(300, function(){ $(this).remove(); }); }
+    Swal.fire({
+        title: 'Delete Author?',
+        text: 'Blog posts will remain but lose the author link.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74a3b',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel',
+        reverseButtons: true,
+    }).then((result) => {
+        if (!result.isConfirmed) return;
+        $.ajax({
+            url:  '{{ url("admin/blog-authors/destroy") }}/' + btn.data('id'),
+            type: 'DELETE',
+            data: { _token: '{{ csrf_token() }}' },
+            success: res => { if (res.success) btn.closest('tr').fadeOut(300, function(){ $(this).remove(); }); }
+        });
     });
 });
 </script>

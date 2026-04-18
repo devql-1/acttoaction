@@ -980,6 +980,53 @@
             color: var(--accent-color);
             font-weight: 700;
         }
+
+        /* Social Post Buttons */
+        .social-post-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .social-post-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #fff !important;
+            transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+            text-decoration: none;
+        }
+
+        .social-post-btn:hover {
+            transform: translateY(-2px);
+            opacity: .95;
+            text-decoration: none;
+        }
+
+        .social-post-btn.linkedin {
+            background: #0a66c2;
+            box-shadow: 0 4px 14px rgba(10, 102, 194, .35);
+        }
+
+        .social-post-btn.linkedin:hover {
+            box-shadow: 0 6px 20px rgba(10, 102, 194, .45);
+        }
+
+        .social-post-btn.instagram {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 4px 14px rgba(220, 39, 67, .35);
+        }
+
+        .social-post-btn.instagram:hover {
+            box-shadow: 0 6px 20px rgba(220, 39, 67, .45);
+        }
     </style>
     <main class="main">
 
@@ -1145,6 +1192,45 @@
                         <article class="prose">
                             {!! $blog->description !!}
                         </article>
+
+                        {{-- Social Post Buttons --}}
+                        @php
+                            $linkedinUrl = trim($blog->linkedin_post ?? '');
+                            if ($linkedinUrl && preg_match('/https?:\/\/[^\s"\'<>]+/i', $linkedinUrl, $m)) {
+                                $linkedinUrl = $m[0];
+                            }
+                            $instagramUrl = trim($blog->instagram_post ?? '');
+                            if ($instagramUrl && preg_match('/https?:\/\/[^\s"\'<>]+/i', $instagramUrl, $m)) {
+                                $instagramUrl = $m[0];
+                            }
+                        @endphp
+                        @if ($linkedinUrl || $instagramUrl)
+                            <div class="social-post-buttons">
+                                @if ($linkedinUrl)
+                                    <a href="{{ $linkedinUrl }}" target="_blank" rel="noopener"
+                                        class="social-post-btn linkedin">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                            <rect x="2" y="9" width="4" height="12" />
+                                            <circle cx="4" cy="4" r="2" />
+                                        </svg>
+                                        View LinkedIn Post
+                                    </a>
+                                @endif
+                                @if ($instagramUrl)
+                                    <a href="{{ $instagramUrl }}" target="_blank" rel="noopener"
+                                        class="social-post-btn instagram">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                                        </svg>
+                                        View Instagram Post
+                                    </a>
+                                @endif
+                            </div>
+                        @endif
 
                         {{-- Tags --}}
                         @if ($blog->tags ?? false)

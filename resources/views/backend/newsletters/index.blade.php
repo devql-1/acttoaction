@@ -195,24 +195,36 @@
 @push('after_scripts')
 <script>
     function deleteSubscriber(id) {
-        if (!confirm('Delete this subscriber?')) return;
+        Swal.fire({
+            title: 'Delete Subscriber?',
+            text: 'This subscriber will be permanently removed.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74a3b',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
+        }).then((result) => {
+            if (!result.isConfirmed) return;
 
-        $.ajax({
-            url: '/admin/newsletters/' + id,
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                'Accept': 'application/json',
-            },
-            success: function (data) {
-                if (data.status === 200) {
-                    $('#nl-row-' + id).fadeOut(300, function () { $(this).remove(); });
-                    toastr.success(data.message);
+            $.ajax({
+                url: '/admin/newsletters/' + id,
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Accept': 'application/json',
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        $('#nl-row-' + id).fadeOut(300, function () { $(this).remove(); });
+                        toastr.success(data.message);
+                    }
+                },
+                error: function () {
+                    toastr.error('Failed to delete subscriber.');
                 }
-            },
-            error: function () {
-                toastr.error('Failed to delete subscriber.');
-            }
+            });
         });
     }
 </script>

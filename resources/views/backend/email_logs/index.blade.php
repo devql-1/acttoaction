@@ -319,7 +319,7 @@
 
             window.viewLog = async function (id) {
                 const modal = getEmailViewModal();
-                if (!modal) { alert('Modal failed to initialise — Bootstrap not loaded?'); return; }
+                if (!modal) { toastr.error('Modal failed to initialise — Bootstrap not loaded?'); return; }
 
                 document.getElementById('elvLoading').classList.remove('d-none');
                 document.getElementById('elvContent').classList.add('d-none');
