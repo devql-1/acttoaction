@@ -905,7 +905,7 @@
 
     <!-- HERO BANNER SECTION -->
     <section class="site-banner">
-        <img src="{{ asset('courseassets/img/homebanner/IMG_3987.jpeg') }}" alt="Site Banner">
+        <img src="{{ asset('courseassets/img/homebanner/IMG_3987.JPEG') }}" alt="Site Banner">
         <div class="hero-content">
             <h2>Building Future Ready <span> Leaders</span>
             </h2>
