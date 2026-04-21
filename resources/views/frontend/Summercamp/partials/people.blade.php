@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="swiper sc-swiper" id="mentorSwiper">
+                <div class="swiper ppl-swiper" id="mentorSwiper">
                     <div class="swiper-wrapper">
                         @foreach ($people['mentors'] as $person)
                             <div class="swiper-slide">
@@ -139,58 +139,38 @@
                 </div>
             </div>
         </section>
+    @endif
 </div>
-@endif
 
-{{-- ── Swiper init for all 4 carousels ── --}}
+{{-- ── Swiper init for speakers / guests / faculty (mentor inited in summercamp.blade.php) ── --}}
 <script>
-    (function() {
+    (function initPeopleSwipers() {
+        if (typeof Swiper === 'undefined') {
+            // Swiper bundle is loaded later in summercamp.blade.php — wait for it.
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initPeopleSwipers);
+            } else {
+                window.addEventListener('load', initPeopleSwipers);
+            }
+            return;
+        }
+
         const swiperConfig = {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: false,
-            pagination: {
-                clickable: true
-            },
             breakpoints: {
-                480: {
-                    slidesPerView: 2
-                },
-                768: {
-                    slidesPerView: 2,
-                    spaceBetween: 24
-                },
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 28
-                },
-                1280: {
-                    slidesPerView: 4,
-                    spaceBetween: 28
-                },
+                480: { slidesPerView: 2 },
+                768: { slidesPerView: 2, spaceBetween: 24 },
+                1024: { slidesPerView: 3, spaceBetween: 28 },
+                1280: { slidesPerView: 4, spaceBetween: 28 },
             }
         };
 
-        [{
-                id: 'mentorSwiper',
-                prev: 'mentorPrev',
-                next: 'mentorNext'
-            },
-            {
-                id: 'speakerSwiper',
-                prev: 'speakerPrev',
-                next: 'speakerNext'
-            },
-            {
-                id: 'guestSwiper',
-                prev: 'guestPrev',
-                next: 'guestNext'
-            },
-            {
-                id: 'facultySwiper',
-                prev: 'facultyPrev',
-                next: 'facultyNext'
-            },
+        [
+            { id: 'speakerSwiper', prev: 'speakerPrev', next: 'speakerNext' },
+            { id: 'guestSwiper',   prev: 'guestPrev',   next: 'guestNext'   },
+            { id: 'facultySwiper', prev: 'facultyPrev', next: 'facultyNext' },
         ].forEach(cfg => {
             const el = document.getElementById(cfg.id);
             if (!el) return;
@@ -207,30 +187,7 @@
     })();
 </script>
 <style>
-/* ===== SCOPED FIX FOR THIS PAGE ONLY ===== */
-
-    .sc-people-page .sc-swiper {
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .sc-people-page .swiper-wrapper {
-        display: flex !important;
-    }
-
-    .sc-people-page .swiper-slide {
-        width: auto !important;
-        /* 🔥 fixes bleeding */
-        flex-shrink: 0;
-    }
-
-    /* Fix card stretching */
-    .sc-people-page .swiper-slide>* {
-        width: 160%;
-    }
-
-    /* Optional spacing fix */
-    .sc-people-page .ppl-swiper {
-        padding-bottom: 50px;
+    .sc-people-page .ppl-card {
+        height: 100%;
     }
 </style>

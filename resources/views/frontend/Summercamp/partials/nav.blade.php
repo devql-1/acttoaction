@@ -1841,6 +1841,7 @@
 
         .ppl-hover-links {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
             transform: translateY(10px);
             transition: .3s .05s;

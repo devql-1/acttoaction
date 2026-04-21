@@ -78,7 +78,7 @@ class PersonController extends Controller
     {
         $sections = Person::SECTIONS;
 
-        return view('backend.people.edit', compact('person', 'sections'));
+        return view('backend.Summercamp.Person.edit', compact('person', 'sections'));
     }
 
     // ── Update ───────────────────────────────────────────────
