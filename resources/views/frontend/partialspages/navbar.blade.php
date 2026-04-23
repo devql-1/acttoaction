@@ -50,47 +50,58 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('aboutus') }}" class="{{ request()->is('aboutus') ? 'active' : '' }}">
-                            About Us
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ route('quiz-test') }}"
                             class="{{ request()->routeIs('quiz-test') ? 'active' : '' }}">
                             Skill Assessment
                         </a>
                     </li>
+
                     <li>
-                        <a href="{{ route('volunteer') }}"
-                            class="{{ request()->routeIs('volunteer') ? 'active' : '' }}">
-                            Join Us
+                        <a href="{{ route('frontend.blog.index') }}"
+                            class="{{ request()->routeIs('frontend.blog.*') ? 'active' : '' }}">
+                            Blog
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('merchandise') }}"
+                            class="{{ request()->routeIs('merchandise') ? 'active' : '' }}">
+                            Merchandise
+                        </a>
+                    </li>
 
-
-                    <!-- Dropdown -->
-                    {{-- <li class="dropdown">
-                        <a href="#"><span>More Pages</span><i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    {{-- About dropdown: groups About Us + Join Us + Contact Us --}}
+                    @php
+                        $aboutActive = request()->is('aboutus')
+                            || request()->routeIs('volunteer')
+                            || request()->routeIs('contactus');
+                    @endphp
+                    <li class="dropdown">
+                        <a href="#" class="{{ $aboutActive ? 'active' : '' }}">
+                            <span>About</span><i class="bi bi-chevron-down toggle-dropdown"></i>
+                        </a>
                         <ul>
-                            <li><a href="department-details.html">Course Details</a></li>
-                            <li><a href="service-details.html">Program Details</a></li>
-                            <li><a href="appointment.html">Enrollment</a></li>
-                            <li><a href="testimonials.html">Testimonials</a></li>
-                            <li><a href="faq.html">Frequently Asked Questions</a></li>
-                            <li><a href="gallery.html">Gallery</a></li>
-                            <li><a href="terms.html">Terms</a></li>
-                            <li><a href="privacy.html">Privacy</a></li>
-                            <li><a href="404.html">404</a></li>
+                            <li>
+                                <a href="{{ route('aboutus') }}"
+                                   class="{{ request()->is('aboutus') ? 'active' : '' }}">
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('volunteer') }}"
+                                   class="{{ request()->routeIs('volunteer') ? 'active' : '' }}">
+                                    Join Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contactus') }}"
+                                   class="{{ request()->routeIs('contactus') ? 'active' : '' }}">
+                                    Contact Us
+                                </a>
+                            </li>
                         </ul>
-                    </li> --}}
-
-                    <li>
-                        <a href="{{ route('contactus') }}"
-                            class="{{ request()->routeIs('contactus') ? 'active' : '' }}">
-                            Contact Us
-                        </a>
                     </li>
+
                     <li>
                         <a href="{{ route('summercamp') }}"
                             class="{{ request()->routeIs('summercamp') ? 'active' : '' }}"

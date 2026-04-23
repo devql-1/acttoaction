@@ -21,7 +21,7 @@
                                     <div class="col-md-9">
                                         <input type="text"
                                             name="phone"
-                                            value="{{ old('name', $contact->phone) }}"
+                                            value="{{ old('phone', $contact->phone) }}"
                                             class="form-control"
                                             id="phone"
                                             placeholder="Enter Phone No." />

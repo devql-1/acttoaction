@@ -16,7 +16,7 @@ class ContactInfoController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email',
             'whatsapp' => 'nullable|string|max:20',
@@ -28,8 +28,8 @@ class ContactInfoController extends Controller
             'linkedin_url' => 'nullable|url',
         ]);
 
-        $contact = ContactInfo::first();
-        $contact->update($request->all());
+        $contact = ContactInfo::firstOrCreate(['id' => 1]);
+        $contact->update($data);
 
         return redirect()->back()->with('success', 'Contact information updated successfully!');
     }

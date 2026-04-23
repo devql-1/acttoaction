@@ -11,7 +11,7 @@
     /* ---------- Hero ---------- */
     .merch-hero {
         position: relative;
-        padding: 100px 20px 70px;
+        padding: 210px 20px 80px;
         background: linear-gradient(135deg, #0e1c38 0%, #1a3a6b 55%, #ff6a00 130%);
         color: #fff;
         text-align: center;
@@ -69,45 +69,6 @@
         color: rgba(255, 255, 255, 0.85);
         margin: 0 auto;
         max-width: 560px;
-    }
-
-    /* ---------- Filters ---------- */
-    .merch-filters {
-        background: #fff;
-        padding: 26px 20px;
-        border-bottom: 1px solid #eceef2;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-    .merch-filters-inner {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        justify-content: center;
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-    .merch-filter-btn {
-        background: #f4f6fa;
-        color: #0e1c38;
-        border: 1px solid transparent;
-        padding: 9px 22px;
-        border-radius: 30px;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.25s ease;
-    }
-    .merch-filter-btn:hover {
-        background: #fff3e6;
-        color: #ff6a00;
-        border-color: #ffd3b3;
-    }
-    .merch-filter-btn.active {
-        background: #ff6a00;
-        color: #fff;
-        box-shadow: 0 6px 18px rgba(255, 106, 0, 0.35);
     }
 
     /* ---------- Grid ---------- */
@@ -244,52 +205,6 @@
         transform: translateY(-2px);
     }
 
-    /* ---------- Features strip ---------- */
-    .merch-features {
-        margin: 70px auto 0;
-        max-width: 1280px;
-        padding: 0 20px;
-    }
-    .merch-features-inner {
-        background: #fff;
-        border-radius: 24px;
-        padding: 40px 30px;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 30px;
-        box-shadow: 0 10px 30px rgba(14, 28, 56, 0.05);
-    }
-    .merch-feature {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 4px 0;
-    }
-    .merch-feature-icon {
-        width: 52px;
-        height: 52px;
-        flex-shrink: 0;
-        border-radius: 14px;
-        background: linear-gradient(135deg, #ff6a00 0%, #ff9a4d 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 22px;
-    }
-    .merch-feature-text h4 {
-        font-size: 15px;
-        font-weight: 700;
-        color: #0e1c38;
-        margin: 0 0 4px;
-    }
-    .merch-feature-text p {
-        font-size: 12.5px;
-        color: #5e6a80;
-        margin: 0;
-        line-height: 1.4;
-    }
-
     /* ---------- CTA banner ---------- */
     .merch-cta {
         margin: 70px auto 0;
@@ -357,10 +272,9 @@
     /* ---------- Responsive ---------- */
     @media (max-width: 1100px) {
         .merch-grid { grid-template-columns: repeat(3, 1fr); }
-        .merch-features-inner { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-        .merch-hero { padding: 70px 20px 50px; }
+        .merch-hero { padding: 170px 20px 50px; }
         .merch-hero h1 { font-size: 34px; }
         .merch-hero p { font-size: 15px; }
         .merch-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
@@ -371,14 +285,11 @@
         .merch-card-desc { font-size: 12.5px; }
         .merch-card-price { font-size: 17px; }
         .merch-card-cta { padding: 8px 14px; font-size: 12px; }
-        .merch-features-inner { grid-template-columns: 1fr; padding: 26px 22px; }
         .merch-cta-inner h2 { font-size: 24px; }
         .merch-cta-inner { padding: 38px 24px; }
     }
     @media (max-width: 480px) {
         .merch-grid { grid-template-columns: 1fr; }
-        .merch-filters { padding: 18px 14px; position: static; }
-        .merch-filter-btn { padding: 8px 16px; font-size: 13px; }
     }
 </style>
 
@@ -390,17 +301,6 @@
             <span class="tagline">Official Merchandise</span>
             <h1>Gear Up With <span>Act&nbsp;To&nbsp;Action</span></h1>
             <p>Rep the community. Premium apparel, accessories, and essentials designed for young performers and changemakers.</p>
-        </div>
-    </section>
-
-    {{-- ============== FILTERS ============== --}}
-    <section class="merch-filters">
-        <div class="merch-filters-inner">
-            <button class="merch-filter-btn active" data-cat="all">All</button>
-            <button class="merch-filter-btn" data-cat="apparel">Apparel</button>
-            <button class="merch-filter-btn" data-cat="accessories">Accessories</button>
-            <button class="merch-filter-btn" data-cat="stationery">Stationery</button>
-            <button class="merch-filter-btn" data-cat="limited">Limited Edition</button>
         </div>
     </section>
 
@@ -535,40 +435,6 @@
         </div>
     </section>
 
-    {{-- ============== FEATURES STRIP ============== --}}
-    <section class="merch-features">
-        <div class="merch-features-inner">
-            <div class="merch-feature">
-                <div class="merch-feature-icon"><i class="bi bi-truck"></i></div>
-                <div class="merch-feature-text">
-                    <h4>Free Shipping</h4>
-                    <p>On all orders over ₹999 across India</p>
-                </div>
-            </div>
-            <div class="merch-feature">
-                <div class="merch-feature-icon"><i class="bi bi-shield-check"></i></div>
-                <div class="merch-feature-text">
-                    <h4>Secure Checkout</h4>
-                    <p>256-bit SSL encryption on every payment</p>
-                </div>
-            </div>
-            <div class="merch-feature">
-                <div class="merch-feature-icon"><i class="bi bi-arrow-repeat"></i></div>
-                <div class="merch-feature-text">
-                    <h4>Easy Returns</h4>
-                    <p>7-day hassle-free return policy</p>
-                </div>
-            </div>
-            <div class="merch-feature">
-                <div class="merch-feature-icon"><i class="bi bi-headset"></i></div>
-                <div class="merch-feature-text">
-                    <h4>Dedicated Support</h4>
-                    <p>Reach out anytime — we reply within 24 hrs</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     {{-- ============== CTA BANNER ============== --}}
     <section class="merch-cta">
         <div class="merch-cta-inner">
@@ -579,27 +445,5 @@
     </section>
 
 </main>
-
-<script>
-    // Static filter tabs — toggles visibility of product cards by category
-    document.addEventListener('DOMContentLoaded', function () {
-        var buttons = document.querySelectorAll('.merch-filter-btn');
-        var cards = document.querySelectorAll('#merchGrid .merch-card');
-        buttons.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var cat = btn.getAttribute('data-cat');
-                buttons.forEach(function (b) { b.classList.remove('active'); });
-                btn.classList.add('active');
-                cards.forEach(function (card) {
-                    if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-    });
-</script>
 
 @endsection

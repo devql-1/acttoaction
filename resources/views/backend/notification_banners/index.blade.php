@@ -42,13 +42,6 @@
             </ul>
         </div>
 
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-round">
@@ -313,11 +306,24 @@ $(document).ready(function () {
 
     // ── Toggle Status ──
     $(document).on('change', '.toggle-banner-status', function () {
-        var id     = $(this).data('id');
-        var status = $(this).is(':checked') ? 1 : 0;
+        var $el    = $(this);
+        var id     = $el.data('id');
+        var status = $el.is(':checked') ? 1 : 0;
 
         $.post('{{ route("admin.notification-banners.toggle") }}', {
             _token: csrfToken, id: id, status: status
+        })
+        .done(function (res) {
+            if (res && res.success) {
+                toastr.success(status ? 'Banner activated' : 'Banner deactivated');
+            } else {
+                $el.prop('checked', !status);
+                toastr.error('Failed to update status');
+            }
+        })
+        .fail(function () {
+            $el.prop('checked', !status);
+            toastr.error('Failed to update status');
         });
     });
 
@@ -345,17 +351,13 @@ $(document).ready(function () {
                 success: function (res) {
                     if (res.success) {
                         row.fadeOut(300, function () { $(this).remove(); });
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Deleted!',
-                            text: 'Banner has been deleted.',
-                            timer: 1800,
-                            showConfirmButton: false
-                        });
+                        toastr.success('Banner deleted');
+                    } else {
+                        toastr.error('Failed to delete banner');
                     }
                 },
                 error: function () {
-                    Swal.fire('Error', 'Failed to delete. Please try again.', 'error');
+                    toastr.error('Failed to delete banner');
                 }
             });
         });

@@ -138,7 +138,7 @@
                     </a>
                 </li>
 
-                {{-- Action Items --}}
+                {{-- Action Items — temporarily disabled
                 <li class="nav-item {{ request()->routeIs('action-items.*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#actionItems"
                         class="{{ request()->routeIs('action-items.*') ? '' : 'collapsed' }}">
@@ -155,6 +155,7 @@
                         </ul>
                     </div>
                 </li>
+                --}}
 
                 {{-- ══════════════════════════════════════════
                      SECTION: ACADEMIC

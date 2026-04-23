@@ -25,7 +25,7 @@ class NotificationBannerController extends Controller
         $banner = new NotificationBanner();
         $banner->title      = $request->title;
         $banner->url        = $request->url;
-        $banner->sort_order = $request->sort_order ?? 0;
+        $banner->sort_order = (int) ($request->sort_order ?: 0);
         $banner->is_active  = $request->has('is_active') ? 1 : 0;
 
         if ($request->hasFile('image')) {
@@ -51,7 +51,7 @@ class NotificationBannerController extends Controller
         $banner = NotificationBanner::findOrFail($id);
         $banner->title      = $request->title;
         $banner->url        = $request->url;
-        $banner->sort_order = $request->sort_order ?? 0;
+        $banner->sort_order = (int) ($request->sort_order ?: 0);
         $banner->is_active  = $request->has('is_active') ? 1 : 0;
 
         if ($request->has('remove_image') && $request->remove_image == 1) {
@@ -86,7 +86,7 @@ class NotificationBannerController extends Controller
     {
         $banner = NotificationBanner::findOrFail($id);
         if ($banner->image && file_exists(public_path($banner->image))) {
-            unlink(public_path($banner->image));
+            @unlink(public_path($banner->image));
         }
         $banner->delete();
         return response()->json(['success' => true]);

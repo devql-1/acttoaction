@@ -264,7 +264,9 @@
                             <strong>{{ $registrations->firstItem() }}</strong>–<strong>{{ $registrations->lastItem() }}</strong>
                             of <strong>{{ $registrations->total() }}</strong>
                         </div>
-                        {{ $registrations->withQueryString()->links() }}
+                        <div class="pagination-wrapper">
+                            {{ $registrations->withQueryString()->links('pagination::bootstrap-5') }}
+                        </div>
                     </div>
                 </div>
             @endif

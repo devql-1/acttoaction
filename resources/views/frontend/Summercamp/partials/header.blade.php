@@ -24,18 +24,35 @@
                         {{-- Drawer close button (mobile only) --}}
                         <button class="sh-close" id="shClose" aria-label="Close menu">&#x2715;</button>
 
+                        @php
+                            $aboutActive = request()->is('aboutus')
+                                || request()->routeIs('volunteer')
+                                || request()->routeIs('contactus');
+                        @endphp
                         <ul class="sh-menu">
                             <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'sh-active' : '' }}">Home</a></li>
-                            <li><a href="{{ route('index.course') }}" class="{{ request()->routeIs('index.course') ? 'sh-active' : '' }}">Courses</a></li>
-                            <li><a href="{{ route('workshops') }}" class="{{ request()->routeIs('workshops', 'workshops.show') ? 'sh-active' : '' }}">Workshops</a></li>
-                            <li><a href="{{ route('summercamp') }}" class="{{ request()->routeIs('summercamp', 'summercamp.partners', 'event.summercamp', 'summercamp.event', 'frontend.events.subevent-detail') ? 'sh-active' : '' }}">Summer</a></li>
-                            <li><a href="{{ route('event.summercamp') }}" class="{{ request()->routeIs('event.summercamp', 'summercamp.event', 'frontend.events.subevent-detail') ? 'sh-active' : '' }}">Event</a></li>
+                            <li><a href="{{ route('index.course') }}" class="{{ request()->routeIs('index.course') ? 'sh-active' : '' }}">Course</a></li>
+                            <li><a href="{{ route('event') }}" class="{{ request()->routeIs('event') ? 'sh-active' : '' }}">Event</a></li>
+                            <li><a href="{{ route('quiz-test') }}" class="{{ request()->routeIs('quiz-test') ? 'sh-active' : '' }}">Skill Assessment</a></li>
                             <li><a href="{{ route('frontend.blog.index') }}" class="{{ request()->routeIs('frontend.blog.*') ? 'sh-active' : '' }}">Blog</a></li>
-                            <li><a href="{{ route('summercamp.partners') }}" class="{{ request()->routeIs('summercamp.partners') ? 'sh-active' : '' }}">Partners</a></li>
+                            <li><a href="{{ route('merchandise') }}" class="{{ request()->routeIs('merchandise') ? 'sh-active' : '' }}">Merchandise</a></li>
+
+                            {{-- About dropdown --}}
+                            <li class="sh-has-drop">
+                                <a href="#" class="{{ $aboutActive ? 'sh-active' : '' }}">
+                                    About <i class="bi bi-chevron-down sh-arrow"></i>
+                                </a>
+                                <ul class="sh-drop">
+                                    <li><a href="{{ route('aboutus') }}" class="sh-leaf {{ request()->is('aboutus') ? 'sh-active' : '' }}">About Us</a></li>
+                                    <li><a href="{{ route('volunteer') }}" class="sh-leaf {{ request()->routeIs('volunteer') ? 'sh-active' : '' }}">Join Us</a></li>
+                                    <li><a href="{{ route('contactus') }}" class="sh-leaf {{ request()->routeIs('contactus') ? 'sh-active' : '' }}">Contact Us</a></li>
+                                </ul>
+                            </li>
+
                             <li>
-                                <a href="{{ route('quiz-test') }}"
-                                    class="sh-cta {{ request()->routeIs('quiz-test') ? 'sh-active' : '' }}">
-                                    Quiz-Test <i class="bi bi-arrow-right"></i>
+                                <a href="{{ route('summercamp') }}"
+                                    class="sh-cta {{ request()->routeIs('summercamp', 'summercamp.partners', 'event.summercamp', 'summercamp.event', 'frontend.events.subevent-detail') ? 'sh-active' : '' }}">
+                                    Summer-Camp <i class="bi bi-arrow-right"></i>
                                 </a>
                             </li>
                         </ul>

@@ -110,7 +110,7 @@
                                             type="checkbox"
                                             class="toggle-status"
                                             data-id="{{ $course->id }}"
-                                            data-url="{{ route('courses.status-update',$course->id) }}"
+                                            data-url="{{ route('courses.status-update') }}"
                                             {{ $course->status == 1 ? 'checked' : '' }}>
                                         <span class="record-toggle"></span>
                                     </label>
@@ -213,34 +213,7 @@ function confirmDelete(id,name){
 }
 
 
-/* STATUS TOGGLE */
-
-$(document).on('change','.toggle-status',function(){
-
-    let id=$(this).data('id');
-    let url=$(this).data('url');
-    let status=$(this).is(':checked')?1:0;
-
-    $.ajax({
-        url:url,
-        type:"POST",
-        data:{
-            _token:'{{ csrf_token() }}',
-            id:id,
-            status:status
-        },
-        success:function(){
-            Swal.fire({
-                icon:'success',
-                title:'Status Updated',
-                timer:1200,
-                showConfirmButton:false
-            });
-        }
-    });
-
-});
-
+/* STATUS TOGGLE handled globally in layout via .toggle-status */
 </script>
 
 <style>

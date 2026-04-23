@@ -8,7 +8,6 @@
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <link rel="icon" href="{{asset('img/' . get_setting('site_logo'))}}" type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
   <!-- Fonts and icons -->
   <script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
@@ -33,7 +32,7 @@
   <!-- CSS Files -->
   <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" />
   <link rel="stylesheet" href="{{asset('assets/css/plugins.min.css')}}" />
-  <link rel="stylesheet" href="{{asset('assets/css/kaiadmin.min.css')}}" />
+  <link rel="stylesheet" href="{{asset('assets/css/acttoaction.min.css')}}" />
 
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}" />
@@ -53,6 +52,9 @@
 
   <!-- Fancybox JS -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- Toastr (loaded last so it overrides Bootstrap's .toast class) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" />
 
 </head>
 <style>
@@ -167,10 +169,10 @@
 
   <!-- Sweet Alert -->
 
-  <!-- Kaiadmin JS -->
-  <script src="{{asset('assets/js/kaiadmin.min.js')}}"></script>
+  <!-- Acttoaction JS -->
+  <script src="{{asset('assets/js/acttoaction.min.js')}}"></script>
 
-  <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+  <!-- Acttoaction DEMO methods, don't include it in your project! -->
   <script src="{{asset('assets/js/setting-demo.js')}}"></script>
   <script src="{{asset('assets/js/demo.js')}}"></script>
 
@@ -506,9 +508,10 @@
 
 
     $(document).on("change", ".toggle-status", function () {
-      let id = $(this).data("id");
-      let url = $(this).data("url");
-      let status = $(this).is(":checked") ? 1 : 0;
+      let $el = $(this);
+      let id = $el.data("id");
+      let url = $el.data("url");
+      let status = $el.is(":checked") ? 1 : 0;
 
       $.ajax({
         url: url,
@@ -517,27 +520,19 @@
           _token: "{{ csrf_token() }}",
           id: id,
           status: status
-        },
-        success: function (response) {
-          if (response.success) {
-            $.notify(
-              {
-                message: "Published status updated successfully!",
-                title: "Success",
-                icon: "fa fa-check"
-              },
-              {
-                type: "success",
-                placement: {
-                  from: "top",
-                  align: "center"
-                },
-                time: 3000,
-                delay: 2000
-              }
-            );
-          }
         }
+      })
+      .done(function (res) {
+        if (res && res.success) {
+          toastr.success(status ? 'Activated' : 'Deactivated');
+        } else {
+          $el.prop('checked', !status);
+          toastr.error('Failed to update status');
+        }
+      })
+      .fail(function () {
+        $el.prop('checked', !status);
+        toastr.error('Failed to update status');
       });
     });
 
@@ -545,28 +540,18 @@
   </script>
 
 
-  @if(session('success'))
+  @if(session('success') || session('error') || $errors->any())
     <script>
-      $.notify({
-        message: "{{ session('success') }}",
-        icon: 'fa fa-check-circle'
-      }, {
-        type: "success",
-        placement: { from: "top", align: "center" },
-        delay: 3000,
-      });
-    </script>
-  @endif
-
-  @if(session('error'))
-    <script>
-      $.notify({
-        message: "{{ session('error') }}",
-        icon: 'fa fa-exclamation-circle'
-      }, {
-        type: "danger",
-        placement: { from: "top", align: "center" },
-        delay: 3000,
+      $(function () {
+        @if(session('success'))
+          toastr.success(@json(session('success')));
+        @endif
+        @if(session('error'))
+          toastr.error(@json(session('error')));
+        @endif
+        @if($errors->any())
+          toastr.error(@json($errors->first()));
+        @endif
       });
     </script>
   @endif

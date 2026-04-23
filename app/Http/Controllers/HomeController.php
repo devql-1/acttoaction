@@ -566,7 +566,8 @@ class HomeController extends Controller
 
     public function contactus()
     {
-        return view('frontend.contact.contact');
+        $contactInfo = \App\Models\ContactInfo::first();
+        return view('frontend.contact.contact', compact('contactInfo'));
     }
 
     public function volunteer()

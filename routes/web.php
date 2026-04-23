@@ -322,8 +322,8 @@ Route::group(['prefix' => 'admin'], function () {
         // Notification Banners (Bell popup)
         Route::get('notification-banners', [NotificationBannerController::class, 'index'])->name('admin.notification-banners.index');
         Route::post('notification-banners', [NotificationBannerController::class, 'store'])->name('admin.notification-banners.store');
-        Route::post('notification-banners/{id}', [NotificationBannerController::class, 'update'])->name('admin.notification-banners.update');
         Route::post('notification-banners/toggle-status', [NotificationBannerController::class, 'toggleStatus'])->name('admin.notification-banners.toggle');
+        Route::post('notification-banners/{id}', [NotificationBannerController::class, 'update'])->name('admin.notification-banners.update');
         Route::delete('notification-banners/{id}', [NotificationBannerController::class, 'destroy'])->name('admin.notification-banners.destroy');
 
         // ════════════════════════════════════════════════════════════════════════════
@@ -590,7 +590,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('courses/{id}', [CourseController::class, 'show'])->name('courses.show');
         Route::delete('courses/{id}', [CourseController::class, 'destroy'])->name('courses.delete');
         Route::get('courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
-        Route::get('status-update/{id}', [CourseController::class, 'status_update'])->name('courses.status-update');
+        Route::post('courses/status', [CourseController::class, 'status'])->name('courses.status-update');
         Route::put('courses/{id}', [CourseController::class, 'update'])->name('courses.update');
 
         // Course Categories
@@ -895,13 +895,14 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('school-partner-categories/{schoolPartnerCategory}', [SchoolPartnerCategoryController::class, 'update'])->name('school-partner-categories.update');
         Route::delete('school-partner-categories/{schoolPartnerCategory}', [SchoolPartnerCategoryController::class, 'destroy'])->name('school-partner-categories.destroy');
 
-        Route::get('action-items', [ActionItemController::class, 'index'])->name('action-items.index');
-        Route::get('action-items/create', [ActionItemController::class, 'create'])->name('action-items.create');
-        Route::post('action-items', [ActionItemController::class, 'store'])->name('action-items.store');
-        Route::get('action-items/{id}/edit', [ActionItemController::class, 'edit'])->name('action-items.edit');
-        Route::put('action-items/{id}', [ActionItemController::class, 'update'])->name('action-items.update');
-        Route::delete('action-items/{id}', [ActionItemController::class, 'destroy'])->name('action-items.destroy');
-        Route::post('action-items/status', [ActionItemController::class, 'status'])->name('action-items.status');
+        // Action Items — temporarily disabled
+        // Route::get('action-items', [ActionItemController::class, 'index'])->name('action-items.index');
+        // Route::get('action-items/create', [ActionItemController::class, 'create'])->name('action-items.create');
+        // Route::post('action-items', [ActionItemController::class, 'store'])->name('action-items.store');
+        // Route::get('action-items/{id}/edit', [ActionItemController::class, 'edit'])->name('action-items.edit');
+        // Route::put('action-items/{id}', [ActionItemController::class, 'update'])->name('action-items.update');
+        // Route::delete('action-items/{id}', [ActionItemController::class, 'destroy'])->name('action-items.destroy');
+        // Route::post('action-items/status', [ActionItemController::class, 'status'])->name('action-items.status');
 
         //Gallerycategories
         Route::resource('galleryCategories', \App\Http\Controllers\admin\GalleryCategoryController::class);

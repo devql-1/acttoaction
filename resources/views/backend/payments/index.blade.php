@@ -1,429 +1,337 @@
 @extends('backend.layout.app')
 @section('content')
-    <div class="container">
-        <div class="page-inner">
-            <div class="page-header">
-                <div class="d-flex align-items-start justify-content-between flex-wrap gap-2">
-                    <div>
-                        <h3 class="fw-bold mb-1">Payments</h3>
-                        <ul class="breadcrumbs mb-0">
-                            <li class="nav-home"><a href="{{ url('/admin') }}"><i class="icon-home"></i></a></li>
-                            <li class="separator"><i class="icon-arrow-right"></i></li>
-                            <li class="nav-item"><a href="{{ route('payments.index') }}">Payments</a></li>
-                        </ul>
-                    </div>
-                    <a href="{{ route('payments.export', request()->query()) }}"
-                        class="btn btn-success btn-sm d-inline-flex align-items-center">
-                        <i class="fas fa-file-csv me-2"></i> Export CSV
-                    </a>
-                </div>
-            </div>
+<div class="container">
+    <div class="page-inner">
 
-            {{-- Statistics Cards --}}
-            <div class="row mb-3">
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                        <i class="fas fa-money-bill-wave"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ms-3 ms-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Total Amount</p>
-                                        <h4 class="card-title">₹{{ number_format($stats['total_amount'], 2) }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-success bubble-shadow-small">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ms-3 ms-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Successful</p>
-                                        <h4 class="card-title">{{ $stats['success'] }}</h4>
-                                    </div>
+        {{-- PAGE HEADER --}}
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">Payments</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home"><a href="{{ url('/admin') }}"><i class="icon-home"></i></a></li>
+                <li class="separator"><i class="icon-arrow-right"></i></li>
+                <li class="nav-item"><a href="{{ route('payments.index') }}">Payments</a></li>
+            </ul>
+        </div>
+
+        {{-- STATS --}}
+        <div class="row mb-4">
+            <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                    <i class="fas fa-money-bill-wave"></i>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-danger bubble-shadow-small">
-                                        <i class="fas fa-times-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ms-3 ms-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Failed</p>
-                                        <h4 class="card-title">{{ $stats['failed'] }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-info bubble-shadow-small">
-                                        <i class="fas fa-exchange-alt"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ms-3 ms-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Total Transactions</p>
-                                        <h4 class="card-title">{{ $stats['total'] }}</h4>
-                                    </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Collected</p>
+                                    <h4 class="card-title">₹{{ number_format($stats['total_amount'], 2) }}</h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
-                                <div class="card-title mb-0">
-                                    All Payments
-                                    @if (request('type'))
-                                        <span
-                                            class="badge bg-primary ms-2">{{ $paymentTypes[request('type')] ?? 'Unknown' }}</span>
-                                    @endif
+            <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-success bubble-shadow-small">
+                                    <i class="fas fa-check-circle"></i>
                                 </div>
-                                <span class="text-muted" style="font-size:12px;">
-                                    {{ $payments->total() }} record{{ $payments->total() === 1 ? '' : 's' }}
-                                </span>
                             </div>
-                            <div class="d-flex gap-2 flex-wrap">
-                                <a href="{{ route('payments.index') }}"
-                                    class="btn btn-sm {{ !request('type') ? 'btn-primary' : 'btn-outline-primary' }}">
-                                    <i class="fas fa-th me-1"></i> All
-                                </a>
-                                @foreach ($paymentTypes as $key => $label)
-                                    <a href="{{ route('payments.index', ['type' => $key]) }}"
-                                        class="btn btn-sm {{ request('type') === $key ? 'btn-primary' : 'btn-outline-primary' }}">
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Successful</p>
+                                    <h4 class="card-title">{{ $stats['success'] }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-warning bubble-shadow-small">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Pending</p>
+                                    <h4 class="card-title">{{ $stats['pending'] ?? 0 }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div class="icon-big text-center icon-danger bubble-shadow-small">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Failed</p>
+                                    <h4 class="card-title">{{ $stats['failed'] }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- FILTERS --}}
+        <div class="card card-round mb-4">
+            <div class="card-header">
+                <div class="card-head-row">
+                    <div class="card-title">Filters</div>
+                    @if(request()->hasAny(['search','status','type']))
+                        <div class="card-tools">
+                            <a href="{{ route('payments.index') }}" class="btn btn-outline-secondary btn-sm">
+                                <i class="fa fa-times me-1"></i> Clear
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="GET" action="{{ route('payments.index') }}">
+                    <div class="row g-3 align-items-end">
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Search</label>
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Email, phone, order ID, payment ID…"
+                                value="{{ request('search') }}">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Type</label>
+                            <select name="type" class="form-select">
+                                <option value="">All Types</option>
+                                @foreach ($paymentTypes as $k => $label)
+                                    <option value="{{ $k }}" {{ request('type') === $k ? 'selected' : '' }}>
                                         {{ $label }}
-                                    </a>
+                                    </option>
                                 @endforeach
-                            </div>
+                            </select>
                         </div>
 
-                        {{-- Filters --}}
-                        <div class="card-body border-bottom pb-3">
-                            <form method="GET" action="{{ route('payments.index') }}" class="row g-2 align-items-end">
-                                <div class="col-md-4">
-                                    <label class="form-label form-label-sm">Search</label>
-                                    <input type="text" name="search" class="form-control form-control-sm"
-                                        placeholder="Email, phone, order ID, payment ID..."
-                                        value="{{ request('search') }}">
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label form-label-sm">Status</label>
-                                    <select name="status" class="form-control form-control-sm">
-                                        <option value="">All Statuses</option>
-                                        <option value="success" {{ request('status') === 'success' ? 'selected' : '' }}>
-                                            Success</option>
-                                        <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>
-                                            Failed</option>
-                                        <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>
-                                            Pending</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="form-label form-label-sm">Payment Method</label>
-                                    <select name="method" class="form-control form-control-sm">
-                                        <option value="">All Methods</option>
-                                        <option value="upi" {{ request('method') === 'upi' ? 'selected' : '' }}>UPI
-                                        </option>
-                                        <option value="card" {{ request('method') === 'card' ? 'selected' : '' }}>Card
-                                        </option>
-                                        <option value="netbanking"
-                                            {{ request('method') === 'netbanking' ? 'selected' : '' }}>Net Banking</option>
-                                        <option value="wallet" {{ request('method') === 'wallet' ? 'selected' : '' }}>
-                                            Wallet</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary btn-sm w-100">
-                                        <i class="fa fa-search me-1"></i> Search
-                                    </button>
-                                </div>
-                                <div class="col-md-2">
-                                    <a href="{{ route('payments.index') }}" class="btn btn-secondary btn-sm w-100">
-                                        <i class="fa fa-times me-1"></i> Clear
-                                    </a>
-                                </div>
-                            </form>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Status</label>
+                            <select name="status" class="form-select">
+                                <option value="">All Statuses</option>
+                                <option value="success" {{ request('status') === 'success' ? 'selected' : '' }}>Success</option>
+                                <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="failed"  {{ request('status') === 'failed'  ? 'selected' : '' }}>Failed</option>
+                            </select>
                         </div>
 
-                        
-
-                        <div class="card-body p-0">
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Student</th>
-                                            <th>Type / Method</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Payment ID</th>
-                                            <th class="text-center">Date</th>
-                                            <th class="text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($payments as $payment)
-                                            <tr>
-                                                <td class="text-muted" style="font-size:12px;">{{ $payment->id }}</td>
-                                                <td>
-                                                    <div class="d-flex align-items-center gap-2">
-                                                        <div class="avatar avatar-sm">
-                                                            <span class="avatar-title rounded-circle bg-primary text-white"
-                                                                style="font-size:12px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;">
-                                                                @if ($payment->enrollment)
-                                                                    {{ strtoupper(substr($payment->enrollment->first_name, 0, 1)) }}
-                                                                @else
-                                                                    {{ strtoupper(substr($payment->email, 0, 1)) }}
-                                                                @endif
-                                                            </span>
-                                                        </div>
-                                                        <div>
-                                                            <div class="fw-bold" style="font-size:13px;">
-                                                                @if ($payment->enrollment)
-                                                                    {{ $payment->enrollment->first_name }}
-                                                                    {{ $payment->enrollment->last_name }}
-                                                                @else
-                                                                    {{ $payment->email }}
-                                                                @endif
-                                                            </div>
-                                                            <div class="text-muted" style="font-size:11px;">
-                                                                {{ $payment->contact ?? $payment->email }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td style="font-size:12px;">
-                                                    <span class="badge bg-info">
-                                                        {{ ucfirst(str_replace('_', ' ', $payment->type)) }}
-                                                    </span>
-                                                    <br>
-                                                    <small class="text-muted">
-                                                        {{ ucfirst($payment->transaction_type ?? 'Unknown') }}
-                                                    </small>
-                                                </td>
-                                                <td class="fw-bold" style="color:#059669;">
-                                                    {{ $payment->currency }} {{ number_format($payment->amount, 2) }}
-                                                </td>
-                                                <td class="text-center">
-                                                    @php
-                                                        $statusBadge =
-                                                            [
-                                                                'success' => 'success',
-                                                                'failed' => 'danger',
-                                                                'pending' => 'warning',
-                                                            ][$payment->status] ?? 'secondary';
-                                                    @endphp
-                                                    <span class="badge badge-{{ $statusBadge }}">
-                                                        {{ ucfirst($payment->status) }}
-                                                    </span>
-                                                </td>
-                                                                <td>
-                                                    @if ($payment->razorpay_payment_id)
-                                                        <code style="font-size:10px;" title="{{ $payment->razorpay_payment_id }}">
-                                                            {{ \Illuminate\Support\Str::limit($payment->razorpay_payment_id, 15) }}
-                                                        </code>
-                                                    @else
-                                                        <span class="text-muted">—</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center" style="font-size:12px;white-space:nowrap;">
-                                                    @if ($payment->paid_at)
-                                                        {{ $payment->paid_at->format('d M Y') }}<br>
-                                                        <span
-                                                            class="text-muted">{{ $payment->paid_at->format('H:i') }}</span>
-                                                    @else
-                                                        <span class="text-muted">—</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    <div class="d-flex gap-1 justify-content-center">
-                                                        <a href="{{ route('payments.show', $payment->id) }}"
-                                                            class="btn btn-sm btn-icon btn-primary btn-round"
-                                                            title="View Details">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>
-                                                        {{-- Delete form --}}
-                                                        <form id="del-form-{{ $payment->id }}" method="POST"
-                                                            action="{{ route('payments.destroy', $payment->id) }}"
-                                                            style="display:none;">
-                                                            @csrf @method('DELETE')
-                                                        </form>
-                                                        <button type="button"
-                                                            class="btn btn-sm btn-icon btn-danger btn-round"
-                                                            title="Delete" onclick="confirmDelete({{ $payment->id }})">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="8" class="text-center py-5 text-muted">
-                                                    <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
-                                                    No payments found.
-                                                </td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-search me-1"></i> Search
+                            </button>
                         </div>
 
-                        {{-- Custom Pagination --}}
-                        @if ($payments->hasPages())
-                            <nav aria-label="Page navigation" class="card-footer">
-                                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                                    <div class="text-muted" style="font-size:13px;">
-                                        Showing
-                                        <strong>{{ $payments->firstItem() }}</strong>–<strong>{{ $payments->lastItem() }}</strong>
-                                        of <strong>{{ $payments->total() }}</strong> payments
-                                    </div>
-                                    <ul class="pagination pagination-sm mb-0">
-                                        {{-- Previous Page Link --}}
-                                        @if ($payments->onFirstPage())
-                                            <li class="page-item disabled">
-                                                <span class="page-link">
-                                                    <i class="fas fa-chevron-left"></i> Previous
-                                                </span>
-                                            </li>
-                                        @else
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $payments->previousPageUrl() }}"
-                                                    rel="prev">
-                                                    <i class="fas fa-chevron-left"></i> Previous
-                                                </a>
-                                            </li>
-                                        @endif
+                    </div>
+                </form>
+            </div>
+        </div>
 
-                                        {{-- Page Number Links --}}
-                                        @if ($payments->lastPage() > 1)
-                                            @php
-                                                $currentPage = $payments->currentPage();
-                                                $lastPage = $payments->lastPage();
-                                                $start = max(1, $currentPage - 2);
-                                                $end = min($lastPage, $currentPage + 2);
-                                            @endphp
-
-                                            {{-- First page link --}}
-                                            @if ($start > 1)
-                                                <li class="page-item">
-                                                    <a class="page-link" href="{{ $payments->url(1) }}">1</a>
-                                                </li>
-                                                @if ($start > 2)
-                                                    <li class="page-item disabled">
-                                                        <span class="page-link">...</span>
-                                                    </li>
-                                                @endif
-                                            @endif
-
-                                            {{-- Page range --}}
-                                            @foreach ($payments->getUrlRange($start, $end) as $page => $url)
-                                                @if ($page == $currentPage)
-                                                    <li class="page-item active">
-                                                        <span class="page-link">
-                                                            {{ $page }}
-                                                            <span class="visually-hidden">(current)</span>
-                                                        </span>
-                                                    </li>
-                                                @else
-                                                    <li class="page-item">
-                                                        <a class="page-link"
-                                                            href="{{ $url }}">{{ $page }}</a>
-                                                    </li>
-                                                @endif
-                                            @endforeach
-
-                                            {{-- Last page link --}}
-                                            @if ($end < $lastPage)
-                                                @if ($end < $lastPage - 1)
-                                                    <li class="page-item disabled">
-                                                        <span class="page-link">...</span>
-                                                    </li>
-                                                @endif
-                                                <li class="page-item">
-                                                    <a class="page-link"
-                                                        href="{{ $payments->url($lastPage) }}">{{ $lastPage }}</a>
-                                                </li>
-                                            @endif
-                                        @endif
-
-                                        {{-- Next Page Link --}}
-                                        @if ($payments->hasMorePages())
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ $payments->nextPageUrl() }}"
-                                                    rel="next">
-                                                    Next <i class="fas fa-chevron-right"></i>
-                                                </a>
-                                            </li>
-                                        @else
-                                            <li class="page-item disabled">
-                                                <span class="page-link">
-                                                    Next <i class="fas fa-chevron-right"></i>
-                                                </span>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </nav>
+        {{-- TABLE --}}
+        <div class="card card-round">
+            <div class="card-header">
+                <div class="card-head-row card-tools-still-right">
+                    <div class="card-title">
+                        Transactions
+                        <span class="badge bg-primary ms-1">{{ $payments->total() }}</span>
+                        @if (request('type'))
+                            <span class="badge bg-info ms-1">
+                                {{ $paymentTypes[request('type')] ?? 'Unknown' }}
+                            </span>
                         @endif
                     </div>
+                    <div class="card-tools">
+                        <a href="{{ route('payments.export', request()->query()) }}"
+                           class="btn btn-success btn-sm">
+                            <i class="fas fa-file-csv me-1"></i> Export CSV
+                        </a>
+                    </div>
                 </div>
             </div>
 
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style="width:70px;">#</th>
+                                <th>Customer</th>
+                                <th>Type</th>
+                                <th class="text-end">Amount</th>
+                                <th class="text-center">Status</th>
+                                <th>Payment ID</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($payments as $payment)
+                                @php
+                                    $statusMap = [
+                                        'success' => ['success', 'check-circle'],
+                                        'failed'  => ['danger',  'times-circle'],
+                                        'pending' => ['warning', 'clock'],
+                                    ];
+                                    [$sBg, $sIcon] = $statusMap[$payment->status] ?? ['secondary', 'question-circle'];
+
+                                    $displayName = $payment->enrollment
+                                        ? trim(($payment->enrollment->first_name ?? '') . ' ' . ($payment->enrollment->last_name ?? ''))
+                                        : ($payment->email ?? '—');
+                                    $initial = strtoupper(mb_substr($displayName ?: 'U', 0, 1));
+                                @endphp
+                                <tr>
+                                    <td class="text-muted small">#{{ $payment->id }}</td>
+
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="avatar-title rounded-circle bg-primary text-white fw-bold"
+                                                  style="width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;">
+                                                {{ $initial }}
+                                            </span>
+                                            <div>
+                                                <div class="fw-bold" style="font-size:13px;">
+                                                    {{ $displayName ?: '—' }}
+                                                </div>
+                                                <small class="text-muted">
+                                                    {{ $payment->contact ?? $payment->email ?? '—' }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge bg-info">
+                                            {{ ucfirst(str_replace('_', ' ', $payment->type)) }}
+                                        </span>
+                                        @if ($payment->transaction_type)
+                                            <br>
+                                            <small class="text-muted">{{ ucfirst($payment->transaction_type) }}</small>
+                                        @endif
+                                    </td>
+
+                                    <td class="text-end fw-bold text-success">
+                                        {{ $payment->currency }} {{ number_format($payment->amount, 2) }}
+                                    </td>
+
+                                    <td class="text-center">
+                                        <span class="badge badge-{{ $sBg }}">
+                                            <i class="fa fa-{{ $sIcon }} me-1"></i>
+                                            {{ ucfirst($payment->status) }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @if ($payment->razorpay_payment_id)
+                                            <code class="small" title="{{ $payment->razorpay_payment_id }}">
+                                                {{ \Illuminate\Support\Str::limit($payment->razorpay_payment_id, 18) }}
+                                            </code>
+                                        @else
+                                            <span class="text-muted">—</span>
+                                        @endif
+                                    </td>
+
+                                    <td class="text-center text-muted small text-nowrap">
+                                        @if ($payment->paid_at)
+                                            {{ $payment->paid_at->format('d M Y') }}<br>
+                                            <small>{{ $payment->paid_at->format('h:i A') }}</small>
+                                        @else
+                                            <span class="text-muted">—</span>
+                                        @endif
+                                    </td>
+
+                                    <td class="text-center">
+                                        <div class="d-flex gap-1 justify-content-center">
+                                            <a href="{{ route('payments.show', $payment->id) }}"
+                                               class="btn btn-sm btn-outline-primary" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <form id="del-form-{{ $payment->id }}" method="POST"
+                                                  action="{{ route('payments.destroy', $payment->id) }}"
+                                                  style="display:none;">
+                                                @csrf @method('DELETE')
+                                            </form>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    title="Delete" onclick="confirmDelete({{ $payment->id }})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center py-5 text-muted">
+                                        <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+                                        No payments found
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @if ($payments->hasPages())
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div class="text-muted" style="font-size:13px;">
+                            Showing
+                            <strong>{{ $payments->firstItem() }}</strong>–<strong>{{ $payments->lastItem() }}</strong>
+                            of <strong>{{ $payments->total() }}</strong>
+                        </div>
+                        <div>
+                            {{ $payments->withQueryString()->links('pagination::bootstrap-5') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
+
     </div>
+</div>
 @endsection
 
 @push('after_scripts')
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Delete Payment Record?',
-                text: 'This action cannot be undone.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#e74a3b',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: '<i class="fas fa-trash me-1"></i> Yes, Delete',
-                cancelButtonText: 'Cancel',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('del-form-' + id).submit();
-                }
-            });
-        }
-    </script>
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Delete Payment Record?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74a3b',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="fas fa-trash me-1"></i> Yes, Delete',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('del-form-' + id).submit();
+            }
+        });
+    }
+</script>
 @endpush
