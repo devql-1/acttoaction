@@ -1,11 +1,8 @@
 @extends('frontend.course.layout')
 
 @section('content')
-    
-
-
     <style>
-.hero-section {
+        .hero-section {
             position: relative;
             min-height: 92vh;
             display: flex;
@@ -2131,7 +2128,9 @@
 
                         <a href="{{ route('course.show', $category->slug) }}" class="cat-card">
                             <div class="card-img">
-                                @if ($firstCourse && $firstCourse->banner_image)
+                                @if ($category->image)
+                                    <img src="{{ $category->image_url }}" alt="{{ $category->name }}" />
+                                @elseif ($firstCourse && $firstCourse->banner_image)
                                     <img src="{{ asset($firstCourse->banner_image) }}" alt="{{ $category->name }}" />
                                 @else
                                     <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80"

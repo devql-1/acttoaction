@@ -1,10 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
-    
+
 
 
     <style>
-:root {
+        :root {
             /* Typography Stack */
             --default-font: "Roboto", system-ui, sans-serif;
             --heading-font: "Montserrat", sans-serif;
@@ -1784,8 +1784,14 @@
 
                     <div class="atp-feature-card fade-in">
                         <div class="fc-img">
-                            <img src="{{ $course->banner_image ? asset($course->banner_image) : 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=900&q=85' }}"
-                                alt="{{ $course->title }}" />
+                            @if ($currentCategory->image)
+                                <img src="{{ $currentCategory->image_url }}" alt="{{ $course->title }}" />
+                            @elseif ($course->banner_image)
+                                <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}" />
+                            @else
+                                <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=900&q=85"
+                                    alt="{{ $course->title }}" />
+                            @endif
                             <div class="fc-scrim"></div>
                             <span class="fc-badge">{{ $currentCategory->name }}</span>
                         </div>
@@ -1861,8 +1867,14 @@
                         @foreach ($currentCategory->courses as $course)
                             <div class="stp-card fade-in" style="animation-delay:{{ $loop->index * 0.1 }}s">
                                 <div class="sc-img">
-                                    <img src="{{ $course->banner_image ? asset($course->banner_image) : 'https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=700&q=80' }}"
-                                        alt="{{ $course->title }}" />
+                                    @if ($currentCategory->image)
+                                        <img src="{{ $currentCategory->image_url }}" alt="{{ $course->title }}" />
+                                    @elseif ($course->banner_image)
+                                        <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}" />
+                                    @else
+                                        <img src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=700&q=80"
+                                            alt="{{ $course->title }}" />
+                                    @endif
                                     <div class="sc-overlay"></div>
                                     <span class="sc-label">{{ $currentCategory->name }}</span>
                                     @if ($course->duration || $course->sessions)

@@ -34,35 +34,39 @@
                    {{-- Single image: full width hero --}}
                    <div class="gal-layout-single">
                        @foreach ($images->take(1) as $img)
-                           <a href="{{ asset('storage/' . $img->image) }}" data-fancybox="gallery-{{ $cat->slug }}"
-                               data-caption="{{ $img->title }}">
-                               <div class="gal-card gal-hero">
-                                   <img src="{{ asset('storage/' . $img->image) }}" alt="{{ $img->title }}"
-                                       loading="lazy" />
-                                   <div class="gal-overlay">
-                                       <i class="bi bi-zoom-in"></i>
-                                       <span>{{ $img->title }}</span>
+                           @if ($img->image)
+                               <a href="{{ asset('storage/' . $img->image) }}"
+                                   data-fancybox="gallery-{{ $cat->slug }}" data-caption="{{ $img->title }}">
+                                   <div class="gal-card gal-hero">
+                                       <img src="{{ asset('storage/' . $img->image) }}" alt="{{ $img->title }}"
+                                           loading="lazy"
+                                           onerror="this.src='https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80'" />
+                                       <div class="gal-overlay">
+                                           <i class="bi bi-zoom-in"></i>
+                                           <span>{{ $img->title }}</span>
+                                       </div>
                                    </div>
-                               </div>
-                           </a>
-                       @endforeach
+                               </a>
+                           @endif
                    </div>
                @elseif($count === 2)
                    {{-- Two images: side by side --}}
                    <div class="gal-layout-two">
                        @foreach ($images->take(2) as $img)
-                           <a href="{{ asset('storage/' . $img->image) }}" data-fancybox="gallery-{{ $cat->slug }}"
-                               data-caption="{{ $img->title }}">
-                               <div class="gal-card">
-                                   <img src="{{ asset('storage/' . $img->image) }}" alt="{{ $img->title }}"
-                                       loading="lazy" />
-                                   <div class="gal-overlay">
-                                       <i class="bi bi-zoom-in"></i>
-                                       <span>{{ $img->title }}</span>
+                           @if ($img->image)
+                               <a href="{{ asset('storage/' . $img->image) }}"
+                                   data-fancybox="gallery-{{ $cat->slug }}" data-caption="{{ $img->title }}">
+                                   <div class="gal-card">
+                                       <img src="{{ asset('storage/' . $img->image) }}" alt="{{ $img->title }}"
+                                           loading="lazy"
+                                           onerror="this.src='https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&q=80'" />
+                                       <div class="gal-overlay">
+                                           <i class="bi bi-zoom-in"></i>
+                                           <span>{{ $img->title }}</span>
+                                       </div>
                                    </div>
-                               </div>
-                           </a>
-                       @endforeach
+                               </a>
+                           @endif
                    </div>
                @elseif($count === 3)
                    {{-- Three: one big left, two stacked right --}}
@@ -159,7 +163,7 @@
 
 
 
-   
+
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.umd.js"></script>
    <script>
@@ -187,8 +191,8 @@
            @endforeach
        })();
    </script>
-<style>
-/* ── Section ── */
+   <style>
+       /* ── Section ── */
        .gallery-section {
            padding: 80px 0;
            background: #f8faff;
@@ -530,4 +534,4 @@
            font-weight: 600;
            text-align: center;
        }
-</style>
+   </style>

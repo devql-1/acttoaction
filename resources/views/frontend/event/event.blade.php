@@ -1,8 +1,7 @@
 @extends('frontend.course.layout')
 @section('content')
-
     <style>
-/* ─── CSS Variable System ─── */
+        /* ─── CSS Variable System ─── */
 
         .light-background {
             background: color-mix(in srgb, var(--accent-color), transparent 96%) !important;
@@ -998,32 +997,45 @@
             gap: 16px;
             align-items: flex-start;
         }
-        .video-modal-main { flex: 1; min-width: 0; }
+
+        .video-modal-main {
+            flex: 1;
+            min-width: 0;
+        }
+
         .video-modal-recs {
             width: 300px;
             flex-shrink: 0;
             max-height: 75vh;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,.2) transparent;
+            scrollbar-color: rgba(255, 255, 255, .2) transparent;
         }
+
         @media (max-width: 900px) {
-            .video-modal-inner { flex-direction: column; gap: 12px; }
+            .video-modal-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
             .video-modal-recs {
                 width: 100%;
                 max-height: 40vh;
                 flex-shrink: 1;
             }
         }
+
         @media (max-width: 576px) {
-            #videoModal { padding: 12px !important; }
+            #videoModal {
+                padding: 12px !important;
+            }
         }
     </style>
     {{-- ══════════════════════════════════════════════════════
      EVENTS PAGE — Dynamic blade (design from static HTML)
 ══════════════════════════════════════════════════════ --}}
 
-    
+
 
     <main class="main">
 
@@ -1085,7 +1097,7 @@
             <div class="container">
                 <div class="section-title">
                     <h2>All Events & Programmes</h2>
-                    <span class="divider-line"></span>
+
                     <p>Click any event to see full details, sub-events, and register for free.</p>
                 </div>
 
@@ -1242,7 +1254,7 @@
                 <div class="section-title text-center">
                     <div class="sh-label">Our Memories</div>
                     <h2>Event <em>Gallery</em></h2>
-                    <span class="divider-line"></span>
+
                     <p>Moments & highlights from our students, events and performances</p>
                 </div>
                 @include('frontend.partialspages.Gallery', [
@@ -1312,7 +1324,7 @@
             <div class="container">
                 <div class="section-title">
                     <h2>What Parents & Schools Say</h2>
-                    <span class="divider-line"></span>
+
                     <p>Real feedback from parents, students, and school coordinators who've attended our events.</p>
                 </div>
                 <div class="row g-4">
@@ -1398,7 +1410,8 @@
                     </p>
                     <div class="newsletter-form">
                         <input type="email" class="newsletter-email-input" placeholder="Enter your email address" />
-                        <button type="button" class="btn-primary-solid newsletter-subscribe-btn"><i class="bi bi-send-fill"></i> Subscribe</button>
+                        <button type="button" class="btn-primary-solid newsletter-subscribe-btn"><i
+                                class="bi bi-send-fill"></i> Subscribe</button>
                     </div>
                 </div>
             </div>

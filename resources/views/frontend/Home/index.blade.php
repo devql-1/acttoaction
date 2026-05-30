@@ -50,43 +50,90 @@
             display: block;
         }
 
-        /* ===== BADGE ===== */
+        /* ===== BADGE (Comic Starburst Style) ===== */
         .badge-free {
             position: absolute;
-            top: 8px;
-            right: -34px;
-
-            background: #e00000;
-            color: #fff;
-
-            font-size: 11px;
-            font-weight: 700;
-            padding: 5px 32px;
-
-            transform: rotate(45deg);
+            top: -26px;
+            right: -30px;
             z-index: 3;
+            width: 110px;
+            height: 100px;
+            pointer-events: none;
+
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 110'><g stroke='%23ffd60a' stroke-width='3' stroke-linecap='round' fill='none'><line x1='60' y1='4' x2='56' y2='18'/><line x1='100' y1='14' x2='86' y2='27'/><line x1='116' y1='55' x2='100' y2='55'/><line x1='105' y1='96' x2='90' y2='82'/><line x1='60' y1='108' x2='60' y2='93'/><line x1='16' y1='96' x2='32' y2='82'/><line x1='4' y1='55' x2='20' y2='55'/><line x1='16' y1='14' x2='32' y2='27'/></g><polygon points='60,15 65,25 80,18 75,32 95,32 83,45 104,55 83,65 95,78 75,78 80,92 65,85 60,95 55,85 40,92 45,78 25,78 37,65 16,55 37,45 25,32 45,32 40,18 55,25' fill='%23e50914' stroke='%23000' stroke-width='2.5' stroke-linejoin='round'/><g fill='%23ffd60a' stroke='%23000' stroke-width='0.8'><polygon points='40,40 42,45 47,47 42,49 40,54 38,49 33,47 38,45'/><polygon points='82,62 84,66 88,68 84,70 82,74 80,70 76,68 80,66'/></g></svg>");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            line-height: 1;
+            white-space: nowrap;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #ffd60a;
+            font-family: 'Arial Black', Impact, sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            font-style: italic;
             letter-spacing: 1px;
             text-transform: uppercase;
+            text-shadow:
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000,
+                0 3px 0 #000;
 
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-            white-space: nowrap;
+            transform: rotate(-8deg);
+            animation: badgePop 2.4s ease-in-out infinite;
+            filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        @keyframes badgePop {
+            0%, 100% {
+                transform: rotate(-8deg) scale(1);
+            }
+            50% {
+                transform: rotate(-8deg) scale(1.08);
+            }
         }
 
         @media (max-width: 600px) {
             .badge-free {
-                top: 6px;
-                right: -26px;
-                font-size: 9px;
-                padding: 3px 20px;
+                top: -20px;
+                right: -22px;
+                width: 85px;
+                height: 78px;
+                font-size: 15px;
+                letter-spacing: 0.5px;
+                text-shadow:
+                    -1.5px -1.5px 0 #000,
+                    1.5px -1.5px 0 #000,
+                    -1.5px 1.5px 0 #000,
+                    1.5px 1.5px 0 #000,
+                    0 2px 0 #000;
             }
         }
 
         @media (max-width: 380px) {
             .badge-free {
-                top: 12px;
-                right: -29px;
-                font-size: 7px;
-                padding: 2px 14px;
+                top: -16px;
+                right: -16px;
+                width: 68px;
+                height: 62px;
+                font-size: 12px;
+                letter-spacing: 0.3px;
+                text-shadow:
+                    -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000;
             }
         }
 

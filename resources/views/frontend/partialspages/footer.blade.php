@@ -6,7 +6,8 @@
                 <!-- Brand / About -->
                 <div class="col-lg-5">
                     <div class="brand-section mb-4">
-                        <a href="index.html" class="logo d-flex align-items-center mb-3">
+                        <a href="{{ route('home') }}" class="logo d-flex align-items-center mb-3">
+                            <img src="{{ asset('img/logo/logo.png') }}" alt="Act To Action" class="footer-logo-img" style="height: 60px; width: auto; margin-right: 10px;">
                             <span class="sitename">Act To Action</span>
                         </a>
                         <p class="brand-description">
