@@ -188,7 +188,7 @@
         }
 
         .hero-content h2 span {
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         .hero-content p {
@@ -201,7 +201,7 @@
         /* ===== PILL BUTTON ===== */
         .pill-btn {
             display: inline-block;
-            background: #ff6a00;
+            background: #7C3AED;
             color: #ffffff !important;
             border: none;
             padding: 10px 24px;
@@ -217,7 +217,7 @@
         }
 
         .pill-btn:hover {
-            background: #e65c00;
+            background: #6D28D9;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(255, 106, 0, 0.38);
         }
@@ -252,11 +252,11 @@
         }
 
         .deal-close:hover {
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         .deal-badge {
-            background: #ff6a00;
+            background: #7C3AED;
             color: #ffffff;
             font-size: 10px;
             font-weight: 700;
@@ -346,7 +346,7 @@
         }
 
         .add .icon {
-            background: #ff6a00;
+            background: #7C3AED;
         }
 
         .send .icon {
@@ -354,7 +354,7 @@
         }
 
         .exchange .icon {
-            background: #ff6a00;
+            background: #7C3AED;
         }
 
         .action h1 {
@@ -404,12 +404,12 @@
         }
 
         .bottom-nav a div:hover {
-            color: #ff6a00;
+            color: #7C3AED;
             transform: translateY(-3px);
         }
 
         .bottom-nav a div.active {
-            color: #ff6a00;
+            color: #7C3AED;
             font-weight: 600;
         }
 
@@ -498,7 +498,7 @@
 
         .mobile-menu a:hover {
             background: rgba(255, 106, 0, 0.18);
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         /* ===== SUPPORT BUTTON ===== */
@@ -779,7 +779,7 @@
         .ann-dot {
             width: 6px;
             height: 6px;
-            background: #ff6a00;
+            background: #7C3AED;
             border-radius: 50%;
             flex-shrink: 0;
             animation: dotPulse 1.8s infinite;
@@ -807,12 +807,12 @@
         }
 
         .ann-msg strong {
-            color: #ff6a00;
+            color: #7C3AED;
             font-weight: 700;
         }
 
         .ann-cta {
-            background: #ff6a00;
+            background: #7C3AED;
             color: #ffffff;
             border: none;
             padding: 6px 14px;
@@ -830,7 +830,7 @@
         }
 
         .ann-cta:hover {
-            background: #e65c00;
+            background: #6D28D9;
         }
 
         .ann-close {

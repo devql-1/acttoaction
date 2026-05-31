@@ -40,7 +40,7 @@
                                         <div id="dropZone"
                                             class="border-2 border-dashed rounded-3 p-4 text-center position-relative"
                                             style="border-color:#dee2e6; cursor:pointer; min-height:180px; display:flex; align-items:center; justify-content:center; flex-direction:column;"
-                                            ondragover="event.preventDefault(); this.style.borderColor='#ff6a00'; this.style.background='#fff8f4';"
+                                            ondragover="event.preventDefault(); this.style.borderColor='#7C3AED'; this.style.background='#fff8f4';"
                                             ondragleave="this.style.borderColor='#dee2e6'; this.style.background='';"
                                             ondrop="handleDrop(event)">
 

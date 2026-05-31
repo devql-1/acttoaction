@@ -99,11 +99,11 @@
                             <div style="width:54px;height:54px;background:rgba(255,106,0,.15);
                                         border:2px solid rgba(255,106,0,.3);border-radius:50%;
                                         display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
-                                <i class="bi {{ $stat->icon }}" style="font-size:22px;color:#ff6a00;"></i>
+                                <i class="bi {{ $stat->icon }}" style="font-size:22px;color:#7C3AED;"></i>
                             </div>
                             <div style="font-family:'Montserrat',sans-serif;font-size:2rem;
                                         font-weight:800;color:#fff;line-height:1;">
-                                {{ $stat->value }}<span style="font-size:1.4rem;color:#ff6a00;">{{ $stat->suffix }}</span>
+                                {{ $stat->value }}<span style="font-size:1.4rem;color:#7C3AED;">{{ $stat->suffix }}</span>
                             </div>
                             <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:6px;">
                                 {{ $stat->label }}

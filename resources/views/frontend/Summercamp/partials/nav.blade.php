@@ -19,7 +19,7 @@
             --bg: #ffffff;
             --fg: #3c4049;
             --head: #112344;
-            --accent: #ff6a00;
+            --accent: #7C3AED;
             --surface: #ffffff;
             --white: #ffffff;
             --ann-h: 40px;
@@ -112,7 +112,7 @@
         .ann-dot {
             width: 6px;
             height: 6px;
-            background: #ff6a00;
+            background: #7C3AED;
             border-radius: 50%;
             flex-shrink: 0;
             animation: dotPulse 1.8s infinite;
@@ -140,7 +140,7 @@
         }
 
         .ann-msg strong {
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         .ann-cta {
@@ -724,7 +724,7 @@
 
         .stat-ico i {
             font-size: 26px;
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         .ctr {
@@ -739,7 +739,7 @@
 
         .ctr .sfx {
             font-size: 1.6rem;
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         .stat-lbl {

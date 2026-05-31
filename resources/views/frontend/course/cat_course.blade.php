@@ -14,15 +14,15 @@
             --background-color: #ffffff;
             --default-color: #3c4049;
             --heading-color: #112344;
-            --accent-color: #ff6a00;
-            --accent-dark: #112344;
-            --accent-light: #112344;
+            --accent-color: #7C3AED;
+            --accent-dark: #7C3AED;
+            --accent-light: #8B5CF6;
             --surface-color: #ffffff;
             --contrast-color: #ffffff;
 
             /* Secondary Colors */
-            --success-color: #2a9d8f;
-            --success-dark: #238378;
+            --success-color: #0A0E1A;
+            --success-dark: #0A0E1A;
             --warning-color: #f7b50d;
 
             /* Neutral Shades */
@@ -1699,8 +1699,14 @@
             </div>
             <div class="hero-photo">
                 @php $heroCourse = $currentCategory->courses->first(); @endphp
-                <img src="{{ $heroCourse && $heroCourse->banner_image ? asset($heroCourse->banner_image) : 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=85' }}"
-                    alt="{{ $currentCategory->name }}" />
+                @if ($currentCategory->image)
+                    <img src="{{ $currentCategory->image_url }}" alt="{{ $currentCategory->name }}" />
+                @elseif ($heroCourse && $heroCourse->banner_image)
+                    <img src="{{ asset($heroCourse->banner_image) }}" alt="{{ $currentCategory->name }}" />
+                @else
+                    <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=85"
+                        alt="{{ $currentCategory->name }}" />
+                @endif
             </div>
             <div class="container hero-text">
                 <div class="row">

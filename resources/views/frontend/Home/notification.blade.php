@@ -111,7 +111,7 @@
                 width: 50px;
                 height: 50px;
                 border-radius: 50%;
-                background: linear-gradient(135deg, #ff6a00, #ff8533);
+                background: linear-gradient(135deg, #7C3AED, #9D4EDD);
                 color: #ffffff;
                 border: none;
                 font-size: 20px;
@@ -220,7 +220,7 @@
                 backdrop-filter: blur(4px);
                 transition: background 0.2s ease;
             }
-            .banner-slider-close:hover { background: #ff6a00; }
+            .banner-slider-close:hover { background: #7C3AED; }
 
             .banner-slider-wrapper {
                 flex: 1;
@@ -316,7 +316,7 @@
                 transition: all 0.25s ease;
             }
             .banner-arrow:hover {
-                background: #ff6a00;
+                background: #7C3AED;
                 transform: translateY(-50%) scale(1.1);
             }
             .banner-arrow-prev { left: clamp(8px, 2vw, 16px); }
@@ -339,7 +339,7 @@
                 transition: all 0.3s ease;
             }
             .banner-dot.active {
-                background: #ff6a00;
+                background: #7C3AED;
                 width: 24px;
                 border-radius: 4px;
             }

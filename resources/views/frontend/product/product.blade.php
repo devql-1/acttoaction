@@ -12,7 +12,7 @@
     .merch-hero {
         position: relative;
         padding: 210px 20px 80px;
-        background: linear-gradient(135deg, #0e1c38 0%, #1a3a6b 55%, #ff6a00 130%);
+        background: linear-gradient(135deg, #0e1c38 0%, #1a3a6b 55%, #7C3AED 130%);
         color: #fff;
         text-align: center;
         overflow: hidden;
@@ -27,7 +27,7 @@
     }
     .merch-hero::before {
         width: 360px; height: 360px;
-        background: #ff6a00;
+        background: #7C3AED;
         top: -120px; right: -80px;
     }
     .merch-hero::after {
@@ -113,7 +113,7 @@
     .merch-card:hover .merch-card-thumb i {
         transform: scale(1.12) rotate(-6deg);
     }
-    .thumb-orange { background: linear-gradient(135deg, #ff6a00 0%, #ff9a4d 100%); }
+    .thumb-orange { background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%); }
     .thumb-navy   { background: linear-gradient(135deg, #0e1c38 0%, #2d4a7a 100%); }
     .thumb-teal   { background: linear-gradient(135deg, #0f766e 0%, #2dd4bf 100%); }
     .thumb-rose   { background: linear-gradient(135deg, #be123c 0%, #fb7185 100%); }
@@ -150,7 +150,7 @@
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 1.4px;
-        color: #ff6a00;
+        color: #7C3AED;
         text-transform: uppercase;
         margin-bottom: 6px;
     }
@@ -201,7 +201,7 @@
         transition: background 0.25s ease, transform 0.25s ease;
     }
     .merch-card-cta:hover {
-        background: #ff6a00;
+        background: #7C3AED;
         transform: translateY(-2px);
     }
 
@@ -246,7 +246,7 @@
         z-index: 2;
     }
     .merch-cta-btn {
-        background: #ff6a00;
+        background: #7C3AED;
         color: #fff !important;
         border: none;
         padding: 13px 34px;

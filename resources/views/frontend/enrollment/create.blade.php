@@ -1,10 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
-    
+
 
 
     <style>
-/* ── FAILED SCREEN anim override ── */
+        /* ── FAILED SCREEN anim override ── */
         #failedScreen .success-anim {
             background: linear-gradient(135deg, #dc2626, #ef4444);
         }
@@ -12,9 +12,9 @@
         :root {
             --ink: #0e1c35;
             --ink2: #1e3a5f;
-            --blue: #ff6a00;
-            --blue-lt: #ff6a00;
-            --gold: #ff6a00;
+            --blue: #7C3AED;
+            --blue-lt: #7C3AED;
+            --gold: #7C3AED;
             --surface: #ffffff;
             --muted: #6b7a99;
             --border: #dde5f4;
@@ -64,7 +64,7 @@
 
         /* ── HEADER ── */
         .page-header {
-            background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 50%, #ff6a00 100%);
+            background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 50%, #7C3AED 100%);
             padding: 0;
             position: relative;
             overflow: hidden;
@@ -973,6 +973,7 @@
         }
 
         @media (max-width: 640px) {
+
             /* Prevent iOS zoom-on-focus for form inputs */
             .fi,
             select.fi,
@@ -1127,6 +1128,7 @@
             #summary-grid {
                 grid-template-columns: 1fr !important;
             }
+
             .step-label {
                 display: none;
             }
@@ -1176,6 +1178,7 @@
             overflow: hidden;
             background: #fff;
         }
+
         .phone-pfx {
             display: flex;
             align-items: center;
@@ -1190,24 +1193,28 @@
             user-select: none;
             flex-shrink: 0;
         }
+
         .phone-pfx-wrap .fi {
             border: none !important;
             border-radius: 0 !important;
             flex: 1;
             min-width: 0;
         }
+
         .phone-pfx-wrap:focus-within {
             border-color: var(--blue);
             box-shadow: 0 0 0 4px rgba(23, 92, 221, .1);
         }
+
         .phone-pfx-wrap.has-error {
             border-color: var(--error);
             background: #fff8f8;
         }
+
         .phone-pfx-wrap.is-valid {
             border-color: var(--success);
         }
-    
+
 
 
         .field-success {
@@ -1930,8 +1937,10 @@
                         </div>
                         <div class="field-error" id="err-terms"><i class="bi bi-exclamation-circle"></i> You must agree
                             to the Terms &amp; Conditions to continue</div>
-                        <div id="submit-error-box" style="display:none;margin-top:14px;background:#fef2f2;border:1.5px solid #fecaca;border-radius:12px;padding:14px 18px;font-size:13px;color:#dc2626;line-height:1.6;">
-                            <div style="font-weight:700;margin-bottom:6px;"><i class="bi bi-exclamation-triangle-fill"></i> Please fix the following:</div>
+                        <div id="submit-error-box"
+                            style="display:none;margin-top:14px;background:#fef2f2;border:1.5px solid #fecaca;border-radius:12px;padding:14px 18px;font-size:13px;color:#dc2626;line-height:1.6;">
+                            <div style="font-weight:700;margin-bottom:6px;"><i
+                                    class="bi bi-exclamation-triangle-fill"></i> Please fix the following:</div>
                             <div id="submit-error-list"></div>
                         </div>
                     </div>
@@ -2375,7 +2384,8 @@
                         gender: radioVal('gender'),
                         father_name: getVal('fatherName'),
                         mother_name: getVal('motherName'),
-                        mother_phone: getVal('motherPhone') ? '+91' + getVal('motherPhone').replace(/\D/g, '') : null,
+                        mother_phone: getVal('motherPhone') ? '+91' + getVal('motherPhone').replace(/\D/g, '') :
+                            null,
                         parent_phone: '+91' + getVal('parentPhone').replace(/\D/g, ''),
                         parent_email: getVal('parentEmail'),
                         phone: '+91' + getVal('phone').replace(/\D/g, ''),
@@ -2573,9 +2583,14 @@
             var box = document.getElementById('submit-error-box');
             var list = document.getElementById('submit-error-list');
             if (!box || !list) return;
-            list.innerHTML = lines.map(function(l) { return '<div>• ' + l + '</div>'; }).join('');
+            list.innerHTML = lines.map(function(l) {
+                return '<div>• ' + l + '</div>';
+            }).join('');
             box.style.display = 'block';
-            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            box.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
         }
 
         function hideSubmitError() {
@@ -2641,7 +2656,7 @@
         updateStepper(0, false);
     </script>
 
-    
+
 
     {{-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>

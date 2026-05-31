@@ -43,7 +43,7 @@
     .detail-key  { color: #6b7a99; font-weight: 500; }
     .detail-val  { color: #0e1c35; font-weight: 600; }
     .btn-home {
-        display: inline-block; background: linear-gradient(135deg, #ff6a00, #e65c00);
+        display: inline-block; background: linear-gradient(135deg, #7C3AED, #6D28D9);
         color: #fff; font-weight: 700; font-size: 15px;
         padding: 14px 32px; border-radius: 12px; text-decoration: none;
         transition: opacity .2s;

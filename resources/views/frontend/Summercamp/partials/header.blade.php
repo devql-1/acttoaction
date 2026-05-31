@@ -336,7 +336,7 @@
     }
 
     .sh-soc a:hover {
-        color: #ff6a00;
+        color: #7C3AED;
     }
 
     /* ── Hamburger button (desktop: hidden) ── */
@@ -415,7 +415,7 @@
             left: 13px;
             right: 13px;
             height: 2px;
-            background: #ff6a00;
+            background: #7C3AED;
             border-radius: 2px;
             transform: scaleX(0);
             transition: transform .25s ease;
@@ -423,7 +423,7 @@
 
         .sh-menu>li>a:not(.sh-cta):hover,
         .sh-menu>li>a.sh-active {
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         .sh-menu>li>a:not(.sh-cta):hover::after,
@@ -433,7 +433,7 @@
 
         /* ── CTA pill (Quiz-Test) ── */
         .sh-cta {
-            background: #ff6a00;
+            background: #7C3AED;
             color: #fff !important;
             padding: 8px 18px;
             border-radius: 25px;
@@ -557,12 +557,12 @@
     .sh-row:hover,
     .sh-row.is-active-sub {
         background: #fff5f0;
-        color: #ff6a00;
+        color: #7C3AED;
     }
 
     .sh-row:hover .sh-subarrow,
     .sh-row.is-active-sub .sh-subarrow {
-        color: #ff6a00;
+        color: #7C3AED;
     }
 
     .sh-row-inner {
@@ -602,7 +602,7 @@
         padding: 9px 14px;
         font-size: 11px;
         font-weight: 700;
-        color: #ff6a00;
+        color: #7C3AED;
         text-decoration: none;
         text-transform: uppercase;
         letter-spacing: .8px;
@@ -627,7 +627,7 @@
 
     .sh-leaf:hover {
         background: #fff5f0;
-        color: #ff6a00;
+        color: #7C3AED;
         padding-left: 20px;
     }
 
@@ -640,12 +640,12 @@
     }
 
     .sh-leaf.sh-leaf-all {
-        color: #ff6a00;
+        color: #7C3AED;
         font-weight: 600;
     }
 
     .sh-leaf.sh-leaf-all .sh-leaf-icon {
-        color: #ff6a00;
+        color: #7C3AED;
     }
 
     /* ── Event list inside dropdown ── */
@@ -663,12 +663,12 @@
 
     .sh-events li>a:hover {
         background: #fff5f0;
-        color: #ff6a00;
+        color: #7C3AED;
         padding-left: 20px;
     }
 
     .sh-events li>a>i {
-        color: #ff6a00;
+        color: #7C3AED;
         font-size: 13px;
         width: 15px;
         flex-shrink: 0;
@@ -752,7 +752,7 @@
         }
 
         .sh-menu>li>a:not(.sh-cta):hover {
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         /* CTA pill on mobile */
@@ -762,7 +762,7 @@
             margin: 14px 20px !important;
             border-radius: 10px !important;
             padding: 11px 16px !important;
-            background: #ff6a00;
+            background: #7C3AED;
             color: #fff !important;
             font-weight: 700;
             text-decoration: none;
@@ -812,7 +812,7 @@
 
         .sh-row.is-active-sub .sh-subarrow {
             transform: rotate(90deg);
-            color: #ff6a00;
+            color: #7C3AED;
         }
 
         /* Leaf / city rows on mobile — indented */

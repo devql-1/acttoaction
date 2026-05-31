@@ -4,53 +4,44 @@
             <div class="row align-items-start">
 
                 <!-- Brand / About -->
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="brand-section mb-4">
-                        <a href="{{ route('home') }}" class="logo d-flex align-items-center mb-3">
-                            <img src="{{ asset('img/logo/logo.png') }}" alt="Act To Action" class="footer-logo-img" style="height: 60px; width: auto; margin-right: 10px;">
-                            <span class="sitename">Act To Action</span>
+                        <a href="https://threatxpert.com" class="logo d-flex align-items-center mb-3">
+                            <span class="sitename">THREAT EXPERT</span>
                         </a>
                         <p class="brand-description">
-                            Developing globally competent young performers through age-structured, experiential, skill -
-                            based learning, supported by on-demand, personalised programs for academic institutions and
-                            individual learners.
+                            Cyber Solutions<br>
+                            Leading cybersecurity training institute providing world-class education and certification
+                            programs.
                         </p>
-
-                        <!-- Contact Info -->
-                        <div class="contact-info mt-4">
-                            <div class="contact-item"><i class="bi bi-telephone"></i><span>Chat with us: +91
-                                    91191-18844, +91 91191-87311, +91 91191-87411</span></div>
-                            <div class="contact-item"><i class="bi bi-clock"></i><span>
-                                    Operating Hours:<br>
-                                    Tue - Sat: 11am - 7pm<br>
-                                    Sunday: 10am - 4pm
-                                </span></div>
-                            <div class="contact-item"><i class="bi bi-geo-alt"></i><span>
-                                    Location: Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar,
-                                    Jaipur - 302021
-                                </span></div>
-                        </div>
                     </div>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="col-lg-7">
+                <div class="col-lg-8">
                     <div class="footer-nav-wrapper">
                         <div class="row">
 
-                            <!-- Social Media -->
+                            <!-- Company -->
                             <div class="col-6 col-lg-3">
                                 <div class="nav-column">
-                                    <h6>Follow Us</h6>
+                                    <h6>Company</h6>
                                     <nav class="footer-nav">
-                                        <a href="https://www.instagram.com/acttoaction_" target="_blank">Instagram</a>
-                                        <a href="https://youtube.com/@acttoaction-21?si=Qz1Or7FLOiVJDVtv"
-                                            target="_blank">YouTube</a>
-                                        <a href="https://x.com/acttoaction_?s=21" target="_blank">X (Twitter)</a>
-                                        <a href="https://www.facebook.com/share/1GB3Jn5JcU/?mibextid=wwXIfr"
-                                            target="_blank">Facebook</a>
-                                        <a href="https://www.linkedin.com/company/acttoaction-skills/"
-                                            target="_blank">LinkedIn</a>
+                                        <a href="https://threatxpert.com/company">About Us</a>
+                                        <a href="https://threatxpert.com/contact">Contact Us</a>
+                                    </nav>
+                                </div>
+                            </div>
+
+                            <!-- Services -->
+                            <div class="col-6 col-lg-3">
+                                <div class="nav-column">
+                                    <h6>Services</h6>
+                                    <nav class="footer-nav">
+                                        <a href="https://threatxpert.com/cotraining">Corporate Training</a>
+                                        <a href="https://threatxpert.com/internship">Placement</a>
+                                        <a href="https://threatxpert.com/events">Events</a>
+                                        <a href="https://threatxpert.com/internship">Internship</a>
                                     </nav>
                                 </div>
                             </div>
@@ -60,33 +51,38 @@
                                 <div class="nav-column">
                                     <h6>Legal</h6>
                                     <nav class="footer-nav">
-                                        <a href="{{ route('privacy') }}">Privacy Policy</a>
-                                        <a href="{{ route('terms') }}">Terms & Conditions</a>
-                                        <a href="{{ route('refund') }}">Refund Policy</a>
+                                        <a href="https://threatxpert.com/terms">Terms of Service</a>
+                                        <a href="https://threatxpert.com/privacy">Privacy Policy</a>
+                                        <a href="https://threatxpert.com/Cancellations">Cancellation Policy</a>
+                                        <a href="https://threatxpert.com/refund">Refund Policy</a>
                                     </nav>
                                 </div>
                             </div>
 
-
-
-                            <!-- Actions -->
+                            <!-- Support -->
                             <div class="col-6 col-lg-3">
                                 <div class="nav-column">
-                                    <h6>Actions</h6>
+                                    <h6>Support</h6>
                                     <nav class="footer-nav">
-                                        <a href="{{ route('aboutus') }}">Admissions</a>
-                                        <a href="{{ route('aboutus') }}">Courses</a>
-                                        <a href="{{ route('event') }}">Events</a>
-                                        <a href="{{ route('volunteer') }}">Join Us</a>
-                                        <a href="{{ route('frontend.blog.index') }}">Blog</a>
+                                        <a href="https://threatxpert.com/contact">Support Center</a>
+                                        <a href="https://threatxpert.com/contact">Security</a>
                                     </nav>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
 
             </div>
+
+            <!-- Copyright -->
+            <div class="row mt-4 pt-3 border-top">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2026 Threat Expert Cyber Solutions PVT LTD. All rights reserved.</p>
+                </div>
+            </div>
+
         </div>
     </div>
 </footer>

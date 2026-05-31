@@ -3,7 +3,7 @@
 
 
     <style>
-/* ── Base ─────────────────────────────────────────── */
+        /* ── Base ─────────────────────────────────────────── */
         h1,
         h2,
         h3,
@@ -740,7 +740,7 @@
         ];
     @endphp
 
-    
+
 
     <main class="main">
 
@@ -788,8 +788,7 @@
                         <i class="bi {{ $pillIcon }}" style="font-size:8px"></i>{{ $statusLabel }}
                     </div>
 
-                    <a href="{{ route('summercamp.event', $sub->event->slug) }}"
-                        class="sd-parent-link d-inline-flex mb-2">
+                    <a href="{{ route('summercamp.event', $sub->event->slug) }}" class="sd-parent-link d-inline-flex mb-2">
                         <i class="bi bi-arrow-left"></i>{{ $sub->event->title }}
                     </a>
 
@@ -1025,7 +1024,8 @@
                             <div class="sc">
                                 <div class="sc-body">
                                     @if ($canRegister)
-                                        <a href="{{ route('frontend.events.register', $sub->slug) }}" class="btn-reg-cta">
+                                        <a href="{{ route('frontend.events.register', $sub->slug) }}"
+                                            class="btn-reg-cta">
                                             <i class="bi bi-check2-circle"></i>
                                             {{ $sub->is_free ? 'Register Free' : 'Register — ₹' . number_format($sub->fees, 0) }}
                                         </a>

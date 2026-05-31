@@ -42,7 +42,7 @@ body {
 }
 
 .login-btn {
-    background: #ff6a00;
+    background: #7C3AED;
     border: none;
     color: white;
     padding: 8px 22px;
@@ -55,7 +55,7 @@ body {
 }
 
 .login-btn:hover {
-    background: #e65c00;
+    background: #6D28D9;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 106, 0, 0.35);
 }
@@ -115,7 +115,7 @@ body {
 
 /* ICON COLORS */
 .add .icon {
-    background: #ff6a00;
+    background: #7C3AED;
 }
 
 .send .icon {
@@ -123,7 +123,7 @@ body {
 }
 
 .exchange .icon {
-    background: #ff6a00;
+    background: #7C3AED;
 }
 
 .action h1 {
@@ -171,13 +171,13 @@ body {
 }
 
 .bottom-nav div:hover {
-    color: #ff6a00;
+    color: #7C3AED;
     transform: translateY(-3px);
 }
 
 /* Active state — matches orange brand color */
 .bottom-nav div.active {
-    color: #ff6a00;
+    color: #7C3AED;
     font-weight: 600;
 }
 
@@ -187,7 +187,7 @@ body {
     position: fixed;
     bottom: 25px;
     right: 25px;
-    background: #ff6a00;
+    background: #7C3AED;
     color: white;
     padding: 12px 18px;
     border-radius: 30px;
@@ -201,7 +201,7 @@ body {
 }
 
 .support:hover {
-    background: #e65c00;
+    background: #6D28D9;
     transform: scale(1.05);
     box-shadow: 0 10px 28px rgba(255, 106, 0, 0.45);
 }

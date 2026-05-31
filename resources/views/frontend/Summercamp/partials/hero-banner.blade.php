@@ -69,7 +69,7 @@
         display: inline-block;
         background: rgba(255, 106, 0, .2);
         border: 1px solid rgba(255, 106, 0, .4);
-        color: #ff6a00;
+        color: #7C3AED;
         padding: 6px 18px;
         border-radius: 30px;
         font-size: 13px;

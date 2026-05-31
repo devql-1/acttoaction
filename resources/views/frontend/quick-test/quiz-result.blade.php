@@ -1102,7 +1102,7 @@
                     'Your child feels emotions profoundly and channels them into powerful, believable performances. Their ability to connect emotionally with characters and audiences is rare and extremely valuable in performing arts.',
                 'course' => 'Screen Acting + Personality Development',
                 'tags' => ['Deeply Feeling', 'Expressive', 'Authentic', 'Emotionally Intelligent'],
-                'color' => '#7c3aed',
+                'color' => '#7C3AED',
             ],
             'creator' => [
                 'name' => 'The Creator',

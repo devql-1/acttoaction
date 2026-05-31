@@ -48,6 +48,7 @@
                                    </div>
                                </a>
                            @endif
+                       @endforeach
                    </div>
                @elseif($count === 2)
                    {{-- Two images: side by side --}}
@@ -67,6 +68,7 @@
                                    </div>
                                </a>
                            @endif
+                       @endforeach
                    </div>
                @elseif($count === 3)
                    {{-- Three: one big left, two stacked right --}}

@@ -38,7 +38,7 @@
                                 <label class="form-label fw-semibold">Images <span class="text-danger">*</span></label>
                                 <div id="dropZone" style="border:2px dashed #dee2e6;border-radius:12px;padding:40px;text-align:center;cursor:pointer;background:#fafafa;transition:.2s;"
                                      onclick="document.getElementById('imagesInput').click()"
-                                     ondragover="event.preventDefault();this.style.borderColor='#ff6a00';"
+                                     ondragover="event.preventDefault();this.style.borderColor='#7C3AED';"
                                      ondragleave="this.style.borderColor='#dee2e6';"
                                      ondrop="handleDrop(event)">
                                     <i class="fa fa-cloud-upload" style="font-size:2.5rem;color:#ccc;display:block;margin-bottom:12px;"></i>

@@ -1,9 +1,7 @@
 @extends('frontend.course.layoutsummercamp')
 @section('content')
-    
-
     <style>
-.light-background {
+        .light-background {
             background: color-mix(in srgb, var(--accent-color), transparent 96%) !important;
         }
 
@@ -1199,7 +1197,8 @@
                     </p>
                     <div class="newsletter-form">
                         <input type="email" class="newsletter-email-input" placeholder="Enter your email address" />
-                        <button type="button" class="btn-primary-solid newsletter-subscribe-btn"><i class="bi bi-send-fill"></i> Subscribe</button>
+                        <button type="button" class="btn-primary-solid newsletter-subscribe-btn"><i
+                                class="bi bi-send-fill"></i> Subscribe</button>
                     </div>
                 </div>
             </div>

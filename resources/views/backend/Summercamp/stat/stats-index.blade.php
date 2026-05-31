@@ -65,7 +65,7 @@
                                                 <div style="font-family:'Montserrat',sans-serif;
                                                             font-size:1.4rem; font-weight:800;
                                                             color:#fff; line-height:1;">
-                                                    {{ $stat->value }}<span style="color:#ff6a00;font-size:1rem;">{{ $stat->suffix }}</span>
+                                                    {{ $stat->value }}<span style="color:#7C3AED;font-size:1rem;">{{ $stat->suffix }}</span>
                                                 </div>
                                                 <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px;">
                                                     {{ $stat->label }}

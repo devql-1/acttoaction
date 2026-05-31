@@ -231,10 +231,10 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero"
-        style="height:380px;margin-top:0;background:linear-gradient(135deg,#112344 0%,#1e3a6e 60%,#ff6a00 100%);display:flex;align-items:center;justify-content:center;text-align:center;">
+        style="height:380px;margin-top:0;background:linear-gradient(135deg,#112344 0%,#1e3a6e 60%,#7C3AED 100%);display:flex;align-items:center;justify-content:center;text-align:center;">
         <div>
             <div
-                style="display:inline-block;background:rgba(255,106,0,.15);color:#ff6a00;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;">
+                style="display:inline-block;background:rgba(255,106,0,.15);color:#7C3AED;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;">
                 Summer Camp 2025
             </div>
             <h1

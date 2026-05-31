@@ -187,7 +187,7 @@
     .ann-dot {
         width: 6px;
         height: 6px;
-        background: #ff6a00;
+        background: #7C3AED;
         border-radius: 50%;
         flex-shrink: 0;
         animation: dotPulse 1.8s infinite;
@@ -215,12 +215,12 @@
     }
 
     .ann-msg strong {
-        color: #ff6a00;
+        color: #7C3AED;
         font-weight: 700;
     }
 
     .ann-cta {
-        background: #ff6a00;
+        background: #7C3AED;
         color: #ffffff;
         border: none;
         padding: 6px 14px;
@@ -238,7 +238,7 @@
     }
 
     .ann-cta:hover {
-        background: #e65c00;
+        background: #6D28D9;
     }
 
     .ann-close {

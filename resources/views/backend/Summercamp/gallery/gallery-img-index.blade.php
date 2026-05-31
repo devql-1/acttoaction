@@ -55,7 +55,7 @@
                                              style="width:100%;height:100%;object-fit:cover;">
                                         {{-- Featured badge --}}
                                         @if($img->is_featured)
-                                        <span style="position:absolute;top:4px;left:4px;background:#ff6a00;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;">FEATURED</span>
+                                        <span style="position:absolute;top:4px;left:4px;background:#7C3AED;color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;">FEATURED</span>
                                         @endif
                                         {{-- Status badge --}}
                                         @if(!$img->status)

@@ -124,7 +124,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             color: #fff;
             padding: 14px 30px;
             border-radius: 32px;
@@ -208,7 +208,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             background: #eff6ff;
             border: 1px solid #dbeafe;
             padding: 4px 14px;
@@ -227,7 +227,7 @@
 
         .section-title h2 em {
             font-style: normal;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
         }
 
         .section-title p {
@@ -243,7 +243,7 @@
             display: block;
             width: 48px;
             height: 3px;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             border-radius: 2px;
             margin: 14px auto 0;
         }
@@ -289,19 +289,19 @@
         }
 
         .cat-tab:hover {
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             background: #eff6ff;
             border-color: #dbeafe;
         }
 
         .cat-tab.active {
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             background: #eff6ff;
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
         }
 
         .tab-count {
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             color: #fff;
             font-size: 10px;
             font-weight: 700;
@@ -358,7 +358,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             border-radius: 0;
         }
 
@@ -372,7 +372,7 @@
             font-size: 26px;
             flex-shrink: 0;
             background: #eff6ff;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
         }
 
         .ph-label {
@@ -381,7 +381,7 @@
             text-transform: uppercase;
             letter-spacing: .8px;
             margin-bottom: 5px;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
         }
 
         .panel-header h2 {
@@ -413,7 +413,7 @@
         .course-card:hover {
             box-shadow: 0 20px 60px rgba(23, 92, 221, .12);
             transform: translateY(-4px);
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
         }
 
         .course-card.flagship:hover {
@@ -447,7 +447,7 @@
             color: #fff;
             text-transform: uppercase;
             letter-spacing: .4px;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
         }
 
         .c-mode {
@@ -478,7 +478,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: .6px;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             background: #eff6ff;
             padding: 3px 10px;
             border-radius: 12px;
@@ -526,7 +526,7 @@
         }
 
         .c-stats span i {
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             font-size: 12px;
         }
 
@@ -559,7 +559,7 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             color: #fff;
             padding: 11px 24px;
             border-radius: 25px;
@@ -579,7 +579,7 @@
 
         .center-tag {
             background: #eef2ff;
-            color: #ff6a00;
+            color: #7C3AED;
             padding: 2px 10px;
             border-radius: 20px;
             font-size: 12px;
@@ -636,7 +636,7 @@
         .cat-card:hover {
             box-shadow: 0 24px 70px rgba(23, 92, 221, .14);
             transform: translateY(-6px);
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
         }
 
         .card-img {
@@ -683,7 +683,7 @@
         }
 
         .atp-b {
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             color: #fff;
         }
 
@@ -748,7 +748,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
         }
 
         .abbr-label {
@@ -756,7 +756,7 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
         }
 
         .card-body-inner h3 {
@@ -797,7 +797,7 @@
         }
 
         .fp i {
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
         }
 
         .card-cta-row {
@@ -813,7 +813,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             font-weight: 700;
             font-size: 14px;
             font-family: var(--heading-font);
@@ -844,7 +844,7 @@
         .why-card:hover {
             box-shadow: 0 14px 45px rgba(23, 92, 221, .1);
             transform: translateY(-4px);
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
         }
 
         /* Fixed: why-icon was just a font-size with no container — aligned to healthcare .icon pattern */
@@ -858,15 +858,15 @@
             align-items: center;
             justify-content: center;
             font-size: 26px;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             margin-bottom: 18px;
             transition: background .25s, color .2s, border-color .2s;
         }
 
         .why-card:hover .why-icon {
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             color: #fff;
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
         }
 
         .why-card h5 {
@@ -958,7 +958,7 @@
 
         .g-overlay a:hover,
         .g-overlay-btn:hover {
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
         }
 
         .g-overlay i {
@@ -1003,7 +1003,7 @@
 
         .testimonial-item:hover {
             box-shadow: 0 12px 40px rgba(23, 92, 221, .08);
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
         }
 
         .stars {
@@ -1033,7 +1033,7 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1128,7 +1128,7 @@
             align-items: center;
             gap: 8px;
             background: #fff;
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             padding: 14px 32px;
             border-radius: 32px;
             font-weight: 700;
@@ -1142,7 +1142,7 @@
         .btn-cta-solid:hover {
             background: #f0f5ff;
             transform: translateY(-2px);
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
         }
 
         .btn-cta-ghost {
@@ -1190,7 +1190,7 @@
 
         .faq-item.open,
         .faq-item:hover {
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
             box-shadow: 0 4px 20px rgba(23, 92, 221, .08);
         }
 
@@ -1213,7 +1213,7 @@
 
         /* Fixed: icon rotation was missing transition */
         .faq-q i {
-            color: var(--ac, #ff6a00);
+            color: var(--ac, #7C3AED);
             flex-shrink: 0;
             transition: transform .3s;
         }
@@ -1257,7 +1257,7 @@
         .video-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(23, 92, 221, .12);
-            border-color: var(--ac, #ff6a00);
+            border-color: var(--ac, #7C3AED);
         }
 
         .vid-thumb {
@@ -1347,7 +1347,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: var(--ac, #ff6a00);
+            background: var(--ac, #7C3AED);
             color: #fff;
             border: none;
             display: flex;
@@ -1540,7 +1540,7 @@
 
         /* ═══ CTA BAR ═══ */
         .cta-bar {
-            background: linear-gradient(135deg, var(--hc, #112344) 0%, #1e3a8a 60%, var(--ac, #ff6a00) 100%);
+            background: linear-gradient(135deg, var(--hc, #112344) 0%, #1e3a8a 60%, var(--ac, #7C3AED) 100%);
             padding: 56px 0;
         }
 
