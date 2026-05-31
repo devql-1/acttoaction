@@ -1,7 +1,7 @@
 /********** Template CSS **********/
 :root {
-    --primary: #ff6a00;
-    --secondary: #e65c00;
+    --primary: #7C3AED;
+    --secondary: #6D28D9;
     --light: #FFF4EF;
     --dark: #0f2747;
 }
@@ -208,7 +208,7 @@
     background: rgba(15, 39, 71, .7);
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     color: var(--light);
 }
 
@@ -330,6 +330,7 @@
 }
 
 @media (min-width: 768px) {
+
     .testimonial-carousel::before,
     .testimonial-carousel::after {
         width: 200px;
@@ -337,6 +338,7 @@
 }
 
 @media (min-width: 992px) {
+
     .testimonial-carousel::before,
     .testimonial-carousel::after {
         width: 300px;
