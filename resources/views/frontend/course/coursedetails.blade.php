@@ -1,9 +1,9 @@
 @extends('frontend.course.layout')
 @section('content')
-    
+
 
     <style>
-a {
+        a {
             color: var(--accent-color);
             text-decoration: none;
             transition: .3s;
@@ -186,6 +186,7 @@ a {
             .quick-info {
                 padding: 16px 0;
             }
+
             .quick-info .qi-item {
                 justify-content: center;
                 padding: 6px 0;
@@ -194,6 +195,7 @@ a {
             .enroll-card .card-top {
                 padding: 22px 20px 18px;
             }
+
             .enroll-card .card-top .price-big {
                 font-size: 32px;
             }
@@ -731,28 +733,29 @@ a {
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <div class="container">
-                    @if($course->category)
+                    @if ($course->category)
                         <div class="badge-cat" data-aos="fade-down">
-                            <i class="bi bi-camera-video me-1"></i> {{ $course->category->name }}
+                            <i class="bi bi-shield-lock-fill me-1"></i> {{ $course->category->name }}
                         </div>
                     @endif
                     <h1 data-aos="fade-up">{{ $course->title }}</h1>
                     <div class="hero-meta" data-aos="fade-up" data-aos-delay="80">
-                        @if($course->duration)
+                        @if ($course->duration)
                             <div class="hm"><i class="bi bi-clock-fill"></i> {{ $course->duration }}</div>
                         @endif
-                        @if($course->sessions)
-                            <div class="hm"><i class="bi bi-collection-play-fill"></i> {{ $course->sessions }} Sessions</div>
+                        @if ($course->sessions)
+                            <div class="hm"><i class="bi bi-collection-play-fill"></i> {{ $course->sessions }} Sessions
+                            </div>
                         @endif
-                        @if($course->mode)
+                        @if ($course->mode)
                             <div class="hm"><i class="bi bi-laptop"></i> {{ $course->mode }}</div>
                         @endif
-                        @if($course->age_group)
+                        @if ($course->age_group)
                             <div class="hm"><i class="bi bi-people-fill"></i> {{ $course->age_group }}</div>
                         @endif
                     </div>
-                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-enroll-hero"
-                        data-aos="fade-up" data-aos-delay="140">
+                    <a href="https://wa.me/918079034973" target="_blank" class="btn-enroll-hero" data-aos="fade-up"
+                        data-aos-delay="140">
                         <i class="bi bi-whatsapp"></i> Enroll Now
                     </a>
                 </div>
@@ -772,7 +775,7 @@ a {
         <div class="quick-info">
             <div class="container">
                 <div class="row align-items-center gy-3 text-center text-md-start">
-                    @if($course->duration)
+                    @if ($course->duration)
                         <div class="col-6 col-md">
                             <div class="qi-item justify-content-center justify-content-md-start">
                                 <i class="bi bi-clock-fill"></i>
@@ -787,7 +790,7 @@ a {
                         </div>
                     @endif
 
-                    @if($course->sessions)
+                    @if ($course->sessions)
                         <div class="col-6 col-md">
                             <div class="qi-item justify-content-center justify-content-md-start">
                                 <i class="bi bi-collection-play-fill"></i>
@@ -802,12 +805,12 @@ a {
                         </div>
                     @endif
 
-                    @if($course->age_group)
+                    @if ($course->age_group)
                         <div class="col-6 col-md">
                             <div class="qi-item justify-content-center justify-content-md-start">
                                 <i class="bi bi-people-fill"></i>
                                 <div>
-                                    <div class="qi-label">Age Group</div>
+                                    <div class="qi-label">Eligibility</div>
                                     <div class="qi-val">{{ $course->age_group }}</div>
                                 </div>
                             </div>
@@ -817,7 +820,7 @@ a {
                         </div>
                     @endif
 
-                    @if($course->mode)
+                    @if ($course->mode)
                         <div class="col-6 col-md">
                             <div class="qi-item justify-content-center justify-content-md-start">
                                 <i class="bi bi-laptop"></i>
@@ -832,7 +835,7 @@ a {
                         </div>
                     @endif
 
-                    @if($course->fees)
+                    @if ($course->fees)
                         <div class="col-6 col-md">
                             <div class="qi-item justify-content-center justify-content-md-start">
                                 <i class="bi bi-cash-coin"></i>
@@ -861,17 +864,17 @@ a {
                             <div class="sec-sub">{!! $course->description !!}</div>
 
                             {{-- Centers & States --}}
-                            @if($course->centers->count())
+                            @if ($course->centers->count())
                                 <div style="margin-top:16px;">
                                     <strong style="font-size:13px;color:var(--hc);">
                                         <i class="bi bi-geo-alt-fill" style="color:var(--ac);"></i> Available At:
                                     </strong>
                                     <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;">
-                                        @foreach($course->centers as $center)
+                                        @foreach ($course->centers as $center)
                                             <span class="center-pill">
                                                 <i class="bi bi-building"></i>
                                                 {{ $center->name }}
-                                                @if($center->state)
+                                                @if ($center->state)
                                                     &nbsp;·&nbsp;{{ $center->state->name }}
                                                 @endif
                                             </span>
@@ -891,68 +894,76 @@ a {
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#faq1">
                                             <span class="faq-num">1</span>
-                                            What age group is this course for?
+                                            Who is this course designed for?
                                         </button>
                                     </h2>
-                                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div id="faq1" class="accordion-collapse collapse show"
+                                        data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            @if($course->age_group)
+                                            @if ($course->age_group)
                                                 This programme is designed for {{ $course->age_group }}. The curriculum is
-                                                carefully adapted to ensure age-appropriate learning and maximum engagement.
+                                                carefully structured to match the required skill level and deliver maximum
+                                                practical value.
                                             @else
-                                                This programme is open to all age groups. Contact us for details.
+                                                This programme is open to all learners. Contact us for eligibility details.
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#faq2">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#faq2">
                                             <span class="faq-num">2</span>
-                                            How long is the course and how many sessions?
+                                            How long is the course and how many sessions are included?
                                         </button>
                                     </h2>
-                                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div id="faq2" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
                                             The course runs for {{ $course->duration ?? 'a set duration' }}
-                                            @if($course->sessions)
+                                            @if ($course->sessions)
                                                 across {{ $course->sessions }} sessions
                                             @endif
-                                            . Each session is carefully designed to build on the previous one progressively.
+                                            . Each session builds progressively on the last, combining theory with hands-on
+                                            lab practice.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#faq3">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#faq3">
                                             <span class="faq-num">3</span>
-                                            Is a certificate provided on completion?
+                                            Will I receive a certificate on completion?
                                         </button>
                                     </h2>
-                                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div id="faq3" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            Yes! An official Act to Action certificate is awarded upon successful completion
-                                            of the programme with a minimum attendance requirement.
+                                            Yes. An official Threat Expert course completion certificate is awarded upon
+                                            successful completion of the programme, subject to a minimum attendance
+                                            requirement. We also guide students toward globally recognised certifications
+                                            such as CEH and CompTIA Security+.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#faq4">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#faq4">
                                             <span class="faq-num">4</span>
                                             What is the mode of training?
                                         </button>
                                     </h2>
-                                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div id="faq4" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
                                             This course is offered in
-                                            <strong>{{ $course->mode ?? 'offline/hybrid' }}</strong> mode.
-                                            @if($course->centers->count())
+                                            <strong>{{ $course->mode ?? 'online/offline' }}</strong> mode.
+                                            @if ($course->centers->count())
                                                 Available at:
-                                                @foreach($course->centers as $center)
+                                                @foreach ($course->centers as $center)
                                                     {{ $center->name }}{{ $center->state ? ' (' . $center->state->name . ')' : '' }}{{ !$loop->last ? ', ' : '.' }}
                                                 @endforeach
                                             @endif
@@ -961,32 +972,37 @@ a {
                                 </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#faq5">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#faq5">
                                             <span class="faq-num">5</span>
                                             What is the course fee and refund policy?
                                         </button>
                                     </h2>
-                                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div id="faq5" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            The course fee is <strong>₹{{ number_format($course->fees) }}</strong>. Fees are
-                                            generally non-refundable. However, within the first month a refund may be
-                                            considered on a case-by-case basis. Please WhatsApp us for details.
+                                            The course fee is <strong>₹{{ number_format($course->fees) }}</strong>. Fees
+                                            are
+                                            generally non-refundable. However, within the first two weeks a refund may be
+                                            considered on a case-by-case basis with mutual consent. Please WhatsApp us for
+                                            details.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#faq6">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#faq6">
                                             <span class="faq-num">6</span>
-                                            What if my child misses a session?
+                                            What if I miss a session?
                                         </button>
                                     </h2>
-                                    <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div id="faq6" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqAccordion">
                                         <div class="accordion-body">
-                                            Study material is shared after every session and we offer a virtual catch-up
-                                            support to help students who miss a class stay on track.
+                                            Session recordings and study materials are shared after every class. If
+                                            additional help is needed, a one-on-one virtual catch-up session can be arranged
+                                            with your trainer to ensure you stay on track.
                                         </div>
                                     </div>
                                 </div>
@@ -1004,28 +1020,29 @@ a {
                             </div>
                             <div class="card-body-p">
                                 <ul class="info-list">
-                                    @if($course->duration)
+                                    @if ($course->duration)
                                         <li><i class="bi bi-clock-fill"></i> <span><strong>Duration:</strong>
                                                 {{ $course->duration }}</span></li>
                                     @endif
-                                    @if($course->sessions)
+                                    @if ($course->sessions)
                                         <li><i class="bi bi-collection-play-fill"></i> <span><strong>Sessions:</strong>
                                                 {{ $course->sessions }} Total</span></li>
                                     @endif
-                                    @if($course->age_group)
-                                        <li><i class="bi bi-people-fill"></i> <span><strong>Age Group:</strong>
+                                    @if ($course->age_group)
+                                        <li><i class="bi bi-people-fill"></i> <span><strong>Eligibility:</strong>
                                                 {{ $course->age_group }}</span></li>
                                     @endif
-                                    @if($course->mode)
-                                        <li><i class="bi bi-laptop"></i> <span><strong>Mode:</strong> {{ $course->mode }}</span>
+                                    @if ($course->mode)
+                                        <li><i class="bi bi-laptop"></i> <span><strong>Mode:</strong>
+                                                {{ $course->mode }}</span>
                                         </li>
                                     @endif
-                                    @if($course->centers->count())
+                                    @if ($course->centers->count())
                                         <li>
                                             <i class="bi bi-geo-alt-fill"></i>
                                             <span>
                                                 <strong>Centers:</strong>
-                                                @foreach($course->centers as $center)
+                                                @foreach ($course->centers as $center)
                                                     {{ $center->name }}{{ !$loop->last ? ', ' : '' }}
                                                 @endforeach
                                             </span>
@@ -1033,15 +1050,18 @@ a {
                                     @endif
                                     <li><i class="bi bi-award-fill"></i> <span><strong>Certificate:</strong> On
                                             Completion</span></li>
+                                    <li><i class="bi bi-briefcase-fill"></i> <span><strong>Placement:</strong> 100%
+                                            Support</span></li>
                                 </ul>
                                 <a href="{{ route('enrollment.enroll', $course->slug) }}" target="_blank"
                                     class="btn-enroll-big">
                                     <i class="bi bi-person-plus-fill"></i> Enroll Now
                                 </a>
-                                <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-wa">
+                                <a href="https://wa.me/918079034973" target="_blank" class="btn-wa">
                                     <i class="bi bi-whatsapp"></i> Ask on WhatsApp
                                 </a>
-                                <p class="note">🔒 Your details are safe with us. Our team will confirm your slot.</p>
+                                <p class="note">🔒 Your details are safe with us. Our team will confirm your batch slot.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1051,20 +1071,20 @@ a {
         </section>
 
         <!-- OTHER COURSES -->
-        @if($otherCourses->count())
+        @if ($otherCourses->count())
             <section class="section-alt">
                 <div class="container">
                     <h3 class="sec-title text-center" data-aos="fade-up">Explore Other Courses</h3>
-                    <p class="sec-sub text-center" data-aos="fade-up">Discover more skill programmes offered by Act to Action.
-                    </p>
+                    <p class="sec-sub text-center" data-aos="fade-up">Discover more cybersecurity programs offered by
+                        Threat Expert.</p>
                     <div class="row gy-4">
-                        @foreach($otherCourses as $other)
+                        @foreach ($otherCourses as $other)
                             <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ $loop->index * 60 }}">
                                 <div class="other-card">
                                     <img src="{{ asset($other->banner_image) }}" alt="{{ $other->title }}">
                                     <div class="oc-body">
                                         <div class="oc-meta">
-                                            <i class="bi bi-people me-1"></i>{{ $other->age_group ?? 'All Ages' }}
+                                            <i class="bi bi-people me-1"></i>{{ $other->age_group ?? 'All Levels' }}
                                             &nbsp;|&nbsp; ₹{{ number_format($other->fees) }}
                                         </div>
                                         <h5>{{ $other->title }}</h5>
@@ -1085,12 +1105,12 @@ a {
             <div class="container">
                 <div class="row align-items-center gy-4">
                     <div class="col-lg-7">
-                        <h2>Secure Your Child's Seat Today</h2>
-                        <p>Next batch starting soon — limited seats available. Contact us now and our team will guide you
-                            through the enrolment process.</p>
+                        <h2>Secure Your Seat in the Next Batch</h2>
+                        <p>New batches start every month — limited seats per batch. Contact us now and our team will guide
+                            you through the enrolment process and find the right program for your goals.</p>
                     </div>
                     <div class="col-lg-5 text-lg-end d-flex flex-wrap gap-3 justify-content-lg-end">
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-cw">
+                        <a href="https://wa.me/918079034973" target="_blank" class="btn-cw">
                             <i class="bi bi-whatsapp"></i> WhatsApp Us
                         </a>
                         <a href="#" class="btn-co">
@@ -1107,18 +1127,29 @@ a {
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         window.addEventListener('load', () => document.getElementById('preloader')?.classList.add('loaded'));
-        AOS.init({ duration: 600, easing: 'ease-in-out', once: true });
+        AOS.init({
+            duration: 600,
+            easing: 'ease-in-out',
+            once: true
+        });
 
         const sTop = document.getElementById('scrollTop');
         if (sTop) {
             window.addEventListener('scroll', () => sTop.classList.toggle('active', scrollY > 100));
-            sTop.addEventListener('click', e => { e.preventDefault(); scrollTo({ top: 0, behavior: 'smooth' }); });
+            sTop.addEventListener('click', e => {
+                e.preventDefault();
+                scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         }
 
         const hdr = document.getElementById('header');
         if (hdr) window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 10));
 
-        const tog = document.getElementById('mobileNavToggle'), nav = document.getElementById('navmenu');
+        const tog = document.getElementById('mobileNavToggle'),
+            nav = document.getElementById('navmenu');
         if (tog) {
             tog.addEventListener('click', () => {
                 nav.classList.toggle('mobile-nav-active');

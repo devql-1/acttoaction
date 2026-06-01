@@ -2072,26 +2072,26 @@
     <main class="main">
         <section class="hero-section">
             <div class="hero-bg">
-                <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=85" alt="Act to Action" />
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=85" alt="Threat Expert" />
             </div>
             <div class="container hero-content">
                 <div class="row">
                     <div class="col-lg-7 fixedtmp">
-                        <div class="hero-eyebrow"><i class="bi bi-mortarboard-fill"></i> Explore Our Programs</div>
-                        <h1>Train. Perform.<br><em>Transform.</em></h1>
-                        <p class="hero-sub">India's first screen acting school for children. Choose from our flagship
-                            year-long program or focused short-term skill tracks designed for every young performer.</p>
+                        <div class="hero-eyebrow"><i class="bi bi-shield-lock-fill"></i> Explore Our Programs</div>
+                        <h1>Learn. Defend.<br><em>Excel.</em></h1>
+                        <p class="hero-sub">India's most hands-on cybersecurity training institute. Choose from our flagship
+                            certification programs or focused short-term skill tracks designed for every level of security
+                            professional.</p>
                         <div class="hero-pills">
-                            <div class="pill"><i class="bi bi-people-fill"></i> 1000+ Students</div>
-                            <div class="pill"><i class="bi bi-award-fill"></i> 250+ Castings</div>
-                            <div class="pill"><i class="bi bi-building"></i> {{ $allCourses->count() > 0 ? '6' : '6' }}
-                                Centres</div>
+                            <div class="pill"><i class="bi bi-people-fill"></i> 500+ Trained</div>
+                            <div class="pill"><i class="bi bi-award-fill"></i> 100% Placement</div>
+                            <div class="pill"><i class="bi bi-building"></i> Online & Offline</div>
                             <div class="pill"><i class="bi bi-collection"></i> {{ $allCourses->count() }} Courses</div>
                         </div>
                         <div class="hero-actions">
                             <a href="#categories" class="btn-hero-primary" onclick="smoothScroll(event,'categories')"><i
                                     class="bi bi-grid-3x3-gap-fill"></i> View Programs</a>
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-hero-outline" target="_blank"><i
+                            <a href="https://wa.me/918079034973" class="btn-hero-outline" target="_blank"><i
                                     class="bi bi-whatsapp"></i> Talk to Us</a>
                         </div>
                     </div>
@@ -2109,8 +2109,7 @@
                     <div class="sh-label">Our Programs</div>
                     <h2>Choose Your <em>Program</em></h2>
                     <p>{{ $categories->count() }} distinct learning track{{ $categories->count() != 1 ? 's' : '' }} built
-                        for different goals, age groups, and commitment levels.</p>
-
+                        for different goals, skill levels, and career paths in cybersecurity.</p>
                 </div>
 
                 <div class="cat-grid">
@@ -2120,7 +2119,7 @@
                             $courseCount = $catCourses->count();
                             $firstCourse = $catCourses->first();
                             $badgeClass = $ci === 0 ? 'atp-b' : 'stp-b';
-                            $badgeLabel = $ci === 0 ? 'Flagship Program' : 'Short Term';
+                            $badgeLabel = $ci === 0 ? 'Flagship Program' : 'Specialist Track';
                             $abbr =
                                 strtoupper(preg_replace('/[^A-Z]/', '', $category->name)) ?:
                                 strtoupper(substr($category->name, 0, 3));
@@ -2133,7 +2132,7 @@
                                 @elseif ($firstCourse && $firstCourse->banner_image)
                                     <img src="{{ asset($firstCourse->banner_image) }}" alt="{{ $category->name }}" />
                                 @else
-                                    <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80"
+                                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80"
                                         alt="{{ $category->name }}" />
                                 @endif
                                 <div class="img-scrim"></div>
@@ -2183,172 +2182,123 @@
             </div>
         </section>
 
-
         <section class="why-section">
             <div class="container">
                 <div class="section-title">
-                    <div class="sh-label">Why Act to Action</div>
+                    <div class="sh-label">Why Threat Expert</div>
                     <h2>Why Choose <em>Us?</em></h2>
-                    <p>Trusted by 1000+ students and parents across Jaipur since 2019.</p>
-
+                    <p>Trusted by 500+ cybersecurity professionals across India.</p>
                 </div>
                 <div class="row g-4">
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-card animate-up">
-                            <div class="why-icon">🎬</div>
-                            <h5>Screen-First Curriculum</h5>
-                            <p>Purpose-built for on-camera acting, digital auditions, and media — not just stage theatre.
-                            </p>
+                            <div class="why-icon">🛡️</div>
+                            <h5>Hands-On Lab Training</h5>
+                            <p>Every course is built around real-world labs, live attack simulations, and industry-standard
+                                tools — not just theory.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-card animate-up">
                             <div class="why-icon">🏆</div>
-                            <h5>250+ Casting Wins</h5>
-                            <p>Students on Zee TV, Star Plus, OTT platforms, brand TVCs, and international productions.</p>
+                            <h5>100% Placement Support</h5>
+                            <p>Dedicated placement assistance with resume building, mock interviews, and direct connections
+                                to our hiring partner network.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-card animate-up">
-                            <div class="why-icon">📍</div>
-                            <h5>6 Centres in Jaipur</h5>
-                            <p>Convenient locations in Vaishali Nagar, Malviya Nagar, Sitapura, Jagatpura & more.</p>
+                            <div class="why-icon">💻</div>
+                            <h5>Online & Offline Batches</h5>
+                            <p>Flexible learning modes — attend in person at our Jaipur centre or join live online sessions
+                                from anywhere in India.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-card animate-up">
                             <div class="why-icon">✅</div>
-                            <h5>Startup India Certified</h5>
-                            <p>Registered with Startup India & iStart Rajasthan. Aligned with NEP 2020 & Skill India.</p>
+                            <h5>Industry-Recognised Certs</h5>
+                            <p>Programs aligned with EC-Council, CompTIA, and CERT-In standards. Registered under Startup
+                                India & Skill India.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <section class="gallery-section" data-aos="fade-up">
             <div class="container">
-
                 <div class="section-title text-center">
-                    <div class="sh-label">Our Memories</div>
-                    <h2>Course <em>Gallery</em></h2>
-
-                    <p>Moments & highlights from our students, events and performances</p>
+                    <div class="sh-label">Our Highlights</div>
+                    <h2>Training <em>Gallery</em></h2>
+                    <p>Moments from our bootcamps, CTF competitions, lab sessions, and certification events.</p>
                 </div>
                 @include('frontend.partialspages.Gallery', [
                     'images' => $galleryImages,
                     'sectionTitle' => 'Course Highlights Gallery',
                     'sectionDesc' =>
-                        'A glimpse into the magic of our past events — the smiles, the performances, and the unforgettable moments captured in every frame.',
+                        'A glimpse into the world of Threat Expert — the labs, the breakthroughs, and the moments that shape India\'s next generation of cybersecurity professionals.',
                 ])
             </div>
         </section>
-        {{-- <section class="gallery-section">
-            <div class="container">
-                <div class="section-title">
-                    <div class="sh-label">Behind the Scenes</div>
-                    <h2>Life at <em>Act to Action</em></h2>
-                    <p>Workshops, showcases, casting wins and everyday magic.</p>
-                    <span class="divider-line"></span>
-                </div>
-                <div class="gallery-grid">
-                    <div class="gallery-item span-2"><img
-                            src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=900&q=80"
-                            alt="Performance" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Annual Graduation Showcase 2024</div>
-                    </div>
-                    <div class="gallery-item"><img
-                            src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&q=80"
-                            alt="Workshop" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Screen Acting Workshop</div>
-                    </div>
-                    <div class="gallery-item"><img
-                            src="https://images.unsplash.com/photo-1549737221-bef65e2604a6?w=500&q=80"
-                            alt="Kids Acting" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">DramATA 2025</div>
-                    </div>
-                    <div class="gallery-item"><img
-                            src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=500&q=80"
-                            alt="Summer Camp" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Summer Camp 2024</div>
-                    </div>
-                    <div class="gallery-item"><img
-                            src="https://images.unsplash.com/photo-1560523159-4a9692d222ef?w=500&q=80" alt="Award" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Star Achievers Award Night</div>
-                    </div>
-                    <div class="gallery-item span-2"><img
-                            src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=900&q=80"
-                            alt="Casting" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Behind the Camera — Mobile Filmmaking</div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-
 
         <section class="testimonials-section">
             <div class="container">
                 <div class="section-title">
-                    <div class="sh-label">Parent Stories</div>
-                    <h2>What <em>Parents Say</em></h2>
-                    <p>Stories from families whose children trained with us.</p>
-
+                    <div class="sh-label">Student Stories</div>
+                    <h2>What Our <em>Students Say</em></h2>
+                    <p>Real words from cybersecurity professionals who trained and got placed through Threat Expert.</p>
                 </div>
                 <div class="row g-4">
                     @php
                         $testimonials = [
                             [
-                                'init' => 'PR',
-                                'name' => 'Priya Rathore',
-                                'role' => 'Parent · ATP Student, Age 8',
+                                'init' => 'AM',
+                                'name' => 'Arjun Mehta',
+                                'role' => 'Ethical Hacking Batch — Placed at IT Security Firm',
                                 'stars' => 5,
                                 'q' =>
-                                    'My daughter joined ATP at age 7 and within 6 months she was shortlisted for a Zee TV audition. The confidence she has built here is beyond anything I expected from an acting school.',
+                                    'I had zero cybersecurity background before joining Threat Expert. Within 4 months I had my CEH certification and a job offer at a leading security firm. The hands-on labs made all the difference.',
                             ],
                             [
-                                'init' => 'AK',
-                                'name' => 'Amit Kumar',
-                                'role' => 'Parent · STP Public Speaking, Age 14',
+                                'init' => 'RS',
+                                'name' => 'Riya Singhania',
+                                'role' => 'VAPT Client — Fintech Startup, Mumbai',
                                 'stars' => 5,
                                 'q' =>
-                                    'The Short Term Program in Public Speaking completely transformed how my son communicates. He now speaks at school assemblies and has won two inter-school competitions since joining.',
+                                    'Threat Expert conducted a VAPT for our startup and identified critical vulnerabilities we had no idea about. Their report was detailed and actionable. They are now our go-to security partner.',
                             ],
                             [
-                                'init' => 'SM',
-                                'name' => 'Sunita Meena',
-                                'role' => 'Parent · STP Mythology, Age 5',
+                                'init' => 'SV',
+                                'name' => 'Saurabh Verma',
+                                'role' => 'Digital Forensics Batch — Forensics Analyst, Delhi',
                                 'stars' => 5,
                                 'q' =>
-                                    'The Mythology & Shlok program is a hidden gem. My 5-year-old now recites Bhagavad Gita shlokas and understands their meaning. Kritesh sir and the team are absolutely phenomenal.',
+                                    'The Digital Forensics course at Threat Expert was unlike any training I have taken. Real case studies, live tools, and mentors who have actually worked in the field. Fully prepared for real incidents.',
                             ],
                             [
-                                'init' => 'DS',
-                                'name' => 'Deepak Sharma',
-                                'role' => 'Parent · ATP Student, Age 11',
+                                'init' => 'VJ',
+                                'name' => 'Vikram Joshi',
+                                'role' => 'Corporate Training Client — HR Director, Jaipur',
                                 'stars' => 5,
                                 'q' =>
-                                    'Aadvika has appeared in two brand campaigns after completing the ATP. The curriculum is incredibly thorough — from voice to on-camera presence to audition technique. World-class for Jaipur.',
+                                    'Threat Expert ran a cybersecurity awareness workshop for our entire staff. The session was engaging and practical — it immediately changed how our team handles phishing and data security.',
                             ],
                             [
-                                'init' => 'RG',
-                                'name' => 'Rahul Gupta',
-                                'role' => 'Parent · STP Filmmaking, Age 13',
+                                'init' => 'PT',
+                                'name' => 'Pooja Tiwari',
+                                'role' => 'Cloud Security Batch — SOC Analyst, Bangalore',
                                 'stars' => 5,
                                 'q' =>
-                                    'The Mobile Filmmaking STP gave my son a complete film shoot experience. He shot, directed, edited and screened his own short film at age 13. Kritesh sir makes it so hands-on and practical.',
+                                    'The Cloud Security and SOC Operations course gave me exactly the skills my employer needed. I was placed within 3 weeks of completing the program. The placement support at Threat Expert is incredible.',
                             ],
                             [
-                                'init' => 'NJ',
-                                'name' => 'Nisha Jain',
-                                'role' => 'Parent · ATP Twins, Age 9',
+                                'init' => 'NK',
+                                'name' => 'Nikhil Kapoor',
+                                'role' => 'Penetration Testing Batch — Red Team, Pune',
                                 'stars' => 5,
                                 'q' =>
-                                    'I enrolled my twins in the ATP and the transformation is visible in everything — their posture, their voice, how they connect with people. This school is genuinely changing young lives in Jaipur.',
+                                    'Threat Expert\'s penetration testing course is world-class. Kali Linux, Metasploit, Burp Suite — real lab environments for everything. It gave me everything I needed to pass my OSCP exam.',
                             ],
                         ];
                     @endphp
@@ -2376,48 +2326,38 @@
             </div>
         </section>
 
-
         <div class="cta-band">
             <div class="cta-bg">
-                <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=1400&q=60" alt="CTA" />
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1400&q=60" alt="CTA" />
             </div>
             <div class="container cta-inner">
-                <h2>Ready to Start the Journey?</h2>
-                <p>Join 1000+ students already performing, growing and shining across Jaipur's biggest stages and
-                    screens.
-                </p>
+                <h2>Ready to Build Your Cyber Career?</h2>
+                <p>Join 500+ professionals already trained, certified, and placed through Threat Expert across India.</p>
                 <div class="cta-btns">
                     <a href="#" class="btn-cta-solid"><i class="bi bi-person-plus-fill"></i> Enroll Now</a>
-                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-cta-ghost" target="_blank"><i
+                    <a href="https://wa.me/918079034973" class="btn-cta-ghost" target="_blank"><i
                             class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
                 </div>
             </div>
         </div>
-
 
         <section class="video-section">
             <div class="container">
                 <div class="section-title">
                     <div class="sh-label">Student Stories</div>
                     <h2>Course <em>Testimonials</em></h2>
-                    <p>Real stories from our students and parents — straight from the heart.</p>
-
+                    <p>Real experiences from our students and corporate clients — straight from the source.</p>
                 </div>
-
                 @include('frontend.partialspages.youtube', ['videos' => $videos])
             </div>
         </section>
-
-        {{-- Modal --}}
-
 
         <div class="faq-section">
             <div class="container">
                 <div class="section-title">
                     <div class="sh-label">Got Questions?</div>
                     <h2>Frequently Asked <em>Questions</em></h2>
-                    <p>Everything you need to know before enrolling your child.</p>
-
+                    <p>Everything you need to know before enrolling in a Threat Expert program.</p>
                 </div>
                 <div class="row justify-content-center mt-4">
                     <div class="col-lg-8">
@@ -2425,34 +2365,34 @@
                             @php
                                 $faqs = [
                                     [
-                                        'q' => 'What age groups are your courses designed for?',
+                                        'q' => 'Who can enroll in Threat Expert courses?',
                                         'a' =>
-                                            'Our programmes cater to a wide range — the Actors Training Program is for ages 3–15, Writing for Screen and Mobile Filmmaking are for ages 8+, and Public Speaking & Podcasting is for ages 12–25. There is something for every child and young adult.',
+                                            'Our programs are open to anyone aged 18 and above — students, IT professionals, developers, system administrators, and career changers. No prior cybersecurity experience is required for foundation courses. Advanced tracks require a basic understanding of networking and operating systems.',
                                     ],
                                     [
                                         'q' => 'Are classes available online or only offline?',
                                         'a' =>
-                                            'We offer both online and offline modes depending on the programme. Most short courses are available online and offline, while the flagship Actors Training Program is primarily offline/hybrid. Check the mode badge on each course card for details.',
+                                            'We offer both online and offline batches. Our online programs include live interactive sessions with the same lab-intensive curriculum as our in-person training, accessible from anywhere in India. Check the mode badge on each course card for details.',
                                     ],
                                     [
-                                        'q' => 'How do I enroll my child?',
+                                        'q' => 'How do I enroll in a course?',
                                         'a' =>
-                                            'Simply click the Enroll Now button on any course card or WhatsApp us directly. Our team will guide you through the right course selection, batch availability, and payment process.',
+                                            'Simply click the Enroll Now button on any course card or WhatsApp us directly. Our team will help you choose the right course based on your background and goals, confirm batch availability, and guide you through the payment process.',
                                     ],
                                     [
                                         'q' => 'What is included in the course fee?',
                                         'a' =>
-                                            'The course fee covers all sessions, training materials, mentorship, and the final showcase or certification event. No hidden charges — what you see on the card is the complete fee.',
+                                            'The course fee covers all live sessions, lab access, study materials, session recordings, and placement support. No hidden charges — what you see on the course card is the complete fee.',
                                     ],
                                     [
-                                        'q' => 'Do you provide a certificate after course completion?',
+                                        'q' => 'Will I receive a certificate after completing the course?',
                                         'a' =>
-                                            'Yes! Every student who completes the course receives an official Act to Action certificate of completion, along with a final showcase or screening experience they\'ll remember for life.',
+                                            'Yes. Every student who completes a Threat Expert program receives an official course completion certificate, provided they maintain a minimum 70% attendance. We also guide students through earning globally recognised certifications such as CEH and CompTIA Security+.',
                                     ],
                                     [
                                         'q' => 'How many students are there per batch?',
                                         'a' =>
-                                            'We keep our batches small — typically 15 to 20 students — so every child receives personal attention and has ample time to perform, practice, and grow.',
+                                            'Batches are intentionally kept small — a maximum of 15 students — so every learner gets dedicated attention, personalised mentorship, and sufficient lab time during each hands-on session.',
                                     ],
                                 ];
                             @endphp
@@ -2471,18 +2411,16 @@
             </div>
         </div>
 
-
         <div class="cta-bar">
             <div class="container">
                 <div class="row align-items-center gy-4">
                     <div class="col-lg-7">
-                        <h3>Ready to Enroll Your Child?</h3>
-                        <p>Next batch starting soon — limited seats. WhatsApp us and we'll guide you to the right
-                            course.
-                        </p>
+                        <h3>Ready to Enroll?</h3>
+                        <p>Next batch starting soon — limited seats per batch. WhatsApp us and we'll guide you to the right
+                            course for your goals.</p>
                     </div>
                     <div class="col-lg-5 text-lg-end">
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-cta-wa">
+                        <a href="https://wa.me/918079034973" target="_blank" class="btn-cta-wa">
                             <i class="bi bi-whatsapp"></i> WhatsApp to Enroll
                         </a>
                     </div>

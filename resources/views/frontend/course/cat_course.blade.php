@@ -1704,7 +1704,7 @@
                 @elseif ($heroCourse && $heroCourse->banner_image)
                     <img src="{{ asset($heroCourse->banner_image) }}" alt="{{ $currentCategory->name }}" />
                 @else
-                    <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=1600&q=85"
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=85"
                         alt="{{ $currentCategory->name }}" />
                 @endif
             </div>
@@ -1712,7 +1712,7 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <span class="hero-cat-badge">
-                            <i class="bi bi-mortarboard-fill"></i> {{ $currentCategory->name }}
+                            <i class="bi bi-shield-lock-fill"></i> {{ $currentCategory->name }}
                         </span>
                         <h1>{{ $currentCategory->name }}</h1>
                         @if ($currentCategory->description)
@@ -1724,10 +1724,10 @@
                                     <div class="hm"><i class="bi bi-clock"></i> {{ $heroCourse->duration }}</div>
                                 @endif
                                 @if ($heroCourse->age_group)
-                                    <div class="hm"><i class="bi bi-people"></i> Age {{ $heroCourse->age_group }}</div>
+                                    <div class="hm"><i class="bi bi-people"></i> {{ $heroCourse->age_group }}</div>
                                 @endif
                                 @if ($heroCourse->mode)
-                                    <div class="hm"><i class="bi bi-camera-video"></i> {{ $heroCourse->mode }}</div>
+                                    <div class="hm"><i class="bi bi-laptop"></i> {{ $heroCourse->mode }}</div>
                                 @endif
                                 @if ($currentCategory->courses->count() > 1)
                                     <div class="hm"><i class="bi bi-lightning-fill"></i>
@@ -1739,7 +1739,7 @@
                             <a href="{{ route('course.details', $heroCourse->slug ?? 'course') }}" class="btn-enroll">
                                 <i class="bi bi-person-plus-fill"></i> Enroll Now
                             </a>
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-wa" target="_blank">
+                            <a href="https://wa.me/918079034973" class="btn-wa" target="_blank">
                                 <i class="bi bi-whatsapp"></i> Ask Us
                             </a>
                         </div>
@@ -1758,7 +1758,7 @@
                         @foreach ($allCategories as $cat)
                             <button class="sw-btn {{ $cat->id === $currentCategory->id ? 'active' : '' }}"
                                 onclick="window.location='{{ route('course.show', $cat->slug) }}'">
-                                <i class="bi bi-mortarboard-fill sw-icon"></i>
+                                <i class="bi bi-shield-fill sw-icon"></i>
                                 {{ $cat->name }}
                                 @php $cnt = $cat->courses->count(); @endphp
                                 @if ($cnt)
@@ -1772,19 +1772,20 @@
                     </div>
                 </div>
 
-                {{-- ── SINGLE COURSE → ATP feature-card layout ── --}}
+                {{-- ── INFO STRIP ── --}}
                 <div class="info-strip atp-strip">
                     <div class="is-icon"><i class="bi bi-info-circle-fill"></i></div>
                     <div class="is-text">
-                        <strong>Take a Personality Assessment Test</strong>
-                        <p>Discover your unique traits and acting potential. Take the test now and get your personalized
-                            score instantly.</p>
+                        <strong>Not Sure Which Course Is Right for You?</strong>
+                        <p>Speak to our counsellor and get a personalised recommendation based on your background, goals,
+                            and career path in cybersecurity.</p>
                     </div>
-                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="is-action">
-                        <i class="bi bi-whatsapp"></i> Start Assessment
+                    <a href="https://wa.me/918079034973" target="_blank" class="is-action">
+                        <i class="bi bi-whatsapp"></i> Get Guidance
                     </a>
                 </div>
                 <br>
+
                 @if ($currentCategory->courses->count() === 1)
                     @php $course = $currentCategory->courses->first(); @endphp
 
@@ -1795,7 +1796,7 @@
                             @elseif ($course->banner_image)
                                 <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}" />
                             @else
-                                <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=900&q=85"
+                                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=900&q=85"
                                     alt="{{ $course->title }}" />
                             @endif
                             <div class="fc-scrim"></div>
@@ -1803,13 +1804,12 @@
                         </div>
                         <div class="fc-body">
                             <div class="fc-tag">
-                                <i class="bi bi-mortarboard-fill"></i> {{ $currentCategory->name }}
+                                <i class="bi bi-shield-lock-fill"></i> {{ $currentCategory->name }}
                             </div>
                             <h3>
                                 {{ $course->title }}
                                 @if ($course->age_group)
-                                    <br><small style="font-weight:400;font-size:1rem;">Ages
-                                        {{ $course->age_group }}</small>
+                                    <br><small style="font-weight:400;font-size:1rem;">{{ $course->age_group }}</small>
                                 @endif
                             </h3>
 
@@ -1825,10 +1825,10 @@
                                         Sessions</span>
                                 @endif
                                 @if ($course->age_group)
-                                    <span class="fm"><i class="bi bi-people"></i> Age {{ $course->age_group }}</span>
+                                    <span class="fm"><i class="bi bi-people"></i> {{ $course->age_group }}</span>
                                 @endif
                                 @if ($course->mode)
-                                    <span class="fm"><i class="bi bi-camera-video"></i> {{ $course->mode }}</span>
+                                    <span class="fm"><i class="bi bi-laptop"></i> {{ $course->mode }}</span>
                                 @endif
                                 @if ($course->fees)
                                     <span class="fm"><i class="bi bi-currency-rupee"></i> {{ $course->fees }}</span>
@@ -1841,12 +1841,12 @@
                                 </a>
                                 @if ($course->highlights_link)
                                     <a href="{{ $course->highlights_link }}" target="_blank" class="btn-card-outline">
-                                        <i class="bi bi-play-circle"></i> Watch Highlights
+                                        <i class="bi bi-play-circle"></i> Watch Overview
                                     </a>
                                 @endif
                                 @foreach ($course->documents as $doc)
                                     <a href="{{ asset($doc->file) }}" target="_blank" class="btn-card-outline">
-                                        <i class="bi bi-download"></i> {{ $doc->title ?? 'Syllabus PDF' }}
+                                        <i class="bi bi-download"></i> {{ $doc->title ?? 'Course Syllabus PDF' }}
                                     </a>
                                 @endforeach
                             </div>
@@ -1856,16 +1856,14 @@
                     <div class="info-strip atp-strip">
                         <div class="is-icon"><i class="bi bi-info-circle-fill"></i></div>
                         <div class="is-text">
-                            <strong>New batches starting every quarter</strong>
-                            <p>Limited seats per batch. Enroll early to secure your child's spot at the centre nearest to
-                                you.</p>
+                            <strong>New batches starting every month</strong>
+                            <p>Limited seats per batch to ensure hands-on lab time for every student. Enroll early to secure
+                                your spot.</p>
                         </div>
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="is-action">
-                            <i class="bi bi-whatsapp"></i> Check Seats
+                        <a href="https://wa.me/918079034973" target="_blank" class="is-action">
+                            <i class="bi bi-whatsapp"></i> Check Availability
                         </a>
                     </div>
-
-                    {{-- ── MULTIPLE COURSES → STP grid-card layout ── --}}
                 @else
                     @php $firstCourse = $currentCategory->courses->first(); @endphp
 
@@ -1878,7 +1876,7 @@
                                     @elseif ($course->banner_image)
                                         <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}" />
                                     @else
-                                        <img src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=700&q=80"
+                                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=700&q=80"
                                             alt="{{ $course->title }}" />
                                     @endif
                                     <div class="sc-overlay"></div>
@@ -1893,17 +1891,16 @@
                                 <div class="sc-body">
                                     <div class="sc-meta">
                                         @if ($course->age_group)
-                                            <span><i class="bi bi-people"></i> Age {{ $course->age_group }}</span>
+                                            <span><i class="bi bi-people"></i> {{ $course->age_group }}</span>
                                         @endif
                                         @if ($course->mode)
-                                            <span><i class="bi bi-camera-video"></i> {{ $course->mode }}</span>
+                                            <span><i class="bi bi-laptop"></i> {{ $course->mode }}</span>
                                         @endif
                                         @if ($course->fees)
                                             <span><i class="bi bi-currency-rupee"></i> {{ $course->fees }}</span>
                                         @endif
                                     </div>
                                     <h4>{{ $course->title }}</h4>
-                                    {{-- strip_tags for CKEditor content in card preview --}}
                                     <p class="sc-desc">{{ Str::limit(strip_tags($course->description), 200) }}</p>
 
                                     <div class="sc-footer">
@@ -1924,12 +1921,12 @@
                     <div class="info-strip stp-strip">
                         <div class="is-icon"><i class="bi bi-lightbulb-fill"></i></div>
                         <div class="is-text">
-                            <strong>Can't decide which course to pick?</strong>
-                            <p>All {{ $currentCategory->courses->count() }} courses run independently — enrol in multiple
-                                tracks or start with the one that excites you most!</p>
+                            <strong>Can't decide which course to start with?</strong>
+                            <p>All {{ $currentCategory->courses->count() }} courses run independently — enroll in multiple
+                                tracks or start with the one that matches your current skill level.</p>
                         </div>
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="is-action">
-                            <i class="bi bi-whatsapp"></i> Ask Counsellor
+                        <a href="https://wa.me/918079034973" target="_blank" class="is-action">
+                            <i class="bi bi-whatsapp"></i> Ask a Counsellor
                         </a>
                     </div>
 
@@ -1939,109 +1936,64 @@
             </div>
         </section>
 
-        {{-- ═══ GALLERY ═══ --}}
-        {{-- <section class="gallery-section light-background">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Life at Act to Action</h2>
-                    <p>Workshops, showcases, casting wins and everyday magic from our classrooms.</p>
-                </div>
-                <div class="gallery-grid">
-                    <div class="g-item span-2">
-                        <img src="https://images.unsplash.com/photo-1503095396549-807759245b35?w=900&q=80"
-                            alt="Showcase" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Annual Graduation Showcase 2024</div>
-                    </div>
-                    <div class="g-item">
-                        <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&q=80"
-                            alt="Workshop" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Screen Acting Workshop</div>
-                    </div>
-                    <div class="g-item">
-                        <img src="https://images.unsplash.com/photo-1549737221-bef65e2604a6?w=500&q=80" alt="DramATA" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">DramATA 2025</div>
-                    </div>
-                    <div class="g-item">
-                        <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=500&q=80"
-                            alt="Summer Camp" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Summer Camp 2024</div>
-                    </div>
-                    <div class="g-item">
-                        <img src="https://images.unsplash.com/photo-1560523159-4a9692d222ef?w=500&q=80" alt="Awards" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Star Achievers Award Night</div>
-                    </div>
-                    <div class="g-item span-2">
-                        <img src="https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=900&q=80"
-                            alt="Filmmaking" />
-                        <div class="g-overlay"><i class="bi bi-zoom-in"></i></div>
-                        <div class="g-caption">Mobile Filmmaking — Behind the Camera</div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-
         {{-- ═══ TESTIMONIALS ═══ --}}
         <section class="testimonials-section">
             <div class="container">
                 <div class="section-title">
-                    <h2>What Parents Say</h2>
-                    <p>Real words from families who've seen the transformation firsthand.</p>
+                    <h2>What Our Students Say</h2>
+                    <p>Real words from cybersecurity professionals who trained with ThreatXpert and transformed their
+                        careers.</p>
                 </div>
                 <div class="row g-4">
                     @php
                         $testimonials = [
                             [
-                                'init' => 'PR',
-                                'name' => 'Priya Rathore',
-                                'role' => 'Parent · ATP Student, Age 8',
+                                'init' => 'AM',
+                                'name' => 'Arjun Mehta',
+                                'role' => 'Ethical Hacking Batch — Placed at IT Security Firm',
                                 'stars' => 5,
                                 'q' =>
-                                    'My daughter joined ATP at age 7 and within 6 months she was shortlisted for a Zee TV audition. The confidence she has built here is beyond anything I expected.',
+                                    'I had zero cybersecurity background before joining ThreatXpert. Within 4 months I had my CEH certification and a job offer. The hands-on labs made all the difference.',
                             ],
                             [
-                                'init' => 'AK',
-                                'name' => 'Amit Kumar',
-                                'role' => 'Parent · STP Public Speaking, Age 14',
+                                'init' => 'RS',
+                                'name' => 'Riya Singhania',
+                                'role' => 'VAPT Client — Fintech Startup, Mumbai',
                                 'stars' => 5,
                                 'q' =>
-                                    'The Short Term Program in Public Speaking completely transformed how my son communicates. He now speaks at assemblies and has won two inter-school competitions.',
+                                    'ThreatXpert conducted a VAPT for our startup and found critical vulnerabilities we had no idea about. Their report was detailed and actionable. Now our go-to security partner.',
                             ],
                             [
-                                'init' => 'SM',
-                                'name' => 'Sunita Meena',
-                                'role' => 'Parent · STP Mythology, Age 5',
+                                'init' => 'SV',
+                                'name' => 'Saurabh Verma',
+                                'role' => 'Digital Forensics Batch — Now Forensics Analyst, Delhi',
                                 'stars' => 5,
                                 'q' =>
-                                    'The Mythology & Shlok program is a hidden gem. My 5-year-old now recites Bhagavad Gita shlokas and understands their meaning. Kritesh sir and team are phenomenal.',
+                                    'The Digital Forensics course was unlike any training I have taken before. Real case studies, live tools, and mentors who have actually worked in the field. Fully prepared me.',
                             ],
                             [
-                                'init' => 'DS',
-                                'name' => 'Deepak Sharma',
-                                'role' => 'Parent · ATP Student, Age 11',
+                                'init' => 'VJ',
+                                'name' => 'Vikram Joshi',
+                                'role' => 'Corporate Training Client — HR Director, Jaipur',
                                 'stars' => 5,
                                 'q' =>
-                                    'Aadvika has appeared in two brand campaigns after completing ATP. The curriculum is incredibly thorough — from voice to on-camera presence to audition technique.',
+                                    'ThreatXpert ran a cybersecurity awareness workshop for our entire staff. The session was practical and immediately impacted how our team handles phishing and data security.',
                             ],
                             [
-                                'init' => 'RG',
-                                'name' => 'Rahul Gupta',
-                                'role' => 'Parent · STP Filmmaking, Age 13',
+                                'init' => 'PT',
+                                'name' => 'Pooja Tiwari',
+                                'role' => 'Cloud Security Batch — SOC Analyst, Bangalore',
                                 'stars' => 5,
                                 'q' =>
-                                    'The Mobile Filmmaking STP gave my son a complete film shoot experience. He shot, directed, edited and screened his own short film at age 13. So hands-on!',
+                                    'The Cloud Security and SOC Operations course gave me the exact skills my employer was looking for. I was placed within 3 weeks of completing the program. Incredible support.',
                             ],
                             [
-                                'init' => 'NJ',
-                                'name' => 'Nisha Jain',
-                                'role' => 'Parent · ATP Twins, Age 9',
+                                'init' => 'NK',
+                                'name' => 'Nikhil Kapoor',
+                                'role' => 'Penetration Testing Batch — Red Team, Pune',
                                 'stars' => 5,
                                 'q' =>
-                                    'I enrolled my twins in ATP and the transformation is visible in everything — posture, voice, how they connect with people. Genuinely changing young lives.',
+                                    'ThreatXpert\'s penetration testing course is genuinely world-class. Real-world lab environments, Metasploit, Burp Suite — everything I needed to crack my OSCP exam.',
                             ],
                         ];
                     @endphp
@@ -2071,16 +2023,16 @@
         {{-- ═══ CTA BAND ═══ --}}
         <div class="cta-band">
             <div class="cta-photo">
-                <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=1400&q=60" alt="CTA" />
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1400&q=60" alt="CTA" />
             </div>
             <div class="container cta-inner">
-                <h2>Ready to Start the Journey?</h2>
-                <p>Join 1000+ students already performing, growing and shining across Jaipur.</p>
+                <h2>Ready to Build Your Cyber Career?</h2>
+                <p>Join 500+ professionals already trained, certified, and placed through ThreatXpert.</p>
                 <div class="cta-btns">
                     <a href="{{ route('course.details', $course->slug) }}" class="btn-cta-solid">
                         <i class="bi bi-person-plus-fill"></i> Enroll Now
                     </a>
-                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-cta-ghost" target="_blank">
+                    <a href="https://wa.me/918079034973" class="btn-cta-ghost" target="_blank">
                         <i class="bi bi-whatsapp"></i> WhatsApp Us
                     </a>
                 </div>

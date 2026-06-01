@@ -1337,13 +1337,14 @@
         <header class="page-header">
             <div class="header-inner">
                 <a href="{{ url('/') }}" class="header-logo">
-                    <div class="logo-mark">🎭</div>
-                    <span class="logo-text">Act<span>To</span>Action</span>
+                    <div class="logo-mark">🛡️</div>
+                    <span class="logo-text">Threat<span>Expert</span></span>
                 </a>
-                <div class="header-eyebrow"><i class="bi bi-star-fill"></i> India's First Screen Acting School</div>
+                <div class="header-eyebrow"><i class="bi bi-shield-lock-fill"></i> India's Most Hands-On Cybersecurity
+                    Training Institute</div>
                 <h1>Enroll in <em>{{ $course->title }}</em></h1>
                 <p>
-                    Since 2019 · 1000+ Students ·
+                    Since 2020 · 500+ Professionals Trained ·
                     {{ $course->centers->count() }} {{ Str::plural('Centre', $course->centers->count()) }}
                     across {{ count($courseStates ?? []) }} {{ Str::plural('State', count($courseStates ?? [])) }}
                 </p>
@@ -1369,7 +1370,7 @@
                 </div>
                 <div class="step-item" id="si-1">
                     <div class="step-circle">2</div>
-                    <div class="step-label">Parents</div>
+                    <div class="step-label">Emergency</div>
                 </div>
                 <div class="step-item" id="si-2">
                     <div class="step-circle">3</div>
@@ -1401,22 +1402,22 @@
                         </div>
                         <div>
                             <div class="ph-step">Step 1 of 6</div>
-                            <h2 class="ph-title">Student Personal Details</h2>
-                            <p class="ph-sub">Tell us about the student enrolling for the course.</p>
+                            <h2 class="ph-title">Your Personal Details</h2>
+                            <p class="ph-sub">Tell us about the professional enrolling for this course.</p>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="row-2">
                             <div class="field-group">
                                 <label>First Name <span class="req">*</span></label>
-                                <input class="fi" type="text" id="firstName" placeholder="e.g. Aryan"
+                                <input class="fi" type="text" id="firstName" placeholder="e.g. Arjun"
                                     autocomplete="given-name" />
                                 <div class="field-error" id="err-firstName"><i class="bi bi-exclamation-circle"></i> First
                                     name is required</div>
                             </div>
                             <div class="field-group">
                                 <label>Last Name <span class="req">*</span></label>
-                                <input class="fi" type="text" id="lastName" placeholder="e.g. Sharma"
+                                <input class="fi" type="text" id="lastName" placeholder="e.g. Mehta"
                                     autocomplete="family-name" />
                                 <div class="field-error" id="err-lastName"><i class="bi bi-exclamation-circle"></i> Last
                                     name is required</div>
@@ -1426,8 +1427,8 @@
                             <div class="field-group">
                                 <label>Date of Birth <span class="req">*</span></label>
                                 <input class="fi" type="date" id="dob" />
-                                <div class="field-hint">Age group for this course:
-                                    <strong>{{ $course->age_group ?? '3–29 years' }}</strong>
+                                <div class="field-hint">Eligibility for this course:
+                                    <strong>{{ $course->age_group ?? '18+ years' }}</strong>
                                 </div>
                                 <div class="field-error" id="err-dob"><i class="bi bi-exclamation-circle"></i> Please
                                     enter a valid date of birth</div>
@@ -1471,7 +1472,7 @@
                     </div>
                 </div>
 
-                {{-- ===================== STEP 2: Parents ===================== --}}
+                {{-- ===================== STEP 2: Emergency Contact ===================== --}}
                 <div class="step-content" data-step="1">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#fdf2f8;color:#db2777;">
@@ -1479,28 +1480,29 @@
                         </div>
                         <div>
                             <div class="ph-step">Step 2 of 6</div>
-                            <h2 class="ph-title">Parent / Guardian Details</h2>
-                            <p class="ph-sub">We use this to communicate with the student's family.</p>
+                            <h2 class="ph-title">Emergency Contact Details</h2>
+                            <p class="ph-sub">We use this to contact someone on your behalf if needed.</p>
                         </div>
                     </div>
                     <div class="panel-body">
                         <div class="row-2">
                             <div class="field-group">
-                                <label>Father's Name <span class="req">*</span></label>
-                                <input class="fi" type="text" id="fatherName" placeholder="e.g. Rajesh Sharma" />
+                                <label>Contact Person Name <span class="req">*</span></label>
+                                <input class="fi" type="text" id="fatherName" placeholder="e.g. Rajesh Mehta" />
                                 <div class="field-error" id="err-fatherName"><i class="bi bi-exclamation-circle"></i>
-                                    Father's name is required</div>
+                                    Contact person name is required</div>
                             </div>
                             <div class="field-group">
-                                <label>Mother's Name <span class="req">*</span></label>
-                                <input class="fi" type="text" id="motherName" placeholder="e.g. Priya Sharma" />
+                                <label>Relationship <span class="req">*</span></label>
+                                <input class="fi" type="text" id="motherName"
+                                    placeholder="e.g. Father, Spouse, Friend" />
                                 <div class="field-error" id="err-motherName"><i class="bi bi-exclamation-circle"></i>
-                                    Mother's name is required</div>
+                                    Relationship is required</div>
                             </div>
                         </div>
                         <div class="row-2">
                             <div class="field-group">
-                                <label>Father's Phone <span class="req">*</span></label>
+                                <label>Primary Phone <span class="req">*</span></label>
                                 <div class="phone-pfx-wrap" id="wrap-parentPhone">
                                     <span class="phone-pfx">+91</span>
                                     <input class="fi" type="tel" id="parentPhone" placeholder="10-digit number"
@@ -1511,7 +1513,7 @@
                                     valid 10-digit phone number is required</div>
                             </div>
                             <div class="field-group">
-                                <label>Mother's Phone <span class="opt">(optional)</span></label>
+                                <label>Alternate Phone <span class="opt">(optional)</span></label>
                                 <div class="phone-pfx-wrap" id="wrap-motherPhone">
                                     <span class="phone-pfx">+91</span>
                                     <input class="fi" type="tel" id="motherPhone" placeholder="10-digit number"
@@ -1523,7 +1525,7 @@
                         </div>
                         <div class="row-2">
                             <div class="field-group">
-                                <label>Parent Email <span class="req">*</span></label>
+                                <label>Contact Email <span class="req">*</span></label>
                                 <input class="fi" type="email" id="parentEmail"
                                     placeholder="e.g. rajesh@email.com" />
                                 <div class="field-error" id="err-parentEmail"><i class="bi bi-exclamation-circle"></i> A
@@ -1550,8 +1552,8 @@
                         </div>
                         <div>
                             <div class="ph-step">Step 3 of 6</div>
-                            <h2 class="ph-title">Contact & Academic Details</h2>
-                            <p class="ph-sub">How can we reach the student? And their current school info.</p>
+                            <h2 class="ph-title">Contact &amp; Professional Details</h2>
+                            <p class="ph-sub">How can we reach you? And your current professional background.</p>
                         </div>
                     </div>
                     <div class="panel-body">
@@ -1574,7 +1576,7 @@
                                 <label>Email Address <span class="req">*</span></label>
                                 <div style="position:relative;">
                                     <input class="fi" type="email" id="email"
-                                        placeholder="e.g. aryan@email.com" />
+                                        placeholder="e.g. arjun@email.com" />
                                     <span class="ajax-indicator" id="ajax-email"></span>
                                 </div>
                                 <div class="field-error" id="err-email"><i class="bi bi-exclamation-circle"></i> A valid
@@ -1589,39 +1591,44 @@
                             <div class="field-error" id="err-address"><i class="bi bi-exclamation-circle"></i> Address is
                                 required</div>
                         </div>
-                        <div class="form-divider"><span>Academic Details</span></div>
+                        <div class="form-divider"><span>Professional Details</span></div>
                         <div class="row-2">
                             <div class="field-group">
-                                <label>School Name <span class="req">*</span></label>
+                                <label>Current Organisation / College <span class="req">*</span></label>
                                 <input class="fi" type="text" id="school"
-                                    placeholder="e.g. Mayoor School, Jaipur" />
-                                <div class="field-error" id="err-school"><i class="bi bi-exclamation-circle"></i> School
-                                    name is required</div>
+                                    placeholder="e.g. Infosys, Jaipur Engineering College" />
+                                <div class="field-error" id="err-school"><i class="bi bi-exclamation-circle"></i>
+                                    Organisation or college name is required</div>
                             </div>
                             <div class="field-group">
-                                <label>Class / Grade <span class="req">*</span></label>
+                                <label>Current Role / Year <span class="req">*</span></label>
                                 <select class="fi" id="grade">
-                                    <option value="">— Select Class —</option>
-                                    <option>Nursery / Pre-School</option>
-                                    <option>KG (Kindergarten)</option>
-                                    @foreach (range(1, 12) as $cls)
-                                        <option>Class {{ $cls }}</option>
-                                    @endforeach
-                                    <option>Undergraduate (College)</option>
-                                    <option>Postgraduate</option>
-                                    <option>Working Professional</option>
+                                    <option value="">— Select Your Role —</option>
+                                    <option>Student — 1st Year</option>
+                                    <option>Student — 2nd Year</option>
+                                    <option>Student — 3rd Year</option>
+                                    <option>Student — Final Year</option>
+                                    <option>Fresh Graduate</option>
+                                    <option>IT Professional (0–2 yrs exp)</option>
+                                    <option>IT Professional (2–5 yrs exp)</option>
+                                    <option>IT Professional (5+ yrs exp)</option>
+                                    <option>Network / System Admin</option>
+                                    <option>Developer / Software Engineer</option>
+                                    <option>Security Analyst</option>
+                                    <option>Manager / Team Lead</option>
                                     <option>Other</option>
                                 </select>
                                 <div class="field-error" id="err-grade"><i class="bi bi-exclamation-circle"></i> Please
-                                    select a class</div>
+                                    select your current role</div>
                             </div>
                         </div>
                         <div class="field-group">
-                            <label>Achievements / Additional Notes <span class="req">*</span></label>
-                            <textarea class="fi" id="achievements" placeholder="Any prior acting experience, awards, special skills…"
+                            <label>Prior Cybersecurity Experience / Certifications <span class="req">*</span></label>
+                            <textarea class="fi" id="achievements"
+                                placeholder="Any prior security training, certifications (CEH, CompTIA, OSCP), CTF experience, or write N/A…"
                                 style="min-height:90px;"></textarea>
                             <div class="field-error" id="err-achievements"><i class="bi bi-exclamation-circle"></i>
-                                Please enter your achievements or write N/A</div>
+                                Please enter your experience or write N/A</div>
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -1643,7 +1650,7 @@
                         </div>
                         <div>
                             <div class="ph-step">Step 4 of 6</div>
-                            <h2 class="ph-title">Location & Centre Selection</h2>
+                            <h2 class="ph-title">Location &amp; Centre Selection</h2>
                             <p class="ph-sub">
                                 <strong>{{ $course->title }}</strong> is available at
                                 <strong>{{ $course->centers->count() }}
@@ -1663,12 +1670,12 @@
                                 @endforeach
                             </select>
                             <div class="field-error" id="err-state"><i class="bi bi-exclamation-circle"></i> Please
-                                select your state</div>
+                                select your city</div>
                         </div>
                         <div class="field-group">
-                            <label>Act to Action Centre <span class="req">*</span></label>
+                            <label>Threat Expert Training Centre <span class="req">*</span></label>
                             <select class="fi" id="centre" onchange="showCentreInfo()">
-                                <option value="">— Select your state first —</option>
+                                <option value="">— Select your city first —</option>
                             </select>
                             <div class="field-error" id="err-centre"><i class="bi bi-exclamation-circle"></i> Please
                                 select a centre</div>
@@ -1697,7 +1704,6 @@
                                                 style="display:none;align-items:center;gap:4px;font-size:12px;color:#d97706;font-weight:600;text-decoration:none;">
                                                 <i class="bi bi-map-fill"></i> View on Map
                                             </a>
-                                            {{-- Fee badge --}}
                                             <span id="ci-fee-wrap"
                                                 style="display:none;align-items:center;gap:6px;font-size:13px;color:#7c3aed;font-weight:700;background:#f5f3ff;padding:5px 14px;border-radius:20px;border:1.5px solid #ede9fe;">
                                                 <i class="bi bi-tag-fill"></i> Course Fee: <span id="ci-fee"></span>
@@ -1741,11 +1747,11 @@
                 <div class="step-content" data-step="4">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#f5f3ff;color:#7c3aed;">
-                            <i class="bi bi-mortarboard-fill" style="font-size:22px;"></i>
+                            <i class="bi bi-shield-lock-fill" style="font-size:22px;"></i>
                         </div>
                         <div>
                             <div class="ph-step">Step 5 of 6</div>
-                            <h2 class="ph-title">Course & Enrollment Details</h2>
+                            <h2 class="ph-title">Course &amp; Enrollment Details</h2>
                             <p class="ph-sub">Your selected course is pre-filled. You may switch to another if needed.</p>
                         </div>
                     </div>
@@ -1758,7 +1764,7 @@
                                 ✓ SELECTED
                             </div>
                             <div style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;">
-                                <div style="font-size:48px;line-height:1;margin-top:2px;">🎭</div>
+                                <div style="font-size:48px;line-height:1;margin-top:2px;">🛡️</div>
                                 <div style="flex:1;min-width:180px;">
                                     <div style="font-size:20px;font-weight:900;color:var(--ink);margin-bottom:4px;">
                                         {{ $course->title }}</div>
@@ -1772,7 +1778,7 @@
                                         @if ($course->age_group)
                                             <span
                                                 style="background:#eff6ff;color:#175cdd;font-size:12px;font-weight:600;padding:4px 10px;border-radius:20px;">
-                                                <i class="bi bi-people-fill me-1"></i>Age {{ $course->age_group }}
+                                                <i class="bi bi-people-fill me-1"></i>{{ $course->age_group }}
                                             </span>
                                         @endif
                                         @if ($course->duration)
@@ -1798,7 +1804,6 @@
                                             {!! Str::limit(strip_tags($course->description), 120) !!}</div>
                                     @endif
                                 </div>
-                                {{-- Dynamic fee box — updated by JS when centre is chosen --}}
                                 <div
                                     style="text-align:center;min-width:110px;background:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 2px 12px rgba(23,92,221,.08);">
                                     <div
@@ -1825,11 +1830,11 @@
                                         <input type="radio" name="course" id="c-{{ $oc->id }}"
                                             value="{{ $oc->title }}" />
                                         <label class="course-opt-label" for="c-{{ $oc->id }}">
-                                            <div class="coll-icon">🌟</div>
+                                            <div class="coll-icon">🔐</div>
                                             <div class="coll-name">{{ $oc->title }}</div>
                                             <div class="coll-age">
                                                 @if ($oc->age_group)
-                                                    Age {{ $oc->age_group }} ·
+                                                    {{ $oc->age_group }} ·
                                                 @endif{{ $oc->duration ?? '3 months' }}
                                             </div>
                                             @if ($oc->fees)
@@ -1862,7 +1867,7 @@
                         <div class="field-group">
                             <label>Coupon Code <span class="opt">(optional)</span></label>
                             <div class="coupon-row">
-                                <input class="fi" type="text" id="coupon" placeholder="e.g. WELCOME20"
+                                <input class="fi" type="text" id="coupon" placeholder="e.g. CYBER20"
                                     style="text-transform:uppercase;" />
                                 <button class="btn-apply" onclick="applyCoupon()">Apply</button>
                             </div>
@@ -1915,11 +1920,11 @@
                                 <div class="check-text">
                                     <strong>I agree to the Terms &amp; Conditions <span class="check-req">*</span></strong>
                                     <span>I have read and accept the
-                                        <a href="https://www.acttoaction.com/terms-and-conditions" target="_blank"
+                                        <a href="https://www.threatxpert.com/terms-and-conditions" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
                                             onclick="event.stopPropagation()">Terms &amp; Conditions</a>
                                         and
-                                        <a href="https://www.acttoaction.com/refund-policy" target="_blank"
+                                        <a href="https://www.threatxpert.com/refund-policy" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
                                             onclick="event.stopPropagation()">Refund Policy</a>.
                                     </span>
@@ -1930,8 +1935,8 @@
                                 <div class="check-box" id="chk-newsletter"></div>
                                 <div class="check-text">
                                     <strong>Subscribe to Updates &amp; Newsletters</strong>
-                                    <span>Receive news about upcoming events, summer camps, casting calls, and
-                                        courses.</span>
+                                    <span>Receive updates on new courses, batch schedules, CTF competitions, and
+                                        cybersecurity events.</span>
                                 </div>
                             </label>
                         </div>
@@ -1958,22 +1963,23 @@
                 {{-- ===================== Success Screen ===================== --}}
                 <div class="success-screen" id="successScreen" style="display:none;">
                     <div class="success-anim">🎉</div>
-                    <div class="success-title">Payment Successful!</div>
+                    <div class="success-title">Enrollment Confirmed!</div>
                     <p class="success-sub">Your seat has been reserved for <strong>{{ $course->title }}</strong>. Our team
-                        will contact you within 24 hours to confirm your batch and free demo class.</p>
-                    <div class="success-ref"><span>Reference ID:</span>&nbsp;<span id="refId">ATA-000000</span></div>
+                        will contact you within 24 hours to confirm your batch details and schedule your free demo class.
+                    </p>
+                    <div class="success-ref"><span>Reference ID:</span>&nbsp;<span id="refId">TX-000000</span></div>
                     <div
                         style="background:#ecfdf5;border:1.5px solid #86efac;border-radius:14px;padding:16px 20px;margin:16px 0;text-align:left;">
                         <div style="font-size:13px;font-weight:700;color:#166534;margin-bottom:4px;"><i
                                 class="bi bi-check-circle-fill"></i> What happens next?</div>
                         <ul style="font-size:13px;color:#166534;margin:0;padding-left:18px;line-height:2;">
                             <li>You'll receive a WhatsApp confirmation shortly</li>
-                            <li>Our team will call to confirm your batch timing</li>
+                            <li>Our team will call to confirm your batch timing and lab access</li>
                             <li>Free demo class will be scheduled within 48 hours</li>
                         </ul>
                     </div>
                     <div class="success-actions">
-                        <a href="https://wa.me/919352023276" target="_blank" class="btn-wa"><i
+                        <a href="https://wa.me/918079034973" target="_blank" class="btn-wa"><i
                                 class="bi bi-whatsapp"></i> Message on WhatsApp</a>
                         <a href="{{ url('/') }}" class="btn-home"><i class="bi bi-house"></i> Back to Home</a>
                     </div>
@@ -1984,7 +1990,7 @@
                     <div class="success-anim">❌</div>
                     <div class="success-title" style="color:#dc2626;">Payment Failed</div>
                     <p class="success-sub">Your enrollment details have been saved. Please try the payment again or contact
-                        us on WhatsApp.</p>
+                        us on WhatsApp for immediate assistance.</p>
                     <div id="failedPaymentId"
                         style="display:none;background:#fff1f2;border:1.5px solid #fecdd3;border-radius:12px;padding:12px 16px;font-size:13px;color:#be123c;margin-bottom:16px;">
                         <strong>Payment ID:</strong> <span id="failedPidText"></span>
@@ -2003,7 +2009,7 @@
                         <button onclick="retryPayment()" class="btn-wa"
                             style="background:#dc2626;border:none;cursor:pointer;"><i class="bi bi-arrow-repeat"></i>
                             Retry Payment</button>
-                        <a href="https://wa.me/919352023276" target="_blank" class="btn-home"><i
+                        <a href="https://wa.me/918079034973" target="_blank" class="btn-home"><i
                                 class="bi bi-whatsapp"></i> WhatsApp Us</a>
                     </div>
                 </div>
@@ -2011,7 +2017,6 @@
             </div>
         </div>
     </main>
-
     {{-- ===================== Scripts ===================== --}}
     {{-- checkout.js removed: Payment Link flow keeps Razorpay key server-side only --}}
     <script>
