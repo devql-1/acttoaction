@@ -1317,51 +1317,50 @@
                 <div class="row gy-5 align-items-center">
                     <div class="col-lg-6" data-aos="fade-right">
                         <div class="about-img">
-                            <img src="https://static.wixstatic.com/media/495d44_bc860d09a55747d4a8cba6868ea9900f~mv2.jpg/v1/fill/w_599,h_750,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/download%20(3).jpg"
-                                alt="Act to Action Students">
+                            <img src="YOUR_IMAGE_URL_HERE" alt="ThreatXpert Cybersecurity Training">
                             <div class="experience-badge">
-                                <span>2019</span>
+                                <span>2020</span>
                                 <p>Est. in<br>India</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
                         <div class="about-content">
-                            <p class="subtitle"><i class="bi bi-stars me-2"></i>India's First Choice Screen Acting School
+                            <p class="subtitle"><i class="bi bi-shield-lock me-2"></i>India's Most Trusted Cybersecurity
+                                Training Institute
                             </p>
-                            <h3>Building India's Future Talent — One Child at a Time</h3>
-                            <p>Act to Action fulfills the needs of every child preparing themselves for the world of 2045
-                                with best skill courses. Since 2019, Act to Action is India's first choice and trusted
-                                screen acting school, delivering the best talent to the film industry, mainstream
-                                advertisements, popular clothing brands, and most-heard music labels.</p>
-                            <p>Not just that — Act to Action provides best-in-class personality development, stage
-                                confidence, public speaking and filmmaking skills, along with fundamental principles of the
-                                <strong>Bhagavad Gita</strong> for inner strength of the child and right character building
-                                for the future of our country.
-                            </p>
-                            <p>Dedicated to the mission of <strong>Viksit Bharat</strong>, contributing to Skill India and
-                                implementation of NEP 2020. Registered with <strong>Startup India</strong> (Central
-                                Government) &amp; <strong>iStart</strong> (Government of Rajasthan).</p>
+                            <h3>Building India's Cyber Warriors — One Expert at a Time</h3>
+                            <p>ThreatXpert fulfills the growing demand for skilled cybersecurity professionals in an
+                                increasingly dangerous digital world. As a premier cybersecurity training and solutions
+                                company, ThreatXpert delivers practical, advanced, and industry-aligned programs that
+                                prepare individuals and organizations to defend against modern cyber threats.</p>
+                            <p>Not just training — ThreatXpert provides end-to-end <strong>Cybersecurity Services</strong>
+                                including secure web development, penetration testing, digital forensics, and threat
+                                intelligence, along with career-focused certifications and <strong>100% placement
+                                    support</strong> for our students.</p>
+                            <p>Dedicated to empowering the digital world, contributing to India's cybersecurity workforce,
+                                and building a safer internet for all. Registered as <strong>Threat Expert Cyber Solutions
+                                    Pvt. Ltd.</strong> and recognized across India's leading cybersecurity platforms.</p>
                             <div class="about-stats">
                                 <div class="stat-item">
-                                    <div class="num">1000+</div>
-                                    <p>Happy Clients &amp; Families</p>
+                                    <div class="num">500+</div>
+                                    <p>Trained Professionals</p>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="num">10</div>
-                                    <p>Professional Skill Courses</p>
+                                    <div class="num">10+</div>
+                                    <p>Cybersecurity Courses</p>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="num">250+</div>
-                                    <p>Prominent Castings</p>
+                                    <div class="num">100%</div>
+                                    <p>Placement Support</p>
                                 </div>
                                 <div class="stat-item">
-                                    <div class="num">25+</div>
-                                    <p>Top Educational Institutes</p>
+                                    <div class="num">50+</div>
+                                    <p>Corporate Clients Served</p>
                                 </div>
                             </div>
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="cta-btn"><i
-                                    class="bi bi-whatsapp"></i> Book Your Appointment Now</a>
+                            <a href="https://wa.me/918079034973" target="_blank" class="cta-btn"><i
+                                    class="bi bi-whatsapp"></i> Book Your Free Demo Now</a>
                         </div>
                     </div>
                 </div>
@@ -1372,23 +1371,23 @@
 
         <section class="news-section">
             <div class="container">
-                <p class="news-label">Act to Action — In the News</p>
+                <p class="news-label">ThreatXpert — Recognized By</p>
                 <div class="logo-marquee-wrap">
                     <div class="logo-marquee">
                         @php
                             $newsLogos = [
+                                ['icon' => 'bi-shield-check', 'name' => 'EC-Council'],
+                                ['icon' => 'bi-award', 'name' => 'CompTIA'],
+                                ['icon' => 'bi-globe', 'name' => 'NASSCOM'],
+                                ['icon' => 'bi-building', 'name' => 'Startup India'],
+                                ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                ['icon' => 'bi-laptop', 'name' => 'CERT-In'],
                                 ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
                                 ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
-                                ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
-                                ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
-                                ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
-                                ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
-                                ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
-                                ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
-                                ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
-                                ['icon' => 'bi-flag', 'name' => 'Skill India'],
-                                ['icon' => 'bi-shop', 'name' => 'Decathlon'],
-                                ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
+                                ['icon' => 'bi-trophy', 'name' => 'CyberSec India Awards'],
+                                ['icon' => 'bi-people', 'name' => 'ISACA'],
+                                ['icon' => 'bi-mortarboard', 'name' => 'ISC2'],
+                                ['icon' => 'bi-star', 'name' => 'Internshala Top Company'],
                             ];
                         @endphp
                         {{-- First set --}}
@@ -1408,24 +1407,26 @@
                             <div class="quote-card">
                                 <i class="bi bi-quote quote-big"></i>
                                 <div class="quote-source"><i class="bi bi-newspaper"></i> Rajasthan Patrika</div>
-                                <blockquote>"Act to Action's theatre show at RIC showcased extraordinary talent from
-                                    Jaipur's youngest stars — a standing ovation from all."</blockquote>
+                                <blockquote>"ThreatXpert is redefining how India approaches cybersecurity education —
+                                    hands-on, practical, and genuinely career-ready from day one."</blockquote>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="quote-card">
                                 <i class="bi bi-quote quote-big"></i>
-                                <div class="quote-source"><i class="bi bi-palette"></i> Kalaneri Art Expo</div>
-                                <blockquote>"A unique blend of performing arts and inner science — Act to Action students
-                                    brought depth and emotion rarely seen at this age."</blockquote>
+                                <div class="quote-source"><i class="bi bi-people"></i> Industry Partner Review</div>
+                                <blockquote>"The quality of talent coming out of ThreatXpert's programs is exceptional —
+                                    their graduates are job-ready and technically sharp from the very first day."
+                                </blockquote>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="quote-card">
                                 <i class="bi bi-quote quote-big"></i>
-                                <div class="quote-source"><i class="bi bi-trophy"></i> Dada Saheb Phalke 2022</div>
-                                <blockquote>"Kritesh Agarwal's award-winning films reflect a generation of children trained
-                                    to tell stories that matter."</blockquote>
+                                <div class="quote-source"><i class="bi bi-trophy"></i> CyberSec India 2023</div>
+                                <blockquote>"ThreatXpert's commitment to practical learning and real-world threat simulation
+                                    sets them apart as one of India's most impactful cybersecurity training providers."
+                                </blockquote>
                             </div>
                         </div>
                     </div>
@@ -1437,40 +1438,44 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>What Sets Us Apart</h2>
-                    <p>Our holistic approach goes far beyond acting — we nurture the whole child through an award-winning
-                        curriculum that blends art, science, and ancient wisdom.</p>
+                    <p>Our hands-on approach goes far beyond theory — we train real defenders through an advanced curriculum
+                        that blends offensive techniques, defensive strategy, and industry-standard tools.</p>
                 </div>
                 <div class="row gy-4">
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="value-card">
-                            <div class="icon"><i class="bi bi-camera-video"></i></div>
-                            <h4>Screen Acting Excellence</h4>
-                            <p>Camera acting techniques, monologue delivery, and on-screen performance skills trained with
-                                industry-standard methods used across Bollywood and mainstream media.</p>
+                            <div class="icon"><i class="bi bi-bug"></i></div>
+                            <h4>Ethical Hacking &amp; Penetration Testing</h4>
+                            <p>Master the mindset of an attacker. Our offensive security training covers web app pentesting,
+                                network exploitation, and vulnerability assessment using industry-standard tools like Kali
+                                Linux and Metasploit.</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="150">
                         <div class="value-card">
-                            <div class="icon"><i class="bi bi-book"></i></div>
-                            <h4>Bhagavad Gita Principles</h4>
-                            <p>Inner strength, discipline, and right values through Shlok Recitation and the timeless
-                                teachings of the Gita — character building for the future of our nation.</p>
+                            <div class="icon"><i class="bi bi-shield-lock"></i></div>
+                            <h4>Secure Web Development</h4>
+                            <p>Build digital assets that can't be broken. Our secure development training covers OWASP Top
+                                10, encryption protocols, authentication hardening, and security-first coding practices for
+                                developers.</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="value-card">
-                            <div class="icon"><i class="bi bi-heart-pulse"></i></div>
-                            <h4>Neuro-Psychological Growth</h4>
-                            <p>Programs co-designed with child development experts and neurotherapists to address physical,
-                                mental, emotional, and intellectual growth in every child.</p>
+                            <div class="icon"><i class="bi bi-search"></i></div>
+                            <h4>Digital Forensics &amp; Incident Response</h4>
+                            <p>Investigate breaches, recover evidence, and respond to active threats. Our DFIR curriculum is
+                                co-designed with certified forensic investigators to simulate real-world attack scenarios.
+                            </p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="250">
                         <div class="value-card">
                             <div class="icon"><i class="bi bi-trophy"></i></div>
-                            <h4>Award-Winning Outcomes</h4>
-                            <p>Children awarded at national &amp; international film festivals, Dausa Ratna, school awards,
-                                and featured in state and national newspapers across India.</p>
+                            <h4>100% Placement Guarantee</h4>
+                            <p>Every student who completes our program receives dedicated placement support — resume
+                                building, mock interviews, and direct connections with our hiring partner network across
+                                India's top IT and security firms.</p>
                         </div>
                     </div>
                 </div>
@@ -1482,20 +1487,19 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Meet the Founder</h2>
-                    <p>The visionary architect behind Act to Action's formula-driven pedagogy and child-centric creative
-                        education philosophy.</p>
+                    <p>The cybersecurity veteran and educator behind ThreatXpert's practical, career-focused training
+                        methodology and threat-intelligence-driven curriculum.</p>
                 </div>
                 <div class="row gy-5 align-items-center">
                     <div class="col-lg-4 text-center" data-aos="fade-right">
-                        <img src="https://static.wixstatic.com/media/f6a8d9_034eaf05abd04f2291659c9ee18f92ea~mv2.jpg/v1/fill/w_247,h_247,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kritesh%20Image.jpg"
-                            alt="Kritesh Agarwal" class="founder-avatar"
+                        <img src="YOUR_FOUNDER_IMAGE_URL_HERE" alt="ThreatXpert Founder" class="founder-avatar"
                             style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
-                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Kritesh Agarwal</h3>
-                        <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Filmmaker
-                            &amp; Acting Coach</p>
+                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">[Founder Name]</h3>
+                        <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Cybersecurity
+                            Expert &amp; Trainer</p>
                         <p style="font-size:13px;color:var(--default-color);margin-bottom:20px;font-style:italic;">Founder
-                            &amp; MD, Rising Passion Pvt. Ltd.</p>
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"
+                            &amp; CEO, Threat Expert Cyber Solutions Pvt. Ltd.</p>
+                        <a href="https://wa.me/918079034973" target="_blank"
                             class="about cta-btn d-inline-flex align-items-center gap-2"
                             style="background:var(--accent-color);color:#fff;padding:12px 28px;border-radius:30px;font-weight:700;box-shadow:0 6px 20px rgba(23,92,221,0.3);">
                             <i class="bi bi-whatsapp"></i> Connect with Us
@@ -1505,42 +1509,30 @@
                     <div class="col-lg-8" data-aos="fade-left" data-aos-delay="100">
                         <p
                             style="font-size:13px;font-weight:700;color:var(--accent-color);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">
-                            <i class="bi bi-stars me-2"></i>Formula-driven pedagogy · Child development science · Holistic
-                            mental health
+                            <i class="bi bi-shield-lock me-2"></i>Certified Ethical Hacker · Penetration Tester ·
+                            Cybersecurity Educator
                         </p>
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Kritesh Agarwal is the Founder of Act
-                            to Action and an emerging force in child-centric innovation, creative leadership, and
-                            AVGC-XR-aligned education. As a performer, strategist, mentor, and creative diplomacy
-                            professional, he brings together artistic sensitivity and technical understanding to design
-                            learning experiences that are expressive, future-focused, and deeply human.</p>
-                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">His work stands at the intersection
-                            of storytelling, leadership development, child wellness, narrative design, and immersive
-                            creative pedagogy. With a distinctive ability to translate performance, psychology, and
-                            innovation into meaningful educational practice, Kritesh has built a powerful framework that
-                            nurtures confidence, communication, creative expression, and real-world readiness in young
-                            learners.</p>
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">The founder of ThreatXpert is a
+                            seasoned cybersecurity professional and educator with deep expertise in offensive security,
+                            threat intelligence, and digital forensics. With a passion for building India's next generation
+                            of cyber defenders, they established ThreatXpert as a platform where practical skills meet
+                            industry-ready training.</p>
+                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Their work sits at the intersection
+                            of real-world threat research, structured pedagogy, and career development. By combining
+                            hands-on labs, live attack simulations, and mentorship from active security professionals,
+                            ThreatXpert's curriculum is built to deliver confident, skilled cybersecurity practitioners from
+                            the very first day of employment.</p>
 
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Over the past five years, Kritesh has
-                            mentored more than 2,000 children aged 3–15 across performance, confidence-building,
-                            communication, and applied creative exposure. Under his guidance, students have secured 250+
-                            castings in major campaigns and productions associated with brands and banners such as Adani
-                            Greens, SBI, and Dettol. His professional journey also includes experience with Zee Studios
-                            Jaipur, along with collaborations across leading schools, premium education institutions, and
-                            national platforms including IICT, IIT, and IIM.</p>
-                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">His work stands at the intersection
-                            of storytelling, leadership development, child wellness, narrative design, and immersive
-                            creative pedagogy. With a distinctive ability to translate performance, psychology, and
-                            innovation into meaningful educational practice, Kritesh has built a powerful framework that
-                            nurtures confidence, communication, creative expression, and real-world readiness in young
-                            learners.</p>
-                        <p style="font-size:15px;line-height:1.8;">Recognized through associations with respected national
-                            and international bodies such as ASSITEJ, CQ-ECCE, and AIP, and acknowledged under iStart and
-                            Startup India, Kritesh represents a new generation of leadership that blends creative vision
-                            with institutional thinking. Through Act to Action, he continues to shape a bold and culturally
-                            rooted movement committed to building emotionally aware, technically skilled, and future-ready
-                            young leaders.
-                            he serves as the Founder &amp; Managing Director of <strong>Rising Passion Pvt. Ltd.</strong>,
-                            actively leading Act to Action with vision and commitment.</p>
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Under their leadership, ThreatXpert
+                            has trained over 500 cybersecurity professionals, delivered enterprise security assessments for
+                            clients across sectors including BFSI, healthcare, and e-commerce, and has built a growing
+                            network of hiring partners ensuring 100% placement support for every graduate. The company has
+                            also partnered with leading educational institutions to integrate cybersecurity awareness into
+                            academic curricula.</p>
+                        <p style="font-size:15px;line-height:1.8;">Recognized across India's cybersecurity ecosystem and
+                            committed to the mission of a safer digital India, the ThreatXpert founder continues to lead
+                            from the front — training, consulting, and building the security talent pipeline our nation
+                            urgently needs.</p>
                     </div>
                 </div>
                 <section class="news-section" style="background: #fff">
@@ -1550,18 +1542,18 @@
                             <div class="logo-marquee">
                                 @php
                                     $newsLogos = [
+                                        ['icon' => 'bi-shield-check', 'name' => 'CEH Certified'],
+                                        ['icon' => 'bi-award', 'name' => 'CompTIA Security+'],
+                                        ['icon' => 'bi-globe', 'name' => 'NASSCOM Member'],
+                                        ['icon' => 'bi-building', 'name' => 'Startup India'],
+                                        ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                        ['icon' => 'bi-laptop', 'name' => 'CERT-In Empanelled'],
                                         ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
                                         ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
-                                        ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
-                                        ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
-                                        ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
-                                        ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
-                                        ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
-                                        ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
-                                        ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
-                                        ['icon' => 'bi-flag', 'name' => 'Skill India'],
-                                        ['icon' => 'bi-shop', 'name' => 'Decathlon'],
-                                        ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
+                                        ['icon' => 'bi-trophy', 'name' => 'CyberSec India Awards'],
+                                        ['icon' => 'bi-people', 'name' => 'ISACA Member'],
+                                        ['icon' => 'bi-mortarboard', 'name' => 'ISC2 Associate'],
+                                        ['icon' => 'bi-star', 'name' => 'Top Cybersecurity Trainer'],
                                     ];
                                 @endphp
                                 {{-- First set --}}
@@ -1581,27 +1573,24 @@
             </div>
         </section>
 
-        <!-- =================== FOUNDER LEGACY & IMPACT =================== -->
+        <!-- =================== LEGACY & IMPACT =================== -->
         <section class="certifications section section-alt">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Legacy &amp; Impact</h2>
-                    <p>From global film festivals to grassroots skill development — Kritesh's journey and
-                        credentials that
-                        power Act to Action's world-class curriculum.</p>
+                    <p>From global threat research to grassroots cybersecurity education — ThreatXpert's journey and
+                        credentials that power India's most practical security curriculum.</p>
                 </div>
                 <div class="row gy-4">
                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="cert-item">
                             <div class="cert-icon"><i class="bi bi-mortarboard"></i></div>
                             <div>
-                                <h5>Academic &amp; Workshop Pedigree</h5>
-                                <p>Journalism &amp; Mass Communication (MUJ) · MA in Entertainment Media &amp;
-                                    Advertisement
-                                    (KC College, Mumbai) · MBA (Symbiosis) · Short workshops of FTII Filmmaking
-                                    Modules, NSD
-                                    Theatre Productions and Child Psychology Workshops with medical professionals.
-                                </p>
+                                <h5>Academic &amp; Certification Pedigree</h5>
+                                <p>Industry-recognized certifications including CEH, CompTIA Security+, OSCP, and more ·
+                                    Curriculum aligned with EC-Council, NASSCOM, and CERT-In standards · Advanced modules on
+                                    Cloud Security, SIEM, SOC Operations, and Red Teaming developed with active security
+                                    practitioners.</p>
                             </div>
                         </div>
                     </div>
@@ -1609,25 +1598,22 @@
                         <div class="cert-item">
                             <div class="cert-icon"><i class="bi bi-globe-americas"></i></div>
                             <div>
-                                <h5>Global Impact — 3,000+ Students Across India &amp; UAE</h5>
-                                <p>Programs designed to support UN Sustainable Development Goals (via My Captain),
-                                    impacting
-                                    students across India and UAE. Trained 100+ child artists now influencing film
-                                    and TV
-                                    with socially conscious performances.</p>
+                                <h5>National Impact — 500+ Professionals Trained Across India</h5>
+                                <p>Training programs designed to support India's cybersecurity workforce demands, with
+                                    graduates placed across IT companies, banks, healthcare organizations, and government
+                                    agencies. ThreatXpert alumni now protect some of India's most critical digital
+                                    infrastructure.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="cert-item">
-                            <div class="cert-icon"><i class="bi bi-film"></i></div>
+                            <div class="cert-icon"><i class="bi bi-shield-exclamation"></i></div>
                             <div>
-                                <h5>Award-Winning Filmmaker</h5>
-                                <p>Visited Cannes Film Festival (France) · Rajasthan International Film Festival ·
-                                    Dada
-                                    Saheb Phalke Film Festival 2022. Kritesh has served as casting head, director,
-                                    acting
-                                    coach, mentor, assistant producer, and art director.</p>
+                                <h5>Real-World Security Services</h5>
+                                <p>Beyond training, ThreatXpert actively delivers cybersecurity services — VAPT, secure web
+                                    development, digital forensics, and threat intelligence — for MNCs, SMEs, healthcare
+                                    institutions, NGOs, and government awareness campaigns across India.</p>
                             </div>
                         </div>
                     </div>
@@ -1635,12 +1621,11 @@
                         <div class="cert-item">
                             <div class="cert-icon"><i class="bi bi-flag"></i></div>
                             <div>
-                                <h5>Contributing to Viksit Bharat &amp; Skill India</h5>
-                                <p>Dedicated to NEP 2020 implementation by producing the best young talent in the
-                                    country.
-                                    Serving MNCs, television industry, production houses, health institutions,
-                                    government
-                                    awareness campaigns, and NGOs.</p>
+                                <h5>Contributing to Digital India &amp; Skill India</h5>
+                                <p>Dedicated to building India's cybersecurity talent pipeline in alignment with the
+                                    National Cyber Security Policy and NEP 2020. ThreatXpert actively works with educational
+                                    institutions to embed cybersecurity literacy into India's next generation of digital
+                                    citizens.</p>
                             </div>
                         </div>
                     </div>
@@ -1648,25 +1633,24 @@
             </div>
         </section>
 
+        <!-- =================== MEET THE CO-FOUNDER =================== -->
         <section class="certifications section">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Meet the Co-Founder</h2>
-                    <p>The visionary architect behind Act to Action's formula-driven pedagogy and child-centric creative
-                        education philosophy.</p>
+                    <p>The strategic mind behind ThreatXpert's operations, partnerships, and industry-aligned program
+                        delivery.</p>
                 </div>
                 <div class="row gy-5 align-items-center">
                     <div class="col-lg-4 text-center" data-aos="fade-right">
-                        <img src="https://static.wixstatic.com/media/495d44_4b14b64cccde4ee797cfd36583c43a9f~mv2.jpg/v1/crop/x_0,y_39,w_408,h_338/fill/w_403,h_334,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kriti%20Gupta.jpg"
-                            alt="Kriti Gupta" class="founder-avatar"
+                        <img src="YOUR_COFOUNDER_IMAGE_URL_HERE" alt="ThreatXpert Co-Founder" class="founder-avatar"
                             style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
-                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Kriti Gupta</h3>
-                        <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Filmmaker
-                            &amp; Acting Coach</p>
+                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">[Co-Founder Name]</h3>
+                        <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Security
+                            Consultant &amp; Operations Lead</p>
                         <p style="font-size:13px;color:var(--default-color);margin-bottom:20px;font-style:italic;">
-                            Co-Founder
-                            &amp; MD, Rising Passion Pvt. Ltd.</p>
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"
+                            Co-Founder, Threat Expert Cyber Solutions Pvt. Ltd.</p>
+                        <a href="https://wa.me/918079034973" target="_blank"
                             class="about cta-btn d-inline-flex align-items-center gap-2"
                             style="background:var(--accent-color);color:#fff;padding:12px 28px;border-radius:30px;font-weight:700;box-shadow:0 6px 20px rgba(23,92,221,0.3);">
                             <i class="bi bi-whatsapp"></i> Connect with Us
@@ -1676,46 +1660,42 @@
                     <div class="col-lg-8" data-aos="fade-left" data-aos-delay="100">
                         <p
                             style="font-size:13px;font-weight:700;color:var(--accent-color);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">
-                            <i class="bi bi-stars me-2"></i>Formula-driven pedagogy · Child development science · Holistic
-                            mental health
+                            <i class="bi bi-shield-lock me-2"></i>Security Operations · Corporate Training · Program Design
                         </p>
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Kriti Gupta is a creative diplomat
-                            and strategic thinker with a strong academic foundation in Journalism and Mass Communication.
-                            Her expertise lies in transforming ideas into impactful experiential learning initiatives
-                            through compelling communication, thoughtful design, and meticulous execution.</p>
-                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Over the past two years with Act to
-                            Action, Kriti has played a pivotal role in shaping and curating innovative programs that foster
-                            creativity, leadership, and cognitive development among young learners. Drawing from her
-                            extensive background in the events ecosystem, she has been a core team member in the successful
-                            execution of more than 15 large - scale events, demonstrating exceptional capabilities in
-                            strategic planning, stakeholder engagement, and seamless implementation.
-                        </p>
-                        <p style="font-size:15px;line-height:1.8;">Recognized for her ability to bridge vision with
-                            execution, Kriti specializes in designing experiential learning formats that create meaningful
-                            and lasting impact. As a creative diplomat, she brings together diverse perspectives, fostering
-                            collaboration and driving initiatives aligned with Act to Action’s mission of building human
-                            intelligence for the future generation.</p>
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">ThreatXpert's Co-Founder is a
+                            strategic operations leader with a strong background in cybersecurity consulting, corporate
+                            training delivery, and program development. Their expertise lies in designing learning journeys
+                            that are structured, measurable, and directly tied to industry hiring requirements.</p>
+                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Over the course of building
+                            ThreatXpert, they have played a pivotal role in forging industry partnerships, establishing
+                            placement pipelines, and ensuring that every batch of graduates meets the bar set by top-tier
+                            employers in the cybersecurity domain. Their operational rigor and attention to student outcomes
+                            make ThreatXpert's programs among the most reliable in India.</p>
+                        <p style="font-size:15px;line-height:1.8;">Recognized for bridging the gap between training and
+                            employment, the Co-Founder leads ThreatXpert's corporate outreach, client services, and career
+                            development initiatives — ensuring that every student's journey from learning to landing a job
+                            is seamless, supported, and successful.</p>
                     </div>
                 </div>
                 <section class="news-section" style="background: #fff">
                     <div class="container">
-                        <p class="news-label">Founder Achievements</p>
+                        <p class="news-label">Co-Founder Achievements</p>
                         <div class="logo-marquee-wrap">
                             <div class="logo-marquee">
                                 @php
                                     $newsLogos = [
+                                        ['icon' => 'bi-shield-check', 'name' => 'CEH Certified'],
+                                        ['icon' => 'bi-award', 'name' => 'CompTIA Security+'],
+                                        ['icon' => 'bi-globe', 'name' => 'NASSCOM Member'],
+                                        ['icon' => 'bi-building', 'name' => 'Startup India'],
+                                        ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                        ['icon' => 'bi-laptop', 'name' => 'CERT-In Empanelled'],
                                         ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
                                         ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
-                                        ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
-                                        ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
-                                        ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
-                                        ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
-                                        ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
-                                        ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
-                                        ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
-                                        ['icon' => 'bi-flag', 'name' => 'Skill India'],
-                                        ['icon' => 'bi-shop', 'name' => 'Decathlon'],
-                                        ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
+                                        ['icon' => 'bi-trophy', 'name' => 'CyberSec India Awards'],
+                                        ['icon' => 'bi-people', 'name' => 'ISACA Member'],
+                                        ['icon' => 'bi-mortarboard', 'name' => 'ISC2 Associate'],
+                                        ['icon' => 'bi-star', 'name' => 'Top Cybersecurity Trainer'],
                                     ];
                                 @endphp
                                 {{-- First set --}}
@@ -1734,72 +1714,65 @@
                 </section>
             </div>
         </section>
+
         <!-- =================== OUR CENTRES =================== -->
         <section class="departments section section-alt">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
-                    <h2>Our Centres</h2>
-                    <p>Act to Action operates from multiple centres across Jaipur — making world-class creative
-                        education
-                        accessible to children all over the city.</p>
+                    <h2>Our Training Centres</h2>
+                    <p>ThreatXpert operates from multiple centres — making world-class cybersecurity education accessible to
+                        students and professionals across India.</p>
                 </div>
                 <div class="row gy-4">
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="dept-card">
                             <div class="img-wrap">
-                                <img src="https://static.wixstatic.com/media/495d44_2eb23deea8754bda9cdf9b7189e1b6a6~mv2.jpg/v1/fill/w_359,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Rising%20Passion.jpg"
-                                    alt="Rising Passion Studio">
+                                <img src="YOUR_CENTRE1_IMAGE_URL_HERE" alt="ThreatXpert Main Training Centre">
                                 <div class="icon-overlay"><i class="bi bi-geo-alt-fill"></i></div>
                             </div>
                             <div class="content">
-                                <h4>Rising Passion Studio</h4>
-                                <p>Vaishali Nagar, Jaipur — our flagship centre and main studio space for all major
-                                    productions and training.</p>
+                                <h4>Main Training Centre</h4>
+                                <p>Jaipur, Rajasthan — our flagship centre equipped with dedicated cyber labs, live attack
+                                    simulation environments, and expert-led classroom training.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="150">
                         <div class="dept-card">
                             <div class="img-wrap">
-                                <img src="https://static.wixstatic.com/media/495d44_c5a0ab3020724ef7bbfb5625689c5193~mv2.jpg/v1/crop/x_120,y_0,w_1360,h_1068/fill/w_359,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Sun%20India.jpg"
-                                    alt="Sun India Pre School">
+                                <img src="YOUR_CENTRE2_IMAGE_URL_HERE" alt="ThreatXpert Online Learning Hub">
                                 <div class="icon-overlay"><i class="bi bi-geo-alt-fill"></i></div>
                             </div>
                             <div class="content">
-                                <h4>Sun India Pre School</h4>
-                                <p>Malviya Nagar, Jaipur — serving the youngest learners with age-appropriate,
-                                    joyful
-                                    creative education.</p>
+                                <h4>Online Learning Hub</h4>
+                                <p>Pan-India online batches — delivering the same lab-intensive, mentor-led experience to
+                                    cybersecurity learners anywhere in the country.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="dept-card">
                             <div class="img-wrap">
-                                <img src="https://static.wixstatic.com/media/495d44_0736d8b1317c409b95ffffc51a75a735~mv2.jpg/v1/fill/w_310,h_282,al_c,lg_1,q_80,enc_avif,quality_auto/Palace%20School.jpg"
-                                    alt="The Palace School">
+                                <img src="YOUR_CENTRE3_IMAGE_URL_HERE" alt="ThreatXpert Corporate Training">
                                 <div class="icon-overlay"><i class="bi bi-geo-alt-fill"></i></div>
                             </div>
                             <div class="content">
-                                <h4>The Palace School</h4>
-                                <p>Old City, Jaipur — bringing creative arts education to the heart of Jaipur's
-                                    heritage
-                                    neighbourhood.</p>
+                                <h4>Corporate Training Wing</h4>
+                                <p>On-site and customized corporate cybersecurity training delivered at client premises —
+                                    tailored to your team's threat landscape and compliance requirements.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="250">
                         <div class="dept-card">
                             <div class="img-wrap">
-                                <img src="https://static.wixstatic.com/media/495d44_034c65d443c6430f847020bdb3a7d3dc~mv2.jpg/v1/fill/w_310,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Mayoor%20School.jpg"
-                                    alt="Mayoor School Sitapura">
+                                <img src="YOUR_CENTRE4_IMAGE_URL_HERE" alt="ThreatXpert University Partnership">
                                 <div class="icon-overlay"><i class="bi bi-geo-alt-fill"></i></div>
                             </div>
                             <div class="content">
-                                <h4>Mayoor School — Sitapura</h4>
-                                <p>Sitapura, Jaipur — expert-led screen acting and personality development for
-                                    school-going
-                                    children.</p>
+                                <h4>University Partnership Centres</h4>
+                                <p>Embedded cybersecurity labs and training programs within partner colleges and
+                                    universities — building security awareness from the ground up.</p>
                             </div>
                         </div>
                     </div>
@@ -1809,18 +1782,16 @@
                     style="background:linear-gradient(135deg,var(--heading-color),#1a3a7c);" data-aos="fade-up">
                     <div class="row align-items-center gy-3">
                         <div class="col-lg-8 text-lg-start">
-                            <h4 class="text-white fw-bold mb-1">Also at Royal Jaipur Skill Academy &amp; Little
-                                Starlings,
-                                Ambabari</h4>
-                            <p style="color:rgba(255,255,255,0.8);margin:0;">Want to bring Act to Action to your
-                                school or
-                                centre? Partner with India's most trusted screen acting school.</p>
+                            <h4 class="text-white fw-bold mb-1">Bring ThreatXpert to Your Institution or Organisation</h4>
+                            <p style="color:rgba(255,255,255,0.8);margin:0;">Want to run ThreatXpert cybersecurity programs
+                                at your college, IT firm, or enterprise? Partner with India's most trusted cybersecurity
+                                training provider.</p>
                         </div>
                         <div class="col-lg-4 text-lg-end">
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"
+                            <a href="https://wa.me/918079034973" target="_blank"
                                 class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-bold"
                                 style="background:#fff;color:var(--accent-color);font-size:15px;text-decoration:none;">
-                                <i class="bi bi-building-add"></i> Register Your Centre
+                                <i class="bi bi-building-add"></i> Partner With Us
                             </a>
                         </div>
                     </div>
@@ -1833,82 +1804,62 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Meet the Team</h2>
-                    <p>Act to Action aspires to be a leading acting academy in India that provides a lot under one
-                        umbrella.
-                        We work with the vision of creating a place where we build important personalities of the
-                        future.
-                    </p>
+                    <p>ThreatXpert aspires to be India's leading cybersecurity training and solutions provider — delivering
+                        everything under one roof. We work with the vision of building India's most capable generation of
+                        cyber defenders.</p>
                 </div>
                 <div class="row gy-4 justify-content-center">
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="doctor-card">
                             <div class="img-wrap">
-                                <img src="https://static.wixstatic.com/media/495d44_e00c60e82b4648339b9a1f4c18e19a1c~mv2.jpg/v1/crop/x_0,y_15,w_540,h_447/fill/w_403,h_334,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Deepak%20Bhaiya.jpg"
-                                    alt="Deepak Chandel">
+                                <img src="YOUR_TEAM1_IMAGE_URL_HERE" alt="Lead Security Trainer">
                                 <div class="social-overlay">
-                                    <a href="https://www.instagram.com/deepak_chandel_photography" target="_blank"
-                                        rel="noopener"><i class="bi bi-instagram"></i></a>
+                                    <a href="#" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
                                 </div>
                             </div>
                             <div class="info">
-                                <h4>Deepak Chandel</h4>
-                                <p class="specialty">Photographer &amp; Cinematographer</p>
-                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">A
-                                    passionate
-                                    photographer with over a decade of experience in celebrity events, grand
-                                    weddings, and
-                                    creative fashion shoots. His expertise with children allows him to capture their
-                                    most
-                                    natural and expressive moments.</p>
+                                <h4>[Lead Trainer Name]</h4>
+                                <p class="specialty">Offensive Security &amp; Penetration Testing Lead</p>
+                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">A certified
+                                    ethical hacker and penetration tester with years of experience in red team operations,
+                                    bug bounty research, and delivering hands-on offensive security training to students and
+                                    corporate teams across India.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
                         <div class="doctor-card">
                             <div class="img-wrap">
-                                <img src="https://static.wixstatic.com/media/495d44_4b14b64cccde4ee797cfd36583c43a9f~mv2.jpg/v1/crop/x_0,y_39,w_408,h_338/fill/w_403,h_334,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Kriti%20Gupta.jpg"
-                                    alt="Kriti Gupta">
+                                <img src="YOUR_TEAM2_IMAGE_URL_HERE" alt="Digital Forensics Trainer">
                                 <div class="social-overlay">
-                                    <a href="https://www.instagram.com/kritigupta_1507" target="_blank" rel="noopener"><i
-                                            class="bi bi-instagram"></i></a>
-                                    <a href="https://www.linkedin.com/in/kriti-gupta-38bb7522a" target="_blank"
-                                        rel="noopener"><i class="bi bi-linkedin"></i></a>
+                                    <a href="#" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
                                 </div>
                             </div>
                             <div class="info">
-                                <h4>Kriti Gupta</h4>
-                                <p class="specialty">Public Relation &amp; Event Head</p>
-                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">With a
-                                    background
-                                    in Journalism &amp; Mass Communication, Kriti brings creativity and leadership
-                                    to every
-                                    project. Her ability to think ahead and adapt ensures every challenge is met
-                                    with
-                                    innovative solutions.</p>
+                                <h4>[Forensics Trainer Name]</h4>
+                                <p class="specialty">Digital Forensics &amp; Incident Response</p>
+                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">Specializing in
+                                    digital forensics, malware analysis, and incident response, with a background in
+                                    assisting law enforcement and corporate clients in investigating cybercrime and data
+                                    breach events.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="doctor-card">
                             <div class="img-wrap">
-                                <img src="https://static.wixstatic.com/media/495d44_99266368241a4cffafcfb142897c1012~mv2.jpg/v1/fill/w_403,h_334,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Dr_%20Bhumika%20Ma'am.jpg"
-                                    alt="Dr. Bhumika Soni">
+                                <img src="YOUR_TEAM3_IMAGE_URL_HERE" alt="Cloud Security Expert">
                                 <div class="social-overlay">
-                                    <a href="https://www.instagram.com/pediatricneurotherapist" target="_blank"
-                                        rel="noopener"><i class="bi bi-instagram"></i></a>
-                                    <a href="https://www.linkedin.com/in/bhumika-soni-500a6928b" target="_blank"
-                                        rel="noopener"><i class="bi bi-linkedin"></i></a>
+                                    <a href="#" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
                                 </div>
                             </div>
                             <div class="info">
-                                <h4>Dr. Bhumika Soni</h4>
-                                <p class="specialty">Child Neuro Therapist</p>
-                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">A skilled
-                                    child
-                                    neurotherapist specializing in developmental delays and sensory integration
-                                    challenges,
-                                    providing evidence-based interventions to enhance children's growth and
-                                    potential.</p>
+                                <h4>[Cloud Security Expert Name]</h4>
+                                <p class="specialty">Cloud Security &amp; SOC Operations</p>
+                                <p style="font-size:13px;color:var(--default-color);margin-bottom:14px;">An expert in cloud
+                                    security architecture, SIEM/SOAR implementation, and SOC operations — training the next
+                                    generation of security analysts to monitor, detect, and respond to threats in real time.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1918,13 +1869,12 @@
                     <div class="row align-items-center gy-3">
                         <div class="col-lg-8">
                             <h3 class="text-white fw-bold mb-2">Join Our Team</h3>
-                            <p style="color:rgba(255,255,255,0.85);margin:0;">Be part of something impactful. We're
-                                looking
-                                for passionate, creative, and driven individuals to grow with us. Explore exciting
-                                opportunities and make a difference.</p>
+                            <p style="color:rgba(255,255,255,0.85);margin:0;">Be part of something impactful. We're looking
+                                for passionate cybersecurity professionals, trainers, and educators to grow with us. Help us
+                                build India's most capable cyber defense workforce.</p>
                         </div>
                         <div class="col-lg-4 text-lg-end">
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"
+                            <a href="https://wa.me/918079034973" target="_blank"
                                 class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-bold"
                                 style="background:#fff;color:var(--accent-color);font-size:15px;text-decoration:none;transition:0.3s;">
                                 <i class="bi bi-arrow-right-circle"></i> Join Our Team
@@ -1940,84 +1890,76 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Our Programmes &amp; Events</h2>
-                    <p>From grand graduation ceremonies and summer camps to national film festivals and parenting
-                        workshops
-                        — a glimpse of life at Act to Action.</p>
+                    <p>From intensive bootcamps and certification ceremonies to corporate workshops and live CTF
+                        competitions — a glimpse of life at ThreatXpert.</p>
                 </div>
                 <div class="row gy-4">
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="gallery-item">
-                            <img src="https://static.wixstatic.com/media/495d44_09883de720124c82807e2c6c308333f4~mv2.jpg/v1/fill/w_526,h_615,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Ceremony.jpg"
-                                alt="Graduation Ceremony">
+                            <img src="YOUR_GALLERY1_IMAGE_URL_HERE" alt="Certification Ceremony">
                             <div class="overlay">
-                                <a href="https://static.wixstatic.com/media/495d44_09883de720124c82807e2c6c308333f4~mv2.jpg"
-                                    class="glightbox" data-gallery="gallery"><i class="bi bi-zoom-in"></i></a>
+                                <a href="YOUR_GALLERY1_IMAGE_URL_HERE" class="glightbox" data-gallery="gallery"><i
+                                        class="bi bi-zoom-in"></i></a>
                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
                         <div class="gallery-item">
-                            <img src="https://static.wixstatic.com/media/495d44_bc860d09a55747d4a8cba6868ea9900f~mv2.jpg/v1/fill/w_599,h_750,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/download%20(3).jpg"
-                                alt="Students in Action">
+                            <img src="YOUR_GALLERY2_IMAGE_URL_HERE" alt="Hands-on Lab Training">
                             <div class="overlay">
-                                <a href="https://static.wixstatic.com/media/495d44_bc860d09a55747d4a8cba6868ea9900f~mv2.jpg"
-                                    class="glightbox" data-gallery="gallery"><i class="bi bi-zoom-in"></i></a>
+                                <a href="YOUR_GALLERY2_IMAGE_URL_HERE" class="glightbox" data-gallery="gallery"><i
+                                        class="bi bi-zoom-in"></i></a>
                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="gallery-item">
-                            <img src="https://static.wixstatic.com/media/495d44_2eb23deea8754bda9cdf9b7189e1b6a6~mv2.jpg/v1/fill/w_359,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Rising%20Passion.jpg"
-                                alt="Rising Passion Studio">
+                            <img src="YOUR_GALLERY3_IMAGE_URL_HERE" alt="CTF Competition">
                             <div class="overlay">
-                                <a href="https://static.wixstatic.com/media/495d44_2eb23deea8754bda9cdf9b7189e1b6a6~mv2.jpg"
-                                    class="glightbox" data-gallery="gallery"><i class="bi bi-zoom-in"></i></a>
+                                <a href="YOUR_GALLERY3_IMAGE_URL_HERE" class="glightbox" data-gallery="gallery"><i
+                                        class="bi bi-zoom-in"></i></a>
                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="250">
                         <div class="gallery-item">
-                            <img src="https://static.wixstatic.com/media/495d44_034c65d443c6430f847020bdb3a7d3dc~mv2.jpg/v1/fill/w_310,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Mayoor%20School.jpg"
-                                alt="Mayoor School Centre">
+                            <img src="YOUR_GALLERY4_IMAGE_URL_HERE" alt="Corporate Workshop">
                             <div class="overlay">
-                                <a href="https://static.wixstatic.com/media/495d44_034c65d443c6430f847020bdb3a7d3dc~mv2.jpg"
-                                    class="glightbox" data-gallery="gallery"><i class="bi bi-zoom-in"></i></a>
+                                <a href="YOUR_GALLERY4_IMAGE_URL_HERE" class="glightbox" data-gallery="gallery"><i
+                                        class="bi bi-zoom-in"></i></a>
                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
                         <div class="gallery-item">
-                            <img src="https://static.wixstatic.com/media/495d44_8006536376234a728a539f6015222395~mv2.jpg/v1/fill/w_310,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Mayoor%20School%20.jpg"
-                                alt="Royal Jaipur Skill Academy">
+                            <img src="YOUR_GALLERY5_IMAGE_URL_HERE" alt="Bootcamp Session">
                             <div class="overlay">
-                                <a href="https://static.wixstatic.com/media/495d44_8006536376234a728a539f6015222395~mv2.jpg"
-                                    class="glightbox" data-gallery="gallery"><i class="bi bi-zoom-in"></i></a>
+                                <a href="YOUR_GALLERY5_IMAGE_URL_HERE" class="glightbox" data-gallery="gallery"><i
+                                        class="bi bi-zoom-in"></i></a>
                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="350">
                         <div class="gallery-item">
-                            <img src="https://static.wixstatic.com/media/495d44_b1cfaa2755d7476ea22e412597641abf~mv2.jpg/v1/crop/x_0,y_141,w_1097,h_998/fill/w_310,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Lasr.jpg"
-                                alt="Little Starlings Centre">
+                            <img src="YOUR_GALLERY6_IMAGE_URL_HERE" alt="Awareness Seminar">
                             <div class="overlay">
-                                <a href="https://static.wixstatic.com/media/495d44_b1cfaa2755d7476ea22e412597641abf~mv2.jpg"
-                                    class="glightbox" data-gallery="gallery"><i class="bi bi-zoom-in"></i></a>
+                                <a href="YOUR_GALLERY6_IMAGE_URL_HERE" class="glightbox" data-gallery="gallery"><i
+                                        class="bi bi-zoom-in"></i></a>
                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
                         <div class="gallery-item">
-                            <img src="https://static.wixstatic.com/media/495d44_0736d8b1317c409b95ffffc51a75a735~mv2.jpg/v1/fill/w_310,h_282,al_c,lg_1,q_80,enc_avif,quality_auto/Palace%20School.jpg"
-                                alt="The Palace School">
+                            <img src="YOUR_GALLERY7_IMAGE_URL_HERE" alt="Placement Drive">
                             <div class="overlay">
-                                <a href="https://static.wixstatic.com/media/495d44_0736d8b1317c409b95ffffc51a75a735~mv2.jpg"
-                                    class="glightbox" data-gallery="gallery"><i class="bi bi-zoom-in"></i></a>
+                                <a href="YOUR_GALLERY7_IMAGE_URL_HERE" class="glightbox" data-gallery="gallery"><i
+                                        class="bi bi-zoom-in"></i></a>
                                 <a href="#"><i class="bi bi-info-circle"></i></a>
                             </div>
                         </div>
@@ -2030,9 +1972,9 @@
         <section class="testimonials section">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
-                    <h2>What Parents &amp; Students Say</h2>
-                    <p>Real stories from families who have experienced the Act to Action difference — confidence,
-                        creativity, and life-changing growth in their children.</p>
+                    <h2>What Our Students &amp; Clients Say</h2>
+                    <p>Real stories from cybersecurity professionals and organizations who have experienced the ThreatXpert
+                        difference — skills, confidence, and career transformation.</p>
                 </div>
                 <div class="swiper testimonialsSwiper" data-aos="fade-up" data-aos-delay="100">
                     <div class="swiper-wrapper">
@@ -2042,84 +1984,76 @@
                                 <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
                                         class="bi bi-star-fill"></i></div>
-                                <p>"My daughter was extremely shy before joining Act to Action. Within just 3
-                                    months, she
-                                    performed confidently on stage at the school annual function. The transformation
-                                    has
-                                    been nothing short of incredible. Kritesh sir's method works!"</p>
-                                <div class="author">
-                                    <div
-                                        style="width:50px;height:50px;border-radius:50%;background:var(--accent-color);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
-                                        P</div>
-                                    <div>
-                                        <h5>Priya Sharma</h5>
-                                        <span>Parent, Vaishali Nagar</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="testimonial-card">
-                                <div class="quote-icon"><i class="bi bi-quote"></i></div>
-                                <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i></div>
-                                <p>"My son got his first commercial advertisement within 4 months of training at Act
-                                    to
-                                    Action. The casting connections and professional grooming they provide is
-                                    unmatched
-                                    anywhere else in Jaipur. Highly recommend to every parent."</p>
-                                <div class="author">
-                                    <div
-                                        style="width:50px;height:50px;border-radius:50%;background:var(--accent-color);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
-                                        R</div>
-                                    <div>
-                                        <h5>Rajesh Agarwal</h5>
-                                        <span>Parent, Malviya Nagar</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="testimonial-card">
-                                <div class="quote-icon"><i class="bi bi-quote"></i></div>
-                                <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i></div>
-                                <p>"The Bhagavad Gita principles integrated into the curriculum are what really sets
-                                    Act to
-                                    Action apart. My child not only improved her acting but also developed a
-                                    stronger sense
-                                    of values and discipline. A truly holistic program."</p>
-                                <div class="author">
-                                    <div
-                                        style="width:50px;height:50px;border-radius:50%;background:var(--accent-color);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
-                                        S</div>
-                                    <div>
-                                        <h5>Sunita Gupta</h5>
-                                        <span>Parent, Sitapura</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="testimonial-card">
-                                <div class="quote-icon"><i class="bi bi-quote"></i></div>
-                                <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i></div>
-                                <p>"Act to Action's summer camp was the highlight of our child's year. The
-                                    activities, the
-                                    graduation ceremony, and the friendships formed were unforgettable. Our school
-                                    trusts
-                                    them completely and will continue to partner with them."</p>
+                                <p>"I had zero cybersecurity background when I joined ThreatXpert. Within 4 months of
+                                    completing their Ethical Hacking program, I had my CEH certification and a job offer at
+                                    a leading IT security firm. The hands-on labs made all the difference."</p>
                                 <div class="author">
                                     <div
                                         style="width:50px;height:50px;border-radius:50%;background:var(--accent-color);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
                                         A</div>
                                     <div>
-                                        <h5>Amit Joshi</h5>
-                                        <span>School Principal, Jaipur</span>
+                                        <h5>Arjun Mehta</h5>
+                                        <span>Security Analyst, Jaipur</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <div class="quote-icon"><i class="bi bi-quote"></i></div>
+                                <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i></div>
+                                <p>"ThreatXpert conducted a VAPT for our fintech startup and identified critical
+                                    vulnerabilities we had no idea existed. Their report was detailed, actionable, and
+                                    professional. They are now our go-to security partner."</p>
+                                <div class="author">
+                                    <div
+                                        style="width:50px;height:50px;border-radius:50%;background:var(--accent-color);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
+                                        R</div>
+                                    <div>
+                                        <h5>Riya Singhania</h5>
+                                        <span>CTO, Fintech Startup, Mumbai</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <div class="quote-icon"><i class="bi bi-quote"></i></div>
+                                <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i></div>
+                                <p>"The Digital Forensics course at ThreatXpert was unlike any other training I've taken.
+                                    Real case studies, live tools, and mentors who have actually worked in the field. I feel
+                                    genuinely prepared to handle real incidents."</p>
+                                <div class="author">
+                                    <div
+                                        style="width:50px;height:50px;border-radius:50%;background:var(--accent-color);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
+                                        S</div>
+                                    <div>
+                                        <h5>Saurabh Verma</h5>
+                                        <span>Forensics Analyst, Delhi</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="testimonial-card">
+                                <div class="quote-icon"><i class="bi bi-quote"></i></div>
+                                <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                        class="bi bi-star-fill"></i></div>
+                                <p>"We partnered with ThreatXpert to run a cybersecurity awareness workshop for our entire
+                                    staff. The session was engaging, practical, and immediately impacted how our team
+                                    handles phishing and data handling. Highly recommended."</p>
+                                <div class="author">
+                                    <div
+                                        style="width:50px;height:50px;border-radius:50%;background:var(--accent-color);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;">
+                                        V</div>
+                                    <div>
+                                        <h5>Vikram Joshi</h5>
+                                        <span>HR Director, Corporate Partner, Jaipur</span>
                                     </div>
                                 </div>
                             </div>
@@ -2135,9 +2069,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Frequently Asked Questions</h2>
-                    <p>Got questions? We've got answers. Here's everything parents and students commonly ask about
-                        Act to
-                        Action's programs, admissions, and policies.</p>
+                    <p>Got questions? We've got answers. Here's everything students and professionals commonly ask about
+                        ThreatXpert's programs, admissions, and cybersecurity services.</p>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-9" data-aos="fade-up" data-aos-delay="100">
@@ -2147,17 +2080,16 @@
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq1">
                                         <span class="faq-num">01</span>
-                                        What age group is the course for?
+                                        Who can enrol in ThreatXpert's programs?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq1" class="accordion-collapse collapse show"
                                     data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">3–29 years. Our programs are thoughtfully designed
-                                        to cater
-                                        to every stage — from toddlers building confidence to young adults honing
-                                        their
-                                        professional craft.</div>
+                                    <div class="accordion-body">Anyone aged 18 and above can enrol — students, IT
+                                        professionals, developers, and career changers. No prior cybersecurity experience is
+                                        required for our foundation programs. Advanced tracks require a basic understanding
+                                        of networking and operating systems.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2165,16 +2097,15 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq2">
                                         <span class="faq-num">02</span>
-                                        Who are your teachers or faculty?
+                                        Who are your trainers and faculty?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Different experts from specific subjects will
-                                        visit, and
-                                        their complete profile will be shared with parents before the session begins
-                                        — so
-                                        you always know who is teaching your child.</div>
+                                    <div class="accordion-body">All our trainers are industry-active cybersecurity
+                                        professionals — certified ethical hackers, penetration testers, forensic
+                                        investigators, and security architects. Their full profiles and certifications are
+                                        shared with enrolled students before training begins.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2182,14 +2113,15 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq3">
                                         <span class="faq-num">03</span>
-                                        Will the student get a certificate at the end of the course?
+                                        Will I receive a certificate upon completion?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Yes! Students will receive a certificate upon
-                                        course
-                                        completion, provided they maintain a minimum attendance of 70%.</div>
+                                    <div class="accordion-body">Yes. Students receive a ThreatXpert completion certificate
+                                        upon finishing the program, provided they maintain a minimum 70% attendance. We also
+                                        guide students through the process of earning globally recognized certifications
+                                        such as CEH and CompTIA Security+.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2197,17 +2129,14 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq4">
                                         <span class="faq-num">04</span>
-                                        How many students are there in each batch?
+                                        How many students are in each batch?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">We keep batches small — a maximum of 20 students
-                                        per batch
-                                        —
-                                        to ensure every child receives personalized attention and guidance from our
-                                        faculty.
-                                    </div>
+                                    <div class="accordion-body">Batches are intentionally kept small — a maximum of 15
+                                        students per batch — to ensure every learner gets dedicated attention, personalized
+                                        mentorship, and adequate lab time during hands-on sessions.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2215,16 +2144,15 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq5">
                                         <span class="faq-num">05</span>
-                                        What happens if a student misses a class?
+                                        What happens if I miss a class?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Class material is shared after every session. If
-                                        extra help
-                                        is required, a personal virtual call can be scheduled to help the student
-                                        catch up
-                                        at their own pace.</div>
+                                    <div class="accordion-body">Session recordings and study materials are shared after
+                                        every class. If additional help is needed, a one-on-one virtual session can be
+                                        arranged with your trainer to ensure you stay on track and cover everything you
+                                        missed.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2232,14 +2160,14 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq6">
                                         <span class="faq-num">06</span>
-                                        What is the mode of delivery for the classes?
+                                        Are classes available online and offline?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Both Online and Offline batches are available,
-                                        making it
-                                        convenient for students regardless of location.</div>
+                                    <div class="accordion-body">Yes — both online and offline batches are available. Our
+                                        online programs include live interactive sessions with the same lab-intensive
+                                        curriculum as our in-person training, accessible from anywhere in India.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2247,16 +2175,15 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq7">
                                         <span class="faq-num">07</span>
-                                        What does the course cover?
+                                        What do the courses cover?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">The course uniquely combines Theatre in Education,
-                                        Bhagavad
-                                        Gita Principles, various acting techniques, personality development, and
-                                        neuro-psychological growth — with a strong focus on camera acting and stage
-                                        performance skills for kids.</div>
+                                    <div class="accordion-body">Our programs cover Ethical Hacking, Penetration Testing,
+                                        Digital Forensics, Incident Response, Secure Web Development, Cloud Security, SOC
+                                        Operations, SIEM/SOAR, Malware Analysis, and Cybersecurity Awareness — with a strong
+                                        focus on practical, tool-based learning throughout.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2264,15 +2191,14 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq8">
                                         <span class="faq-num">08</span>
-                                        Who are the inspirers of the entire program?
+                                        What tools and technologies will I learn?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Lord Krishna, Bharatmuni, HH Pramukh Swami Maharaj,
-                                        Maharishi Patanjali, Stanford Meisner, Lee Strasberg, Konstantin
-                                        Stanislavski, and
-                                        Augusto Boal.</div>
+                                    <div class="accordion-body">Students train with industry-standard tools including Kali
+                                        Linux, Metasploit, Burp Suite, Wireshark, Nmap, Nessus, Autopsy, Splunk, and more —
+                                        the same tools used by professional security teams and red teamers worldwide.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2280,15 +2206,15 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq9">
                                         <span class="faq-num">09</span>
-                                        What materials will be provided to the students?
+                                        What materials and resources are provided?
                                         <i class="toggle-icon bi"></i>
                                     </button>
                                 </h2>
                                 <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Students will receive Monologues, a Bhagavad Gita
-                                        Jar, the
-                                        official Act to Action Uniform, and a Portfolio to share at casting calls.
-                                    </div>
+                                    <div class="accordion-body">Students receive access to our dedicated lab environment,
+                                        comprehensive study notes, practice CTF challenges, session recordings, a
+                                        professional course completion portfolio, and career support resources including a
+                                        CV template and interview preparation guide.</div>
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -2301,13 +2227,10 @@
                                     </button>
                                 </h2>
                                 <div id="faq10" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                    <div class="accordion-body">Due to limited seats, there is generally no refund.
-                                        However,
-                                        within the first month, if the child is not comfortable with the class or
-                                        acting as
-                                        a subject, a refund of the remaining fees can be processed with mutual
-                                        consent of
-                                        the parent and mentor.</div>
+                                    <div class="accordion-body">Due to limited batch sizes, refunds are not generally
+                                        available after enrolment. However, within the first two weeks, if you are not
+                                        satisfied with the program, a refund of the remaining fees can be processed with
+                                        mutual consent. Please contact us to discuss your situation.</div>
                                 </div>
                             </div>
                         </div>
@@ -2321,18 +2244,17 @@
             <div class="container">
                 <div class="row align-items-center gy-4">
                     <div class="col-lg-8" data-aos="fade-right">
-                        <h2>Annual Batch Registration Now Open!</h2>
-                        <p>Act to Action offers the perfect blend of skill development and lasting childhood
-                            memories,
-                            shaping a strong foundation for future success. Start today to build confidence,
-                            discipline, and
-                            on-camera excellence.</p>
+                        <h2>New Batch Enrollments Now Open!</h2>
+                        <p>ThreatXpert offers the perfect blend of technical depth, hands-on labs, and career placement
+                            support — building a strong foundation for a future-proof cybersecurity career. Enrol today to
+                            gain the skills, certifications, and industry connections you need to stay ahead of every
+                            threat.</p>
                         <div class="d-flex flex-wrap gap-3 mt-3">
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-white"><i
-                                    class="bi bi-whatsapp"></i> Book Appointment Now</a>
-                            <a href="https://www.acttoaction.com/admissions" target="_blank" class="btn-white"
+                            <a href="https://wa.me/918079034973" target="_blank" class="btn-white"><i
+                                    class="bi bi-whatsapp"></i> Book Free Demo Now</a>
+                            <a href="https://www.threatxpert.com/courses" target="_blank" class="btn-white"
                                 style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);"><i
-                                    class="bi bi-mortarboard"></i> View Admissions</a>
+                                    class="bi bi-mortarboard"></i> View All Courses</a>
                         </div>
                     </div>
                     <div class="col-lg-4 d-flex justify-content-lg-end" data-aos="fade-left" data-aos-delay="100">
@@ -2340,9 +2262,8 @@
                             <div class="icon text-warning"><i class="bi bi-tag-fill"></i></div>
                             <div>
                                 <span>Early Bird Discount</span>
-                                <strong>Limited Seats Available</strong>
-                                <small style="display:block;opacity:0.7;font-size:12px;margin-top:2px;">Register
-                                    before
+                                <strong>Limited Seats Per Batch</strong>
+                                <small style="display:block;opacity:0.7;font-size:12px;margin-top:2px;">Register before the
                                     batch fills up</small>
                             </div>
                         </div>
@@ -2356,9 +2277,8 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Get In Touch</h2>
-                    <p>Have questions or need to reach us? Our support team is available Monday through Saturday.
-                        For
-                        emergencies, please call our 24/7 hotline immediately.</p>
+                    <p>Have questions about our courses or services? Our team is available Monday through Saturday. Reach
+                        out for course enquiries, corporate training proposals, or cybersecurity consultations.</p>
                 </div>
                 <div class="row gy-5">
                     <div class="col-lg-4" data-aos="fade-right">
@@ -2366,29 +2286,28 @@
                             <div class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></div>
                             <div>
                                 <h5>Our Location</h5>
-                                <p>Rising Passion Studio, Hoshiar Singh Marg,<br>Moti Nagar, Vaishali Nagar, Jaipur - 302021
-                                </p>
+                                <p>ThreatXpert Training Centre,<br>Jaipur, Rajasthan, India</p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-telephone-fill"></i></div>
                             <div>
                                 <h5>Phone Numbers</h5>
-                                <p>+91 91191-18844<br>+91 91191-87311<br>+91 91191-87411</p>
+                                <p>+91 80790 34973</p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-envelope-fill"></i></div>
                             <div>
                                 <h5>Email Address</h5>
-                                <p>contact@acttoaction.com</p>
+                                <p>training@threatxpert.com</p>
                             </div>
                         </div>
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-clock-fill"></i></div>
                             <div>
                                 <h5>Working Hours</h5>
-                                <p>Tue – Sat: 11:00 AM – 7:00 PM<br>Sunday: 10:00 AM – 4:00 PM</p>
+                                <p>Mon – Sat: 10:00 AM – 7:00 PM<br>Sunday: By Appointment Only</p>
                             </div>
                         </div>
                     </div>
@@ -2411,12 +2330,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <select class="form-control">
-                                        <option value="" disabled selected>Select Department</option>
-                                        <option>Cardiology</option>
-                                        <option>Neurology</option>
-                                        <option>Orthopedics</option>
-                                        <option>Pediatrics</option>
-                                        <option>General Medicine</option>
+                                        <option value="" disabled selected>Select Interest</option>
+                                        <option>Ethical Hacking &amp; Penetration Testing</option>
+                                        <option>Digital Forensics &amp; Incident Response</option>
+                                        <option>Secure Web Development</option>
+                                        <option>Cloud Security</option>
+                                        <option>Corporate Training</option>
+                                        <option>VAPT / Security Audit</option>
+                                        <option>General Enquiry</option>
                                     </select>
                                 </div>
                                 <div class="col-12">
@@ -2436,7 +2357,7 @@
                 <div class="mt-5 rounded-4 overflow-hidden" style="height:350px;box-shadow:0 10px 40px rgba(0,0,0,0.1);"
                     data-aos="fade-up">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215209132737!2d-73.98784368459315!3d40.75775394258374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1620000000000"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227748.3825624477!2d75.71877344531249!3d26.88514083509063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1620000000000"
                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>

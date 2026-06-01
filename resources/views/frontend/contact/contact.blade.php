@@ -2,7 +2,7 @@
 @section('content')
 
     <style>
-:root {
+        :root {
             --cu-accent: var(--accent-color, #0d6efd);
             --cu-surface: var(--surface-color, #ffffff);
             --cu-text: var(--default-color, #495057);
@@ -442,9 +442,11 @@
                 font-size: 16px;
                 min-height: 44px;
             }
+
             .cu-field .input-group-text {
                 font-size: 14px;
             }
+
             .cu-form-card,
             .cu-info-card {
                 padding: 24px 18px;
@@ -455,25 +457,22 @@
         $ci = $contactInfo ?? null;
         $phone = $ci->phone ?? '';
         $whatsapp = $ci->whatsapp ?? '';
-        $email = $ci->email ?: 'contact@acttoaction.com';
-        $address = $ci->address ?: 'Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar, Jaipur - 302021';
+        $email = $ci->email ?: 'training@threatxpert.com';
+        $address = $ci->address ?: 'ThreatXpert Training Centre, Jaipur, Rajasthan, India';
         $mapLink = $ci->map_link ?? '';
         $fbUrl = $ci->fb_url ?? '';
         $instaUrl = $ci->insta_url ?? '';
         $linkedinUrl = $ci->linkedin_url ?? '';
 
-        $chatPhones = ['+91 91191-18844', '+91 91191-87311', '+91 91191-87411'];
-        $workingHours = [
-            'Tue - Sat: 11am - 7pm',
-            'Sunday: 10am - 4pm',
-        ];
+        $chatPhones = ['+91 80790 34973'];
+        $workingHours = ['Mon - Sat: 10am - 7pm', 'Sunday: By Appointment Only'];
 
         $phoneDigits = preg_replace('/\D/', '', $phone);
         $whatsappDigits = preg_replace('/\D/', '', $whatsapp);
         $isEmbedMap = $mapLink && str_contains($mapLink, '/maps/embed');
     @endphp
 
-    
+
 
     <main class="main">
         <!-- Hero -->
@@ -481,8 +480,8 @@
             <div class="container cu-hero-inner" data-aos="fade-up">
                 <span class="cu-eyebrow">Contact Us</span>
                 <h1>We'd Love To <span>Hear From You</span></h1>
-                <p>Got a question about courses, admissions, or events? Send us a message or reach out directly — our team
-                    usually responds within one business day.</p>
+                <p>Got a question about courses, certifications, or corporate training? Send us a message or reach out
+                    directly — our team usually responds within one business day.</p>
                 <div class="cu-breadcrumb">
                     <a href="{{ url('/') }}">Home</a>
                     <i class="bi bi-chevron-right"></i>
@@ -534,7 +533,7 @@
                     <div class="col-lg-5" data-aos="fade-right">
                         <div class="cu-info-card">
                             <h3>Reach Out To Us</h3>
-                            <p>Visit our office, drop us a line, or connect on social — we're happy to help.</p>
+                            <p>Visit our training centre, drop us a line, or connect on social — we're happy to help.</p>
 
                             <div class="cu-info-row">
                                 <div class="cu-ic-sm"><i class="bi bi-geo-alt-fill"></i></div>
@@ -547,10 +546,15 @@
                             <div class="cu-info-row">
                                 <div class="cu-ic-sm"><i class="bi bi-telephone-fill"></i></div>
                                 <div>
-                                    <h6>Chat With Us</h6>
+                                    <h6>Call or WhatsApp</h6>
                                     <p>
                                         @foreach ($chatPhones as $ph)
-                                            <a href="tel:{{ preg_replace('/\D/', '', $ph) }}" style="color:inherit;text-decoration:none;">{{ $ph }}</a>@if (!$loop->last),<br>@endif
+                                            <a href="tel:{{ preg_replace('/\D/', '', $ph) }}"
+                                                style="color:inherit;text-decoration:none;">{{ $ph }}</a>
+                                            @if (!$loop->last)
+                                                ,
+                                                <br>
+                                            @endif
                                         @endforeach
                                     </p>
                                 </div>
@@ -562,7 +566,9 @@
                                     <h6>Operating Hours</h6>
                                     <p>
                                         @foreach ($workingHours as $wh)
-                                            {{ $wh }}@if (!$loop->last)<br>@endif
+                                            {{ $wh }}@if (!$loop->last)
+                                                <br>
+                                            @endif
                                         @endforeach
                                     </p>
                                 </div>
@@ -572,7 +578,8 @@
                                 <div class="cu-ic-sm"><i class="bi bi-envelope-fill"></i></div>
                                 <div>
                                     <h6>Email Support</h6>
-                                    <p><a href="mailto:{{ $email }}" style="color:inherit;text-decoration:none;">{{ $email }}</a></p>
+                                    <p><a href="mailto:{{ $email }}"
+                                            style="color:inherit;text-decoration:none;">{{ $email }}</a></p>
                                 </div>
                             </div>
 
@@ -635,7 +642,7 @@
                                         <div class="cu-field">
                                             <label for="cu-subject">Subject</label>
                                             <input type="text" id="cu-subject" name="subject" class="form-control"
-                                                placeholder="What's this about?" required>
+                                                placeholder="Course enquiry, VAPT, corporate training…" required>
                                             <small class="text-danger subject_error"></small>
                                         </div>
                                     </div>
@@ -643,7 +650,7 @@
                                         <div class="cu-field">
                                             <label for="cu-message">Your Message</label>
                                             <textarea id="cu-message" name="message" class="form-control" rows="5"
-                                                placeholder="Write your message here..."></textarea>
+                                                placeholder="Tell us what you're looking for — we'll help you find the right program or service."></textarea>
                                             <small class="text-danger message_error"></small>
                                         </div>
                                     </div>

@@ -1,10 +1,10 @@
 @extends('frontend.course.layout')
 @section('content')
-    
+
 
 
     <style>
-* {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -962,7 +962,7 @@
                 text-align: center;
             }
         }
-    
+
 
 
         .like-btn.liked {
@@ -1114,7 +1114,7 @@
                             @else
                                 <div
                                     style="width:100%;height:100%;min-height:300px;background:linear-gradient(135deg,rgba(23,92,221,.15),rgba(23,92,221,.05));border-radius:16px;display:flex;align-items:center;justify-content:center;">
-                                    <i class="bi bi-journal-richtext" style="font-size:5rem;color:rgba(23,92,221,.2);"></i>
+                                    <i class="bi bi-shield-lock" style="font-size:5rem;color:rgba(23,92,221,.2);"></i>
                                 </div>
                             @endif
                         </div>
@@ -1210,7 +1210,8 @@
                                     <a href="{{ $linkedinUrl }}" target="_blank" rel="noopener"
                                         class="social-post-btn linkedin">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                            <path
+                                                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                                             <rect x="2" y="9" width="4" height="12" />
                                             <circle cx="4" cy="4" r="2" />
                                         </svg>
@@ -1222,7 +1223,8 @@
                                         class="social-post-btn instagram">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2">
-                                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                            <rect x="2" y="2" width="20" height="20" rx="5"
+                                                ry="5" />
                                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                                         </svg>
@@ -1245,7 +1247,6 @@
                                 </div>
                             </div>
                         @elseif($blog->category)
-                            {{-- fallback: show category as a tag --}}
                             <div class="tags-section">
                                 <h4>Tags</h4>
                                 <div class="tags-list">
@@ -1347,7 +1348,7 @@
 
                         {{-- Recent Posts --}}
                         <div class="sidebar-card">
-                            <h3>Recent Posts</h3>
+                            <h3>Recent Articles</h3>
                             <div class="recent-posts">
                                 @foreach ($recentPosts as $rp)
                                     <a href="#" class="recent-post">
@@ -1357,7 +1358,7 @@
                                         @else
                                             <div class="recent-post-image"
                                                 style="background:linear-gradient(135deg,rgba(23,92,221,.15),rgba(23,92,221,.05));display:flex;align-items:center;justify-content:center;">
-                                                <i class="bi bi-journal"
+                                                <i class="bi bi-shield-lock"
                                                     style="color:rgba(23,92,221,.3);font-size:1.2rem;"></i>
                                             </div>
                                         @endif
@@ -1384,9 +1385,9 @@
                         <div class="sidebar-card"
                             style="background:linear-gradient(135deg,rgba(23,92,221,.05),rgba(23,92,221,.02));border-color:rgba(23,92,221,.2);"
                             data-newsletter data-source="blogdetails">
-                            <h3>Newsletter</h3>
-                            <p>Get the latest tips, success stories, and exclusive workshop updates delivered to your
-                                inbox.</p>
+                            <h3>Stay Cyber-Aware</h3>
+                            <p>Get the latest threat research, certification guides, and ThreatXpert course updates
+                                delivered straight to your inbox.</p>
                             <input type="email" class="newsletter-email-input" placeholder="Your email address">
                             <button type="button" class="btn btn-primary newsletter-subscribe-btn">Subscribe</button>
                         </div>
@@ -1402,7 +1403,7 @@
                 <div class="container">
                     <div class="section-header">
                         <h2>Related Articles</h2>
-                        <a href="#" class="btn btn-outline">View All Posts</a>
+                        <a href="#" class="btn btn-outline">View All Articles</a>
                     </div>
                     <div class="related-grid">
                         @foreach ($related as $rp)
@@ -1445,9 +1446,9 @@
         <section class="newsletter-cta">
             <div class="container">
                 <div class="newsletter-cta-content" data-newsletter data-source="blogdetails">
-                    <h2>Stay Updated with Our Latest News</h2>
-                    <p>Subscribe to our newsletter for exclusive tips, success stories, and updates on workshops and events.
-                    </p>
+                    <h2>Stay One Step Ahead of Every Threat</h2>
+                    <p>Subscribe to the ThreatXpert newsletter for expert cybersecurity tips, ethical hacking guides,
+                        certification updates, and course news.</p>
                     <div class="newsletter-cta-form">
                         <input type="email" class="newsletter-email-input" placeholder="Enter your email address">
                         <button type="button" class="btn btn-primary newsletter-subscribe-btn">Subscribe Now</button>
@@ -1503,5 +1504,4 @@
     </script>
 
     {{-- Liked state style --}}
-    
 @endsection

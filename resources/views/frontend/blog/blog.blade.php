@@ -1,13 +1,13 @@
 @extends('frontend.course.layout')
 @section('content')
-    
+
 
     <style>
-/* ===================== CSS VARIABLES (inherit from main) ===================== */
+        /* ===================== CSS VARIABLES (inherit from main) ===================== */
         /* These variables must be defined in :root of your main CSS:
-           --accent-color, --heading-color, --default-color, --surface-color,
-           --background-color, --contrast-color, --heading-font, --nav-font, --default-font
-        */
+               --accent-color, --heading-color, --default-color, --surface-color,
+               --background-color, --contrast-color, --heading-font, --nav-font, --default-font
+            */
 
         /* ===================== BASE ===================== */
         *,
@@ -1329,10 +1329,10 @@
             <div class="container hero-inner">
                 <div class="row align-items-center">
                     <div class="col-lg-7">
-                        <div class="eyebrow"><i class="bi bi-journal-richtext"></i> Our Stories</div>
-                        <h1>Behind the <em>Curtain</em> &<br>Beyond the Stage</h1>
-                        <p>Casting wins, workshops, student spotlights, and behind-the-scenes from Jaipur's #1 screen acting
-                            school for kids.</p>
+                        <div class="eyebrow"><i class="bi bi-journal-richtext"></i> Cyber Insights</div>
+                        <h1>Inside the World of<br><em>Cyber Defence</em> &<br>Digital Security</h1>
+                        <p>Threat research, ethical hacking tips, student success stories, certification guides, and the
+                            latest from India's most practical cybersecurity training institute.</p>
                         <div class="hero-stats">
                             <div class="hs">
                                 <span class="num">{{ $totalBlogs }}+</span>
@@ -1343,8 +1343,8 @@
                                 <span class="lbl">Categories</span>
                             </div>
                             <div class="hs">
-                                <span class="num">1000+</span>
-                                <span class="lbl">Students Featured</span>
+                                <span class="num">500+</span>
+                                <span class="lbl">Professionals Trained</span>
                             </div>
                         </div>
                     </div>
@@ -1390,7 +1390,7 @@
         @if ($featured)
             <section class="featured-post-section">
                 <div class="container">
-                    <div class="featured-label"><i class="bi bi-star-fill"></i> Featured Story</div>
+                    <div class="featured-label"><i class="bi bi-star-fill"></i> Featured Article</div>
                     <div class="featured-card">
                         <div class="row g-0">
                             <div class="col-lg-6">
@@ -1473,8 +1473,7 @@
                                         @else
                                             <div
                                                 style="height:210px;background:linear-gradient(135deg,#175cdd22,#175cdd55);display:flex;align-items:center;justify-content:center;">
-                                                <i class="bi bi-journal-richtext"
-                                                    style="font-size:3rem;color:#175cdd44;"></i>
+                                                <i class="bi bi-shield-lock" style="font-size:3rem;color:#175cdd44;"></i>
                                             </div>
                                         @endif
                                         @if ($blog->category)
@@ -1516,8 +1515,8 @@
                                                     @endif
                                                     <span>{{ $blog->author->name }}</span>
                                                 @else
-                                                    <div class="av">AA</div>
-                                                    <span>Act to Action</span>
+                                                    <div class="av">TX</div>
+                                                    <span>ThreatXpert</span>
                                                 @endif
                                             </div>
                                             <a href="{{ route('frontend.blog.details', $blog->slug) }}" class="bc-link">
@@ -1530,7 +1529,7 @@
                                 <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#888;">
                                     <i class="bi bi-journal-x"
                                         style="font-size:3rem;display:block;margin-bottom:16px;"></i>
-                                    No blog posts found.
+                                    No articles found.
                                 </div>
                             @endforelse
                         </div>
@@ -1543,18 +1542,17 @@
                                     data-base-url="{{ url()->current() }}" data-category="{{ request('category') }}"
                                     data-tag="{{ request('tag') }}">
                                     <span class="lm-text"><i class="bi bi-arrow-down-circle me-1"></i> Load More
-                                        Posts</span>
+                                        Articles</span>
                                     <span class="lm-spinner"></span>
                                 </button>
                                 <span class="load-more-count d-block">
-                                    Showing {{ $blogs->count() }} of {{ $blogs->total() }} posts
+                                    Showing {{ $blogs->count() }} of {{ $blogs->total() }} articles
                                 </span>
                             </div>
                         @else
-                            {{-- All posts loaded — show total --}}
                             @if ($blogs->total() > 0)
                                 <div class="load-more-wrap">
-                                    <span class="load-more-count">All {{ $blogs->total() }} posts loaded</span>
+                                    <span class="load-more-count">All {{ $blogs->total() }} articles loaded</span>
                                 </div>
                             @endif
                         @endif
@@ -1591,7 +1589,7 @@
                                 <li>
                                     <a href="{{ route('frontend.blog.index') }}"
                                         class="{{ !request('category') && !request('tag') ? 'active' : '' }}">
-                                        All Posts <span class="badge">{{ $totalBlogs }}</span>
+                                        All Articles <span class="badge">{{ $totalBlogs }}</span>
                                     </a>
                                 </li>
                                 @foreach ($categories as $cat)
@@ -1608,7 +1606,7 @@
 
                         {{-- Recent Posts --}}
                         <div class="sidebar-card">
-                            <h5>Recent Posts</h5>
+                            <h5>Recent Articles</h5>
                             @foreach ($recentPosts as $rp)
                                 <a href="{{ route('frontend.blog.details', $rp->slug) }}" class="text-decoration-none">
                                     <div class="recent-post">
@@ -1628,7 +1626,7 @@
                             @endforeach
                         </div>
 
-                        {{-- Popular Tags — with sidebar-card wrapper --}}
+                        {{-- Popular Tags --}}
                         @if ($tags->count())
                             <div class="sidebar-card">
                                 <h5>Popular Tags</h5>
@@ -1648,21 +1646,25 @@
                             <h5>About This Blog</h5>
                             <p
                                 style="font-size:13px;line-height:1.7;color:color-mix(in srgb,var(--default-color),transparent 20%);">
-                                Stories from India's first screen acting school for children (ages 3–29). Founded in 2019 by
-                                Kritesh Agarwal. Registered with Startup India &amp; iStart Rajasthan.
+                                Practical cybersecurity knowledge from India's most hands-on security training institute.
+                                ThreatXpert — empowering the digital world through expert training, real-world labs, and
+                                100% placement support.
                             </p>
                             <a href="#enroll"
                                 style="display:inline-flex;align-items:center;gap:8px;background:var(--accent-color);color:#fff;padding:10px 22px;border-radius:50px;font-size:13px;font-weight:600;margin-top:12px;transition:all .3s;">
-                                <i class="bi bi-person-plus-fill"></i> Enroll Today
+                                <i class="bi bi-shield-lock-fill"></i> Enroll Today
                             </a>
                         </div>
 
                         {{-- Newsletter --}}
                         <div class="sidebar-newsletter" data-newsletter data-source="blog">
-                            <h5>Stay Updated</h5>
-                            <p>Get the latest stories, casting news and workshop updates delivered to your inbox.</p>
-                            <input type="email" class="ns-input newsletter-email-input" placeholder="Your email address" />
-                            <button type="button" class="ns-btn newsletter-subscribe-btn"><i class="bi bi-send-fill me-2"></i>Subscribe</button>
+                            <h5>Stay Cyber-Aware</h5>
+                            <p>Get the latest threat alerts, course updates, and cybersecurity tips delivered to your inbox.
+                            </p>
+                            <input type="email" class="ns-input newsletter-email-input"
+                                placeholder="Your email address" />
+                            <button type="button" class="ns-btn newsletter-subscribe-btn"><i
+                                    class="bi bi-send-fill me-2"></i>Subscribe</button>
                         </div>
 
                     </aside>
@@ -1676,16 +1678,18 @@
                 <div class="inner">
                     <div
                         style="display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 18px;border-radius:50px;margin-bottom:20px;">
-                        Never Miss a Story
+                        Stay One Step Ahead
                     </div>
-                    <h2>Get the Latest from<br>Act to Action</h2>
-                    <p>Casting wins, workshops, student spotlights &amp; school updates — delivered fresh.</p>
+                    <h2>Get the Latest from<br>ThreatXpert</h2>
+                    <p>Threat research, ethical hacking guides, certification tips &amp; course updates — delivered fresh to
+                        your inbox.</p>
                     <div class="nl-form" data-newsletter data-source="blog">
                         <input type="email" class="newsletter-email-input" placeholder="Enter your email address" />
-                        <button type="button" class="newsletter-subscribe-btn"><i class="bi bi-send-fill me-2"></i> Subscribe Free</button>
+                        <button type="button" class="newsletter-subscribe-btn"><i class="bi bi-send-fill me-2"></i>
+                            Subscribe Free</button>
                     </div>
                     <p style="font-size:12px;color:rgba(255,255,255,.45);margin-top:14px;">
-                        No spam. Unsubscribe anytime. 500+ parents already subscribed.
+                        No spam. Unsubscribe anytime. 500+ cybersecurity professionals already subscribed.
                     </p>
                 </div>
             </div>
