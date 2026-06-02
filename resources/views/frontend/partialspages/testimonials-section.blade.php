@@ -61,7 +61,7 @@
         [
             'img' => 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600',
             'fb' => 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600',
-            'cap' => 'Summer Camp 2024 was magical! ✨',
+            'cap' => 'Cyber AI Threat Conclave 2024 was magical! ✨',
             'tags' => ['#SummerCamp', '#ActToAction', '#Jaipur'],
             'type' => 'photo',
         ],

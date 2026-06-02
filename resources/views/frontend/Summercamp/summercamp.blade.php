@@ -78,7 +78,7 @@
                                     <div class="dropdown">
                                         <a href="https://www.acttoaction.com/events-1"><i
                                                 class="bi bi-calendar-event"></i>Upcoming Events</a>
-                                        <a href="#gallery"><i class="bi bi-camera"></i>Summer Camp 2025</a>
+                                        <a href="#gallery"><i class="bi bi-camera"></i>Cyber AI Threat Conclave 2025</a>
                                         <a href="#register"><i class="bi bi-pencil-square"></i>Register 2026</a>
                                         <div class="sep"></div>
                                         <a href="https://www.acttoaction.com/castings"><i class="bi bi-film"></i>Casting
@@ -88,7 +88,7 @@
 
                                 <li><a href="https://www.acttoaction.com/blog">Blog</a></li>
                                 <li><a href="https://www.acttoaction.com/about-us-1">About</a></li>
-                                <li><a href="#" class="active">Summer Camp</a></li>
+                                <li><a href="#" class="active">Cyber AI Threat Conclave</a></li>
                                 <li><a href="tel:9119118844" class="nav-register"><i class="bi bi-telephone-fill"></i>
                                         Call Now</a></li>
                             </ul>
@@ -146,8 +146,8 @@
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 order-2 order-lg-1">
-                    <h2 class="section-heading">Performing Arts Summer Camp for Young Dreamers — Jaipur 2025</h2>
-                    <p class="lead-p">Act To Action's Summer Camp 2025 brought together young performers from across
+                    <h2 class="section-heading">Cyber AI Threat Conclave for Young Dreamers — Jaipur 2025</h2>
+                    <p class="lead-p">Act To Action's Cyber AI Threat Conclave 2025 brought together young performers from across
                         Jaipur for a transformative journey into performing arts.</p>
                     <p class="body-p">From drama workshops to dance sessions, our expert faculty guided children aged
                         5–17 through immersive experiences that built confidence, creativity and lifelong friendships.
@@ -169,8 +169,8 @@
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2">
                     <div class="about-visual">
-                        <div class="about-badge"><span class="yr">2025</span><span class="txt">Summer
-                                Camp</span></div>
+                        <div class="about-badge"><span class="yr">2025</span><span class="txt">Cyber AI Threat
+                                Conclave</span></div>
                         <div class="about-img">
                             <img src="https://static.wixstatic.com/media/495d44_3d0904880d89405289048b015862cffc~mv2.jpg/v1/fill/w_980,h_653,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/495d44_3d0904880d89405289048b015862cffc~mv2.jpg"
                                 alt="Exhibition Gate" />
@@ -194,8 +194,8 @@
     <section class="themes-sec sec bg-light2" id="themes">
         <div class="container">
             <div class="sec-title">
-                <h2>Camp Themes &amp; Categories</h2>
-                <p>Explore the diverse performing arts disciplines and creative streams at Summer Camp 2025.</p>
+                <h2>Conclave Themes &amp; Categories</h2>
+                <p>Explore the diverse performing arts disciplines and creative streams at Cyber AI Threat Conclave 2025.</p>
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-6 col-md-4 col-lg-3">
@@ -270,7 +270,7 @@
     <section class="sec" id="activities">
         <div class="container">
             <div class="sec-title">
-                <h2>Camp Activities &amp; Programs</h2>
+                <h2>Conclave Activities &amp; Programs</h2>
                 <p>Rich performing arts disciplines designed to nurture every child's unique talent and confidence.</p>
             </div>
             <div class="row g-4 justify-content-center">
@@ -304,7 +304,7 @@
             <div class="act-banner mt-5">
                 <div class="row align-items-center g-4">
                     <div class="col-md-8">
-                        <h3>Summer Camp 2026 is Coming Soon!</h3>
+                        <h3>Cyber AI Threat Conclave 2026 is Coming Soon!</h3>
                         <p>Be the first to know when registrations open. Call us or chat on WhatsApp to join the
                             priority list.</p>
                     </div>
@@ -321,7 +321,7 @@
     {{-- <section class="gallery-sec" id="gallery">
         <div class="gallery-header">
             <div class="g-eyebrow"><span></span>Photo Gallery<span></span></div>
-            <h2>Summer Camp 2025 — Memories</h2>
+            <h2>Cyber AI Threat Conclave 2025 — Memories</h2>
             <p>Click any photo to view full size &nbsp;·&nbsp; Hover to pause scrolling</p>
         </div>
         <div class="gallery-tabs">
@@ -467,7 +467,7 @@
                         style="width:100%;height:100%;object-fit:cover;display:block;transition:.4s" loading="lazy"
                         alt="Grand Finale" />
                     <div class="gf-over"><i class="bi bi-zoom-in"></i></div>
-                    <div class="gf-caption">🏆 Grand Finale — Summer Camp 2025</div>
+                    <div class="gf-caption">🏆 Grand Finale — Cyber AI Threat Conclave 2025</div>
                 </div>
             </div>
             <div class="scroll-strip" style="margin-top:8px">
@@ -541,7 +541,7 @@
                 <div class="col-md-8">
                     <div class="ppl-label"><i class="bi bi-mortarboard-fill"></i> Mentors</div>
                     <h2 class="ppl-heading">Our Guiding Mentors</h2>
-                    <p class="ppl-sub">The visionaries and leaders who shaped the direction of Summer Camp 2025 and
+                    <p class="ppl-sub">The visionaries and leaders who shaped the direction of Cyber AI Threat Conclave 2025 and
                         inspired every child.</p>
                 </div>
                 <div class="col-md-4 d-flex justify-content-md-end">
@@ -603,8 +603,8 @@
             <div class="act-banner mt-5">
                 <div class="row align-items-center g-4">
                     <div class="col-md-8">
-                        <h3>Explore Our Summer Camp Partners</h3>
-                        <p>Discover our trusted partners and find the perfect summer camp for your child.</p>
+                        <h3>Explore Our Cyber AI Threat Conclave Partners</h3>
+                        <p>Discover our trusted partners and find the perfect program for your child.</p>
                     </div>
                     <div class="col-md-4 text-md-end">
                         <a href="{{ route('summercamp.partners') }}" class="act-btn">
@@ -628,7 +628,7 @@
         <div class="container">
             <div class="sec-title" style="padding-bottom: 0%;">
                 <h2>Videos &amp; Media Coverage</h2>
-                <p>Watch highlights from Summer Camp 2025 — performances, moments and media features.</p>
+                <p>Watch highlights from Cyber AI Threat Conclave 2025 — performances, moments and media features.</p>
             </div>
             @include('frontend.partialspages.youtube', ['videos' => $videos])
             {{-- <p class="text-center mt-3" style="font-size:13px;color:#aaa;">Replace the YouTube embed URLs in each
@@ -642,9 +642,9 @@
         <div class="container">
             <div class="row align-items-center g-5 mb-5">
                 <div class="col-lg-6">
-                    <h1>Ready for Summer Camp 2026?</h1>
+                    <h1>Ready for Cyber AI Threat Conclave 2026?</h1>
                     <p class="desc">Registrations are opening soon. Call us today to secure your child's spot and be
-                        part of Jaipur's biggest performing arts summer camp.</p>
+                        part of Jaipur's biggest performing arts program.</p>
                     <div class="cta-links">
                         <a href="tel:9119118844" class="cta-link-main"><i class="bi bi-telephone-fill"></i>Call Now:
                             +91 91191 88844 <i class="bi bi-arrow-right"></i></a>
@@ -678,7 +678,7 @@
             <div class="cta-contact">
                 <div class="row align-items-center">
                     <div class="col-lg-8 mb-3 mb-lg-0">
-                        <h2>Secure Your Child's Spot for Summer Camp 2026</h2>
+                        <h2>Secure Your Child's Spot for Cyber AI Threat Conclave 2026</h2>
                         <p>Don't miss out — slots fill up fast. Contact us today to register your interest.</p>
                     </div>
                     <div class="col-lg-4">
@@ -699,7 +699,7 @@
         <div class="container">
             <div class="sec-title">
                 <h2>What Parents Say</h2>
-                <p>Hear from families whose children transformed through Act To Action Summer Camp 2025.</p>
+                <p>Hear from families whose children transformed through Act To Action Cyber AI Threat Conclave 2025.</p>
             </div>
             <div class="swiper ts-swiper" id="tsSwiper">
                 <div class="swiper-wrapper">
@@ -782,7 +782,7 @@
         <div class="container">
             <div class="sec-title">
                 <h2>Venue Partners</h2>
-                <p>Summer Camp 2025 was hosted across prestigious schools, institutions and studios across Jaipur.</p>
+                <p>Cyber AI Threat Conclave 2025 was hosted across prestigious schools, institutions and studios across Jaipur.</p>
             </div>
             <div class="row g-4">
                 <div class="col-lg-8">
@@ -828,7 +828,7 @@
                 <div class="col-lg-4">
                     <div class="contact-form-card">
                         <h2>Get in Touch</h2>
-                        <p class="sub">Interested in Summer Camp 2026? Send us a message.</p>
+                        <p class="sub">Interested in Cyber AI Threat Conclave 2026? Send us a message.</p>
                         <input type="text" class="form-control" placeholder="Your Child's Name" />
                         <input type="text" class="form-control" placeholder="Parent's Phone Number" />
                         <input type="email" class="form-control" placeholder="Email Address" />

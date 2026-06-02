@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         // ── Gallery Categories (tabs) ─────────────────────────
-        // e.g. "All", "Drama", "Dance", "Music", "Summer Camp 2024"
+        // e.g. "All", "Drama", "Dance", "Music", "Cyber AI Threat Conclave 2024"
         Schema::create('gallery_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');                              // tab label

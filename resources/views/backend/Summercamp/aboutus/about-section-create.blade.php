@@ -25,7 +25,7 @@
                                 <label class="form-label fw-semibold">Heading <span class="text-danger">*</span></label>
                                 <input type="text" name="heading" value="{{ old('heading') }}"
                                        class="form-control @error('heading') is-invalid @enderror"
-                                       placeholder="e.g. Performing Arts Summer Camp for Young Dreamers">
+                                       placeholder="e.g. Cyber AI Threat Conclave for Young Dreamers">
                                 @error('heading') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
@@ -96,7 +96,7 @@
                                 <div class="col-md-8">
                                     <label class="form-label fw-semibold">Badge Text</label>
                                     <input type="text" name="badge_text" value="{{ old('badge_text') }}"
-                                           class="form-control" placeholder="e.g. Summer Camp">
+                                           class="form-control" placeholder="e.g. Cyber AI Threat Conclave">
                                 </div>
                             </div>
 

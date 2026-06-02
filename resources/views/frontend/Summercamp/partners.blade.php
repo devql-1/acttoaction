@@ -235,14 +235,14 @@
         <div>
             <div
                 style="display:inline-block;background:rgba(255,106,0,.15);color:#7C3AED;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;">
-                Summer Camp 2025
+                Cyber AI Threat Conclave 2025
             </div>
             <h1
                 style="font-size:clamp(2.2rem,6vw,4rem);font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;margin:0 0 16px;">
                 Our Partners
             </h1>
             <p style="color:rgba(255,255,255,.75);font-size:16px;max-width:520px;margin:0 auto;line-height:1.7;">
-                The organisations and institutions who made Summer Camp 2025 possible.
+                The organisations and institutions who made Cyber AI Threat Conclave 2025 possible.
             </p>
         </div>
     </section>

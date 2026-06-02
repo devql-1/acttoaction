@@ -1332,7 +1332,7 @@ a {
                             <div>
                                 <div class="badge-role">Events</div>
                                 <h5>Event Coordinator / Volunteer</h5>
-                                <p>Support our exhibitions, theatre shows, fashion shows, film festivals, summer camps, and
+                                <p>Support our exhibitions, theatre shows, fashion shows, film festivals, Cyber AI Threat Conclave programs, and
                                     graduation ceremonies as an on-ground team member.</p>
                             </div>
                         </div>

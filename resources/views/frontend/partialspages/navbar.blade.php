@@ -27,7 +27,7 @@
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="logo d-flex align-items-center">
                 <div class="logo">
-                    <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
+                    <img src="{{ asset('public/img/logo/logo.png') }}" alt="ActToAction Logo">
                 </div>
             </a>
 
@@ -117,7 +117,7 @@
             align-items: center;
             gap: 6px;
        ">
-                            Summer-Camp
+                            Cyber AI Threat Conclave
                             <i class="bi bi-arrow-right"></i>
                         </a>
                     </li>

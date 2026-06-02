@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('hero_banners', function (Blueprint $table) {
             $table->id();
             $table->string('image_path');           // stored path e.g. hero/banner.jpg
-            $table->string('alt_text')->default('Summer Camp Banner');
+            $table->string('alt_text')->default('Cyber AI Threat Conclave Banner');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

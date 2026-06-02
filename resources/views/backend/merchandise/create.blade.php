@@ -28,7 +28,7 @@
                                 <label class="form-label fw-semibold">Item Name <span class="text-danger">*</span></label>
                                 <input type="text" name="name" value="{{ old('name') }}"
                                     class="form-control @error('name') is-invalid @enderror"
-                                    placeholder="e.g. Summer Camp T-Shirt">
+                                    placeholder="e.g. Cyber AI Threat Conclave T-Shirt">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

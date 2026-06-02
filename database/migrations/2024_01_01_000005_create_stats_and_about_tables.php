@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('body_text')->nullable();
             $table->string('image_path')->nullable();
             $table->string('badge_year')->nullable();       // e.g. "2025"
-            $table->string('badge_text')->nullable();       // e.g. "Summer Camp"
+            $table->string('badge_text')->nullable();       // e.g. "Cyber AI Threat Conclave"
             $table->string('fc_title')->nullable();         // floating card title
             $table->string('fc_subtitle')->nullable();      // floating card subtitle
             $table->string('btn1_label')->nullable();       // e.g. "Call Us Now"

@@ -18,7 +18,7 @@
         <div class="mgal-header">
             <div class="mgal-eyebrow"><span></span> Our Moments <span></span></div>
             <h2>Memories We've Created</h2>
-            <p>Snapshots from our summer camps, performances &amp; workshops</p>
+            <p>Snapshots from our Cyber AI Threat Conclave programs, performances &amp; workshops</p>
         </div>
 
         {{-- Tabs --}}

@@ -137,7 +137,7 @@
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Message <span class="text-danger">*</span></label>
                         <textarea name="message" class="form-control" rows="3"
-                            placeholder="e.g. 🎭 &nbsp;<strong>Summer Camp 2026</strong> — Jaipur's Biggest Performing Arts Camp is Coming!"
+                            placeholder="e.g. 🎭 &nbsp;<strong>Cyber AI Threat Conclave 2026</strong> — Jaipur's Biggest Performing Arts Program is Coming!"
                             required maxlength="500"></textarea>
                         <small class="text-muted">Supports basic HTML like &lt;strong&gt;. Max 500 chars.</small>
                     </div>

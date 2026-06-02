@@ -12,7 +12,7 @@
         <div class="hero-fallback-content">
             <div class="hero-fallback-inner">
                 <span class="hero-fallback-tag">🎭 Act To Action</span>
-                <h2>Summer Camp 2026</h2>
+                <h2>Cyber AI Threat Conclave 2026</h2>
                 <p>Jaipur's Biggest Performing Arts Camp</p>
             </div>
         </div>

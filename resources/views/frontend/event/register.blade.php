@@ -1222,7 +1222,7 @@
         <div class="hero">
             @if ($sub->banner_image)
                 <div
-                    style="position:absolute;inset:0;background-image:url('{{ asset($sub->banner_image) }}');background-size:cover;background-position:center;z-index:0;">
+                    style="position:absolute;inset:0;background-image:url('{{ asset('public/' . $sub->banner_image) }}');background-size:cover;background-position:center;z-index:0;">
                 </div>
                 <div
                     style="position:absolute;inset:0;background:linear-gradient(to right,rgba(12,24,37,.93) 0%,rgba(12,24,37,.72) 55%,rgba(12,24,37,.38) 100%);z-index:1;">

@@ -760,9 +760,9 @@
         {{-- HERO --}}
         <div class="sd-hero">
             @if ($sub->banner_image)
-                <img class="sd-hero-img" src="{{ asset($sub->banner_image) }}" alt="{{ $sub->title }}" />
+                <img class="sd-hero-img" src="{{ asset('public/' . $sub->banner_image) }}" alt="{{ $sub->title }}" />
             @elseif ($sub->event->banner_image)
-                <img class="sd-hero-img" src="{{ asset($sub->event->banner_image) }}" alt="{{ $sub->title }}" />
+                <img class="sd-hero-img" src="{{ asset('public/' . $sub->event->banner_image) }}" alt="{{ $sub->title }}" />
             @else
                 <img class="sd-hero-img" src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=1400&q=80"
                     alt="{{ $sub->title }}" />

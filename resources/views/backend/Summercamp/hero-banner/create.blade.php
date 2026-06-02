@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <input type="text" name="alt_text"
-                                            value="{{ old('alt_text', 'Summer Camp Banner') }}"
+                                            value="{{ old('alt_text', 'Cyber AI Threat Conclave Banner') }}"
                                             class="form-control @error('alt_text') is-invalid @enderror"
                                             placeholder="Describe the banner">
                                         <small class="text-muted">Used for screen readers & SEO.</small>

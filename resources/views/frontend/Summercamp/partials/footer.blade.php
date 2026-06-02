@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mb-4 mb-lg-0">
-                <a href="https://www.acttoaction.com"><img src="{{ asset('courseassets/img/logo/IMG_6008.PNG') }}"
+                <a href="https://www.acttoaction.com"><img src="{{ asset('public/courseassets/img/logo/IMG_6008.PNG') }}"
                         alt="Act To Action" style="height:40px;" /></a>
                 <p class="brand-desc">Developing globally competent young performers through age-structured,
                     experiential, skill - based learning, supported by on-demand, personalised programs for academic
@@ -28,7 +28,7 @@
                         </ul>
                     </div>
                     <div class="col-6 col-md-3 mb-4">
-                        <h6>Summer Camp</h6>
+                        <h6>Cyber AI Threat Conclave</h6>
                         <ul class="fn-list">
                             <li><a href="#about">About</a></li>
                             <li><a href="#gallery">Gallery</a></li>

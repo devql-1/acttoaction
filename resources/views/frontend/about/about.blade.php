@@ -1492,11 +1492,12 @@
                 </div>
                 <div class="row gy-5 align-items-center">
                     <div class="col-lg-4 text-center" data-aos="fade-right">
-                        <img src="YOUR_FOUNDER_IMAGE_URL_HERE" alt="ThreatXpert Founder" class="founder-avatar"
+                        <img src="{{ asset('img/niran-29kAMqfR.jpg.jpeg') }}" alt="Niranjan Dadhich"
+                            class="founder-avatar"
                             style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
-                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">[Founder Name]</h3>
+                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Niranjan Dadhich</h3>
                         <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Cybersecurity
-                            Expert &amp; Trainer</p>
+                            Consultant | Penetration Tester | Security Trainer</p>
                         <p style="font-size:13px;color:var(--default-color);margin-bottom:20px;font-style:italic;">Founder
                             &amp; CEO, Threat Expert Cyber Solutions Pvt. Ltd.</p>
                         <a href="https://wa.me/918079034973" target="_blank"
@@ -1512,25 +1513,25 @@
                             <i class="bi bi-shield-lock me-2"></i>Certified Ethical Hacker · Penetration Tester ·
                             Cybersecurity Educator
                         </p>
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">The founder of ThreatXpert is a
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Niranjan Dadhich is a
                             seasoned cybersecurity professional and educator with deep expertise in offensive security,
                             threat intelligence, and digital forensics. With a passion for building India's next generation
-                            of cyber defenders, they established ThreatXpert as a platform where practical skills meet
+                            of cyber defenders, he established ThreatXpert as a platform where practical skills meet
                             industry-ready training.</p>
-                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Their work sits at the intersection
+                        <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">His work sits at the intersection
                             of real-world threat research, structured pedagogy, and career development. By combining
                             hands-on labs, live attack simulations, and mentorship from active security professionals,
                             ThreatXpert's curriculum is built to deliver confident, skilled cybersecurity practitioners from
                             the very first day of employment.</p>
 
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Under their leadership, ThreatXpert
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Under his leadership, ThreatXpert
                             has trained over 500 cybersecurity professionals, delivered enterprise security assessments for
                             clients across sectors including BFSI, healthcare, and e-commerce, and has built a growing
                             network of hiring partners ensuring 100% placement support for every graduate. The company has
                             also partnered with leading educational institutions to integrate cybersecurity awareness into
                             academic curricula.</p>
                         <p style="font-size:15px;line-height:1.8;">Recognized across India's cybersecurity ecosystem and
-                            committed to the mission of a safer digital India, the ThreatXpert founder continues to lead
+                            committed to the mission of a safer digital India, Niranjan Dadhich continues to lead
                             from the front — training, consulting, and building the security talent pipeline our nation
                             urgently needs.</p>
                     </div>
@@ -1643,11 +1644,12 @@
                 </div>
                 <div class="row gy-5 align-items-center">
                     <div class="col-lg-4 text-center" data-aos="fade-right">
-                        <img src="YOUR_COFOUNDER_IMAGE_URL_HERE" alt="ThreatXpert Co-Founder" class="founder-avatar"
+                        <img src="{{ asset('img/fa-B2Lm1oYl.jpg.jpeg') }}" alt="Lunkaran Dayama"
+                            class="founder-avatar"
                             style="width:220px;height:220px;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 16px 50px rgba(23,92,221,0.2);margin-bottom:24px;max-width:100%;">
-                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">[Co-Founder Name]</h3>
-                        <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Security
-                            Consultant &amp; Operations Lead</p>
+                        <h3 style="font-size:26px;font-weight:800;margin-bottom:4px;">Lunkaran Dayama</h3>
+                        <p style="font-size:14px;font-weight:700;color:var(--accent-color);margin-bottom:4px;">Marketing
+                            Consultant</p>
                         <p style="font-size:13px;color:var(--default-color);margin-bottom:20px;font-style:italic;">
                             Co-Founder, Threat Expert Cyber Solutions Pvt. Ltd.</p>
                         <a href="https://wa.me/918079034973" target="_blank"
@@ -1660,21 +1662,18 @@
                     <div class="col-lg-8" data-aos="fade-left" data-aos-delay="100">
                         <p
                             style="font-size:13px;font-weight:700;color:var(--accent-color);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;">
-                            <i class="bi bi-shield-lock me-2"></i>Security Operations · Corporate Training · Program Design
+                            <i class="bi bi-shield-lock me-2"></i>Marketing Strategy · Brand Growth · Business Outreach
                         </p>
-                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">ThreatXpert's Co-Founder is a
-                            strategic operations leader with a strong background in cybersecurity consulting, corporate
-                            training delivery, and program development. Their expertise lies in designing learning journeys
-                            that are structured, measurable, and directly tied to industry hiring requirements.</p>
+                        <p style="font-size:16px;line-height:1.8;margin-bottom:16px;">Lunkaran Dayama is a marketing
+                            consultant with a strong background in brand positioning, outreach, and growth strategy. His
+                            expertise helps strengthen ThreatXpert's visibility and connects the right audiences with the
+                            platform's cybersecurity training and services.</p>
                         <p style="font-size:15px;line-height:1.8;margin-bottom:24px;">Over the course of building
-                            ThreatXpert, they have played a pivotal role in forging industry partnerships, establishing
-                            placement pipelines, and ensuring that every batch of graduates meets the bar set by top-tier
-                            employers in the cybersecurity domain. Their operational rigor and attention to student outcomes
-                            make ThreatXpert's programs among the most reliable in India.</p>
-                        <p style="font-size:15px;line-height:1.8;">Recognized for bridging the gap between training and
-                            employment, the Co-Founder leads ThreatXpert's corporate outreach, client services, and career
-                            development initiatives — ensuring that every student's journey from learning to landing a job
-                            is seamless, supported, and successful.</p>
+                            ThreatXpert, he has supported brand-building efforts, audience engagement, and business growth
+                            initiatives that help the company reach more learners, clients, and partners.</p>
+                        <p style="font-size:15px;line-height:1.8;">Recognized for his marketing expertise, Lunkaran Dayama
+                            continues to support ThreatXpert's brand strategy, promotional efforts, and business development
+                            initiatives — helping the organization expand its reach and impact.</p>
                     </div>
                 </div>
                 <section class="news-section" style="background: #fff">
@@ -2277,7 +2276,7 @@
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>Get In Touch</h2>
-                    <p>Have questions about our courses or services? Our team is available Monday through Saturday. Reach
+                    <p>Have questions about Threat Academy or services? Our team is available Monday through Saturday. Reach
                         out for course enquiries, corporate training proposals, or cybersecurity consultations.</p>
                 </div>
                 <div class="row gy-5">

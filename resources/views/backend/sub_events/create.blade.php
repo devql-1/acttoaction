@@ -18,7 +18,7 @@
 
             {{-- Parent Event Info Bar --}}
             <div class="alert alert-light border mb-4 d-flex align-items-center gap-3">
-                <img src="{{ asset($event->banner_image) }}" class="rounded"
+                <img src="{{ asset('public/' . $event->banner_image) }}" class="rounded"
                     style="width:45px;height:45px;object-fit:cover;">
                 <div>
                     <strong>{{ $event->title }}</strong>

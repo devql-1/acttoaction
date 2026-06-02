@@ -4,7 +4,7 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h3 class="fw-bold mb-3">Summer-Camp-Events</h3>
+                <h3 class="fw-bold mb-3">Cyber AI Threat Conclave Events</h3>
                 <ul class="breadcrumbs mb-3">
                     <li class="nav-home"><a href="#"><i class="icon-home"></i></a></li>
                     <li class="separator"><i class="icon-arrow-right"></i></li>
@@ -53,8 +53,8 @@
                                                         style="display:inline-block;cursor:pointer;">
                                                         <a data-fancybox="gallery"
                                                             data-options='{"buttons": [], "click": "close"}'
-                                                            href="{{ asset($event->banner_image) }}">
-                                                            <img src="{{ asset($event->banner_image) }}"
+                                                            href="{{ asset('public/' . $event->banner_image) }}">
+                                                            <img src="{{ asset('public/' . $event->banner_image) }}"
                                                                 alt="{{ $event->title }}"
                                                                 style="width:50px;height:50px;object-fit:cover;
                     border-radius:8px;

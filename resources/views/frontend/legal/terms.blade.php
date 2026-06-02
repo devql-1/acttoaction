@@ -96,10 +96,10 @@
 
             <div class="legal-card">
                 <h2>1. Acceptance of Terms</h2>
-                <p>By accessing or using the <strong>Act To Action</strong> website, enrolling in any of our courses, or registering for a workshop, you agree to be bound by these Terms &amp; Conditions. If you do not agree to these terms, please do not use our services.</p>
+                <p>By accessing or using the <strong>Act To Action</strong> website, enrolling in any Threat Academy program, or registering for a workshop, you agree to be bound by these Terms &amp; Conditions. If you do not agree to these terms, please do not use our services.</p>
 
                 <h2>2. Services</h2>
-                <p>Act To Action provides acting courses, summer camps, workshops, skill assessments, and related educational programs for children and young learners. We reserve the right to modify, add, or discontinue any program at any time.</p>
+                <p>Act To Action provides Threat Academy courses, Cyber AI Threat Conclave programs, workshops, skill assessments, and related educational programs for children and young learners. We reserve the right to modify, add, or discontinue any program at any time.</p>
 
                 <h2>3. Enrollment &amp; Registration</h2>
                 <ul>

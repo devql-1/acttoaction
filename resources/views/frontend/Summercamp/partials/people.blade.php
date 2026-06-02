@@ -9,7 +9,7 @@
                     <div class="col-md-8">
                         <div class="ppl-label"><i class="bi bi-mortarboard-fill"></i> Mentors</div>
                         <h2 class="ppl-heading">Our Guiding Mentors</h2>
-                        <p class="ppl-sub">The visionaries and leaders who shaped the direction of Summer Camp and
+                        <p class="ppl-sub">The visionaries and leaders who shaped the direction of Cyber AI Threat Conclave and
                             inspired
                             every child.</p>
                     </div>

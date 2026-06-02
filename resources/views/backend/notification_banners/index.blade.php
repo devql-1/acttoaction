@@ -161,7 +161,7 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Title <span class="text-danger">*</span></label>
-                        <input type="text" name="title" class="form-control" placeholder="e.g. Summer Camp 2026" required>
+                        <input type="text" name="title" class="form-control" placeholder="e.g. Cyber AI Threat Conclave 2026" required>
                     </div>
 
                     <div class="mb-3">

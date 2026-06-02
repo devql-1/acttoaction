@@ -41,7 +41,7 @@ class HeroBannerController extends Controller
 
         HeroBanner::create([
             'image_path' => $path,
-            'alt_text' => $request->input('alt_text', 'Summer Camp Banner'),
+            'alt_text' => $request->input('alt_text', 'Cyber AI Threat Conclave Banner'),
             'is_active' => $request->boolean('is_active'),
         ]);
 

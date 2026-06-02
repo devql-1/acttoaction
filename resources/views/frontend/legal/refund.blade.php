@@ -118,7 +118,7 @@
 
             <div class="legal-card">
                 <h2>1. Overview</h2>
-                <p>At <strong>Act To Action</strong>, we understand that plans can change. This Refund Policy explains when and how refunds are processed for our courses, workshops, and summer camps. Please read this policy carefully before making a payment.</p>
+                <p>At <strong>Act To Action</strong>, we understand that plans can change. This Refund Policy explains when and how refunds are processed for Threat Academy courses, workshops, and Cyber AI Threat Conclave programs. Please read this policy carefully before making a payment.</p>
 
                 <h2>2. Eligibility for Refund</h2>
                 <p>Refund requests are eligible only if they meet the following conditions:</p>

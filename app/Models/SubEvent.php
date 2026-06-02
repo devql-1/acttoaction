@@ -78,6 +78,11 @@ class SubEvent extends Model
         return $query->where('event_date', '>=', now());
     }
 
+    public function getBannerUrlAttribute()
+    {
+        return $this->banner_image ? asset('public/' . $this->banner_image) : asset('assets/img/placeholder-image.jpg');
+    }
+
     // Get formatted time range
     public function getTimeRangeAttribute()
     {

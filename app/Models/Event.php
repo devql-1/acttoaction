@@ -57,7 +57,7 @@ class Event extends Model
     // Get banner image full URL
     public function getBannerUrlAttribute()
     {
-        return $this->banner_image ? asset('storage/' . $this->banner_image) : asset('assets/img/placeholder-image.jpg');
+        return $this->banner_image ? asset('public/' . $this->banner_image) : asset('assets/img/placeholder-image.jpg');
     }
 
     // Scope: active events only

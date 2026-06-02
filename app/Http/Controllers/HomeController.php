@@ -657,7 +657,7 @@ class HomeController extends Controller
             ->get();
 
         // Sidebar & tag section tags
-        $tags = collect(['Acting', 'Screen Acting', 'DramATA', 'Kids', 'Jaipur', 'Casting', 'Summer Camp', 'Theatre', 'Workshops', 'Confidence', 'NEP 2020', 'Performance']);
+        $tags = collect(['Acting', 'Screen Acting', 'DramATA', 'Kids', 'Jaipur', 'Casting', 'Cyber AI Threat Conclave', 'Theatre', 'Workshops', 'Confidence', 'NEP 2020', 'Performance']);
 
         return view('frontend.blog.blogdetails', compact('blog', 'related', 'recentPosts', 'categories', 'tags'));
     }

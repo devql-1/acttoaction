@@ -965,7 +965,7 @@
         <div class="action add">
             <a href="{{ route('index.course') }}" class="action-link">
                 <div class="icon"><i class="fas fa-book-open"></i></div>
-                <h1>Our Courses</h1>
+                <h1>Threat Academy</h1>
             </a>
         </div>
 
@@ -980,7 +980,7 @@
         <div class="action exchange">
             <a href="{{ route('summercamp') }}" class="action-link">
                 <div class="icon"><i class="fas fa-campground"></i></div>
-                <h1>Summer Camp 2026</h1>
+                <h1>Cyber AI Threat Conclave 2026</h1>
             </a>
         </div>
     </section>

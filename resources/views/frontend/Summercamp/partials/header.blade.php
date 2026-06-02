@@ -4,7 +4,7 @@
 
             {{-- Logo --}}
             <a href="{{ url('/') }}" class="sh-logo">
-                <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
+                <img src="{{ asset('public/img/logo/logo.png') }}" alt="ActToAction Logo">
             </a>
 
             {{-- Right side: socials + nav + hamburger --}}
@@ -31,7 +31,7 @@
                         @endphp
                         <ul class="sh-menu">
                             <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'sh-active' : '' }}">Home</a></li>
-                            <li><a href="{{ route('index.course') }}" class="{{ request()->routeIs('index.course') ? 'sh-active' : '' }}">Course</a></li>
+                            <li><a href="{{ route('index.course') }}" class="{{ request()->routeIs('index.course') ? 'sh-active' : '' }}">Threat Academy</a></li>
                             <li><a href="{{ route('event') }}" class="{{ request()->routeIs('event') ? 'sh-active' : '' }}">Event</a></li>
                             <li><a href="{{ route('quiz-test') }}" class="{{ request()->routeIs('quiz-test') ? 'sh-active' : '' }}">Skill Assessment</a></li>
                             <li><a href="{{ route('frontend.blog.index') }}" class="{{ request()->routeIs('frontend.blog.*') ? 'sh-active' : '' }}">Blog</a></li>
@@ -52,7 +52,7 @@
                             <li>
                                 <a href="{{ route('summercamp') }}"
                                     class="sh-cta {{ request()->routeIs('summercamp', 'summercamp.partners', 'event.summercamp', 'summercamp.event', 'frontend.events.subevent-detail') ? 'sh-active' : '' }}">
-                                    Summer-Camp <i class="bi bi-arrow-right"></i>
+                                    Cyber AI Threat Conclave <i class="bi bi-arrow-right"></i>
                                 </a>
                             </li>
                         </ul>

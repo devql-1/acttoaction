@@ -1157,7 +1157,7 @@
                                 <div class="event-card-stripe" style="background:{{ $stripe }}"></div>
                                 <div class="event-card-img">
                                     @if ($event->banner_image)
-                                        <img src="{{ asset($event->banner_image) }}" alt="{{ $event->title }}"
+                                        <img src="{{ asset('public/' . $event->banner_image) }}" alt="{{ $event->title }}"
                                             loading="lazy" />
                                     @else
                                         <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=80"
@@ -1275,7 +1275,7 @@
                         <div class="biz-badge"><i class="bi bi-buildings-fill me-1"></i> For Schools &
                             Institutions</div>
                         <h2>Bring Our Events to Your School</h2>
-                        <p class="biz-p">Want to host DramATA, Actor's Chaupal, or a Summer Camp at your school
+                        <p class="biz-p">Want to host DramATA, Actor's Chaupal, or a Cyber AI Threat Conclave at your school
                             campus? We
                             bring the full Act to Action experience directly to your students.</p>
                         @foreach ([['bi-calendar-check-fill', 'Custom Event Scheduling', 'Choose a date that works for your school calendar — we\'ll come to you.'], ['bi-people-fill', 'Suitable for All Ages', 'From Nursery to Class 12 — tailored activities for every age group.'], ['bi-award-fill', 'Certificates & Awards', 'Every participant receives an official Act to Action certificate of participation.']] as [$ico, $title, $text])
@@ -1328,7 +1328,7 @@
                     <p>Real feedback from parents, students, and school coordinators who've attended our events.</p>
                 </div>
                 <div class="row g-4">
-                    @foreach ([['P', 'Priya Sharma', 'Parent · DramATA 2024', '"DramATA was an incredible experience for my daughter. She came home glowing with confidence. The judges were professional and so encouraging!"'], ['R', 'Rajesh Agarwal', 'Parent · Summer Camp 2024', '"The Summer Camp was the best decision we made for our son. He came back a completely changed, confident child who loves performing on stage."'], ['S', 'Sunita Meena', 'Principal · Mayoor School', '"We hosted Actor\'s Chaupal at our school and the response was overwhelming. Students were energised and the ATA team was wonderfully professional."']] as [$initial, $name, $role, $quote])
+                    @foreach ([['P', 'Priya Sharma', 'Parent · DramATA 2024', '"DramATA was an incredible experience for my daughter. She came home glowing with confidence. The judges were professional and so encouraging!"'], ['R', 'Rajesh Agarwal', 'Parent · Cyber AI Threat Conclave 2024', '"The Cyber AI Threat Conclave was the best decision we made for our son. He came back a completely changed, confident child who loves performing on stage."'], ['S', 'Sunita Meena', 'Principal · Mayoor School', '"We hosted Actor\'s Chaupal at our school and the response was overwhelming. Students were energised and the ATA team was wonderfully professional."']] as [$initial, $name, $role, $quote])
                         <div class="col-md-6 col-lg-4">
                             <div class="testimonial-item">
                                 <div class="t-big-quote">"</div>

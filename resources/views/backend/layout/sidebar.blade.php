@@ -258,14 +258,14 @@
                 </li>
 
                 {{-- ══════════════════════════════════════════
-                     SECTION: SUMMER CAMP
+                     SECTION: CYBER AI THREAT CONCLAVE
                 ══════════════════════════════════════════ --}}
                 <li class="nav-section">
                     <span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span>
-                    <h4 class="text-section">Summer Camp</h4>
+                    <h4 class="text-section">Cyber AI Threat Conclave</h4>
                 </li>
 
-                {{-- Summer Camp Main Menu --}}
+                {{-- Cyber AI Threat Conclave Main Menu --}}
                 <li
                     class="nav-item {{ request()->routeIs('people-*', 'workshop-*', 'gallery-*', 'stats-*', 'about-section-*', 'themes.*', 'summer-events.*', 'summer-sub-events.*', 'summer-partners.*', 'summer-partner-categories.*', 'school-partners.*', 'school-partner-categories.*') ? 'active' : '' }}">
                     <a data-bs-toggle="collapse" href="#summercamp"

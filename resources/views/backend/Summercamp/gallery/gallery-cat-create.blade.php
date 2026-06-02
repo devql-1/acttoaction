@@ -23,7 +23,7 @@
                                 <label class="form-label fw-semibold">Name <span class="text-danger">*</span></label>
                                 <input type="text" name="name" value="{{ old('name') }}"
                                        class="form-control @error('name') is-invalid @enderror"
-                                       placeholder="e.g. Summer Camp 2025"
+                                       placeholder="e.g. Cyber AI Threat Conclave 2025"
                                        oninput="autoSlug(this.value)">
                                 @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
@@ -65,7 +65,7 @@
                         <p class="mb-1"><strong>Drama</strong> — acting / theatre photos</p>
                         <p class="mb-1"><strong>Dance</strong> — dance performance photos</p>
                         <p class="mb-1"><strong>Music</strong> — music session photos</p>
-                        <p class="mb-0"><strong>Summer Camp 2025</strong> — event-specific album</p>
+                        <p class="mb-0"><strong>Cyber AI Threat Conclave 2025</strong> — event-specific album</p>
                     </div>
                 </div>
             </div>

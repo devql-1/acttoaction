@@ -58,7 +58,7 @@ use App\Http\Controllers\admin\VolunteerController;
 use App\Http\Controllers\admin\YoutubeVideoController;
 use App\Http\Controllers\admin\YoutubeCategoryController;
 
-// Summer Camp Admin Controllers
+// Cyber AI Threat Conclave Admin Controllers
 use App\Http\Controllers\admin\Summercamp\AboutSectionController;
 use App\Http\Controllers\admin\Summercamp\GalleryCategoryController;
 use App\Http\Controllers\admin\Summercamp\GalleryImageController;
@@ -194,7 +194,7 @@ Route::get('/enrollment/payment/callback', [EnrollmentController::class, 'paymen
 Route::get('/enrollment/payment/confirmed', [EnrollmentController::class, 'paymentConfirmed'])->middleware('throttle:30,1')->name('enrollment.payment.confirmed');
 
 // ╔════════════════════════════════════════════════════════════════════════════╗
-// ║                           SUMMER CAMP ROUTES                              ║
+// ║                   CYBER AI THREAT CONCLAVE ROUTES                         ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
 Route::get('/summer-camp', [SummerController::class, 'index'])->name('summercamp');
@@ -726,7 +726,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/email-logs/clear', [EmailLogController::class, 'clearAll'])->name('email-logs.clear');
 
         // ════════════════════════════════════════════════════════════════════════════
-        // SUMMER CAMP MANAGEMENT
+        // CYBER AI THREAT CONCLAVE MANAGEMENT
         // ════════════════════════════════════════════════════════════════════════════
 
         // People
@@ -738,7 +738,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/people/status', [PersonController::class, 'status'])->name('people-status');
         Route::delete('/people/{person}', [PersonController::class, 'destroy'])->name('people-destroy');
 
-        // Summer Camp Partners
+        // Cyber AI Threat Conclave Partners
         Route::get('/summer-partners', [SummerPartnerController::class, 'index'])->name('summer-partners.index');
         Route::get('/summer-partners/create', [SummerPartnerController::class, 'create'])->name('summer-partners.create');
         Route::post('/summer-partners', [SummerPartnerController::class, 'store'])->name('summer-partners.store');
@@ -850,7 +850,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('summer-sub-events/{id}', [SummerSubEventController::class, 'destroy'])->name('summer-sub-events.destroy');
         Route::post('summer-sub-events/status', [SummerSubEventController::class, 'status'])->name('summer-sub-events.status');
 
-        // Summer Camp Partners
+        // Cyber AI Threat Conclave Partners
         Route::get('summer-partners', [SummerPartnerController::class, 'index'])->name('summer-partners.index');
         Route::get('summer-partners/create', [SummerPartnerController::class, 'create'])->name('summer-partners.create');
         Route::post('summer-partners', [SummerPartnerController::class, 'store'])->name('summer-partners.store');
@@ -859,7 +859,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('summer-partners/{partner}', [SummerPartnerController::class, 'update'])->name('summer-partners.update');
         Route::delete('summer-partners/{partner}', [SummerPartnerController::class, 'destroy'])->name('summer-partners.destroy');
 
-        // Summer Camp Partner Categories
+        // Cyber AI Threat Conclave Partner Categories
         Route::get('summer-partner-categories', [SummerPartnerCategoryController::class, 'index'])->name('summer-partner-categories.index');
         Route::get('summer-partner-categories/create', [SummerPartnerCategoryController::class, 'create'])->name('summer-partner-categories.create');
         Route::post('summer-partner-categories', [SummerPartnerCategoryController::class, 'store'])->name('summer-partner-categories.store');

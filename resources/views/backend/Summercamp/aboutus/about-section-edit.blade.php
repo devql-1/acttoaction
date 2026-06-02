@@ -103,7 +103,7 @@
                                     <label class="form-label fw-semibold">Badge Text</label>
                                     <input type="text" name="badge_text"
                                            value="{{ old('badge_text', $aboutSection->badge_text) }}"
-                                           class="form-control" placeholder="e.g. Summer Camp">
+                                           class="form-control" placeholder="e.g. Cyber AI Threat Conclave">
                                 </div>
                             </div>
 
