@@ -33,13 +33,7 @@ class EventController extends Controller
         ]);
 
         // Upload banner image
-        $bannerPath = null;
-
-        if ($request->hasFile('banner_image')) {
-            $filename = time() . '.' . $request->banner_image->extension();
-            $request->banner_image->move(public_path('img/event_banners'), $filename);
-            $bannerPath = 'img/event_banners/' . $filename;
-        }
+        $bannerPath = $this->storeBannerImage($request);
         $event = Event::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -84,16 +78,8 @@ class EventController extends Controller
         $bannerPath = $event->banner_image;
 
         if ($request->hasFile('banner_image')) {
-            // Delete old image
-            if ($bannerPath && file_exists(public_path($bannerPath))) {
-                unlink(public_path($bannerPath));
-            }
-
-            // Upload new image
-            $filename = time() . '.' . $request->banner_image->extension();
-            $request->banner_image->move(public_path('img/event_banners'), $filename);
-
-            $bannerPath = 'img/event_banners/' . $filename;
+            $this->deleteBannerImage($bannerPath);
+            $bannerPath = $this->storeBannerImage($request);
         }
 
         $event->update([
@@ -121,12 +107,45 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
 
         // Delete banner image from storage
-        if ($event->banner_image) {
-            Storage::disk('public')->delete($event->banner_image);
-        }
+        $this->deleteBannerImage($event->banner_image);
 
         $event->delete(); // cascades to sub_events and sub_event_centers
 
         return redirect()->back()->with('success', 'Event deleted successfully');
+    }
+
+    private function storeBannerImage(Request $request): ?string
+    {
+        if (!$request->hasFile('banner_image')) {
+            return null;
+        }
+
+        $filename = time() . '.' . $request->banner_image->extension();
+        return $request->file('banner_image')->storeAs('event_banners', $filename, 'public');
+    }
+
+    private function deleteBannerImage(?string $path): void
+    {
+        if (!$path) {
+            return;
+        }
+
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+            return;
+        }
+
+        $legacyPath = public_path($path);
+        if (file_exists($legacyPath)) {
+            unlink($legacyPath);
+            return;
+        }
+
+        if (str_starts_with($path, 'public/')) {
+            $legacyPublicPath = public_path(substr($path, 7));
+            if (file_exists($legacyPublicPath)) {
+                unlink($legacyPublicPath);
+            }
+        }
     }
 }

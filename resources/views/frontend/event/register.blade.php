@@ -2,7 +2,7 @@
 @section('content')
 
     <style>
-:root {
+        :root {
             --ink: #0c1825;
             --soft: #455a70;
             --mute: #8fa8bf;
@@ -1200,7 +1200,7 @@
         window.__RZP_KEY__ = '{{ config('services.razorpay.key') }}';
     </script>
 
-    
+
 
     <div class="pg">
 
@@ -1301,7 +1301,7 @@
 
                         @if ($isFull)
                             <div class="a-full"><i class="bi bi-x-octagon-fill fs-5"></i>
-                                <div>Session <strong>fully booked</strong>. WhatsApp us for the waitlist.</div>
+                                <div>Session <strong>fully booked</strong>. WhatsApp us to join the waitlist.</div>
                             </div>
                         @endif
                         @if ($isLow && !$isFull)
@@ -1360,7 +1360,7 @@
                                         @endif
                                         @if ($sub->age_group)
                                             <div class="si-box">
-                                                <div class="si-lbl"><i class="bi bi-people"></i>Age Group</div>
+                                                <div class="si-lbl"><i class="bi bi-people"></i>Eligibility</div>
                                                 <div class="si-val">{{ $sub->age_group }}</div>
                                             </div>
                                         @endif
@@ -1497,7 +1497,7 @@
                                     <div class="ch-step">{{ $centres->count() > 1 ? 4 : 3 }}</div>
                                     <div>
                                         <h4>Review &amp; Submit</h4>
-                                        <p>Check your booking details below</p>
+                                        <p>Check your registration details below</p>
                                     </div>
                                 </div>
                                 <div class="cb">
@@ -1547,8 +1547,8 @@
                                     </button>
                                     <p
                                         style="text-align:center;font-size:11px;color:var(--mute);margin-top:11px;margin-bottom:0;">
-                                        <i class="bi bi-shield-check" style="color:var(--gr);"></i> Your details are safe.
-                                        We never share them.
+                                        <i class="bi bi-shield-check" style="color:var(--gr);"></i> Your details are safe
+                                        with Threat Expert. We never share them.
                                     </p>
                                 </div>
                             </div>
@@ -1561,7 +1561,7 @@
                         <div class="sidebar">
                             <div class="sc">
                                 <div class="sc-head"><i class="bi bi-receipt"></i>
-                                    <h5>Booking Summary</h5>
+                                    <h5>Registration Summary</h5>
                                 </div>
                                 <div class="sc-ev">
                                     <div class="ek">Main Event</div>
@@ -1586,8 +1586,9 @@
                                                 class="rv">{{ ucfirst($sub->mode) }}</span></div>
                                     @endif
                                     @if ($sub->age_group)
-                                        <div class="sc-row"><span class="rk"><i class="bi bi-people"></i>Age
-                                                Group</span><span class="rv">{{ $sub->age_group }}</span></div>
+                                        <div class="sc-row"><span class="rk"><i
+                                                    class="bi bi-people"></i>Eligibility</span><span
+                                                class="rv">{{ $sub->age_group }}</span></div>
                                     @endif
                                     <div class="sc-row"><span class="rk"><i
                                                 class="bi bi-ticket-perforated"></i>Fee/Person</span><span
@@ -1649,7 +1650,7 @@
                                     <h5>Need Help?</h5>
                                 </div>
                                 <div class="sc-help">
-                                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="hw">
+                                    <a href="https://wa.me/918079034973" target="_blank" class="hw">
                                         <i class="bi bi-whatsapp"></i>
                                         <div>
                                             <div>Chat on WhatsApp</div>
@@ -1657,11 +1658,11 @@
                                                 us</div>
                                         </div>
                                     </a>
-                                    <a href="tel:+919352023276" class="hp">
+                                    <a href="tel:+918079034973" class="hp">
                                         <i class="bi bi-telephone-fill"></i>
                                         <div>
-                                            <div>+91 93520 23276</div>
-                                            <div style="font-size:10.5px;font-weight:400;opacity:.7;">Tue–Sat · 11 AM – 7
+                                            <div>+91 80790 34973</div>
+                                            <div style="font-size:10.5px;font-weight:400;opacity:.7;">Mon–Sat · 10 AM – 7
                                                 PM</div>
                                         </div>
                                     </a>

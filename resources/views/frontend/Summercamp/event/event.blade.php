@@ -947,7 +947,7 @@
                                 <div class="event-card-stripe" style="background:{{ $stripe }}"></div>
                                 <div class="event-card-img">
                                     @if ($event->banner_image)
-                                        <img src="{{ asset('public/' . $event->banner_image) }}" alt="{{ $event->title }}"
+                                        <img src="{{ $event->banner_url }}" alt="{{ $event->title }}"
                                             loading="lazy" />
                                     @else
                                         <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=80"

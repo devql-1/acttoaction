@@ -850,7 +850,7 @@
         {{-- HERO --}}
         <div class="detail-hero">
             @if ($event->banner_image)
-                <img class="detail-hero-img" src="{{ asset('public/' . $event->banner_image) }}" alt="{{ $event->title }}" />
+                <img class="detail-hero-img" src="{{ $event->banner_url }}" alt="{{ $event->title }}" />
             @else
                 <img class="detail-hero-img" src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=1400&q=80"
                     alt="{{ $event->title }}" />
@@ -1311,7 +1311,7 @@
                                     <div class="sub-stripe" style="background:{{ $oStripe }}"></div>
                                     <div class="oe-card-img">
                                         @if ($other->banner_image)
-                                            <img src="{{ asset('public/' . $other->banner_image) }}" alt="{{ $other->title }}"
+                                            <img src="{{ $other->banner_url }}" alt="{{ $other->title }}"
                                                 loading="lazy" />
                                         @else
                                             <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80"

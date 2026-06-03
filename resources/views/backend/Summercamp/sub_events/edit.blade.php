@@ -19,7 +19,7 @@
 
             {{-- Parent Event Info Bar --}}
             <div class="alert alert-light border mb-4 d-flex align-items-center gap-3">
-                <img src="{{ asset('public/' . $subEvent->event->banner_image) }}" class="rounded"
+                <img src="{{ $subEvent->event->banner_url }}" class="rounded"
                     style="width:45px;height:45px;object-fit:cover;">
                 <div>
                     <strong>{{ $subEvent->event->title }}</strong>
@@ -157,7 +157,7 @@
                                         {{-- Existing image --}}
                                         @if($subEvent->banner_image)
                                             <div class="mb-2 d-flex align-items-center gap-3">
-                                                <img src="{{ asset('public/' . $subEvent->banner_image) }}" alt="Current Banner"
+                                                <img src="{{ $subEvent->banner_url }}" alt="Current Banner"
                                                     style="width:120px;height:80px;object-fit:cover;border-radius:6px;border:1px solid #ddd;">
                                                 <div>
                                                     <small class="text-muted d-block mb-1">Current banner image</small>

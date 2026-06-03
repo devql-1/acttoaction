@@ -868,9 +868,9 @@
         {{-- HERO --}}
         <div class="detail-hero">
             @if ($event->banner_image)
-                <img class="detail-hero-img" src="{{ asset('public/' . $event->banner_image) }}" alt="{{ $event->title }}" />
+                <img class="detail-hero-img" src="{{ $event->banner_url }}" alt="{{ $event->title }}" />
             @else
-                <img class="detail-hero-img" src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=1400&q=80"
+                <img class="detail-hero-img" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1400&q=80"
                     alt="{{ $event->title }}" />
             @endif
             <div class="detail-hero-overlay"></div>
@@ -878,7 +878,6 @@
                 <div class="container">
 
                     @php
-                        // Determine hero status from sub events
                         $earliest = $event->subEvents->sortBy('event_date')->first();
                         if ($earliest) {
                             $eDate = Carbon::parse($earliest->event_date);
@@ -980,7 +979,7 @@
                                 <p class="sub-section-sub">
                                     {{ $event->subEvents->count() }}
                                     session{{ $event->subEvents->count() != 1 ? 's' : '' }}
-                                    available — register via WhatsApp
+                                    available — register online or via WhatsApp
                                 </p>
 
                                 <div class="row g-4">
@@ -1058,7 +1057,7 @@
                                                     <div class="sub-meta-item">
                                                         <i class="bi bi-people"></i>
                                                         <div>
-                                                            <div class="sub-meta-label">Age Group</div>
+                                                            <div class="sub-meta-label">Eligibility</div>
                                                             <div class="sub-meta-value">{{ $sub->age_group ?: '—' }}</div>
                                                         </div>
                                                     </div>
@@ -1138,7 +1137,7 @@
                                 style="background:#f8fafc;border-radius:16px;border:1.5px dashed #e4ecf8;">
                                 <i class="bi bi-calendar-x"
                                     style="font-size:40px;color:#e5e7eb;display:block;margin-bottom:12px;"></i>
-                                <p style="color:#9ca3af;font-size:14px;margin:0;">No sub-events scheduled yet. Check back
+                                <p style="color:#9ca3af;font-size:14px;margin:0;">No sessions scheduled yet. Check back
                                     soon!</p>
                             </div>
                         @endif
@@ -1198,7 +1197,7 @@
                                         @endif
                                         @if ($earliest->age_group)
                                             <div class="info-row">
-                                                <span class="ik"><i class="bi bi-people"></i>Age Group</span>
+                                                <span class="ik"><i class="bi bi-people"></i>Eligibility</span>
                                                 <span class="iv">{{ $earliest->age_group }}</span>
                                             </div>
                                         @endif
@@ -1237,10 +1236,10 @@
                             {{-- CTA --}}
                             <div class="sidebar-card">
                                 <div class="sc-body">
-                                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-reg-cta">
-                                        <i class="bi bi-check2-circle"></i> Register Now — It's Free!
+                                    <a href="https://wa.me/918079034973" target="_blank" class="btn-reg-cta">
+                                        <i class="bi bi-check2-circle"></i> Register Now
                                     </a>
-                                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-wa-cta">
+                                    <a href="https://wa.me/918079034973" target="_blank" class="btn-wa-cta">
                                         <i class="bi bi-whatsapp" style="color:#25d366;"></i> Ask on WhatsApp
                                     </a>
                                 </div>
@@ -1284,16 +1283,16 @@
                                 <div class="sc-body">
                                     <ul class="sc-list">
                                         <li><i class="bi bi-calendar-week"></i>
-                                            <div><strong>Tue – Sat</strong>&nbsp; 11 AM – 7 PM</div>
+                                            <div><strong>Mon – Sat</strong>&nbsp; 10 AM – 7 PM</div>
                                         </li>
                                         <li><i class="bi bi-calendar-week"></i>
-                                            <div><strong>Sunday</strong>&nbsp; 10 AM – 4 PM</div>
+                                            <div><strong>Sunday</strong>&nbsp; By Appointment Only</div>
                                         </li>
                                         <li><i class="bi bi-geo-alt-fill"></i>
-                                            <div>Rising Passion Studio, Vaishali Nagar, Jaipur</div>
+                                            <div>Threat Expert Training Centre, Jaipur, Rajasthan</div>
                                         </li>
                                         <li><i class="bi bi-telephone-fill"></i>
-                                            <div>+91 93520 23276</div>
+                                            <div>+91 80790 34973</div>
                                         </li>
                                     </ul>
                                 </div>
@@ -1311,9 +1310,9 @@
             <section class="other-events-section">
                 <div class="container">
                     <div class="section-title">
-                        <h2>Other Events by Act to Action</h2>
+                        <h2>Other Events by Threat Expert</h2>
                         <span class="divider-line"></span>
-                        <p>Explore more exciting programmes for young performers.</p>
+                        <p>Explore more cybersecurity programmes, workshops, and competitions.</p>
                     </div>
                     <div class="row g-4">
                         @foreach ($otherEvents as $oi => $other)
@@ -1329,10 +1328,10 @@
                                     <div class="sub-stripe" style="background:{{ $oStripe }}"></div>
                                     <div class="oe-card-img">
                                         @if ($other->banner_image)
-                                            <img src="{{ asset('public/' . $other->banner_image) }}" alt="{{ $other->title }}"
+                                            <img src="{{ $other->banner_url }}" alt="{{ $other->title }}"
                                                 loading="lazy" />
                                         @else
-                                            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80"
+                                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80"
                                                 alt="{{ $other->title }}" loading="lazy" />
                                         @endif
                                         @if ($oEarliest)

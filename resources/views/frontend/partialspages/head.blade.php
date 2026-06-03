@@ -9,8 +9,9 @@
     <meta name="keywords" content="" />
 
     <!-- Favicons -->
-    <link href="{{ asset('public/courseassets/img/faviconsdf.png') }}" rel="icon" />
-    <link href="{{ asset('public/courseassets/img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
+    <link href="{{ asset('courseassets/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('courseassets/img/faviconsdf.png') }}" rel="icon" />
+    <link href="{{ asset('courseassets/img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -20,15 +21,15 @@
         rel="stylesheet" />
 
     <!-- Vendor CSS Files -->
-    <link href="{{ asset('public/courseassets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('public/courseassets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" />
-    <link href="{{ asset('public/courseassets/vendor/aos/aos.css') }}" rel="stylesheet" />
-    <link href="{{ asset('public/courseassets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('public/courseassets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('public/courseassets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/vendor/aos/aos.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet" />
 
     <!-- Main CSS File -->
-    <link href="{{ asset('public/courseassets/css/main.css') }}" rel="stylesheet" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 

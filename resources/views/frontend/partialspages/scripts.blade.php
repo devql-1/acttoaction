@@ -3,16 +3,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- Newsletter AJAX handler -->
-<script src="{{ asset('public/js/newsletter.js') }}"></script>
+<script src="{{ asset('js/newsletter.js') }}"></script>
 
 <!-- Vendor JS Files -->
-<script src="{{ asset('public/courseassets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('public/courseassets/vendor/php-email-form/validate.js') }}"></script>
-<script src="{{ asset('public/courseassets/vendor/aos/aos.js') }}"></script>
-<script src="{{ asset('public/courseassets/vendor/glightbox/js/glightbox.min.js') }}"></script>
-<script src="{{ asset('public/courseassets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-<script src="{{ asset('public/courseassets/vendor/swiper/swiper-bundle.min.js') }}"></script>
-<script src="{{ asset('public/courseassets/js/main.js') }}"></script>
+<script src="{{ asset('courseassets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('courseassets/vendor/php-email-form/validate.js') }}"></script>
+<script src="{{ asset('courseassets/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('courseassets/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('courseassets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
+<script src="{{ asset('courseassets/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('courseassets/js/main.js') }}"></script>
 <script>
     // Filter Featured Courses
     function filterFeatured(catId, btn) {

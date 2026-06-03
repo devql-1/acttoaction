@@ -1,8 +1,6 @@
 @extends('frontend.course.layout')
 @section('content')
 
-
-
     <style>
         :root {
             /* Typography Stack */

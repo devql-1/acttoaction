@@ -19,7 +19,7 @@
             <div class="card-body py-3">
                 <div class="row align-items-center">
                     <div class="col-auto">
-                        <img src="{{ asset('public/' . $event->banner_image) }}" alt="{{ $event->title }}"
+                        <img src="{{ $event->banner_url }}" alt="{{ $event->title }}"
                             class="rounded" style="width:65px;height:65px;object-fit:cover;">
                     </div>
                     <div class="col">

@@ -57,7 +57,38 @@ class Event extends Model
     // Get banner image full URL
     public function getBannerUrlAttribute()
     {
-        return $this->banner_image ? asset('public/' . $this->banner_image) : asset('assets/img/placeholder-image.jpg');
+        if (!$this->banner_image) {
+            return asset('assets/img/placeholder-image.jpg');
+        }
+
+        if (Str::startsWith($this->banner_image, ['http://', 'https://', '//'])) {
+            return $this->banner_image;
+        }
+
+        $normalizedPath = ltrim($this->banner_image, '/');
+        $assetPrefix = $this->getPublicAssetPrefix();
+
+        if (Str::startsWith($normalizedPath, 'public/')) {
+            return asset($assetPrefix . Str::after($normalizedPath, 'public/'));
+        }
+
+        if (Str::startsWith($normalizedPath, 'img/')) {
+            return asset($assetPrefix . $normalizedPath);
+        }
+
+        if (Str::startsWith($normalizedPath, 'storage/')) {
+            return asset($assetPrefix . $normalizedPath);
+        }
+
+        return asset($assetPrefix . 'storage/' . $normalizedPath);
+    }
+
+    protected function getPublicAssetPrefix(): string
+    {
+        $documentRoot = request()?->server('DOCUMENT_ROOT');
+        $publicRoot = realpath(public_path());
+
+        return $documentRoot && realpath($documentRoot) === $publicRoot ? '' : 'public/';
     }
 
     // Scope: active events only

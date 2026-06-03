@@ -1046,13 +1046,14 @@
             <div class="container position-relative">
                 <div class="row align-items-center g-5">
                     <div class="col-lg-7">
-                        <div class="eyebrow"><i class="bi bi-calendar-star-fill"></i> Events & Programmes — Act to Action
+                        <div class="eyebrow"><i class="bi bi-calendar-star-fill"></i> Events & Programmes — Threat Expert
                         </div>
-                        <h1>Where Young Talent Meets<br />the <em>Spotlight</em></h1>
-                        <p class="hero-sub">From inter-school drama competitions to graduation ceremonies — Act to Action
-                            hosts Jaipur's most exciting performing arts events for children aged 3 to 29.</p>
+                        <h1>Where Cyber Talent Meets<br />the <em>Real World</em></h1>
+                        <p class="hero-sub">From live CTF competitions and bootcamp graduation ceremonies to corporate
+                            security workshops — Threat Expert hosts India's most practical cybersecurity events for
+                            students, professionals, and organisations.</p>
                         <div class="d-flex flex-wrap gap-3">
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-primary-solid">
+                            <a href="https://wa.me/918079034973" target="_blank" class="btn-primary-solid">
                                 <i class="bi bi-whatsapp"></i> Register for an Event
                             </a>
                             <a href="#evSection" class="btn-ghost">
@@ -1060,23 +1061,23 @@
                             </a>
                         </div>
                         <div class="hero-trust-row">
-                            <div class="hero-trust-item"><i class="bi bi-check-circle-fill"></i> 100% Free Events</div>
-                            <div class="hero-trust-item"><i class="bi bi-people-fill"></i> 1000+ Participants</div>
-                            <div class="hero-trust-item"><i class="bi bi-building"></i> 25+ Partner Schools</div>
-                            <div class="hero-trust-item"><i class="bi bi-patch-check-fill"></i> Since 2019</div>
+                            <div class="hero-trust-item"><i class="bi bi-check-circle-fill"></i> Free & Paid Events</div>
+                            <div class="hero-trust-item"><i class="bi bi-people-fill"></i> 500+ Participants</div>
+                            <div class="hero-trust-item"><i class="bi bi-building"></i> 20+ Partner Organisations</div>
+                            <div class="hero-trust-item"><i class="bi bi-patch-check-fill"></i> Since 2020</div>
                         </div>
                     </div>
                     <div class="col-lg-5 d-none d-lg-flex hero-mosaic">
                         <div class="row g-3 w-100">
                             <div class="col-6">
                                 <div class="mosaic-img"><img
-                                        src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=400&q=80"
-                                        alt="DramATA" /></div>
+                                        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80"
+                                        alt="CTF Competition" /></div>
                             </div>
                             <div class="col-6">
                                 <div class="mosaic-img" style="margin-top:22px;"><img
-                                        src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80"
-                                        alt="Chaupal" /></div>
+                                        src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=80"
+                                        alt="Security Workshop" /></div>
                             </div>
                             <div class="col-12">
                                 <div class="mosaic-img" style="height:130px;"><img
@@ -1097,8 +1098,7 @@
             <div class="container">
                 <div class="section-title">
                     <h2>All Events & Programmes</h2>
-
-                    <p>Click any event to see full details, sub-events, and register for free.</p>
+                    <p>Click any event to see full details, sub-events, and register.</p>
                 </div>
 
                 {{-- Filter bar --}}
@@ -1138,7 +1138,6 @@
                                 $statusIcon = 'bi-calendar-x';
                             }
 
-                            // Stripe colour per index
                             $stripes = [
                                 'linear-gradient(90deg,#112344,#175cdd)',
                                 'linear-gradient(90deg,#d97706,#fbbf24)',
@@ -1157,10 +1156,10 @@
                                 <div class="event-card-stripe" style="background:{{ $stripe }}"></div>
                                 <div class="event-card-img">
                                     @if ($event->banner_image)
-                                        <img src="{{ asset('public/' . $event->banner_image) }}" alt="{{ $event->title }}"
+                                        <img src="{{ asset($event->banner_image) }}" alt="{{ $event->title }}"
                                             loading="lazy" />
                                     @else
-                                        <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=80"
+                                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80"
                                             alt="{{ $event->title }}" loading="lazy" />
                                     @endif
                                     <span class="event-cat-badge status-{{ $statusLabel }}">
@@ -1227,10 +1226,17 @@
             <div class="container">
                 <div class="section-title">
                     <h2>Why Join Our Events</h2>
-                    <p>More than just an event — an experience worth remembering</p>
+                    <p>More than just an event — a career-defining experience</p>
                 </div>
                 <div class="row g-4">
-                    @foreach ([['bi-people-fill', 'Community & Connection', 'Meet like-minded people, form lasting bonds and grow your network in a welcoming environment.'], ['bi-lightbulb-fill', 'Learn & Grow', 'Hands-on workshops and sessions led by experts designed to inspire and expand your skills.'], ['bi-star-fill', 'Unforgettable Moments', 'From opening ceremonies to closing celebrations — every moment is crafted with care.'], ['bi-camera-fill', 'Capture the Memory', 'Professional coverage, live highlights, and an online gallery to relive every moment.'], ['bi-patch-check-fill', 'Certified Participation', 'Every participant receives a certificate recognising their involvement and contribution.'], ['bi-geo-alt-fill', 'Multiple Locations', 'Events held across cities so you can always find one near you and participate with ease.']] as [$icon, $title, $text])
+                    @foreach ([
+            ['bi-people-fill', 'Network with Security Professionals', 'Meet like-minded security practitioners, form lasting professional bonds, and grow your network in a high-trust environment.'],
+            ['bi-lightbulb-fill', 'Learn from Active Practitioners', 'Hands-on workshops and sessions led by certified ethical hackers and security experts designed to sharpen real skills.'],
+            ['bi-trophy-fill', 'Compete & Get Recognised', 'From CTF challenges to live attack simulations — compete, prove your skills, and earn recognition on a national stage.'],
+            ['bi-camera-fill', 'Capture the Experience', 'Professional event coverage, live highlights, and a gallery to relive every session and breakthrough moment.'],
+            ['bi-patch-check-fill', 'Certified Participation', 'Every participant receives a Threat Expert certificate of participation recognising their involvement.'],
+            ['bi-geo-alt-fill', 'Online & Offline Options', 'Events available both in-person at our Jaipur centre and online — so you can always participate from wherever you are.'],
+        ] as [$icon, $title, $text])
                         <div class="col-lg-4 col-md-6">
                             <div class="why-card">
                                 <div class="why-icon"><i class="bi {{ $icon }}"></i></div>
@@ -1250,35 +1256,34 @@
   ══════════════════════ --}}
         <section class="gallery-section" data-aos="fade-up">
             <div class="container">
-
                 <div class="section-title text-center">
-                    <div class="sh-label">Our Memories</div>
+                    <div class="sh-label">Our Highlights</div>
                     <h2>Event <em>Gallery</em></h2>
-
-                    <p>Moments & highlights from our students, events and performances</p>
+                    <p>Moments from our bootcamps, CTF competitions, lab sessions, and certification events.</p>
                 </div>
                 @include('frontend.partialspages.Gallery', [
                     'images' => $galleryImages,
                     'sectionTitle' => 'Event Highlights Gallery',
                     'sectionDesc' =>
-                        'A glimpse into the magic of our past events — the smiles, the performances, and the unforgettable moments captured in every frame.',
+                        'A glimpse into the world of Threat Expert events — the labs, the competitions, and the moments that shape India\'s next generation of cybersecurity professionals.',
                 ])
             </div>
         </section>
+
         {{-- ══════════════════════
-       FOR SCHOOLS
+       FOR ORGANISATIONS
   ══════════════════════ --}}
         <section class="business-section">
             <div class="container position-relative">
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
-                        <div class="biz-badge"><i class="bi bi-buildings-fill me-1"></i> For Schools &
-                            Institutions</div>
-                        <h2>Bring Our Events to Your School</h2>
-                        <p class="biz-p">Want to host DramATA, Actor's Chaupal, or a Cyber AI Threat Conclave at your school
-                            campus? We
-                            bring the full Act to Action experience directly to your students.</p>
-                        @foreach ([['bi-calendar-check-fill', 'Custom Event Scheduling', 'Choose a date that works for your school calendar — we\'ll come to you.'], ['bi-people-fill', 'Suitable for All Ages', 'From Nursery to Class 12 — tailored activities for every age group.'], ['bi-award-fill', 'Certificates & Awards', 'Every participant receives an official Act to Action certificate of participation.']] as [$ico, $title, $text])
+                        <div class="biz-badge"><i class="bi bi-buildings-fill me-1"></i> For Colleges &amp; Organisations
+                        </div>
+                        <h2>Bring Our Events to Your Campus or Office</h2>
+                        <p class="biz-p">Want to host a CTF competition, cybersecurity awareness workshop, or bootcamp
+                            graduation at your college or corporate office? We bring the full Threat Expert experience
+                            directly to your team.</p>
+                        @foreach ([['bi-calendar-check-fill', 'Custom Event Scheduling', 'Choose a date that works for your academic or corporate calendar — we\'ll come to you.'], ['bi-people-fill', 'Suitable for All Levels', 'From complete beginners to seasoned IT professionals — tailored sessions for every skill level.'], ['bi-award-fill', 'Certificates & Recognition', 'Every participant receives an official Threat Expert certificate of participation.']] as [$ico, $title, $text])
                             <div class="biz-feature-row">
                                 <div class="biz-ico"><i class="bi {{ $ico }}"></i></div>
                                 <div>
@@ -1288,7 +1293,7 @@
                             </div>
                         @endforeach
                         <div class="mt-4">
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-white-solid">
+                            <a href="https://wa.me/918079034973" target="_blank" class="btn-white-solid">
                                 <i class="bi bi-whatsapp"></i> Talk to Our Team
                             </a>
                         </div>
@@ -1296,20 +1301,20 @@
                     <div class="col-lg-6 d-none d-lg-block">
                         <div class="biz-stats-grid">
                             <div class="biz-stat-card">
-                                <div class="bsn">25<span>+</span></div>
-                                <div class="bsl">Partner Schools</div>
+                                <div class="bsn">20<span>+</span></div>
+                                <div class="bsl">Partner Organisations</div>
                             </div>
                             <div class="biz-stat-card">
-                                <div class="bsn">6<span>+</span></div>
-                                <div class="bsl">Centres in Jaipur</div>
+                                <div class="bsn">2<span>+</span></div>
+                                <div class="bsl">Training Centres</div>
                             </div>
                             <div class="biz-stat-card">
-                                <div class="bsn">3000<span>+</span></div>
-                                <div class="bsl">Children Impacted</div>
+                                <div class="bsn">500<span>+</span></div>
+                                <div class="bsl">Professionals Trained</div>
                             </div>
                             <div class="biz-stat-card">
                                 <div class="bsn">100<span>%</span></div>
-                                <div class="bsl">Free to Schools</div>
+                                <div class="bsl">Placement Support</div>
                             </div>
                         </div>
                     </div>
@@ -1323,12 +1328,11 @@
         <section class="testimonials-section">
             <div class="container">
                 <div class="section-title">
-                    <h2>What Parents & Schools Say</h2>
-
-                    <p>Real feedback from parents, students, and school coordinators who've attended our events.</p>
+                    <h2>What Students &amp; Clients Say</h2>
+                    <p>Real feedback from professionals, students, and organisations who've attended our events.</p>
                 </div>
                 <div class="row g-4">
-                    @foreach ([['P', 'Priya Sharma', 'Parent · DramATA 2024', '"DramATA was an incredible experience for my daughter. She came home glowing with confidence. The judges were professional and so encouraging!"'], ['R', 'Rajesh Agarwal', 'Parent · Cyber AI Threat Conclave 2024', '"The Cyber AI Threat Conclave was the best decision we made for our son. He came back a completely changed, confident child who loves performing on stage."'], ['S', 'Sunita Meena', 'Principal · Mayoor School', '"We hosted Actor\'s Chaupal at our school and the response was overwhelming. Students were energised and the ATA team was wonderfully professional."']] as [$initial, $name, $role, $quote])
+                    @foreach ([['A', 'Arjun Mehta', 'Student · CTF Competition 2024', '"The CTF event at Threat Expert was unlike anything I\'d experienced. Real-world challenges, great mentors, and I walked away with skills I could apply immediately."'], ['V', 'Vikram Joshi', 'HR Director · Corporate Workshop', '"We hosted a cybersecurity awareness workshop through Threat Expert and the response from our staff was overwhelming. Engaging, practical, and brilliantly delivered."'], ['P', 'Pooja Tiwari', 'Alumni · Bootcamp Graduation', '"The graduation ceremony after completing my Cloud Security bootcamp was a proud moment. Threat Expert truly makes you feel valued and part of a professional community."']] as [$initial, $name, $role, $quote])
                         <div class="col-md-6 col-lg-4">
                             <div class="testimonial-item">
                                 <div class="t-big-quote">"</div>
@@ -1353,18 +1357,15 @@
         </section>
 
         {{-- ══════════════════════
-       YOUTUBE / PARENT TESTIMONIALS
-       (kept exactly as-is from original)
+       YOUTUBE / TESTIMONIALS
   ══════════════════════ --}}
         <section class="video-section">
             <div class="container">
                 <div class="section-title" style="padding-bottom: 0px;">
-                    <div class="sh-label">Parents Testimonials</div>
+                    <div class="sh-label">Event Testimonials</div>
                     <h2>Event <em>Testimonials</em></h2>
-                    <p>Real stories from our event participants</p>
-
+                    <p>Real stories from our event participants and corporate clients.</p>
                 </div>
-
                 @include('frontend.partialspages.youtube', ['videos' => $videos])
             </div>
         </section>
@@ -1406,8 +1407,8 @@
             <div class="container">
                 <div class="newsletter-box" data-newsletter data-source="event">
                     <h3>Stay Updated on All Events</h3>
-                    <p>Get notified about upcoming events, new sub-events, and early registration slots before anyone else.
-                    </p>
+                    <p>Get notified about upcoming CTF competitions, bootcamp schedules, and early registration slots before
+                        anyone else.</p>
                     <div class="newsletter-form">
                         <input type="email" class="newsletter-email-input" placeholder="Enter your email address" />
                         <button type="button" class="btn-primary-solid newsletter-subscribe-btn"><i
@@ -1418,7 +1419,6 @@
         </section>
 
     </main>
-
     {{-- ══════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════ --}}

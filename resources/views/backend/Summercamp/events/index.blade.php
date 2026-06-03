@@ -53,8 +53,8 @@
                                                         style="display:inline-block;cursor:pointer;">
                                                         <a data-fancybox="gallery"
                                                             data-options='{"buttons": [], "click": "close"}'
-                                                            href="{{ asset('public/' . $event->banner_image) }}">
-                                                            <img src="{{ asset('public/' . $event->banner_image) }}"
+                                                            href="{{ $event->banner_url }}">
+                                                            <img src="{{ $event->banner_url }}"
                                                                 alt="{{ $event->title }}"
                                                                 style="width:50px;height:50px;object-fit:cover;
                     border-radius:8px;

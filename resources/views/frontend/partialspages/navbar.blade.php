@@ -1,5 +1,3 @@
-
-
 <header id="header" class="header fixed-top">
     @include('frontend.partialspages.ann_bar')
     <div class="topbar d-flex align-items-center dark-background">
@@ -27,7 +25,7 @@
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="logo d-flex align-items-center">
                 <div class="logo">
-                    <img src="{{ asset('public/img/logo/logo.png') }}" alt="ActToAction Logo">
+                    <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
                 </div>
             </a>
 
@@ -72,9 +70,10 @@
 
                     {{-- About dropdown: groups About Us + Join Us + Contact Us --}}
                     @php
-                        $aboutActive = request()->is('aboutus')
-                            || request()->routeIs('volunteer')
-                            || request()->routeIs('contactus');
+                        $aboutActive =
+                            request()->is('aboutus') ||
+                            request()->routeIs('volunteer') ||
+                            request()->routeIs('contactus');
                     @endphp
                     <li class="dropdown">
                         <a href="#" class="{{ $aboutActive ? 'active' : '' }}">
@@ -83,19 +82,19 @@
                         <ul>
                             <li>
                                 <a href="{{ route('aboutus') }}"
-                                   class="{{ request()->is('aboutus') ? 'active' : '' }}">
+                                    class="{{ request()->is('aboutus') ? 'active' : '' }}">
                                     About Us
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('volunteer') }}"
-                                   class="{{ request()->routeIs('volunteer') ? 'active' : '' }}">
+                                    class="{{ request()->routeIs('volunteer') ? 'active' : '' }}">
                                     Join Us
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('contactus') }}"
-                                   class="{{ request()->routeIs('contactus') ? 'active' : '' }}">
+                                    class="{{ request()->routeIs('contactus') ? 'active' : '' }}">
                                     Contact Us
                                 </a>
                             </li>
@@ -128,15 +127,15 @@
     </div>
 </header>
 <style>
-/* Keep the orange topbar (email + phone) visible on scroll.
+    /* Keep the orange topbar (email + phone) visible on scroll.
    Overrides main.css .scrolled .header .topbar { height: 0; visibility: hidden; } */
-.scrolled .header .topbar {
-    height: 40px !important;
-    visibility: visible !important;
-    overflow: visible !important;
-}
+    .scrolled .header .topbar {
+        height: 40px !important;
+        visibility: visible !important;
+        overflow: visible !important;
+    }
 
-.logo img {
+    .logo img {
         height: 120px;
     }
 
@@ -351,22 +350,27 @@
         flex-wrap: wrap;
         gap: 6px 18px;
     }
+
     .header .topbar .contact-info i.bi-whatsapp {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         gap: 0 6px;
     }
+
     .header .topbar .contact-info i.bi-whatsapp a {
         color: inherit;
         text-decoration: none;
     }
+
     .header .topbar .contact-info i.bi-whatsapp a:hover {
         text-decoration: underline;
     }
+
     .header .topbar .contact-info i.topbar-location {
         max-width: 260px;
     }
+
     .header .topbar .contact-info i.topbar-location span {
         white-space: nowrap;
         overflow: hidden;
@@ -390,6 +394,7 @@
             height: auto !important;
             padding: 8px 0 !important;
         }
+
         .header .topbar .contact-info {
             flex-direction: column;
             align-items: center;
@@ -397,15 +402,18 @@
             font-size: 13px;
             line-height: 1.3;
         }
+
         .header .topbar .contact-info i.bi-whatsapp {
             margin-left: 0 !important;
             justify-content: center;
         }
+
         .header .topbar .contact-info i a,
         .header .topbar .contact-info i span {
             font-size: 13px !important;
             padding-left: 4px;
         }
+
         /* Show location back on mobile, stacked */
         .header .topbar .contact-info i.topbar-location {
             display: flex !important;
@@ -413,6 +421,7 @@
             max-width: 92vw;
             justify-content: center;
         }
+
         .header .topbar .contact-info i.topbar-location span {
             white-space: normal;
             text-align: center;
@@ -423,10 +432,12 @@
         .header .topbar .contact-info {
             font-size: 12px;
         }
+
         .header .topbar .contact-info i a,
         .header .topbar .contact-info i span {
             font-size: 12px !important;
         }
+
         .header .topbar .contact-info i.bi-whatsapp a:nth-of-type(2) {
             display: none;
         }

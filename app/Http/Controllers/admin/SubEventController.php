@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\SubEvent;
 use App\Models\Event;
 use App\Models\State;
+use Illuminate\Support\Facades\Storage;
 
 class SubEventController extends Controller
 {
@@ -38,12 +39,7 @@ class SubEventController extends Controller
         ]);
 
         // Handle banner image upload
-        $bannerPath = null;
-        if ($request->hasFile('banner_image')) {
-            $filename = time() . '.' . $request->banner_image->extension();
-            $request->banner_image->move(public_path('img/event_banners'), $filename);
-            $bannerPath = 'img/event_banners/' . $filename;
-        }
+        $bannerPath = $this->storeBannerImage($request);
 
         $subEvent = SubEvent::create([
             'event_id' => $event->id,
@@ -110,13 +106,8 @@ class SubEventController extends Controller
 
         // Handle banner image upload
         if ($request->hasFile('banner_image')) {
-            // Delete old image if exists
-            if ($bannerPath && file_exists(public_path($bannerPath))) {
-                unlink(public_path($bannerPath));
-            }
-            $filename = time() . '.' . $request->banner_image->extension();
-            $request->banner_image->move(public_path('img/event_banners'), $filename);
-            $bannerPath = 'img/event_banners/' . $filename;
+            $this->deleteBannerImage($bannerPath);
+            $bannerPath = $this->storeBannerImage($request);
         }
 
         $subEvent->update([
@@ -152,9 +143,7 @@ class SubEventController extends Controller
         $eventId = $subEvent->event_id;
 
         // Delete banner image if exists
-        if ($subEvent->banner_image && file_exists(public_path($subEvent->banner_image))) {
-            unlink(public_path($subEvent->banner_image));
-        }
+        $this->deleteBannerImage($subEvent->banner_image);
 
         $subEvent->centers()->detach();
         $subEvent->delete();
@@ -168,5 +157,40 @@ class SubEventController extends Controller
         $event = Event::findOrFail($event_id);
         $subEvents = SubEvent::where('event_id', $event_id)->get();
         return view('backend.sub_events.show', compact('event', 'subEvents'));
+    }
+
+    private function storeBannerImage(Request $request): ?string
+    {
+        if (!$request->hasFile('banner_image')) {
+            return null;
+        }
+
+        $filename = time() . '.' . $request->banner_image->extension();
+        return $request->file('banner_image')->storeAs('event_banners', $filename, 'public');
+    }
+
+    private function deleteBannerImage(?string $path): void
+    {
+        if (!$path) {
+            return;
+        }
+
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+            return;
+        }
+
+        $legacyPath = public_path($path);
+        if (file_exists($legacyPath)) {
+            unlink($legacyPath);
+            return;
+        }
+
+        if (str_starts_with($path, 'public/')) {
+            $legacyPublicPath = public_path(substr($path, 7));
+            if (file_exists($legacyPublicPath)) {
+                unlink($legacyPublicPath);
+            }
+        }
     }
 }
