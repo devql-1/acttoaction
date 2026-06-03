@@ -1,9 +1,7 @@
 @extends('frontend.course.layout')
 @section('content')
-    
-
     <style>
-*,
+        *,
         *::before,
         *::after {
             box-sizing: border-box;
@@ -1288,8 +1286,8 @@
         }
 
         /* =====================================================
-                                                       RESPONSIVE — TABLET & MOBILE  (max-width: 768px)
-                                                       ===================================================== */
+                                                               RESPONSIVE — TABLET & MOBILE  (max-width: 768px)
+                                                               ===================================================== */
         @media (max-width: 768px) {
 
             .quiz-top-bar,
@@ -1381,8 +1379,8 @@
         }
 
         /* =====================================================
-                                                       RESPONSIVE — SMALL PHONES  (max-width: 480px)
-                                                       ===================================================== */
+                                                               RESPONSIVE — SMALL PHONES  (max-width: 480px)
+                                                               ===================================================== */
         @media (max-width: 480px) {
 
             .test-hero {
@@ -1498,7 +1496,7 @@
                 font-size: 15px;
             }
         }
-    
+
 
 
         .ina-scale-legend {
@@ -1537,38 +1535,34 @@
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
                         <div class="test-hero-eyebrow">
-                            <i class="bi bi-camera-video-fill"></i> Free {{ $test->test_name }}
+                            <i class="bi bi-shield-lock-fill"></i> Free {{ $test->test_name }}
                         </div>
-                        <h1>{{ $test->test_name }} for <span>Children & Teens</span></h1>
+                        <h1>{{ $test->test_name }} for <span>IT Professionals & Students</span></h1>
                         <div class="test-count-badge">
                             <div class="dot"></div>
-                            <span><strong>2,840</strong> tests taken in the last 30 days</span>
+                            <span><strong>2,840</strong> assessments taken in the last 30 days</span>
                         </div>
                         <p class="test-hero-desc">
-                            {{ $test->description ?? 'This free test will reveal your child\'s natural performance strengths — from emotional expression to stage confidence and camera presence. Discover which course is the perfect match.' }}
+                            {{ $test->description ?? 'This free assessment will reveal your natural cybersecurity strengths — from analytical thinking to threat detection instincts and defensive mindset. Discover which Threat Expert course is your perfect match.' }}
                         </p>
                         @if ($test->age)
                             <p style="font-size:14px;color:#6b7280;margin-bottom:12px;">
-                                <i class="bi bi-people-fill me-1"></i> Recommended for age:
+                                <i class="bi bi-people-fill me-1"></i> Recommended for:
                                 <strong>{{ $test->age }}</strong>
                             </p>
                         @endif
-                        {{-- <div class="reviewer-badge">
-                            <div class="rv-avatar">KA</div>
-                            <span>Reviewed by <strong>Kritesh Agarwal</strong>, Filmmaker & Child Acting Coach</span>
-                        </div> --}}
                         <div class="mt-3">
                             <a href="#quiz" class="btn d-inline-flex align-items-center gap-2"
                                 style="background:var(--accent-color);color:#fff;border-radius:30px;padding:13px 32px;font-family:var(--heading-font);font-weight:700;font-size:15px;">
-                                <i class="bi bi-play-circle-fill"></i> Start the Free Test
+                                <i class="bi bi-play-circle-fill"></i> Start the Free Assessment
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="hero-test-visual">
                             <div class="htv-header">
-                                <h4>🎭 {{ $test->test_name }}</h4>
-                                <p>Step 1 of {{ $categories->count() }} — Ready to discover your talent?</p>
+                                <h4>🛡️ {{ $test->test_name }}</h4>
+                                <p>Step 1 of {{ $categories->count() }} — Ready to discover your strengths?</p>
                             </div>
                             <div class="htv-progress-wrap">
                                 <div class="htv-progress-label"><span>Progress</span><span>0%</span></div>
@@ -1599,30 +1593,13 @@
             </div>
         </section>
 
-        {{-- ── MEDIA BAR ── --}}
-        {{-- <div class="media-bar">
-            <div class="container">
-                <p>As Seen In</p>
-                <div class="media-logos">
-                    <div class="media-logo">Rajasthan Patrika</div>
-                    <div class="media-logo">Dainik Bhaskar</div>
-                    <div class="media-logo">Cannes FF</div>
-                    <div class="media-logo">Dada Saheb Phalke</div>
-                    <div class="media-logo">RIFF</div>
-                    <div class="media-logo">Birla Auditorium</div>
-                    <div class="media-logo">Startup India</div>
-                    <div class="media-logo">Skill India</div>
-                </div>
-            </div>
-        </div> --}}
-
         {{-- ── QUIZ AREA ── --}}
         <section class="quiz-wrapper" id="quiz">
             <div class="container">
 
                 <div id="quiz-container">
                     <div class="quiz-top-bar">
-                        <h3>🎭 {{ $test->test_name }}</h3>
+                        <h3>🛡️ {{ $test->test_name }}</h3>
                         <span class="quiz-step-badge" id="step-badge">
                             Step 1 of {{ $categories->count() }}
                         </span>
@@ -1645,7 +1622,7 @@
 
                     <div class="quiz-body">
                         <div class="q-section-label" id="q-section-label">
-                            <i class="bi bi-emoji-smile"></i> Loading...
+                            <i class="bi bi-shield-lock"></i> Loading...
                         </div>
                         <div class="q-number" id="q-number"></div>
                         <div class="q-text" id="q-text"></div>
@@ -1672,180 +1649,6 @@
             </div>
         </section>
 
-        {{-- ── TALENT TYPES ── --}}
-        {{-- <section class="talent-types-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>What Are the 6 Acting Talent Types?</h2>
-                    <span class="divider"></span>
-                    <p>Act to Action's talent framework identifies 6 core performing arts profiles — each with unique
-                        strengths and the ideal course pathway.</p>
-                </div>
-                <div class="row g-4">
-                    @php
-                        $talentCards = [
-                            [
-                                'icon' => '🎭',
-                                'num' => 'Type 1',
-                                'name' => 'The Performer',
-                                'tagline' => 'Natural On-Screen Magnetism',
-                                'desc' =>
-                                    'Performers have natural charisma and camera presence. They light up on stage and on screen, captivating audiences effortlessly. Their energy is infectious and their confidence instinctive.',
-                                'traits' => ['Charismatic', 'Energetic', 'Camera-Ready'],
-                            ],
-                            [
-                                'icon' => '💙',
-                                'num' => 'Type 2',
-                                'name' => 'The Empath',
-                                'tagline' => 'Deep Emotional Expression',
-                                'desc' =>
-                                    'Empaths feel emotions deeply and express them powerfully. They connect with characters on a profound level and bring genuine feeling to every scene — making audiences truly believe.',
-                                'traits' => ['Sensitive', 'Expressive', 'Deeply Feeling'],
-                            ],
-                            [
-                                'icon' => '✨',
-                                'num' => 'Type 3',
-                                'name' => 'The Creator',
-                                'tagline' => 'Storytelling & Imagination',
-                                'desc' =>
-                                    'Creators have boundless imagination and a natural gift for storytelling. They invent characters, build worlds, and bring unique perspectives to their performances that surprise and delight.',
-                                'traits' => ['Imaginative', 'Inventive', 'Storyteller'],
-                            ],
-                            [
-                                'icon' => '👑',
-                                'num' => 'Type 4',
-                                'name' => 'The Leader',
-                                'tagline' => 'Stage Presence & Command',
-                                'desc' =>
-                                    'Leaders naturally command attention the moment they walk on stage. They have powerful presence, clear voice, and the ability to guide an audience through a performance with confidence.',
-                                'traits' => ['Confident', 'Authoritative', 'Commanding'],
-                            ],
-                            [
-                                'icon' => '🎤',
-                                'num' => 'Type 5',
-                                'name' => 'The Voice',
-                                'tagline' => 'Powerful Speech & Expression',
-                                'desc' =>
-                                    'Voices have extraordinary command of language, tone, and speech. They excel in public speaking, dialogue delivery, and voice modulation — making every word they speak memorable.',
-                                'traits' => ['Articulate', 'Persuasive', 'Expressive'],
-                            ],
-                            [
-                                'icon' => '🎬',
-                                'num' => 'Type 6',
-                                'name' => 'The Director',
-                                'tagline' => 'Vision, Craft & Filmmaking',
-                                'desc' =>
-                                    'Directors see the bigger picture. They notice composition, rhythm, and narrative. Their talent lies behind the camera — in storytelling, directing others, and crafting complete cinematic experiences.',
-                                'traits' => ['Visionary', 'Strategic', 'Detail-Oriented'],
-                            ],
-                        ];
-                    @endphp
-                    @foreach ($talentCards as $tc)
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="talent-type-card">
-                                <div class="tt-icon">{{ $tc['icon'] }}</div>
-                                <div class="tt-type-num">{{ $tc['num'] }}</div>
-                                <div class="tt-name">{{ $tc['name'] }}</div>
-                                <div class="tt-tagline">{{ $tc['tagline'] }}</div>
-                                <p class="tt-desc">{{ $tc['desc'] }}</p>
-                                <div class="tt-traits">
-                                    @foreach ($tc['traits'] as $trait)
-                                        <span class="tt-trait">{{ $trait }}</span>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </section> --}}
-
-        {{-- ── FAQ ── --}}
-        {{-- <section class="faq-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>{{ $test->test_name }} — FAQ</h2>
-                    <span class="divider"></span>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-9">
-                        <div class="accordion" id="faqAccordion">
-                            @php
-                                $faqs = [
-                                    [
-                                        'q' => 'What is this test based on?',
-                                        'a' =>
-                                            'This test is co-developed by Kritesh Agarwal (Filmmaker & Acting Coach), Dr. Bhumika Soni (Child Neuro Therapist), and child development experts at Act to Action. It combines performing arts science, neuro-psychology, and 6+ years of practical coaching data to accurately identify a child\'s natural talent type.',
-                                    ],
-                                    [
-                                        'q' => 'How long does the test take?',
-                                        'a' =>
-                                            'The test consists of ' .
-                                            $totalQuestions .
-                                            ' questions across ' .
-                                            $categories->count() .
-                                            ' sections and takes approximately ' .
-                                            ($test->duration ?? '8–10') .
-                                            ' minutes to complete. Questions are simple and fun — parents can complete it with their child together.',
-                                    ],
-                                    [
-                                        'q' => 'Is this a free test?',
-                                        'a' =>
-                                            'Yes, this test is completely free to take and receive your full results. There are no hidden fees, no credit card required, and no account needed. We believe every child deserves to discover their potential.',
-                                    ],
-                                    [
-                                        'q' => 'What will my results look like?',
-                                        'a' =>
-                                            'After completing the test, you will instantly receive your child\'s Talent Type (e.g., The Performer, The Empath), a score breakdown across 6 dimensions, key strength tags, a detailed description, and a personalised course recommendation from Act to Action\'s skill programmes.',
-                                    ],
-                                    [
-                                        'q' => 'What age group is this test for?',
-                                        'a' =>
-                                            'This test is designed for ' .
-                                            ($test->age
-                                                ? 'children aged ' . $test->age
-                                                : 'children and young adults aged 5 to 29') .
-                                            '. For children under 10, we recommend that parents complete the test on behalf of their child or together with them.',
-                                    ],
-                                    [
-                                        'q' => 'Can I have my school or group take this test?',
-                                        'a' =>
-                                            'Yes! Act to Action offers group assessments for schools, NGOs, and organisations. Contact us via WhatsApp to arrange a batch assessment session. We have partnered with 25+ top educational institutes across India.',
-                                    ],
-                                    [
-                                        'q' => 'Will you sell my data?',
-                                        'a' =>
-                                            'We do not sell your email or personal data to any third parties and have a zero-spam policy. We are registered with Startup India and iStart Rajasthan and comply with applicable privacy laws.',
-                                    ],
-                                ];
-                            @endphp
-                            @foreach ($faqs as $i => $faq)
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button {{ $i > 0 ? 'collapsed' : '' }}" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#faq{{ $i }}">
-                                            {{ $faq['q'] }}
-                                        </button>
-                                    </h2>
-                                    <div id="faq{{ $i }}"
-                                        class="accordion-collapse collapse {{ $i === 0 ? 'show' : '' }}"
-                                        data-bs-parent="#faqAccordion">
-                                        <div class="accordion-body">{{ $faq['a'] }}</div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="text-center mt-5">
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"
-                                class="btn d-inline-flex align-items-center gap-2"
-                                style="background:var(--accent-color);color:#fff;border-radius:30px;padding:13px 30px;font-family:var(--heading-font);font-weight:700;">
-                                <i class="bi bi-play-circle-fill"></i> Take the Test Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
     </main>
 
     <script>
@@ -2019,6 +1822,4 @@
 
         renderStep(0);
     </script>
-
-    
 @endsection
