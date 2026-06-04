@@ -1,14 +1,14 @@
 @extends('frontend.course.layout')
 @section('content')
-    
+
 
 
     <style>
-/* ════════════════════════════════════════════
-                                                                                   QUIZ RESULT PAGE — Act to Action
-                                                                                   Design: Deep navy + electric blue, editorial
-                                                                                   premium feel with bold typographic hierarchy
-                                                                                ════════════════════════════════════════════ */
+        /* ════════════════════════════════════════════
+                                                                                       QUIZ RESULT PAGE — Act to Action
+                                                                                       Design: Deep navy + electric blue, editorial
+                                                                                       premium feel with bold typographic hierarchy
+                                                                                    ════════════════════════════════════════════ */
         *,
         *::before,
         *::after {
@@ -1037,111 +1037,130 @@
                 padding: 14px;
             }
         }
-    /* ══════════════════════════════════════════════════════
-       @media print  –  "Save as PDF" stylesheet
-       Trigger: Ctrl+P  OR  the Download PDF button below.
-       In Chrome / Edge print dialog → set Destination to
-       "Save as PDF" and Margins to "None" for best output.
-    ══════════════════════════════════════════════════════ */
-    @media print {
-        @page { size: A4 portrait; margin: 0; }
 
-        /* Force background colours / images to print */
-        * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust:         exact !important;
-            color-adjust:               exact !important;
+        /* ══════════════════════════════════════════════════════
+           @media print  –  "Save as PDF" stylesheet
+           Trigger: Ctrl+P  OR  the Download PDF button below.
+           In Chrome / Edge print dialog → set Destination to
+           "Save as PDF" and Margins to "None" for best output.
+        ══════════════════════════════════════════════════════ */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            /* Force background colours / images to print */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            /* ── Hide site chrome ── */
+            #header,
+            #footer,
+            .ann-bar,
+            #scrollTopBtn,
+            .rh-actions {
+                display: none !important;
+            }
+
+            /* ── Remove margin added to compensate for fixed nav ── */
+            main.main {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+
+            /* ── Score ring: replace conic-gradient with plain border ─
+               (conic-gradient prints unreliably; border is exact)   ── */
+            #score-ring {
+                background: none !important;
+                border: 14px solid var(--print-ring-color, #175cdd) !important;
+                box-shadow: none !important;
+            }
+
+            /* ── Keep key cards intact across pages ── */
+            .rh-hero,
+            .res-section,
+            .type-spotlight,
+            .res-card,
+            .graph-card,
+            .cat-score-row,
+            .qa-block,
+            .qa-item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
         }
-
-        /* ── Hide site chrome ── */
-        #header, #footer, .ann-bar,
-        #scrollTopBtn, .rh-actions      { display: none !important; }
-
-        /* ── Remove margin added to compensate for fixed nav ── */
-        main.main                       { margin-top: 0 !important; padding-top: 0 !important; }
-
-        /* ── Score ring: replace conic-gradient with plain border ─
-           (conic-gradient prints unreliably; border is exact)   ── */
-        #score-ring {
-            background:  none !important;
-            border:      14px solid var(--print-ring-color, #175cdd) !important;
-            box-shadow:  none !important;
-        }
-
-        /* ── Keep key cards intact across pages ── */
-        .rh-hero, .res-section,
-        .type-spotlight, .res-card,
-        .graph-card, .cat-score-row,
-        .qa-block, .qa-item             { break-inside: avoid; page-break-inside: avoid; }
-    }
     </style>
     {{-- Chart.js must load before any graph @include partial runs --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @php
         /* ════════════════════════════════════════════
-           TALENT TYPES — used as FALLBACK when no
+           CYBERSECURITY APTITUDE TYPES — used as FALLBACK when no
            TestResultRange is configured for this score
         ════════════════════════════════════════════ */
         $talentTypes = [
             'performer' => [
-                'name' => 'The Performer',
-                'emoji' => '🎭',
-                'tagline' => 'Natural On-Screen Magnetism',
+                'name' => 'The Threat Hunter',
+                'emoji' => '🛡️',
+                'tagline' => 'Natural Offensive Security Instinct',
                 'desc' =>
-                    'Your child has exceptional natural charisma and camera presence. They light up every room, command attention instinctively, and make every performance feel alive and genuine. They were born for the screen.',
-                'course' => 'Screen Acting + Camera Techniques',
-                'tags' => ['Charismatic', 'Camera-Ready', 'Energetic', 'Scene-Stealer'],
+                    'You have exceptional natural instincts for identifying vulnerabilities and thinking like an attacker. You light up when faced with a challenge, approach problems creatively, and have the mindset that drives elite penetration testers and red teamers.',
+                'course' => 'Ethical Hacking + Penetration Testing',
+                'tags' => ['Offensive Mindset', 'Vulnerability Hunter', 'Red Team Ready', 'Quick Thinker'],
                 'color' => '#175cdd',
             ],
             'empath' => [
-                'name' => 'The Empath',
-                'emoji' => '💙',
-                'tagline' => 'Deep Emotional Expression',
+                'name' => 'The Analyst',
+                'emoji' => '🔍',
+                'tagline' => 'Deep Investigative Thinking',
                 'desc' =>
-                    'Your child feels emotions profoundly and channels them into powerful, believable performances. Their ability to connect emotionally with characters and audiences is rare and extremely valuable in performing arts.',
-                'course' => 'Screen Acting + Personality Development',
-                'tags' => ['Deeply Feeling', 'Expressive', 'Authentic', 'Emotionally Intelligent'],
+                    'You have a rare ability to observe patterns, connect the dots, and reconstruct what happened after a security incident. Your methodical, detail-oriented approach makes you ideally suited for digital forensics and threat intelligence roles.',
+                'course' => 'Digital Forensics + Incident Response',
+                'tags' => ['Detail-Oriented', 'Methodical', 'Pattern Recognition', 'Investigative'],
                 'color' => '#7C3AED',
             ],
             'creator' => [
-                'name' => 'The Creator',
-                'emoji' => '✨',
-                'tagline' => 'Storytelling & Wild Imagination',
+                'name' => 'The Builder',
+                'emoji' => '⚙️',
+                'tagline' => 'Secure Architecture & Development',
                 'desc' =>
-                    "Your child's imagination is extraordinary. They invent entire worlds, create vivid characters, and bring total originality to everything they do. Storytelling is their superpower.",
-                'course' => 'Theatre & Stage + Filmmaking',
-                'tags' => ['Imaginative', 'Inventive', 'Original', 'Storyteller'],
+                    'Your strength lies in building systems that are secure by design. You think about security from the ground up, understand how applications are constructed, and have a natural instinct for identifying and fixing weaknesses in code and infrastructure.',
+                'course' => 'Secure Web Development + Cloud Security',
+                'tags' => ['Security-First', 'Technical', 'Systems Thinker', 'Developer Mindset'],
                 'color' => '#059669',
             ],
             'leader' => [
-                'name' => 'The Leader',
-                'emoji' => '👑',
-                'tagline' => 'Stage Presence & Command',
+                'name' => 'The Defender',
+                'emoji' => '🔐',
+                'tagline' => 'SOC Operations & Threat Response',
                 'desc' =>
-                    'Your child naturally commands attention and authority the moment they enter a room. They have powerful stage presence and the natural ability to lead an audience through any performance with total confidence.',
-                'course' => 'Screen Acting + Public Speaking',
-                'tags' => ['Commanding', 'Confident', 'Authoritative', 'Natural Leader'],
+                    'You naturally take command in high-pressure situations and have the confidence and decisiveness that defines great SOC analysts and incident response leads. You thrive when monitoring, detecting, and neutralising active threats in real time.',
+                'course' => 'SOC Operations + SIEM & SOAR',
+                'tags' => ['Decisive', 'Calm Under Pressure', 'Monitoring Expert', 'Incident Commander'],
                 'color' => '#d97706',
             ],
             'voice' => [
-                'name' => 'The Voice',
-                'emoji' => '🎤',
-                'tagline' => 'Powerful Speech & Expression',
+                'name' => 'The Communicator',
+                'emoji' => '📋',
+                'tagline' => 'Security Awareness & GRC',
                 'desc' =>
-                    "Your child's greatest performing gift is their voice — its tone, clarity, and expressive range. They excel in dialogue delivery, public speaking, and voice-led performance of all kinds.",
-                'course' => 'Public Speaking + Theatre & Stage',
-                'tags' => ['Articulate', 'Persuasive', 'Expressive', 'Clear Communicator'],
+                    'Your greatest security strength is your ability to communicate risk clearly and influence people. You excel at translating complex threats into actionable guidance — the defining skill of governance, risk, and compliance professionals.',
+                'course' => 'Cybersecurity Awareness + GRC Fundamentals',
+                'tags' => ['Clear Communicator', 'Risk-Aware', 'Policy Thinker', 'Influencer'],
                 'color' => '#db2777',
             ],
             'director' => [
-                'name' => 'The Director',
-                'emoji' => '🎬',
-                'tagline' => 'Vision, Craft & Filmmaking',
+                'name' => 'The Strategist',
+                'emoji' => '🌐',
+                'tagline' => 'Big-Picture Security Architecture',
                 'desc' =>
-                    'Your child has the eye of a born director. They see the bigger picture, understand narrative structure, notice composition details others miss, and have a natural gift for guiding the creative process.',
-                'course' => 'Filmmaking + Screen Acting',
-                'tags' => ['Visionary', 'Strategic', 'Detail-Oriented', 'Big-Picture Thinker'],
+                    'You see the entire security landscape — infrastructure, people, processes, and risk. Your ability to think strategically and design holistic defence frameworks makes you ideal for security architecture and leadership roles.',
+                'course' => 'Cloud Security + Security Architecture',
+                'tags' => ['Strategic Thinker', 'Big-Picture', 'Architecture Mindset', 'Risk Leader'],
                 'color' => '#0891b2',
             ],
         ];
@@ -1149,44 +1168,24 @@
         $tt = $talentTypes[$topTypeKey ?? 'performer'] ?? $talentTypes['performer'];
 
         /* ════════════════════════════════════════════
-                                                                                                           TestResultRange DATA
-                                                                                                           ─────────────────────────────────────────
-                                                                                                           $range comes from session (set in submit())
-                                                                                                           It's a plain PHP array built from:
-               TestResultRange::where('test_id', $id)
-                   ->where('min_percent', '<=', $overallPct)
-                   ->where('max_percent', '>=', $overallPct)
-                   ->first()
-           and stored as:
-               'range' => [
-                   'label'              => $range->label,
-                   'emoji'              => $range->emoji,
-                   'tagline'            => $range->tagline,
-                   'description'        => $range->description,
-                   'recommended_course' => $range->recommended_course,
-                   'tags'               => $range->tags,   // cast as array in model
-                   'color'              => $range->color,
-                   'min_percent'        => $range->min_percent,
-                   'max_percent'        => $range->max_percent,
-               ]
-           If no range matched → $range is null → fallback to talent type
+           TestResultRange DATA — same logic, unchanged
         ════════════════════════════════════════════ */
-$hasRange = !empty($range);
+        $hasRange = !empty($range);
 
-$displayLabel = $range['label'] ?? $tt['name'];
-$displayEmoji = $range['emoji'] ?? $tt['emoji'];
-$displayTagline = $range['tagline'] ?? $tt['tagline'];
-$displayDesc = $range['description'] ?? $tt['desc'];
-$displayCourse = $range['recommended_course'] ?? $tt['course'];
-$displayTags = !empty($range['tags']) ? $range['tags'] : $tt['tags'];
-$displayColor = $range['color'] ?? $tt['color'];
-$rangeMin = $range['min_percent'] ?? null;
-$rangeMax = $range['max_percent'] ?? null;
+        $displayLabel = $range['label'] ?? $tt['name'];
+        $displayEmoji = $range['emoji'] ?? $tt['emoji'];
+        $displayTagline = $range['tagline'] ?? $tt['tagline'];
+        $displayDesc = $range['description'] ?? $tt['desc'];
+        $displayCourse = $range['recommended_course'] ?? $tt['course'];
+        $displayTags = !empty($range['tags']) ? $range['tags'] : $tt['tags'];
+        $displayColor = $range['color'] ?? $tt['color'];
+        $rangeMin = $range['min_percent'] ?? null;
+        $rangeMax = $range['max_percent'] ?? null;
 
-/* Answer display maps (1-indexed to match scale 1–5) */
-$ansLabels = ['', 'Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
-$ansEmoji = ['', '😟', '😐', '🙂', '😊', '🤩'];
-$ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-always'];
+        /* Answer display maps (1-indexed to match scale 1–5) */
+        $ansLabels = ['', 'Never', 'Rarely', 'Sometimes', 'Often', 'Always'];
+        $ansEmoji = ['', '😟', '😐', '🙂', '😊', '🤩'];
+        $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-always'];
     @endphp
 
     <main class="main">
@@ -1207,7 +1206,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
 
                         <div class="rh-eyebrow au">
                             <span class="dot-live"></span>
-                            Your Result is Ready
+                            Your Assessment Result is Ready
                         </div>
 
                         <h1 class="au au-1">
@@ -1221,7 +1220,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                             <div class="rh-badge">
                                 <div class="badge-emoji">{{ $displayEmoji }}</div>
                                 <div class="badge-meta">
-                                    <small>Dominant Talent Type</small>
+                                    <small>Dominant Aptitude Type</small>
                                     <strong>{{ $displayLabel }}</strong>
                                 </div>
                             </div>
@@ -1244,7 +1243,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                             <button type="button" class="rh-btn-primary" id="downloadBtn" onclick="printResult()">
                                 <i class="bi bi-file-earmark-pdf"></i> Download PDF
                             </button>
-                            <a href="https://wa.me/?text={{ urlencode('🎭 ' . $displayEmoji . ' ' . $displayLabel . ' — ' . $displayTagline . '! Free test: acttoaction.com') }}"
+                            <a href="https://wa.me/?text={{ urlencode('🛡️ ' . $displayEmoji . ' ' . $displayLabel . ' — ' . $displayTagline . '! Free assessment: threatxpert.com') }}"
                                 target="_blank" class="rh-btn-ghost">
                                 <i class="bi bi-whatsapp"></i> Share
                             </a>
@@ -1278,16 +1277,14 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
 
         {{-- ════════════════════════════════════════════
         SECTION 1 — OVERALL RESULT SUMMARY
-        Shows TestResultRange data if matched,
-        otherwise falls back to talent type profile
         ════════════════════════════════════════════ --}}
         <section class="res-section bg-soft">
             <div class="container">
 
                 <div class="sec-head">
-                    <h2>Your Complete Result</h2>
+                    <h2>Your Complete Assessment Result</h2>
                     <span class="sh-bar"></span>
-                    <p>A full breakdown of your child's performing arts talent profile across all dimensions.</p>
+                    <p>A full breakdown of your cybersecurity aptitude profile across all dimensions.</p>
                 </div>
 
                 {{-- LEFT: Type spotlight --}}
@@ -1306,8 +1303,8 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                                 </div>
                             @else
                                 <div class="ts-source-badge fallback-source">
-                                    <i class="bi bi-stars"></i>
-                                    Talent Type Profile
+                                    <i class="bi bi-shield-lock"></i>
+                                    Aptitude Type Profile
                                 </div>
                             @endif
 
@@ -1374,13 +1371,13 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                 {{-- Course --}}
                 @if ($displayCourse)
                     <div class="course-pill">
-                        <div class="cp-icon">🎬</div>
+                        <div class="cp-icon">🛡️</div>
                         <div>
                             <h6>
                                 @if ($hasRange)
                                     Admin-Recommended Course
                                 @else
-                                    Suggested Course for Your Type
+                                    Suggested Course for Your Aptitude Type
                                 @endif
                             </h6>
                             <p>{{ $displayCourse }}</p>
@@ -1394,8 +1391,6 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
 
         {{-- ════════════════════════════════════════════
         SECTION 2 — CATEGORY SCORES
-        Each category card shows score + all
-        question answers from $answers array
         ════════════════════════════════════════════ --}}
         <section class="res-section bg-white">
             <div class="container">
@@ -1403,7 +1398,8 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                 <div class="sec-head">
                     <h2>Category-Wise Scores</h2>
                     <span class="sh-bar"></span>
-                    <p>Performance across all {{ $chartData->count() }} test sections, with each question answered.</p>
+                    <p>Performance across all {{ $chartData->count() }} assessment sections, with each question answered.
+                    </p>
                 </div>
 
                 <div class="row g-4">
@@ -1411,7 +1407,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                     @foreach ($test->categories as $si => $cat)
                         @php
                             $catColor = $cat->color ?? ($chartData[$si]['color'] ?? '#175cdd');
-                            $catIcon = $cat->icon ?? ($chartData[$si]['icon'] ?? '📋');
+                            $catIcon = $cat->icon ?? ($chartData[$si]['icon'] ?? '🛡️');
                             $catName = $cat->category_name ?? ($cat->name ?? 'Section ' . ($si + 1));
                             $catScore = $chartData[$si]['score'] ?? 0;
                         @endphp
@@ -1451,10 +1447,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
 
 
         {{-- ════════════════════════════════════════════
-        SECTION 3 — DYNAMIC GRAPH (admin-selected)
-        Admin sets graph_type per test in
-        TestGraphConfig table. Options: bar, radar,
-        pie, line, none
+        SECTION 3 — DYNAMIC GRAPH
         ════════════════════════════════════════════ --}}
         @if (isset($graphType) && $graphType !== 'none')
             <section class="res-section bg-soft">
@@ -1463,15 +1456,15 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                     <div class="sec-head">
                         @php
                             $graphTitles = [
-                                'bar' => '📊 Talent Bar Chart',
-                                'radar' => '🕸️ Talent Radar',
-                                'pie' => '🥧 Talent Distribution',
+                                'bar' => '📊 Aptitude Bar Chart',
+                                'radar' => '🕸️ Aptitude Radar',
+                                'pie' => '🥧 Aptitude Distribution',
                                 'line' => '📈 Performance Line',
                             ];
                         @endphp
                         <h2>{{ $graphTitles[$graphType] ?? '📊 Score Chart' }}</h2>
                         <span class="sh-bar"></span>
-                        <p>Visual breakdown of your child's complete talent profile.</p>
+                        <p>Visual breakdown of your complete cybersecurity aptitude profile.</p>
                     </div>
 
                     <div class="scores-card" style="max-width:820px;margin:0 auto;">
@@ -1479,7 +1472,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                             <div class="sch-icon"><i class="bi bi-bar-chart-fill"></i></div>
                             <div>
                                 <p class="sch-title">Score Breakdown Chart</p>
-                                <p class="sch-sub">Visual representation of the full talent profile</p>
+                                <p class="sch-sub">Visual representation of your full aptitude profile</p>
                             </div>
                         </div>
                         <div class="graph-card-body">
@@ -1494,8 +1487,6 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
 
         {{-- ════════════════════════════════════════════
         SECTION 4 — QUESTION-BY-QUESTION BREAKDOWN
-        Detailed card per category showing every
-        question and its answer label
         ════════════════════════════════════════════ --}}
         <section class="res-section bg-white">
             <div class="container">
@@ -1511,7 +1502,7 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
                     @foreach ($test->categories as $si => $cat)
                         @php
                             $catColor = $cat->color ?? ($chartData[$si]['color'] ?? '#175cdd');
-                            $catIcon = $cat->icon ?? ($chartData[$si]['icon'] ?? '📋');
+                            $catIcon = $cat->icon ?? ($chartData[$si]['icon'] ?? '🛡️');
                             $catName = $cat->category_name ?? ($cat->name ?? 'Section ' . ($si + 1));
                             $catScore = $chartData[$si]['score'] ?? 0;
                         @endphp
@@ -1563,26 +1554,26 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
         ════════════════════════════════════════════ --}}
         <section class="final-cta">
             <div class="container">
-                <h2>Ready to Turn This Talent into a Career?</h2>
-                <p>Book a free appointment — our expert coaches will guide your child to the perfect course based on these
-                    personalised results.</p>
+                <h2>Ready to Turn Your Aptitude into a Career?</h2>
+                <p>Book a free demo class — our expert trainers will guide you to the perfect course based on your
+                    personalised assessment results.</p>
                 <div class="d-flex gap-3 justify-content-center flex-wrap">
-                    <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank">
+                    <a href="https://wa.me/918079034973" target="_blank">
                         <button class="rh-btn-primary" style="font-size:15px;padding:14px 30px;">
-                            <i class="bi bi-whatsapp"></i> Book Free Appointment
+                            <i class="bi bi-whatsapp"></i> Book Free Demo Class
                         </button>
                     </a>
                     <a href="#">
                         <button class="rh-btn-ghost" style="font-size:15px;padding:13px 26px;">
-                            <i class="bi bi-arrow-repeat"></i> Retake the Test
+                            <i class="bi bi-arrow-repeat"></i> Retake the Assessment
                         </button>
                     </a>
                 </div>
                 <div class="trust-row">
-                    <div class="trust-item"><i class="bi bi-check-circle-fill"></i> No-risk 1-month trial</div>
-                    <div class="trust-item"><i class="bi bi-check-circle-fill"></i> Only 20 seats per batch</div>
+                    <div class="trust-item"><i class="bi bi-check-circle-fill"></i> Free demo class included</div>
+                    <div class="trust-item"><i class="bi bi-check-circle-fill"></i> Only 15 seats per batch</div>
                     <div class="trust-item"><i class="bi bi-check-circle-fill"></i> Certificate on completion</div>
-                    <div class="trust-item"><i class="bi bi-check-circle-fill"></i> Govt. registered institute</div>
+                    <div class="trust-item"><i class="bi bi-check-circle-fill"></i> 100% placement support</div>
                 </div>
             </div>
         </section>
@@ -1593,7 +1584,6 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
         style="display: none;">
         <i class="bi bi-arrow-up"></i>
     </button>
-
     <script>
         const OVERALL = {{ $overallPct }};
 
@@ -1643,35 +1633,35 @@ $ansBadge = ['', 'ans-never', 'ans-rarely', 'ans-sometimes', 'ans-often', 'ans-a
     </script>
 
     <script>
-    /* ══════════════════════════════════════════════════════
-       printResult()
-       Uses the browser's built-in print engine — zero deps,
-       always works, pixel-perfect output.
-       Steps:
-         1. Set CSS variable --print-ring-color so @media print
-            CSS can draw a solid border on the score ring.
-         2. Scroll to top (so print starts from y=0).
-         3. Call window.print() → browser opens print dialog.
-            User selects "Save as PDF" + Margins: None → Done.
-         4. afterprint event fires → restore ring colour var.
-    ══════════════════════════════════════════════════════ */
-    function printResult() {
-        const color = '{{ $displayColor }}';
+        /* ══════════════════════════════════════════════════════
+           printResult()
+           Uses the browser's built-in print engine — zero deps,
+           always works, pixel-perfect output.
+           Steps:
+             1. Set CSS variable --print-ring-color so @media print
+                CSS can draw a solid border on the score ring.
+             2. Scroll to top (so print starts from y=0).
+             3. Call window.print() → browser opens print dialog.
+                User selects "Save as PDF" + Margins: None → Done.
+             4. afterprint event fires → restore ring colour var.
+        ══════════════════════════════════════════════════════ */
+        function printResult() {
+            const color = '{{ $displayColor }}';
 
-        /* Expose ring colour to @media print CSS */
-        document.documentElement.style.setProperty('--print-ring-color', color);
+            /* Expose ring colour to @media print CSS */
+            document.documentElement.style.setProperty('--print-ring-color', color);
 
-        /* Scroll to top so the printout begins at the hero */
-        window.scrollTo(0, 0);
+            /* Scroll to top so the printout begins at the hero */
+            window.scrollTo(0, 0);
 
-        /* Restore CSS variable once the dialog closes */
-        window.addEventListener('afterprint', function cleanup() {
-            document.documentElement.style.removeProperty('--print-ring-color');
-            window.removeEventListener('afterprint', cleanup);
-        });
+            /* Restore CSS variable once the dialog closes */
+            window.addEventListener('afterprint', function cleanup() {
+                document.documentElement.style.removeProperty('--print-ring-color');
+                window.removeEventListener('afterprint', cleanup);
+            });
 
-        window.print();
-    }
+            window.print();
+        }
     </script>
 
 @endsection

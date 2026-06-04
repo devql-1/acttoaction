@@ -1499,19 +1499,18 @@
             <div class="container">
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
-                        <div class="eyebrow"><i class="bi bi-lightning-charge-fill"></i> Free Skill & Talent Assessments
+                        <div class="eyebrow"><i class="bi bi-shield-lock-fill"></i> Free Cybersecurity Skill Assessments
                         </div>
-                        <h1>Understand your child’s strengths with <em>child development–informed </em> skill
-                            assessments</h1>
-                        <p class="hero-sub">Parenting today cannot rely only on the methods of the past, because childhood,
-                            opportunity, and the future world have changed. Act to Action created this assessment ecosystem
-                            to help parents understand each child through a more personalised, modern, and
-                            development-sensitive lens. Built with a child development–informed, applied psychology–guided,
-                            and quality-governed approach, these assessments are designed to support clearer decisions,
-                            personalised growth pathways, and meaningful future readiness.</p>
+                        <h1>Understand your cybersecurity strengths with <em>industry–informed</em> skill assessments</h1>
+                        <p class="hero-sub">The cybersecurity talent landscape is evolving rapidly — and knowing where your
+                            strengths and gaps lie is the first step to a successful career. Threat Expert created this
+                            assessment ecosystem to help students and professionals understand their readiness through a
+                            personalised, practical, and career-sensitive lens. Built with an industry–informed, applied
+                            psychology–guided, and quality-governed approach, these assessments are designed to support
+                            clearer decisions, personalised learning pathways, and meaningful career readiness.</p>
                         <div class="hero-cta-row">
                             <a href="#tests" class="btn-primary-solid">
-                                <i class="bi bi-play-circle-fill"></i> Take Test
+                                <i class="bi bi-play-circle-fill"></i> Take Assessment
                             </a>
                             <a href="{{ route('index.course') }}" class="btn-ghost">
                                 <i class="bi bi-grid-3x3-gap"> </i> View All Courses
@@ -1520,8 +1519,8 @@
                         <div class="hero-trust-row">
                             <div class="hero-trust-item"><i class="bi bi-check-circle-fill"></i> 100% Free</div>
                             <div class="hero-trust-item"><i class="bi bi-clock"></i> 5–10 min each</div>
-                            <div class="hero-trust-item"><i class="bi bi-shield-check"></i> Age-appropriate format</div>
-                            <div class="hero-trust-item"><i class="bi bi-people-fill"></i> Personalised result direction
+                            <div class="hero-trust-item"><i class="bi bi-shield-check"></i> Career-relevant format</div>
+                            <div class="hero-trust-item"><i class="bi bi-people-fill"></i> Personalised course direction
                             </div>
                         </div>
                     </div>
@@ -1530,9 +1529,9 @@
                             <div class="test-preview-stack">
                                 @php
                                     $heroCards = [
-                                        ['icon' => '🎭', 'tag_class' => 'tag-popular', 'tag_text' => '⭐ Most Popular'],
-                                        ['icon' => '🎯', 'tag_class' => 'tag-free', 'tag_text' => 'Free'],
-                                        ['icon' => '💬', 'tag_class' => 'tag-quick', 'tag_text' => '5 mins'],
+                                        ['icon' => '🛡️', 'tag_class' => 'tag-popular', 'tag_text' => '⭐ Most Popular'],
+                                        ['icon' => '🔐', 'tag_class' => 'tag-free', 'tag_text' => 'Free'],
+                                        ['icon' => '💻', 'tag_class' => 'tag-quick', 'tag_text' => '5 mins'],
                                     ];
                                     $pcClasses = ['pc1', 'pc2', 'pc3'];
                                 @endphp
@@ -1547,7 +1546,6 @@
                                     </div>
                                 @endforeach
 
-                                {{-- Fallback placeholders if fewer than 3 tests --}}
                                 @for ($j = $tests->count(); $j < 3; $j++)
                                     <div class="preview-card {{ $pcClasses[$j] }}">
                                         <div class="pc-icon">{{ $heroCards[$j]['icon'] }}</div>
@@ -1568,55 +1566,53 @@
         <section class="tests-section" id="tests">
             <div class="container">
                 <div class="section-title">
-                    <h2>Tests & Assessments</h2>
+                    <h2>Assessments & Skill Tests</h2>
                     <span class="divider-line"></span>
-                    <p>Free, science-backed assessments designed by child development experts and professional acting
-                        coaches.</p>
+                    <p>Free, industry-backed assessments designed by certified cybersecurity professionals and career
+                        development experts.</p>
                 </div>
 
                 @if ($tests->isEmpty())
                     <div class="text-center py-5">
                         <p style="color:#6b7280;font-size:16px;">No assessments available at the moment. Please check back
-                            soon!
-                        </p>
+                            soon!</p>
                     </div>
                 @else
                     <div class="row g-4">
                         @php
-                            // {{-- Palette cycles through for visual variety --}}
                             $palettes = [
                                 [
                                     'gradient' => 'linear-gradient(90deg,#175cdd,#60a5fa)',
                                     'icon_bg' => '#eff6ff',
-                                    'icon' => '🎭',
+                                    'icon' => '🛡️',
                                     'badge_bg' => '#eff6ff',
                                     'badge_text' => '#175cdd',
                                 ],
                                 [
                                     'gradient' => 'linear-gradient(90deg,#7c3aed,#a78bfa)',
                                     'icon_bg' => '#f5f3ff',
-                                    'icon' => '🌟',
+                                    'icon' => '🔐',
                                     'badge_bg' => '#f5f3ff',
                                     'badge_text' => '#7c3aed',
                                 ],
                                 [
                                     'gradient' => 'linear-gradient(90deg,#059669,#34d399)',
                                     'icon_bg' => '#ecfdf5',
-                                    'icon' => '🎯',
+                                    'icon' => '💻',
                                     'badge_bg' => '#ecfdf5',
                                     'badge_text' => '#059669',
                                 ],
                                 [
                                     'gradient' => 'linear-gradient(90deg,#d97706,#fbbf24)',
                                     'icon_bg' => '#fffbeb',
-                                    'icon' => '💬',
+                                    'icon' => '🔎',
                                     'badge_bg' => '#fffbeb',
                                     'badge_text' => '#d97706',
                                 ],
                                 [
                                     'gradient' => 'linear-gradient(90deg,#db2777,#f472b6)',
                                     'icon_bg' => '#fdf2f8',
-                                    'icon' => '🎨',
+                                    'icon' => '⚙️',
                                     'badge_bg' => '#fdf2f8',
                                     'badge_text' => '#db2777',
                                 ],
@@ -1641,7 +1637,6 @@
                                     <div class="test-card-stripe" style="background:{{ $palette['gradient'] }}"></div>
                                     <div class="test-card-top">
 
-                                        {{-- Most Popular ribbon on first card --}}
                                         @if ($isFirst)
                                             <div class="popular-ribbon">⭐ Most Popular</div>
                                         @endif
@@ -1653,11 +1648,10 @@
                                         <h5>{{ $test->test_name }}</h5>
 
                                         <p class="test-tagline">
-                                            {{ $test->description ?? 'Discover your child\'s unique strengths and potential through this expert-designed assessment.' }}
+                                            {{ $test->description ?? 'Discover your cybersecurity strengths and the ideal Threat Expert course for your goals.' }}
                                         </p>
 
                                         <div class="test-meta">
-                                            {{-- Duration --}}
                                             @if ($test->duration)
                                                 <span>
                                                     <i class="bi bi-clock"></i>
@@ -1665,18 +1659,16 @@
                                                 </span>
                                             @endif
 
-                                            {{-- Questions count (from withCount) --}}
                                             <span>
                                                 <i class="bi bi-question-circle"></i>
                                                 {{ $test->questions_count }}
                                                 question{{ $test->questions_count != 1 ? 's' : '' }}
                                             </span>
 
-                                            {{-- Age range --}}
                                             @if ($test->age)
                                                 <span>
                                                     <i class="bi bi-people"></i>
-                                                    Age {{ $test->age }}
+                                                    {{ $test->age }}
                                                 </span>
                                             @endif
                                         </div>
@@ -1685,7 +1677,7 @@
                                     <div class="test-card-footer">
                                         <span class="badge-free">Free</span>
                                         <a href="{{ route('quicktest.take', $test->slug) }}" class="take-test-btn">
-                                            Take Test <i class="bi bi-arrow-right"></i>
+                                            Take Assessment <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -1696,21 +1688,20 @@
             </div>
         </section>
 
-        {{-- ── WHY OUR TESTS ARE THE BEST ── --}}
+        {{-- ── WHY OUR ASSESSMENTS ── --}}
         <section class="why-tests-section">
             <div class="container">
 
                 <div class="text-center mb-5">
-                    <div class="why-top-badge d-inline-flex"><i class="bi bi-patch-check-fill"></i> CHILD
-                        DEVELOPMENT–INFORMED & EXPERT-DESIGNED
+                    <div class="why-top-badge d-inline-flex"><i class="bi bi-patch-check-fill"></i> INDUSTRY–INFORMED &
+                        EXPERT-DESIGNED
                     </div>
-                    <h2 style="font-size:34px;font-weight:900;color:var(--heading-color);margin-bottom:12px;">Why Our Tests
-                        Are the <span style="color:var(--accent-color)">Best</span> for Your Child</h2>
-                    <p style="font-size:16px;color:#6b7280;max-width:580px;margin:0 auto;">Not just another These
-                        assessments are not random personality quizzes or generic talent tests. They are built to offer
-                        structured developmental insights across expression, communication, emotional resilience,
-                        performance readiness, and future-facing creative skills helping families make better decisions with
-                        greater clarity.
+                    <h2 style="font-size:34px;font-weight:900;color:var(--heading-color);margin-bottom:12px;">Why Our
+                        Assessments Are the <span style="color:var(--accent-color)">Best</span> for Your Career</h2>
+                    <p style="font-size:16px;color:#6b7280;max-width:580px;margin:0 auto;">These assessments are not random
+                        personality quizzes or generic aptitude tests. They are built to offer structured career insights
+                        across threat analysis instincts, defensive thinking, technical aptitude, analytical reasoning, and
+                        hands-on readiness — helping professionals and students make better decisions with greater clarity.
                     </p>
                 </div>
 
@@ -1718,17 +1709,15 @@
                     <div class="col-lg-6">
                         <div class="why-big-card">
                             <div class="big-num">01</div>
-                            <h3>Built for real child development understanding
-                            </h3>
+                            <h3>Built for real cybersecurity career understanding</h3>
                             <div class="accent-line"></div>
                             <p>Each assessment is designed to look beyond labels and help identify broader patterns in how a
-                                child thinks, expresses, responds, performs, and learns. The goal is not to box a child into
-                                a category, but to open a clearer path for mentoring, counselling, and growth.
-                            </p>
+                                professional thinks analytically, responds to threats, approaches problems, and applies
+                                security concepts. The goal is not to box someone into a category, but to open a clearer
+                                path for course selection, mentoring, and career growth.</p>
                             <div class="why-pill-row">
-                                <div class="why-pill"><i class="bi bi-brain"></i> Child development–informed</div>
-                                <div class="why-pill"><i class="bi bi-award"></i>Parent-friendly
-                                </div>
+                                <div class="why-pill"><i class="bi bi-brain"></i> Industry-informed</div>
+                                <div class="why-pill"><i class="bi bi-award"></i> Career-friendly</div>
                                 <div class="why-pill"><i class="bi bi-clipboard2-check"></i> Strength-based</div>
                             </div>
                         </div>
@@ -1739,18 +1728,14 @@
                                 <div class="why-feat-card">
                                     <div class="why-feat-icon" style="background:#eff6ff;color:var(--accent-color);"><i
                                             class="bi bi-lightning-charge-fill"></i></div>
-                                    <h5>Short, focused & meaningful</h5>
-                                    <p>Each test is intentionally designed to stay brief, engaging, and age-sensitive — so
-                                        families get useful insight without overwhelming the child.
-
-                                    </p>
+                                    <h5>Short, focused &amp; meaningful</h5>
+                                    <p>Each assessment is intentionally designed to stay brief, engaging, and role-sensitive
+                                        — so professionals get useful insight without a lengthy commitment.</p>
                                     <ul class="feat-check-list">
-                                        <li><i class="bi bi-check-circle-fill"></i> 5–10 minutes per test</li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Simple and guided response style
-                                        </li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Suitable for parent-assisted completion
-                                            where needed
-                                        </li>
+                                        <li><i class="bi bi-check-circle-fill"></i> 5–10 minutes per assessment</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Simple and guided response style</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Suitable for both students and working
+                                            professionals</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1759,16 +1744,14 @@
                                     <div class="why-feat-icon" style="background:#ecfdf5;color:#059669;"><i
                                             class="bi bi-graph-up-arrow"></i></div>
                                     <h5>Actionable Results, Not Just Labels</h5>
-                                    <p>The result is designed to help parents and mentors understand broad strengths, growth
-                                        areas, and likely comfort zones — with direction toward relevant learning tracks and
-                                        support.</p>
+                                    <p>The result is designed to help learners and mentors understand core strengths, skill
+                                        gaps, and likely career fit — with direction toward the most relevant Threat Expert
+                                        course track.</p>
                                     <ul class="feat-check-list">
-                                        <li><i class="bi bi-check-circle-fill"></i> Strength and growth-area view
+                                        <li><i class="bi bi-check-circle-fill"></i> Strength and gap-area view</li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Easier course selection conversations
                                         </li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Easier counselling conversations
-                                        </li>
-                                        <li><i class="bi bi-check-circle-fill"></i> Course-direction support
-                                        </li>
+                                        <li><i class="bi bi-check-circle-fill"></i> Career-direction support</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1782,28 +1765,26 @@
                             <div class="why-feat-icon mx-auto" style="background:#f5f3ff;color:#7c3aed;"><i
                                     class="bi bi-shield-check"></i></div>
                             <h5>100% Free, Always</h5>
-                            <p> Every assessment on this page is free to attempt, so more families can access structured
-                                developmental insight without barriers.
-                            </p>
+                            <p>Every assessment on this page is free to attempt, so more professionals and students can
+                                access structured career insight without barriers.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-feat-card text-center">
                             <div class="why-feat-icon mx-auto" style="background:#fffbeb;color:#d97706;"><i
                                     class="bi bi-people-fill"></i></div>
-                            <h5>Trusted by Families</h5>
-                            <p> Designed for children and supported by parent-friendly language, these tools are built to
-                                encourage clarity, not confusion.</p>
+                            <h5>Trusted by Professionals</h5>
+                            <p>Designed for IT professionals and students, these tools are built to encourage clarity, not
+                                confusion — helping you choose the right course with confidence.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="why-feat-card text-center">
                             <div class="why-feat-icon mx-auto" style="background:#fdf2f8;color:#db2777;"><i
                                     class="bi bi-mortarboard-fill"></i></div>
-                            <h5>Aligned with Holistic Development</h5>
-                            <p>The assessments are built around expression, confidence, communication, emotional growth,
-                                creativity, and performance-linked readiness.
-                            </p>
+                            <h5>Aligned with Industry Standards</h5>
+                            <p>The assessments are built around threat analysis, defensive thinking, network security,
+                                ethical hacking aptitude, and hands-on technical readiness.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
@@ -1811,28 +1792,27 @@
                             <div class="why-feat-icon mx-auto" style="background:#ecfeff;color:#0891b2;"><i
                                     class="bi bi-phone-fill"></i></div>
                             <h5>Works Across Devices</h5>
-                            <p> Parents and learners can complete the assessments easily on phone, tablet, or laptop.
-                            </p>
+                            <p>Students and professionals can complete the assessments easily on phone, tablet, or laptop —
+                                anywhere, anytime.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="comparison-wrap">
                     <h3 class="text-center mb-2" style="font-size:26px;font-weight:800;">How We Compare</h3>
-                    <p class="text-center mb-4" style="color:#6b7280;font-size:15px;">See why Act to Action assessments go
-                        beyond generic online quizzes.
-                    </p>
+                    <p class="text-center mb-4" style="color:#6b7280;font-size:15px;">See why Threat Expert assessments go
+                        beyond generic online quizzes.</p>
                     <div class="comparison-table">
                         <div class="comp-header">
                             <div class="ch">Feature</div>
-                            <div class="ch highlight text-center">Act to Action ✦</div>
+                            <div class="ch highlight text-center">Threat Expert ✦</div>
                             <div class="ch text-center" style="color:#9ca3af;">Generic Online Quiz</div>
                             <div class="ch text-center" style="color:#9ca3af;">Paid Assessment App</div>
                         </div>
                         @php
                             $compRows = [
                                 [
-                                    'label' => 'Expert-designed developmental questions',
+                                    'label' => 'Expert-designed cybersecurity questions',
                                     'ata' => '✔ Yes',
                                     'generic' => '✘ Rarely',
                                     'paid' => '✔ Sometimes',
@@ -1844,7 +1824,7 @@
                                     'paid' => '✔ Usually paid',
                                 ],
                                 [
-                                    'label' => 'Built for children and families',
+                                    'label' => 'Built for IT professionals & students',
                                     'ata' => '✔ Yes',
                                     'generic' => '✘ Not always',
                                     'paid' => '✔ Sometimes',
@@ -1856,13 +1836,13 @@
                                     'paid' => '✔ Limited',
                                 ],
                                 [
-                                    'label' => 'Performance & creative skill orientation',
+                                    'label' => 'Cybersecurity & technical skill orientation',
                                     'ata' => '✔ Yes',
                                     'generic' => '✘ No',
                                     'paid' => '✘ Rarely',
                                 ],
                                 [
-                                    'label' => 'Parent-friendly result direction',
+                                    'label' => 'Career-friendly result direction',
                                     'ata' => '✔ Yes',
                                     'generic' => '✘ Limited',
                                     'paid' => '✔ Sometimes',
@@ -1895,73 +1875,60 @@
                         <h3 style="font-size:24px;font-weight:800;margin-bottom:30px;">How It Works — 3 Simple Steps</h3>
                         <div class="process-section">
                             <div style="position:relative;">
-                                <!-- Step 1 -->
                                 <div class="process-step">
                                     <div class="step-num">1</div>
                                     <div class="step-body">
                                         <h5>Choose your assessment</h5>
-                                        <p>
-                                            Pick the test that matches what you want to understand better — communication,
-                                            emotional resilience, personality style, stagecraft, content creation, or acting
-                                            readiness.
-                                        </p>
+                                        <p>Pick the test that matches what you want to understand better — ethical hacking
+                                            aptitude, threat analysis instincts, defensive mindset, network security
+                                            knowledge, or overall cybersecurity readiness.</p>
                                     </div>
                                 </div>
 
-                                <!-- Step 1 Line -->
                                 <div class="process-line" style="top:46px;height:60px;"></div>
 
-                                <!-- Step 2 -->
                                 <div class="process-step" style="margin-top:8px;">
                                     <div class="step-num">2</div>
                                     <div class="step-body">
                                         <h5>Answer quick guided questions</h5>
-                                        <p>
-                                            Complete a short set of age-sensitive questions. For younger children, parents
-                                            or facilitators can assist. The process is simple, reflective, and designed to
-                                            take only a few minutes.
-                                        </p>
+                                        <p>Complete a short set of career-relevant questions. The process is simple,
+                                            reflective, and designed to take only a few minutes — no prior cybersecurity
+                                            knowledge required for foundational tests.</p>
                                     </div>
                                 </div>
 
-                                <!-- Step 2 Line -->
                                 <div class="process-line" style="top:130px;height:60px;left:23px;position:absolute;">
                                 </div>
 
-                                <!-- Step 3 -->
                                 <div class="process-step" style="margin-top:8px;">
                                     <div class="step-num">3</div>
                                     <div class="step-body">
-                                        <h5>Get your insight direction</h5>
-                                        <p>
-                                            Instantly receive a detailed result — your child's strengths, growth areas,
-                                            personality profile, and the exact Act to Action course recommended for them.
-                                        </p>
+                                        <h5>Get your career direction</h5>
+                                        <p>Instantly receive a detailed result — your strengths, skill gaps, aptitude
+                                            profile, and the exact Threat Expert course recommended for your goals and
+                                            career path.</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Call-to-Action -->
                             <a href="#tests" class="btn-primary-solid mt-3" style="display:inline-flex;">
-                                <i class="bi bi-play-circle-fill"></i> Start a Free Test Now
+                                <i class="bi bi-play-circle-fill"></i> Start a Free Assessment Now
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="result-preview">
                             <div class="rp-icon">📊</div>
-                            <h4>Your Child’s Result Snapshot
-                            </h4>
-                            <p>A simple developmental insight summary that helps you understand broad strengths, comfort
-                                patterns, and possible next-step direction.
-                            </p>
+                            <h4>Your Assessment Result Snapshot</h4>
+                            <p>A clear career insight summary that helps you understand your strengths, skill gaps, and the
+                                best course path for you.</p>
                             <div
                                 style="background:#fff;border-radius:14px;padding:20px;margin-bottom:18px;border:1.5px solid #dbeafe;text-align:left;">
                                 <div
                                     style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
                                     <span
-                                        style="font-family:var(--heading-font);font-weight:700;font-size:14px;color:var(--heading-color);">Acting
-                                        Talent Score</span>
+                                        style="font-family:var(--heading-font);font-weight:700;font-size:14px;color:var(--heading-color);">Cybersecurity
+                                        Aptitude Score</span>
                                     <span style="font-weight:800;font-size:18px;color:var(--accent-color);">87%</span>
                                 </div>
                                 <div style="background:#e8edf5;border-radius:8px;height:8px;overflow:hidden;">
@@ -1972,32 +1939,31 @@
                                 <div style="display:flex;justify-content:space-between;margin-top:14px;gap:8px;">
                                     <div style="text-align:center;flex:1;">
                                         <div style="font-size:18px;font-weight:800;color:#059669;">High</div>
-                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Emotional Range
-                                        </div>
+                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Analytical
+                                            Thinking</div>
                                     </div>
                                     <div style="text-align:center;flex:1;">
                                         <div style="font-size:18px;font-weight:800;color:#d97706;">Medium</div>
-                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Stage
-                                            Confidence
-                                        </div>
+                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Threat
+                                            Detection</div>
                                     </div>
                                     <div style="text-align:center;flex:1;">
                                         <div style="font-size:18px;font-weight:800;color:var(--accent-color);">High</div>
-                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Creativity
-                                        </div>
+                                        <div style="font-size:11px;color:#9ca3af;text-transform:uppercase;">Defensive
+                                            Mindset</div>
                                     </div>
                                 </div>
                             </div>
                             <p style="font-size:13px;color:#16a34a;font-weight:600;margin-bottom:14px;"><i
-                                    class="bi bi-star-fill me-1"></i>Communication, Acting, Theatre, Content, or
-                                Personality Development pathway</p>
+                                    class="bi bi-star-fill me-1"></i>Ethical Hacking, Penetration Testing, DFIR, or Cloud
+                                Security pathway</p>
                             <div class="result-tag-row">
-                                <span class="result-tag">Natural Performer</span>
-                                <span class="result-tag">Visual Thinker</span>
-                                <span class="result-tag">Emotionally Aware</span>
-                                <span class="result-tag">Camera-Ready</span>
-                                <span class="result-tag">Emerging Speaker</span>
-                                <span class="result-tag">Creative Explorer</span>
+                                <span class="result-tag">Analytical Thinker</span>
+                                <span class="result-tag">Threat Hunter</span>
+                                <span class="result-tag">Security Mindset</span>
+                                <span class="result-tag">Detail-Oriented</span>
+                                <span class="result-tag">Problem Solver</span>
+                                <span class="result-tag">Tech Explorer</span>
                             </div>
                         </div>
                     </div>
@@ -2005,6 +1971,7 @@
 
             </div>
         </section>
+
         {{-- ── IMPORTANT DISCLAIMER ── --}}
         <section class="disclaimer-section">
             <div class="container">
@@ -2013,14 +1980,13 @@
                         <div class="disclaimer-icon">⚠️</div>
                         <h3>Important Note</h3>
                     </div>
-                    <p>
-                        These assessments are developmental and educational insight tools, not medical or diagnostic
-                        instruments. They are designed to provide broad directional understanding and should be used to
-                        support reflection, counselling, and growth planning.
-                    </p>
+                    <p>These assessments are career guidance and educational insight tools, not formal technical
+                        certifications or diagnostic instruments. They are designed to provide broad directional
+                        understanding and should be used to support course selection, counselling, and career planning
+                        conversations.</p>
                     <div class="disclaimer-footer">
                         <span><i class="bi bi-lock-fill"></i> Confidential response handling</span>
-                        <span><i class="bi bi-book-fill"></i> Developmental use only</span>
+                        <span><i class="bi bi-book-fill"></i> Career guidance use only</span>
                         <span><i class="bi bi-shield-check"></i> Report framework protected under applicable intellectual
                             property rights</span>
                     </div>
@@ -2031,30 +1997,28 @@
         {{-- ── IN THE NEWS ── --}}
         <section class="news-section">
             <div class="container">
-                <p class="news-label">Act to Action — In the News</p>
+                <p class="news-label">Threat Expert — Recognised By</p>
                 <div class="logo-marquee-wrap">
                     <div class="logo-marquee">
                         @php
                             $newsLogos = [
+                                ['icon' => 'bi-shield-check', 'name' => 'EC-Council'],
+                                ['icon' => 'bi-award', 'name' => 'CompTIA'],
+                                ['icon' => 'bi-globe', 'name' => 'NASSCOM'],
+                                ['icon' => 'bi-building', 'name' => 'Startup India'],
+                                ['icon' => 'bi-flag', 'name' => 'Skill India'],
+                                ['icon' => 'bi-laptop', 'name' => 'CERT-In'],
                                 ['icon' => 'bi-newspaper', 'name' => 'Rajasthan Patrika'],
                                 ['icon' => 'bi-newspaper', 'name' => 'Dainik Bhaskar'],
-                                ['icon' => 'bi-trophy', 'name' => 'Dada Saheb Phalke'],
-                                ['icon' => 'bi-film', 'name' => 'RIFF — Film Festival'],
-                                ['icon' => 'bi-globe', 'name' => 'Cannes Film Festival'],
-                                ['icon' => 'bi-building', 'name' => 'Birla Auditorium'],
-                                ['icon' => 'bi-palette', 'name' => 'Kalaneri Art Expo'],
-                                ['icon' => 'bi-shield-check', 'name' => 'Startup India'],
-                                ['icon' => 'bi-award', 'name' => 'iStart Rajasthan'],
-                                ['icon' => 'bi-flag', 'name' => 'Skill India'],
-                                ['icon' => 'bi-shop', 'name' => 'Decathlon'],
-                                ['icon' => 'bi-star', 'name' => 'RAS Club Awards'],
+                                ['icon' => 'bi-trophy', 'name' => 'CyberSec India Awards'],
+                                ['icon' => 'bi-people', 'name' => 'ISACA'],
+                                ['icon' => 'bi-mortarboard', 'name' => 'ISC2'],
+                                ['icon' => 'bi-star', 'name' => 'Top Cybersecurity Trainer'],
                             ];
                         @endphp
-                        {{-- First set --}}
                         @foreach ($newsLogos as $logo)
                             <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
                         @endforeach
-                        {{-- Duplicate for seamless loop --}}
                         @foreach ($newsLogos as $logo)
                             <div class="logo-pill"><i class="bi {{ $logo['icon'] }}"></i> {{ $logo['name'] }}</div>
                         @endforeach
@@ -2067,24 +2031,25 @@
                             <div class="quote-card">
                                 <i class="bi bi-quote quote-big"></i>
                                 <div class="quote-source"><i class="bi bi-newspaper"></i> Rajasthan Patrika</div>
-                                <blockquote>"Act to Action's theatre show at RIC showcased extraordinary talent from
-                                    Jaipur's youngest stars — a standing ovation from all."</blockquote>
+                                <blockquote>"Threat Expert is redefining how India approaches cybersecurity education —
+                                    practical, hands-on, and genuinely career-ready from day one."</blockquote>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="quote-card">
                                 <i class="bi bi-quote quote-big"></i>
-                                <div class="quote-source"><i class="bi bi-palette"></i> Kalaneri Art Expo</div>
-                                <blockquote>"A unique blend of performing arts and inner science — Act to Action students
-                                    brought depth and emotion rarely seen at this age."</blockquote>
+                                <div class="quote-source"><i class="bi bi-people"></i> Industry Partner Review</div>
+                                <blockquote>"The quality of talent emerging from Threat Expert programs is exceptional —
+                                    their graduates are technically sharp and job-ready from day one."</blockquote>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="quote-card">
                                 <i class="bi bi-quote quote-big"></i>
-                                <div class="quote-source"><i class="bi bi-trophy"></i> Dada Saheb Phalke 2022</div>
-                                <blockquote>"Kritesh Agarwal's award-winning films reflect a generation of children trained
-                                    to tell stories that matter."</blockquote>
+                                <div class="quote-source"><i class="bi bi-trophy"></i> CyberSec India 2023</div>
+                                <blockquote>"Threat Expert's commitment to practical learning and real-world threat
+                                    simulation sets them apart as one of India's most impactful cybersecurity training
+                                    providers."</blockquote>
                             </div>
                         </div>
                     </div>
@@ -2092,40 +2057,41 @@
             </div>
         </section>
 
-        {{-- ── FOR SCHOOLS & BUSINESSES ── --}}
+        {{-- ── FOR ORGANISATIONS & COLLEGES ── --}}
         <section class="business-section">
             <div class="container position-relative">
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
-                        <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Schools & Organisations</div>
-                        <h2>Unlock your school's true creative potential</h2>
-                        <p>Act to Action partners with schools, NGOs, hospitals, and corporates to deliver impactful
-                            workshops, events, and ongoing programmes. Get started in minutes — no consultants, no wasted
-                            time, just results.</p>
+                        <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Colleges &amp; Organisations</div>
+                        <h2>Unlock your team's cybersecurity potential</h2>
+                        <p>Threat Expert partners with colleges, IT firms, banks, hospitals, and corporates to deliver
+                            impactful workshops, awareness programs, and ongoing training. Get started in minutes — no
+                            consultants, no wasted time, just results.</p>
                         <div class="biz-feature-row">
                             <div class="biz-ico"><i class="bi bi-mortarboard-fill"></i></div>
                             <div>
-                                <h6>School Partnerships</h6>
-                                <p>Theatre in Education, NEP 2020 aligned, modelling shows, exhibitions & parenting
-                                    workshops.</p>
+                                <h6>College &amp; University Partnerships</h6>
+                                <p>Cybersecurity labs, NEP 2020 aligned skill modules, CTF competitions, and career
+                                    workshops for students.</p>
                             </div>
                         </div>
                         <div class="biz-feature-row">
                             <div class="biz-ico"><i class="bi bi-heart-pulse-fill"></i></div>
                             <div>
-                                <h6>Hospitals & Health Institutions</h6>
-                                <p>Mindfulness teaching and mindful doctor programmes for healthcare professionals.</p>
+                                <h6>Healthcare &amp; Financial Institutions</h6>
+                                <p>Tailored cybersecurity awareness and compliance training for hospitals, banks, and
+                                    regulated industries.</p>
                             </div>
                         </div>
                         <div class="biz-feature-row">
                             <div class="biz-ico"><i class="bi bi-globe2"></i></div>
                             <div>
-                                <h6>NGOs & Government Campaigns</h6>
-                                <p>Free character building based on Bhagavad Gita for NGOs, slums, juveniles, and awareness
+                                <h6>NGOs &amp; Government Campaigns</h6>
+                                <p>Cybersecurity awareness programs for NGOs, government bodies, and public digital literacy
                                     campaigns.</p>
                             </div>
                         </div>
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" class="btn-white-solid mt-2" target="_blank">
+                        <a href="https://wa.me/918079034973" class="btn-white-solid mt-2" target="_blank">
                             <i class="bi bi-whatsapp"></i> Get Started Today
                         </a>
                     </div>
@@ -2133,20 +2099,20 @@
                         <div class="biz-visual">
                             <div class="biz-stats-grid">
                                 <div class="biz-stat-card">
-                                    <div class="bsn">25<span>+</span></div>
-                                    <div class="bsl">Partner Institutes</div>
+                                    <div class="bsn">20<span>+</span></div>
+                                    <div class="bsl">Partner Organisations</div>
                                 </div>
                                 <div class="biz-stat-card">
-                                    <div class="bsn">3K<span>+</span></div>
-                                    <div class="bsl">Students Impacted</div>
+                                    <div class="bsn">500<span>+</span></div>
+                                    <div class="bsl">Professionals Trained</div>
                                 </div>
                                 <div class="biz-stat-card">
-                                    <div class="bsn">6<span>+</span></div>
-                                    <div class="bsl">Centres in Jaipur</div>
+                                    <div class="bsn">2<span>+</span></div>
+                                    <div class="bsl">Training Centres</div>
                                 </div>
                                 <div class="biz-stat-card">
                                     <div class="bsn">100<span>%</span></div>
-                                    <div class="bsl">Free for NGOs</div>
+                                    <div class="bsl">Placement Support</div>
                                 </div>
                             </div>
                         </div>
@@ -2161,59 +2127,59 @@
                 <div class="section-title">
                     <h2>What people are saying about us</h2>
                     <span class="divider-line"></span>
-                    <p>A simple developmental insight summary that helps you understand broad strengths, comfort patterns,
-                        and possible next-step direction.</p>
+                    <p>Real feedback from cybersecurity professionals, students, and organisations who've trained with
+                        Threat Expert.</p>
                 </div>
                 <div class="row g-4">
                     @php
                         $testimonials = [
                             [
-                                'initials' => 'DB',
+                                'initials' => 'AM',
                                 'color' => '#7c3aed',
-                                'author' => 'Dr. Bhumika Soni',
-                                'role' => 'Child Neuro Therapist',
+                                'author' => 'Arjun Mehta',
+                                'role' => 'Security Analyst — Placed after Ethical Hacking Batch',
                                 'quote' =>
-                                    '"Kritesh\'s integration of neuro-psychology with theatre is genuinely pioneering. I have not seen any other programme in India address both the emotional and cognitive development of children this holistically."',
-                            ],
-                            [
-                                'initials' => 'PV',
-                                'color' => '#059669',
-                                'author' => 'Priya Verma',
-                                'role' => 'Parent — Vaishali Nagar',
-                                'quote' =>
-                                    '"My daughter went from refusing to speak in public to anchoring the school annual function. The Stage Confidence assessment showed us exactly where she needed support — and the course delivered."',
-                            ],
-                            [
-                                'initials' => 'AK',
-                                'color' => '#d97706',
-                                'author' => 'Arjun Kapoor',
-                                'role' => 'Student, Age 19 — Jagatpura',
-                                'quote' =>
-                                    '"I took the Acting Talent Test and was surprised by how accurately it identified my strengths. Joined the screen acting batch within a week and got my first casting call in Month 4!"',
-                            ],
-                            [
-                                'initials' => 'NS',
-                                'color' => '#db2777',
-                                'author' => 'Neha Singhania',
-                                'role' => 'Parent — Old City, Jaipur',
-                                'quote' =>
-                                    '"The Skill Course Finder test is brilliant for parents who don\'t know where to start. It asked the right questions and matched my 7-year-old perfectly to the theatre programme."',
-                            ],
-                            [
-                                'initials' => 'MK',
-                                'color' => '#0891b2',
-                                'author' => 'Mrs. Meena Khatri',
-                                'role' => 'Principal — Mayoor School, Sitapura',
-                                'quote' =>
-                                    '"As a school principal, I partnered with Act to Action for our annual day. The children\'s transformation was visible — confidence, expression, and discipline all improved noticeably."',
+                                    '"The Cybersecurity Aptitude Assessment pointed me straight to the Ethical Hacking course. Within 4 months I had my CEH certification and a job offer. Threat Expert\'s direction was spot on."',
                             ],
                             [
                                 'initials' => 'RS',
-                                'color' => '#175cdd',
-                                'author' => 'Rajesh Sharma',
-                                'role' => 'Parent — Malviya Nagar',
+                                'color' => '#059669',
+                                'author' => 'Riya Singhania',
+                                'role' => 'CTO — Fintech Startup, Mumbai',
                                 'quote' =>
-                                    '"The Bhagavad Gita module is unlike anything I\'ve seen. My son is calmer, more focused, and speaks about values we were struggling to teach at home. Act to Action changed our family."',
+                                    '"We used Threat Expert\'s team assessment to benchmark our developers\' security awareness. The results were eye-opening — and the recommended training transformed how our team handles security."',
+                            ],
+                            [
+                                'initials' => 'SV',
+                                'color' => '#d97706',
+                                'author' => 'Saurabh Verma',
+                                'role' => 'Digital Forensics Analyst, Delhi',
+                                'quote' =>
+                                    '"The assessment identified my strength in analytical investigation and pointed me to the DFIR course. Now I\'m handling real-world forensic cases. Threat Expert changed my career trajectory."',
+                            ],
+                            [
+                                'initials' => 'VJ',
+                                'color' => '#db2777',
+                                'author' => 'Vikram Joshi',
+                                'role' => 'HR Director — Corporate Partner, Jaipur',
+                                'quote' =>
+                                    '"We partnered with Threat Expert for a group cybersecurity awareness assessment for our entire staff. The results were practical and the follow-up training immediately improved our security culture."',
+                            ],
+                            [
+                                'initials' => 'PT',
+                                'color' => '#0891b2',
+                                'author' => 'Pooja Tiwari',
+                                'role' => 'SOC Analyst — Placed after Cloud Security Batch',
+                                'quote' =>
+                                    '"The assessment showed me exactly where my cloud security knowledge had gaps. The recommended course filled those gaps perfectly — and I was placed within 3 weeks of completing it."',
+                            ],
+                            [
+                                'initials' => 'NK',
+                                'color' => '#175cdd',
+                                'author' => 'Nikhil Kapoor',
+                                'role' => 'Red Team Professional, Pune',
+                                'quote' =>
+                                    '"Threat Expert\'s assessment was the most accurate career tool I\'ve used. It identified my offensive security aptitude immediately and recommended the penetration testing course. Best decision I made."',
                             ],
                         ];
                     @endphp
@@ -2249,48 +2215,33 @@
                 <div class="section-title">
                     <h2>Something to Read</h2>
                     <span class="divider-line"></span>
-                    <p>
-                        The latest updates on child acting, personality development, and creative education from our blog.
-                    </p>
+                    <p>The latest updates on cybersecurity trends, ethical hacking tips, certification guides, and career
+                        insights from the Threat Expert blog.</p>
                 </div>
 
                 <div class="row g-4">
                     @forelse($blogs as $blog)
                         <div class="col-md-4">
                             <div class="blog-card">
-
-                                {{-- Blog Image --}}
                                 <img class="blog-img" src="{{ asset('img/' . $blog->image) }}"
                                     alt="{{ $blog->title }}" />
-
                                 <div class="blog-body">
-
-                                    {{-- Category Tag --}}
                                     <span class="blog-tag">
                                         {{ $blog->category->category_name ?? 'Uncategorized' }}
                                     </span>
-
-                                    {{-- Title --}}
                                     <h5>{{ $blog->title }}</h5>
-
-                                    {{-- Excerpt --}}
                                     <p>
                                         {{ \Illuminate\Support\Str::limit(strip_tags($blog->description), 50) }}
                                     </p>
-
-                                    {{-- Author + Date --}}
                                     <div class="blog-by">
                                         <i class="bi bi-person-circle"></i>
-                                        <span>{{ $blog->author->name ?? 'Admin' }}</span>
+                                        <span>{{ $blog->author->name ?? 'Threat Expert' }}</span>
                                         <i class="bi bi-calendar3"></i>
                                         {{ $blog->created_at->format('M Y') }}
                                     </div>
-
-                                    {{-- Read More --}}
                                     <a href="{{ route('frontend.blog.details', $blog->slug) }}" class="read-more-link">
                                         Read More <i class="bi bi-arrow-right"></i>
                                     </a>
-
                                 </div>
                             </div>
                         </div>
@@ -2301,10 +2252,9 @@
                     @endforelse
                 </div>
 
-                {{-- Read All Button --}}
                 <div class="text-center mt-5">
                     <a href="{{ route('frontend.blog.index') }}" class="btn-primary-solid" style="display:inline-flex;">
-                        <i class="bi bi-journals"></i> Read All Entries
+                        <i class="bi bi-journals"></i> Read All Articles
                     </a>
                 </div>
             </div>
@@ -2315,8 +2265,8 @@
             <div class="container">
                 <div class="newsletter-box" data-newsletter data-source="quicktest">
                     <h3>Get Our Newsletter</h3>
-                    <p>Monthly tips on child acting, personality development, casting opportunities, and event updates —
-                        straight to your inbox.</p>
+                    <p>Monthly cybersecurity tips, ethical hacking guides, certification updates, and course news — straight
+                        to your inbox.</p>
                     <div class="newsletter-form">
                         <input type="email" class="newsletter-email-input" placeholder="Enter your email address..." />
                         <button type="button" class="btn-primary-solid newsletter-subscribe-btn">
