@@ -96,9 +96,12 @@
         }
 
         @keyframes badgePop {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: rotate(-8deg) scale(1);
             }
+
             50% {
                 transform: rotate(-8deg) scale(1.08);
             }
@@ -952,9 +955,9 @@
 
     <!-- HERO BANNER SECTION -->
     <section class="site-banner">
-        <img src="{{ asset('courseassets/img/homebanner/IMG_3987.JPEG') }}" alt="Site Banner">
+        <img src="{{ asset('courseassets/img/homebanner/hommebanner.JPEG') }}" alt="Site Banner">
         <div class="hero-content">
-            <h2>Building Future Ready <span> Leaders</span>
+            <h2>Building secure technology for <span> connected world</span>
             </h2>
             <p>Creative Expression, Cognitive Leadership & Technology led Innovation</p>
         </div>

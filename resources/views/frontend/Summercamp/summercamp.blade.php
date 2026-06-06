@@ -6,19 +6,19 @@
 
 <body>
     <style>
-.swiper-wrapper {
-        display: flex !important;
-    }
+        .swiper-wrapper {
+            display: flex !important;
+        }
 
-    .swiper-slide {
-        height: auto !important;
-    }
+        .swiper-slide {
+            height: auto !important;
+        }
 
-    /* Push body content below the fixed announcement bar */
-    body {
-        padding-top: var(--ann-h, 40px);
-        transition: padding-top 0.3s ease;
-    }
+        /* Push body content below the fixed announcement bar */
+        body {
+            padding-top: var(--ann-h, 40px);
+            transition: padding-top 0.3s ease;
+        }
     </style>
 
     <div id="preloader"></div>
@@ -194,72 +194,97 @@
     <section class="themes-sec sec bg-light2" id="themes">
         <div class="container">
             <div class="sec-title">
-                <h2>Conclave Themes &amp; Categories</h2>
-                <p>Explore the diverse performing arts disciplines and creative streams at Cyber AI Threat Conclave 2025.</p>
+                <h2>Cyber AI Threat Conclave
+                    Themes & Tracks</h2>
+                <p>Explore cutting-edge cybersecurity domains, AI-driven innovations, and real-world threat intelligence
+                    shaping the future of digital defense at Cyber AI Threat Conclave 2026.</p>
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(255,106,0,.1)">🎭</div>
-                        <h4>Drama</h4>
-                        <p>Stage acting, improvisation &amp; character work</p><span class="theme-tag"
-                            style="background:rgba(255,106,0,.1);color:var(--accent)">Performing Arts</span>
+                        <div class="theme-ico" style="background:rgba(220,53,69,.1)">🛡️</div>
+                        <h4>Threat Intelligence</h4>
+                        <p>Real-time cyber threat analysis, attack trends &amp; global threat landscape</p>
+                        <span class="theme-tag" style="background:rgba(220,53,69,.1);color:#dc3545">
+                            CYBER DEFENSE
+                        </span>
                     </div>
                 </div>
+
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(17,35,68,.08)">💃</div>
-                        <h4>Dance</h4>
-                        <p>Classical, folk &amp; contemporary styles</p><span class="theme-tag"
-                            style="background:rgba(17,35,68,.08);color:#112344">Movement Arts</span>
+                        <div class="theme-ico" style="background:rgba(102,126,234,.1)">🤖</div>
+                        <h4>AI in Cybersecurity</h4>
+                        <p>AI-powered detection, automation &amp; intelligent security systems</p>
+                        <span class="theme-tag" style="background:rgba(102,126,234,.1);color:#667eea">
+                            AI SECURITY
+                        </span>
                     </div>
                 </div>
+
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(247,181,13,.12)">🎵</div>
-                        <h4>Music</h4>
-                        <p>Vocals, rhythm &amp; ensemble performance</p><span class="theme-tag"
-                            style="background:rgba(247,181,13,.12);color:#b8860b">Sonic Arts</span>
+                        <div class="theme-ico" style="background:rgba(255,106,0,.1)">🔐</div>
+                        <h4>Ethical Hacking</h4>
+                        <p>Penetration testing, vulnerability assessment &amp; red team strategies</p>
+                        <span class="theme-tag" style="background:rgba(255,106,0,.1);color:#ff6a00">
+                            OFFENSIVE SECURITY
+                        </span>
                     </div>
                 </div>
+
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(5,150,82,.1)">📖</div>
-                        <h4>Storytelling</h4>
-                        <p>Creative writing &amp; oral narration</p><span class="theme-tag"
-                            style="background:rgba(5,150,82,.1);color:#059652">Narrative Arts</span>
+                        <div class="theme-ico" style="background:rgba(17,35,68,.08)">🌐</div>
+                        <h4>Network Security</h4>
+                        <p>Infrastructure protection, firewalls &amp; secure architecture design</p>
+                        <span class="theme-tag" style="background:rgba(17,35,68,.08);color:#112344">
+                            INFRA SECURITY
+                        </span>
                     </div>
                 </div>
+
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(102,126,234,.1)">🎤</div>
-                        <h4>Public Speaking</h4>
-                        <p>Confidence &amp; stage presence</p><span class="theme-tag"
-                            style="background:rgba(102,126,234,.1);color:#667eea">Communication</span>
+                        <div class="theme-ico" style="background:rgba(5,150,82,.1)">📊</div>
+                        <h4>Digital Forensics</h4>
+                        <p>Incident investigation, cybercrime analysis &amp; evidence handling</p>
+                        <span class="theme-tag" style="background:rgba(5,150,82,.1);color:#059652">
+                            FORENSICS
+                        </span>
                     </div>
                 </div>
+
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(220,53,69,.1)">🎬</div>
-                        <h4>Film Acting</h4>
-                        <p>Screen presence &amp; camera techniques</p><span class="theme-tag"
-                            style="background:rgba(220,53,69,.1);color:#dc3545">Screen Arts</span>
+                        <div class="theme-ico" style="background:rgba(247,181,13,.12)">🧠</div>
+                        <h4>Cyber Awareness &amp; Training</h4>
+                        <p>Human firewall, awareness programs &amp; security best practices</p>
+                        <span class="theme-tag" style="background:rgba(247,181,13,.12);color:#b8860b">
+                            EDUCATION
+                        </span>
                     </div>
                 </div>
+
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(255,106,0,.07)">🎨</div>
-                        <h4>Creative Arts</h4>
-                        <p>Costume, props &amp; stage design</p><span class="theme-tag"
-                            style="background:rgba(255,106,0,.07);color:var(--accent)">Visual Arts</span>
+                        <div class="theme-ico" style="background:rgba(0,123,255,.1)">☁️</div>
+                        <h4>Cloud Security</h4>
+                        <p>Securing cloud environments, data protection &amp; compliance</p>
+                        <span class="theme-tag" style="background:rgba(0,123,255,.1);color:#007bff">
+                            CLOUD DEFENSE
+                        </span>
                     </div>
                 </div>
+
                 <div class="col-6 col-md-4 col-lg-3">
                     <div class="theme-card">
-                        <div class="theme-ico" style="background:rgba(17,35,68,.08)">🏆</div>
-                        <h4>Grand Finale</h4>
-                        <p>Live showcase before dignitaries</p><span class="theme-tag"
-                            style="background:rgba(17,35,68,.08);color:#112344">Showcase</span>
+                        <div class="theme-ico" style="background:rgba(111,66,193,.1)">🏆</div>
+                        <h4>CTF &amp; Hackathon</h4>
+                        <p>Live cybersecurity challenges, competitions &amp; real-world simulations</p>
+                        <span class="theme-tag" style="background:rgba(111,66,193,.1);color:#6f42c1">
+                            COMPETITION
+                        </span>
                     </div>
                 </div>
             </div>
@@ -276,31 +301,38 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-3 col-md-6">
                     <div class="act-card">
-                        <div class="act-ico"><i class="bi bi-person-hearts"></i></div>
-                        <h4>Dance</h4>
-                        <p>Classical, folk and contemporary dance by expert choreographers.</p>
+                        <div class="act-ico"><i class="bi bi-flag-fill"></i></div>
+                        <h4>CTF (Capture The Flag)</h4>
+                        <p>Hands-on cybersecurity challenges designed to test real-world hacking and defense skills.</p>
                         <ul class="act-list">
-                            <li>Classical &amp; folk forms</li>
-                            <li>Choreography skills</li>
-                            <li>Body coordination</li>
-                            <li>Stage performances</li>
-                        </ul><a href="{{ route('curriculum') }}" class="act-cta">Enroll Now</a>
+                            <li>Ethical hacking challenges</li>
+                            <li>Cryptography &amp; forensics</li>
+                            <li>Web &amp; network security tasks</li>
+                            <li>Team-based problem solving</li>
+                        </ul>
+                        <a href="{{ route('curriculum') }}" class="act-cta">Enroll Now →</a>
                     </div>
                 </div>
+
+
                 <div class="col-lg-3 col-md-6">
                     <div class="act-card">
-                        <div class="act-ico"><i class="bi bi-book-half"></i></div>
-                        <h4>Storytelling</h4>
-                        <p>Creative writing, oral storytelling and narrative expression.</p>
+                        <div class="act-ico"><i class="bi bi-patch-question-fill"></i></div>
+                        <h4>Cyber AI Quiz</h4>
+                        <p>Interactive quiz competition focused on cybersecurity, AI, and emerging technologies.</p>
                         <ul class="act-list">
-                            <li>Creative writing</li>
-                            <li>Oral narration</li>
-                            <li>Imagination exercises</li>
-                            <li>Public speaking</li>
-                        </ul><a href="{{ route('curriculum') }}" class="act-cta">Enroll Now →</a>
+                            <li>Cybersecurity fundamentals</li>
+                            <li>AI &amp; tech awareness</li>
+                            <li>Rapid-fire quiz rounds</li>
+                            <li>Competitive leaderboard</li>
+                        </ul>
+                        <a href="{{ route('curriculum') }}" class="act-cta">Enroll Now →</a>
                     </div>
                 </div>
+
+
             </div>
+
             <div class="act-banner mt-5">
                 <div class="row align-items-center g-4">
                     <div class="col-md-8">
@@ -541,7 +573,8 @@
                 <div class="col-md-8">
                     <div class="ppl-label"><i class="bi bi-mortarboard-fill"></i> Mentors</div>
                     <h2 class="ppl-heading">Our Guiding Mentors</h2>
-                    <p class="ppl-sub">The visionaries and leaders who shaped the direction of Cyber AI Threat Conclave 2025 and
+                    <p class="ppl-sub">The visionaries and leaders who shaped the direction of Cyber AI Threat Conclave
+                        2025 and
                         inspired every child.</p>
                 </div>
                 <div class="col-md-4 d-flex justify-content-md-end">
@@ -699,7 +732,8 @@
         <div class="container">
             <div class="sec-title">
                 <h2>What Parents Say</h2>
-                <p>Hear from families whose children transformed through Act To Action Cyber AI Threat Conclave 2025.</p>
+                <p>Hear from families whose children transformed through Act To Action Cyber AI Threat Conclave 2025.
+                </p>
             </div>
             <div class="swiper ts-swiper" id="tsSwiper">
                 <div class="swiper-wrapper">
@@ -782,7 +816,8 @@
         <div class="container">
             <div class="sec-title">
                 <h2>Venue Partners</h2>
-                <p>Cyber AI Threat Conclave 2025 was hosted across prestigious schools, institutions and studios across Jaipur.</p>
+                <p>Cyber AI Threat Conclave 2025 was hosted across prestigious schools, institutions and studios across
+                    Jaipur.</p>
             </div>
             <div class="row g-4">
                 <div class="col-lg-8">
