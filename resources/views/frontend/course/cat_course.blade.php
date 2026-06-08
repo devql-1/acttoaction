@@ -1700,7 +1700,7 @@
                 @if ($currentCategory->image)
                     <img src="{{ $currentCategory->image_url }}" alt="{{ $currentCategory->name }}" />
                 @elseif ($heroCourse && $heroCourse->banner_image)
-                    <img src="{{ asset($heroCourse->banner_image) }}" alt="{{ $currentCategory->name }}" />
+                    <img src="{{ $heroCourse->banner_url }}" alt="{{ $currentCategory->name }}" />
                 @else
                     <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1600&q=85"
                         alt="{{ $currentCategory->name }}" />
@@ -1737,7 +1737,7 @@
                             <a href="{{ route('course.details', $heroCourse->slug ?? 'course') }}" class="btn-enroll">
                                 <i class="bi bi-person-plus-fill"></i> Enroll Now
                             </a>
-                            <a href="https://wa.me/918079034973" class="btn-wa" target="_blank">
+                            <a href="https://wa.me/{{ $whatsappDigits }}" class="btn-wa" target="_blank">
                                 <i class="bi bi-whatsapp"></i> Ask Us
                             </a>
                         </div>
@@ -1778,7 +1778,7 @@
                         <p>Speak to our counsellor and get a personalised recommendation based on your background, goals,
                             and career path in cybersecurity.</p>
                     </div>
-                    <a href="https://wa.me/918079034973" target="_blank" class="is-action">
+                    <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="is-action">
                         <i class="bi bi-whatsapp"></i> Get Guidance
                     </a>
                 </div>
@@ -1792,7 +1792,7 @@
                             @if ($currentCategory->image)
                                 <img src="{{ $currentCategory->image_url }}" alt="{{ $course->title }}" />
                             @elseif ($course->banner_image)
-                                <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}" />
+                                <img src="{{ $course->banner_url }}" alt="{{ $course->title }}" />
                             @else
                                 <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=900&q=85"
                                     alt="{{ $course->title }}" />
@@ -1858,7 +1858,7 @@
                             <p>Limited seats per batch to ensure hands-on lab time for every student. Enroll early to secure
                                 your spot.</p>
                         </div>
-                        <a href="https://wa.me/918079034973" target="_blank" class="is-action">
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="is-action">
                             <i class="bi bi-whatsapp"></i> Check Availability
                         </a>
                     </div>
@@ -1872,7 +1872,7 @@
                                     @if ($currentCategory->image)
                                         <img src="{{ $currentCategory->image_url }}" alt="{{ $course->title }}" />
                                     @elseif ($course->banner_image)
-                                        <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}" />
+                                        <img src="{{ $course->banner_url }}" alt="{{ $course->title }}" />
                                     @else
                                         <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=700&q=80"
                                             alt="{{ $course->title }}" />
@@ -1923,7 +1923,7 @@
                             <p>All {{ $currentCategory->courses->count() }} courses run independently — enroll in multiple
                                 tracks or start with the one that matches your current skill level.</p>
                         </div>
-                        <a href="https://wa.me/918079034973" target="_blank" class="is-action">
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="is-action">
                             <i class="bi bi-whatsapp"></i> Ask a Counsellor
                         </a>
                     </div>
@@ -2030,7 +2030,7 @@
                     <a href="{{ route('course.details', $course->slug) }}" class="btn-cta-solid">
                         <i class="bi bi-person-plus-fill"></i> Enroll Now
                     </a>
-                    <a href="https://wa.me/918079034973" class="btn-cta-ghost" target="_blank">
+                    <a href="https://wa.me/{{ $whatsappDigits }}" class="btn-cta-ghost" target="_blank">
                         <i class="bi bi-whatsapp"></i> WhatsApp Us
                     </a>
                 </div>

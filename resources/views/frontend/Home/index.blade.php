@@ -949,13 +949,9 @@
     <!-- HEADER -->
     <header class="topbar">
         <div class="logo">
-            <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
-        </div>
-    </header>
-
-    <!-- HERO BANNER SECTION -->
-    <section class="site-banner">
-        <img src="{{ asset('courseassets/img/homebanner/hommebanner.JPEG') }}" alt="Site Banner">
+<img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
+...
+<img src="{{ asset('courseassets/img/homebanner/hommebanner.jpeg') }}" alt="Site Banner">
         <div class="hero-content">
             <h2>Building secure technology for <span> connected world</span>
             </h2>

@@ -1979,7 +1979,7 @@
                         </ul>
                     </div>
                     <div class="success-actions">
-                        <a href="https://wa.me/918079034973" target="_blank" class="btn-wa"><i
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-wa"><i
                                 class="bi bi-whatsapp"></i> Message on WhatsApp</a>
                         <a href="{{ url('/') }}" class="btn-home"><i class="bi bi-house"></i> Back to Home</a>
                     </div>
@@ -2009,7 +2009,7 @@
                         <button onclick="retryPayment()" class="btn-wa"
                             style="background:#dc2626;border:none;cursor:pointer;"><i class="bi bi-arrow-repeat"></i>
                             Retry Payment</button>
-                        <a href="https://wa.me/918079034973" target="_blank" class="btn-home"><i
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-home"><i
                                 class="bi bi-whatsapp"></i> WhatsApp Us</a>
                     </div>
                 </div>

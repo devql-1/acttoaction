@@ -1236,10 +1236,10 @@
                             {{-- CTA --}}
                             <div class="sidebar-card">
                                 <div class="sc-body">
-                                    <a href="https://wa.me/918079034973" target="_blank" class="btn-reg-cta">
+                                    <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-reg-cta">
                                         <i class="bi bi-check2-circle"></i> Register Now
                                     </a>
-                                    <a href="https://wa.me/918079034973" target="_blank" class="btn-wa-cta">
+                                    <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-wa-cta">
                                         <i class="bi bi-whatsapp" style="color:#25d366;"></i> Ask on WhatsApp
                                     </a>
                                 </div>

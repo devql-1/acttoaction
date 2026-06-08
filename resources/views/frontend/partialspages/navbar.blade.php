@@ -1,16 +1,25 @@
 <header id="header" class="header fixed-top">
+    @include('frontend.partialspages.contact-info')
     @include('frontend.partialspages.ann_bar')
     <div class="topbar d-flex align-items-center dark-background">
         <div class="container d-flex justify-content-center justify-content-md-between">
             <div class="contact-info d-flex align-items-center">
                 <i class="bi bi-envelope d-flex align-items-center">
-                    <a href="mailto:info@acttoaction.com">info@acttoaction.com</a>
+                    <a href="mailto:{{ $email }}">{{ $email }}</a>
                 </i>
+                @if($phone || $whatsapp)
                 <i class="bi bi-whatsapp d-flex align-items-center ms-4">
-                    <a href="tel:919119118844">+91 91191-18844</a>
-                    <a href="tel:919119187311" class="ms-2">+91 91191-87311</a>
-                    <a href="tel:919119187411" class="ms-2">+91 91191-87411</a>
+                    @if($phone)
+                        <a href="tel:{{ $phoneDigits }}">{{ $phone }}</a>
+                    @endif
+                    @if($phone && $whatsapp)
+                        <span class="ms-2">|</span>
+                    @endif
+                    @if($whatsapp)
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="ms-2">WhatsApp</a>
+                    @endif
                 </i>
+                @endif
             </div>
             {{-- <div class="social-links d-none d-md-flex align-items-center">
                 <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
@@ -38,12 +47,12 @@
                     </li>
                     <li>
                         <a href="{{ route('index.course') }}"
-                            class="{{ request()->routeIs('index.course') ? 'active' : '' }}">
+                            class="{{ request()->routeIs('index.course', 'course.*') ? 'active' : '' }}">
                             Course
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('event') }}" class="{{ request()->routeIs('event') ? 'active' : '' }}">
+                        <a href="{{ route('event') }}" class="{{ request()->routeIs('event', 'frontend.events.*') ? 'active' : '' }}">
                             Event
                         </a>
                     </li>

@@ -1053,7 +1053,7 @@
                             security workshops — Threat Expert hosts India's most practical cybersecurity events for
                             students, professionals, and organisations.</p>
                         <div class="d-flex flex-wrap gap-3">
-                            <a href="https://wa.me/918079034973" target="_blank" class="btn-primary-solid">
+                            <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-primary-solid">
                                 <i class="bi bi-whatsapp"></i> Register for an Event
                             </a>
                             <a href="#evSection" class="btn-ghost">
@@ -1156,7 +1156,7 @@
                                 <div class="event-card-stripe" style="background:{{ $stripe }}"></div>
                                 <div class="event-card-img">
                                     @if ($event->banner_image)
-                                        <img src="{{ asset($event->banner_image) }}" alt="{{ $event->title }}"
+                                        <img src="{{ $event->banner_url }}" alt="{{ $event->title }}"
                                             loading="lazy" />
                                     @else
                                         <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80"
@@ -1293,7 +1293,7 @@
                             </div>
                         @endforeach
                         <div class="mt-4">
-                            <a href="https://wa.me/918079034973" target="_blank" class="btn-white-solid">
+                            <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-white-solid">
                                 <i class="bi bi-whatsapp"></i> Talk to Our Team
                             </a>
                         </div>

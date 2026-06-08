@@ -1,0 +1,1 @@
+{{-- Contact info variables ($phone, $whatsapp, $email, $address, $mapLink, $fbUrl, $instaUrl, $linkedinUrl, $chatPhones, $workingHours, $phoneDigits, $whatsappDigits) are injected globally by AppServiceProvider. This partial is kept as a semantic marker. --}}

@@ -31,7 +31,7 @@ class BlogAuthor extends Model
     public function getImageUrlAttribute(): string
     {
         return $this->image
-            ? asset('img/authors/' . $this->image)
-            : asset('img/default-author.png');
+            ? asset('public/img/authors/' . $this->image)
+            : asset('public/img/default-author.png');
     }
 }

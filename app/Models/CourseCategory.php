@@ -41,9 +41,30 @@ class CourseCategory extends Model
 
     public function getImageUrlAttribute()
     {
-        return $this->image
-            ? asset('storage/' . $this->image)
-            : asset('frontendassets/img/cat-1.jpg');
+        $assetPrefix = $this->getPublicAssetPrefix();
+        $normalized = ltrim($this->image ?? '', '/');
+        
+        if (!$this->image) {
+            return asset($assetPrefix . 'frontendassets/img/classes-1.jpg');
+        }
+        
+        if (Str::startsWith($normalized, ['http://', 'https://', '//'])) {
+            return $this->image;
+        }
+        
+        if (Str::startsWith($normalized, ['public/', 'storage/', 'img/'])) {
+            return asset($assetPrefix . $normalized);
+        }
+        
+        return asset($assetPrefix . 'storage/' . $normalized);
+    }
+
+    protected function getPublicAssetPrefix(): string
+    {
+        $documentRoot = request()?->server('DOCUMENT_ROOT');
+        $publicRoot = realpath(public_path());
+
+        return $documentRoot && realpath($documentRoot) === $publicRoot ? '' : 'public/';
     }
 
     public function scopeActive($query)

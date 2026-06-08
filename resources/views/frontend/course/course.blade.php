@@ -2091,7 +2091,7 @@
                         <div class="hero-actions">
                             <a href="#categories" class="btn-hero-primary" onclick="smoothScroll(event,'categories')"><i
                                     class="bi bi-grid-3x3-gap-fill"></i> View Programs</a>
-                            <a href="https://wa.me/918079034973" class="btn-hero-outline" target="_blank"><i
+                            <a href="https://wa.me/{{ $whatsappDigits }}" class="btn-hero-outline" target="_blank"><i
                                     class="bi bi-whatsapp"></i> Talk to Us</a>
                         </div>
                     </div>
@@ -2130,7 +2130,7 @@
                                 @if ($category->image)
                                     <img src="{{ $category->image_url }}" alt="{{ $category->name }}" />
                                 @elseif ($firstCourse && $firstCourse->banner_image)
-                                    <img src="{{ asset($firstCourse->banner_image) }}" alt="{{ $category->name }}" />
+                                    <img src="{{ $firstCourse->banner_url }}" alt="{{ $category->name }}" />
                                 @else
                                     <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80"
                                         alt="{{ $category->name }}" />
@@ -2335,7 +2335,7 @@
                 <p>Join 500+ professionals already trained, certified, and placed through Threat Expert across India.</p>
                 <div class="cta-btns">
                     <a href="#" class="btn-cta-solid"><i class="bi bi-person-plus-fill"></i> Enroll Now</a>
-                    <a href="https://wa.me/918079034973" class="btn-cta-ghost" target="_blank"><i
+                    <a href="https://wa.me/{{ $whatsappDigits }}" class="btn-cta-ghost" target="_blank"><i
                             class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
                 </div>
             </div>
@@ -2420,7 +2420,7 @@
                             course for your goals.</p>
                     </div>
                     <div class="col-lg-5 text-lg-end">
-                        <a href="https://wa.me/918079034973" target="_blank" class="btn-cta-wa">
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-cta-wa">
                             <i class="bi bi-whatsapp"></i> WhatsApp to Enroll
                         </a>
                     </div>

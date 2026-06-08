@@ -1,27 +1,26 @@
 <footer class="footer">
+    @include('frontend.partialspages.contact-info')
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mb-4 mb-lg-0">
-                <a href="https://www.acttoaction.com"><img src="{{ asset('public/courseassets/img/logo/IMG_6008.PNG') }}"
+                <a href="{{ url('/') }}"><img src="{{ asset('courseassets/img/logo.webp') }}"
                         alt="Act To Action" style="height:40px;" /></a>
                 <p class="brand-desc">Developing globally competent young performers through age-structured,
                     experiential, skill - based learning, supported by on-demand, personalised programs for academic
                     institutions and individual learners.</p>
                 <p class="brand-desc">Office Visits :- Only Appointment Based</p>
-                <div class="fc-item"><i class="bi bi-geo-alt-fill"></i>Rising Passion Studio, Hoshiar Singh
-                    Marg, Moti Nagar, Vaishali Nagar, Jaipur – 302021</div>
-                <div class="fc-item"><i class="bi bi-telephone-fill"></i><a href="tel:9119118844" style="color:#666">
-                        Chat with us: +91 91191-18844, +91 91191-87311, +91 91191-87411</a></div>
-                <div class="fc-item"><i class="bi bi-clock-fill"></i>Tue–Sat: 11am–7pm &nbsp;|&nbsp; Sun:
-                    10am–4pm</div>
+                <div class="fc-item"><i class="bi bi-geo-alt-fill"></i>{{ $address }}</div>
+                <div class="fc-item"><i class="bi bi-telephone-fill"></i><a href="tel:{{ $phoneDigits }}" style="color:#666">
+                        Chat with us: {{ $phone ?: '+91 91191-18844, +91 91191-87311, +91 91191-87411' }}</a></div>
+                <div class="fc-item"><i class="bi bi-clock-fill"></i>{{ implode('<br>', $workingHours) }}</div>
             </div>
             <div class="col-lg-8 footer-nav-wrap">
                 <div class="row">
                     <div class="col-6 col-md-3 mb-4">
                         <h6>Quick Links</h6>
                         <ul class="fn-list">
-                            <li><a href="{{ route('aboutus') }}">Admissions</a></li>
-                            <li><a href="{{ route('aboutus') }}">Courses</a></li>
+                            <li><a href="{{ route('index.course') }}">Admissions</a></li>
+                            <li><a href="{{ route('index.course') }}">Courses</a></li>
                             <li><a href="{{ route('event') }}">Events</a></li>
                             <li><a href="{{ route('volunteer') }}">Join Us</a></li>
                             <li><a href="{{ route('frontend.blog.index') }}">Blog</a></li>
@@ -92,9 +91,9 @@
         <div class="footer-bottom">
             <p>©2025 All Rights Reserved · <span>Act To Action</span></p>
             <div class="legal-links">
-                <a href="https://www.acttoaction.com/privacy-policy">Privacy</a>
-                <a href="https://www.acttoaction.com/terms-and-conditions">Terms</a>
-                <a href="https://www.acttoaction.com/refund-policy">Refund</a>
+                <a href="{{ route('privacy') }}">Privacy</a>
+                <a href="{{ route('terms') }}">Terms</a>
+                <a href="{{ route('refund') }}">Refund</a>
                 <span class="credits">Template: <a href="https://bootstrapmade.com" target="_blank"
                         style="color:var(--accent)">BootstrapMade</a></span>
             </div>

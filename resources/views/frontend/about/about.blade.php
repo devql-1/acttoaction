@@ -1359,7 +1359,7 @@
                                     <p>Corporate Clients Served</p>
                                 </div>
                             </div>
-                            <a href="https://wa.me/918079034973" target="_blank" class="cta-btn"><i
+                            <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="cta-btn"><i
                                     class="bi bi-whatsapp"></i> Book Your Free Demo Now</a>
                         </div>
                     </div>
@@ -1500,7 +1500,7 @@
                             Consultant | Penetration Tester | Security Trainer</p>
                         <p style="font-size:13px;color:var(--default-color);margin-bottom:20px;font-style:italic;">Founder
                             &amp; CEO, Threat Expert Cyber Solutions Pvt. Ltd.</p>
-                        <a href="https://wa.me/918079034973" target="_blank"
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank"
                             class="about cta-btn d-inline-flex align-items-center gap-2"
                             style="background:var(--accent-color);color:#fff;padding:12px 28px;border-radius:30px;font-weight:700;box-shadow:0 6px 20px rgba(23,92,221,0.3);">
                             <i class="bi bi-whatsapp"></i> Connect with Us
@@ -1652,7 +1652,7 @@
                             Consultant</p>
                         <p style="font-size:13px;color:var(--default-color);margin-bottom:20px;font-style:italic;">
                             Co-Founder, Threat Expert Cyber Solutions Pvt. Ltd.</p>
-                        <a href="https://wa.me/918079034973" target="_blank"
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank"
                             class="about cta-btn d-inline-flex align-items-center gap-2"
                             style="background:var(--accent-color);color:#fff;padding:12px 28px;border-radius:30px;font-weight:700;box-shadow:0 6px 20px rgba(23,92,221,0.3);">
                             <i class="bi bi-whatsapp"></i> Connect with Us
@@ -1787,7 +1787,7 @@
                                 training provider.</p>
                         </div>
                         <div class="col-lg-4 text-lg-end">
-                            <a href="https://wa.me/918079034973" target="_blank"
+                            <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank"
                                 class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-bold"
                                 style="background:#fff;color:var(--accent-color);font-size:15px;text-decoration:none;">
                                 <i class="bi bi-building-add"></i> Partner With Us
@@ -1873,7 +1873,7 @@
                                 build India's most capable cyber defense workforce.</p>
                         </div>
                         <div class="col-lg-4 text-lg-end">
-                            <a href="https://wa.me/918079034973" target="_blank"
+                            <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank"
                                 class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-bold"
                                 style="background:#fff;color:var(--accent-color);font-size:15px;text-decoration:none;transition:0.3s;">
                                 <i class="bi bi-arrow-right-circle"></i> Join Our Team
@@ -2249,7 +2249,7 @@
                             gain the skills, certifications, and industry connections you need to stay ahead of every
                             threat.</p>
                         <div class="d-flex flex-wrap gap-3 mt-3">
-                            <a href="https://wa.me/918079034973" target="_blank" class="btn-white"><i
+                            <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-white"><i
                                     class="bi bi-whatsapp"></i> Book Free Demo Now</a>
                             <a href="https://www.threatxpert.com/courses" target="_blank" class="btn-white"
                                 style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);"><i
@@ -2272,6 +2272,7 @@
         </section>
 
         <!-- =================== CONTACT =================== -->
+        @include('frontend.partialspages.contact-info')
         <section class="contact section" id="contact">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
@@ -2281,32 +2282,49 @@
                 </div>
                 <div class="row gy-5">
                     <div class="col-lg-4" data-aos="fade-right">
+                        @if($address)
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-geo-alt-fill"></i></div>
                             <div>
                                 <h5>Our Location</h5>
-                                <p>ThreatXpert Training Centre,<br>Jaipur, Rajasthan, India</p>
+                                <p>{!! nl2br(e($address)) !!}</p>
                             </div>
                         </div>
+                        @endif
+                        @if($phone || $whatsapp)
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-telephone-fill"></i></div>
                             <div>
                                 <h5>Phone Numbers</h5>
-                                <p>+91 80790 34973</p>
+                                <p>
+                                    @if($phone)
+                                        Call: <a href="tel:{{ $phoneDigits }}" class="text-decoration-none">{{ $phone }}</a><br>
+                                    @endif
+                                    @if($whatsapp)
+                                        WhatsApp: <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="text-decoration-none">{{ $whatsapp }}</a>
+                                    @endif
+                                </p>
                             </div>
                         </div>
+                        @endif
+                        @if($email)
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-envelope-fill"></i></div>
                             <div>
                                 <h5>Email Address</h5>
-                                <p>training@threatxpert.com</p>
+                                <p><a href="mailto:{{ $email }}" class="text-decoration-none">{{ $email }}</a></p>
                             </div>
                         </div>
+                        @endif
                         <div class="info-item">
                             <div class="icon-wrap"><i class="bi bi-clock-fill"></i></div>
                             <div>
                                 <h5>Working Hours</h5>
-                                <p>Mon – Sat: 10:00 AM – 7:00 PM<br>Sunday: By Appointment Only</p>
+                                <p>
+                                    @foreach ($workingHours as $wh)
+                                        {{ $wh }}@if (!$loop->last)<br>@endif
+                                    @endforeach
+                                </p>
                             </div>
                         </div>
                     </div>

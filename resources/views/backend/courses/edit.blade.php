@@ -277,7 +277,7 @@
 
                                         @if ($course->banner_image)
                                             <div class="mt-2">
-                                                <img src="{{ asset($course->banner_image) }}" alt="Banner"
+                                                <img src="{{ $course->banner_url }}" alt="Banner"
                                                     style="max-width: 200px; max-height: 150px;">
                                             </div>
                                         @endif

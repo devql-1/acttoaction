@@ -27,7 +27,7 @@
                             <!-- Banner Image -->
                             @if ($course->banner_image)
                                 <div class="mb-4">
-                                    <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}"
+                                    <img src="{{ $course->banner_url }}" alt="{{ $course->title }}"
                                         class="img-fluid rounded"
                                         style="max-width: 100%; max-height: 400px; object-fit: cover;">
                                 </div>

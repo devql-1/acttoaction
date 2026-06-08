@@ -1558,7 +1558,7 @@
                 <p>Book a free demo class — our expert trainers will guide you to the perfect course based on your
                     personalised assessment results.</p>
                 <div class="d-flex gap-3 justify-content-center flex-wrap">
-                    <a href="https://wa.me/918079034973" target="_blank">
+                    <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank">
                         <button class="rh-btn-primary" style="font-size:15px;padding:14px 30px;">
                             <i class="bi bi-whatsapp"></i> Book Free Demo Class
                         </button>

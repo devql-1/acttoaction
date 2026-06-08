@@ -1,11 +1,4 @@
-@php
-    $ci = $contactInfo ?? null;
-    $phone      = $ci->phone ?? '';
-    $whatsapp   = $ci->whatsapp ?? '';
-    $email      = $ci->email ?? '';
-    $address    = $ci->address ?? '';
-    $mapLink    = $ci->map_link ?? '';
-@endphp
+@include('frontend.partialspages.contact-info')
 
 <section class="contact section" id="contact">
     <div class="container">
@@ -32,10 +25,10 @@
                             <h5>Phone Numbers</h5>
                             <p>
                                 @if($phone)
-                                    Call: <a href="tel:{{ $phone }}" class="text-decoration-none">{{ $phone }}</a><br>
+                                    Call: <a href="tel:{{ $phoneDigits }}" class="text-decoration-none">{{ $phone }}</a><br>
                                 @endif
                                 @if($whatsapp)
-                                    WhatsApp: <a href="https://wa.me/{{ preg_replace('/\D/', '', $whatsapp) }}" target="_blank" class="text-decoration-none">{{ $whatsapp }}</a>
+                                    WhatsApp: <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="text-decoration-none">{{ $whatsapp }}</a>
                                 @endif
                             </p>
                         </div>

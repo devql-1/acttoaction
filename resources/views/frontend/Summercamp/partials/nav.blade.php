@@ -2,7 +2,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cyber AI Threat Conclave 2026 | Act To Action</title>
-    <link rel="icon" type="image/png" href="{{ asset('public/courseassets/img/faviconsdf.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('courseassets/img/faviconsdf.png') }}">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap"
         rel="stylesheet" />
@@ -266,6 +266,7 @@
             white-space: nowrap;
             transition: .3s;
             position: relative;
+            text-decoration: none !important;
         }
 
         .navmenu a::after {
@@ -280,12 +281,19 @@
             transition: .3s;
         }
 
+        .navmenu a {
+            border-bottom: none !important;
+        }
+
         .navmenu a:hover,
         .navmenu a.active {
             color: var(--accent);
         }
 
-        .navmenu a:hover::after,
+        .navmenu a:hover::after {
+            transform: scaleX(1);
+        }
+
         .navmenu a.active::after {
             transform: scaleX(1);
         }
@@ -446,6 +454,10 @@
             .navmenu a {
                 font-size: 15px;
                 padding: 13px 22px;
+                border-bottom: 1px solid #f5f5f5;
+            }
+
+            .navmenu a.active {
                 border-bottom: 1px solid #f5f5f5;
             }
 

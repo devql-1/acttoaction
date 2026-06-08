@@ -330,7 +330,7 @@
                 </div>
 
                 <div class="success-actions">
-                    <a href="https://wa.me/918079034973" target="_blank" class="btn-wa">
+                    <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-wa">
                         <i class="bi bi-whatsapp"></i> Chat with Us on WhatsApp
                     </a>
                     <a href="{{ url('/') }}" class="btn-outline">

@@ -2091,7 +2091,7 @@
                                     campaigns.</p>
                             </div>
                         </div>
-                        <a href="https://wa.me/918079034973" class="btn-white-solid mt-2" target="_blank">
+                        <a href="https://wa.me/{{ $whatsappDigits }}" class="btn-white-solid mt-2" target="_blank">
                             <i class="bi bi-whatsapp"></i> Get Started Today
                         </a>
                     </div>
@@ -2223,8 +2223,8 @@
                     @forelse($blogs as $blog)
                         <div class="col-md-4">
                             <div class="blog-card">
-                                <img class="blog-img" src="{{ asset('img/' . $blog->image) }}"
-                                    alt="{{ $blog->title }}" />
+<img class="blog-img" src="{{ $blog->image_url }}"
+                                     alt="{{ $blog->title }}" />
                                 <div class="blog-body">
                                     <span class="blog-tag">
                                         {{ $blog->category->category_name ?? 'Uncategorized' }}

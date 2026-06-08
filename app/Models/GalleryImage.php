@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class GalleryImage extends Model
 {
@@ -43,7 +43,30 @@ class GalleryImage extends Model
 
     public function getImageUrlAttribute(): string
     {
-        return Storage::url($this->image_path);
+        $assetPrefix = $this->getPublicAssetPrefix();
+        $normalized = ltrim($this->image_path ?? '', '/');
+        
+        if (!$this->image_path) {
+            return '';
+        }
+        
+        if (Str::startsWith($normalized, ['http://', 'https://', '//'])) {
+            return $this->image_path;
+        }
+        
+        if (Str::startsWith($normalized, ['public/', 'storage/', 'img/'])) {
+            return asset($assetPrefix . $normalized);
+        }
+        
+        return asset($assetPrefix . 'storage/' . $normalized);
+    }
+
+    protected function getPublicAssetPrefix(): string
+    {
+        $documentRoot = request()?->server('DOCUMENT_ROOT');
+        $publicRoot = realpath(public_path());
+
+        return $documentRoot && realpath($documentRoot) === $publicRoot ? '' : 'public/';
     }
 
     // ── Scopes ───────────────────────────────────────────────

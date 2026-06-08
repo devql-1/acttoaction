@@ -1,0 +1,2081 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ActtoAction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="http://127.0.0.1:3000/courseassets/img/faviconsdf.png">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== TOPBAR ===== */
+        .topbar {
+            width: 100%;
+            padding: 16px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            position: relative;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+            display: block;
+        }
+
+        /* ===== BADGE (Comic Starburst Style) ===== */
+        .badge-free {
+            position: absolute;
+            top: -26px;
+            right: -30px;
+            z-index: 3;
+            width: 110px;
+            height: 100px;
+            pointer-events: none;
+
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 110'><g stroke='%23ffd60a' stroke-width='3' stroke-linecap='round' fill='none'><line x1='60' y1='4' x2='56' y2='18'/><line x1='100' y1='14' x2='86' y2='27'/><line x1='116' y1='55' x2='100' y2='55'/><line x1='105' y1='96' x2='90' y2='82'/><line x1='60' y1='108' x2='60' y2='93'/><line x1='16' y1='96' x2='32' y2='82'/><line x1='4' y1='55' x2='20' y2='55'/><line x1='16' y1='14' x2='32' y2='27'/></g><polygon points='60,15 65,25 80,18 75,32 95,32 83,45 104,55 83,65 95,78 75,78 80,92 65,85 60,95 55,85 40,92 45,78 25,78 37,65 16,55 37,45 25,32 45,32 40,18 55,25' fill='%23e50914' stroke='%23000' stroke-width='2.5' stroke-linejoin='round'/><g fill='%23ffd60a' stroke='%23000' stroke-width='0.8'><polygon points='40,40 42,45 47,47 42,49 40,54 38,49 33,47 38,45'/><polygon points='82,62 84,66 88,68 84,70 82,74 80,70 76,68 80,66'/></g></svg>");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            line-height: 1;
+            white-space: nowrap;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #ffd60a;
+            font-family: 'Arial Black', Impact, sans-serif;
+            font-size: 19px;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow:
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000,
+                0 3px 0 #000;
+
+            transform: rotate(-8deg);
+            animation: badgePop 2.4s ease-in-out infinite;
+            filter: drop-shadow(2px 4px 4px rgba(0, 0, 0, 0.25));
+        }
+
+        @keyframes badgePop {
+
+            0%,
+            100% {
+                transform: rotate(-8deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(-8deg) scale(1.08);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .badge-free {
+                top: -20px;
+                right: -22px;
+                width: 85px;
+                height: 78px;
+                font-size: 15px;
+                letter-spacing: 0.5px;
+                text-shadow:
+                    -1.5px -1.5px 0 #000,
+                    1.5px -1.5px 0 #000,
+                    -1.5px 1.5px 0 #000,
+                    1.5px 1.5px 0 #000,
+                    0 2px 0 #000;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .badge-free {
+                top: -16px;
+                right: -16px;
+                width: 68px;
+                height: 62px;
+                font-size: 12px;
+                letter-spacing: 0.3px;
+                text-shadow:
+                    -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000;
+            }
+        }
+
+        /* ===== BANNER SECTION ===== */
+        .site-banner {
+            width: 100%;
+            height: 800px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .site-banner img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        .site-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 39, 71, 0.45);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .hero-content h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-content h2 span {
+            color: #7C3AED;
+        }
+
+        .hero-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.88);
+            margin-bottom: 0;
+        }
+
+        /* ===== PILL BUTTON ===== */
+        .pill-btn {
+            display: inline-block;
+            background: #7C3AED;
+            color: #ffffff !important;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 33px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .pill-btn:hover {
+            background: #6D28D9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 106, 0, 0.38);
+        }
+
+        /* ===== DEAL POPUP ===== */
+        .deal-popup {
+            position: fixed;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #0f2747;
+            color: #ffffff;
+            border-radius: 18px;
+            padding: 20px 14px;
+            width: 140px;
+            text-align: center;
+            z-index: 300;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+        }
+
+        .deal-close {
+            position: absolute;
+            top: 9px;
+            right: 11px;
+            background: none;
+            border: none;
+            color: #a0b4cc;
+            font-size: 13px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .deal-close:hover {
+            color: #7C3AED;
+        }
+
+        .deal-badge {
+            background: #7C3AED;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 33px;
+            display: inline-block;
+            margin-bottom: 10px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        .deal-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .deal-desc {
+            font-size: 11px;
+            color: #a0b4cc;
+            margin-bottom: 14px;
+            line-height: 1.45;
+        }
+
+        .deal-popup .pill-btn {
+            width: 100%;
+            font-size: 11px;
+            padding: 8px 10px;
+        }
+
+        /* ===== MAIN CONTAINER & ACTIONS ===== */
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px 140px;
+            width: 100%;
+        }
+
+        .action {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 32px 0;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeSlide 0.6s ease forwards;
+            position: relative;
+        }
+
+        .action:nth-child(1) {
+            animation-delay: 0.0s;
+        }
+
+        .action:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .action:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .icon {
+            width: 68px;
+            height: 68px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #ffffff;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .add .icon {
+            background: #7C3AED;
+        }
+
+        .send .icon {
+            background: #0f2747;
+        }
+
+        .exchange .icon {
+            background: #7C3AED;
+        }
+
+        .action h1 {
+            font-size: 58px;
+            font-weight: 700;
+            color: #0f2747;
+            line-height: 1;
+            font-family: Arial, sans-serif;
+        }
+
+        .action:hover .icon {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== BOTTOM NAV (DESKTOP) ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(40px);
+            background: #0f2747;
+            color: #ffffff;
+            padding: 14px 32px;
+            border-radius: 50px;
+            display: flex;
+            gap: 30px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            z-index: 200;
+            opacity: 0;
+            animation: navSlideUp 0.8s ease 0.6s forwards;
+        }
+
+        .bottom-nav a {
+            text-decoration: none;
+            color: #ffffff;
+            display: inline-block;
+        }
+
+        .bottom-nav a div {
+            cursor: pointer;
+            transition: color 0.25s ease, transform 0.25s ease;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .bottom-nav a div:hover {
+            color: #7C3AED;
+            transform: translateY(-3px);
+        }
+
+        .bottom-nav a div.active {
+            color: #7C3AED;
+            font-weight: 600;
+        }
+
+        /* ===== HAMBURGER BUTTON (MOBILE) ===== */
+        .hamburger-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f2747;
+            color: #ffffff;
+            border: none;
+            border-radius: 33px;
+            padding: 13px 28px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            z-index: 201;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+            align-items: center;
+            gap: 10px;
+            transition: background 0.25s ease;
+        }
+
+        .hamburger-btn:hover {
+            background: #1a3a62;
+        }
+
+        .hb-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .hb-bars span {
+            width: 18px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 2px;
+            display: block;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            bottom: 78px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.94);
+            background: #0f2747;
+            border-radius: 20px;
+            padding: 8px 12px;
+            z-index: 202;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
+            min-width: 190px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+
+        .mobile-menu.open {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            pointer-events: all;
+        }
+
+        .mobile-menu a {
+            display: block;
+            text-decoration: none;
+            color: #ffffff;
+            padding: 13px 18px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .mobile-menu a+a {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(255, 106, 0, 0.18);
+            color: #7C3AED;
+        }
+
+        /* ===== SUPPORT BUTTON ===== */
+        .support {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 200;
+        }
+
+        .support .pill-btn {
+            box-shadow: 0 6px 20px rgba(255, 106, 0, 0.38);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes navSlideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* ===== LARGE DESKTOP (1200px+) ===== */
+        @media (min-width: 1200px) {
+            .site-banner {
+                height: 1000px;
+            }
+
+            .hero-content h2 {
+                font-size: 48px;
+            }
+
+            .action h1 {
+                font-size: 60px;
+            }
+        }
+
+        /* ===== TABLET (601px – 900px) ===== */
+        @media (max-width: 900px) and (min-width: 601px) {
+            .topbar {
+                padding: 14px 30px;
+            }
+
+            .logo img {
+                height: 56px;
+            }
+
+            .site-banner {
+                height: 260px;
+            }
+
+            .hero-content h2 {
+                font-size: 32px;
+            }
+
+            .hero-content p {
+                font-size: 15px;
+            }
+
+            .container {
+                padding: 60px 20px 130px;
+            }
+
+            .action {
+                margin: 24px 0;
+            }
+
+            .action h1 {
+                font-size: 40px;
+            }
+
+            .icon {
+                width: 58px;
+                height: 58px;
+                font-size: 24px;
+            }
+
+            .deal-popup {
+                left: 12px;
+                width: 122px;
+                padding: 14px 10px;
+            }
+
+            .deal-title {
+                font-size: 12px;
+            }
+
+            .deal-desc {
+                font-size: 10px;
+            }
+
+            .bottom-nav {
+                font-size: 14px;
+                gap: 20px;
+                padding: 12px 24px;
+            }
+
+            .support .pill-btn {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+        }
+
+        /* ===== MOBILE (≤ 600px) ===== */
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 10px 16px;
+            }
+
+            .logo img {
+                height: 48px;
+            }
+
+            .site-banner {
+                height: 200px;
+            }
+
+            .hero-content h2 {
+                font-size: 22px;
+            }
+
+            .hero-content p {
+                font-size: 13px;
+            }
+
+            .container {
+                padding: 50px 16px 120px;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .action {
+                gap: 14px;
+                margin: 20px 0;
+            }
+
+            .action h1 {
+                font-size: 30px;
+            }
+
+            .icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                border-radius: 14px;
+            }
+
+            .deal-popup {
+                left: 8px;
+                top: auto;
+                bottom: 95px;
+                transform: none;
+                width: 112px;
+                padding: 12px 9px;
+            }
+
+            .deal-badge {
+                font-size: 9px;
+                padding: 3px 8px;
+                margin-bottom: 8px;
+            }
+
+            .deal-title {
+                font-size: 11px;
+            }
+
+            .deal-desc {
+                font-size: 10px;
+                margin-bottom: 10px;
+            }
+
+            .deal-popup .pill-btn {
+                font-size: 10px;
+                padding: 6px 8px;
+            }
+
+            .bottom-nav {
+                display: none !important;
+            }
+
+            .hamburger-btn {
+                display: flex !important;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .support {
+                bottom: 18px;
+                right: 12px;
+            }
+
+            .support .pill-btn {
+                font-size: 12px;
+                padding: 9px 13px;
+            }
+        }
+
+        /* ===== SMALL MOBILE (≤ 380px) ===== */
+        @media (max-width: 380px) {
+            .site-banner {
+                height: 170px;
+            }
+
+            .hero-content h2 {
+                font-size: 18px;
+            }
+
+            .hero-content p {
+                display: none;
+            }
+
+            .action h1 {
+                font-size: 25px;
+            }
+
+            .icon {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .deal-popup {
+                display: none;
+            }
+        }
+
+        /* ===== ANNOUNCEMENT BAR (Below Header) ===== */
+        .ann-bar {
+            background: #0e1c38;
+            display: flex;
+            align-items: center;
+            position: relative;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(255, 106, 0, 0.25);
+            transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+            max-height: 60px;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        .ann-bar.hidden {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .ann-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 12px;
+            position: relative;
+            padding: 12px 40px;
+        }
+
+        .ann-dot {
+            width: 6px;
+            height: 6px;
+            background: #7C3AED;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: dotPulse 1.8s infinite;
+        }
+
+        @keyframes dotPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.25;
+            }
+        }
+
+        .ann-msg {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 640px;
+        }
+
+        .ann-msg strong {
+            color: #7C3AED;
+            font-weight: 700;
+        }
+
+        .ann-cta {
+            background: #7C3AED;
+            color: #ffffff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .ann-cta:hover {
+            background: #6D28D9;
+        }
+
+        .ann-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 0;
+            position: absolute;
+            right: 12px;
+            line-height: 1;
+            transition: color 0.2s ease;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ann-close:hover {
+            color: #ffffff;
+        }
+
+        /* ===== TABLET (601px – 900px) ===== */
+        @media (max-width: 900px) and (min-width: 601px) {
+            .ann-bar {
+                font-size: 11px;
+                max-height: 56px;
+            }
+
+            .ann-inner {
+                padding: 10px 30px;
+                gap: 10px;
+            }
+
+            .ann-msg {
+                max-width: 500px;
+            }
+
+            .ann-cta {
+                padding: 5px 12px;
+                font-size: 9px;
+            }
+        }
+
+        /* ===== MOBILE (≤ 600px) ===== */
+        @media (max-width: 600px) {
+            .ann-bar {
+                font-size: 10.5px;
+                max-height: 80px;
+            }
+
+            .ann-inner {
+                padding: 10px 40px 10px 12px;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .ann-msg {
+                max-width: 100%;
+                font-size: 10px;
+                line-height: 1.4;
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+            }
+
+            .ann-cta {
+                display: none;
+            }
+
+            .ann-dot {
+                width: 5px;
+                height: 5px;
+            }
+
+            .ann-close {
+                right: 6px;
+                font-size: 12px;
+            }
+        }
+
+        /* ===== SMALL MOBILE (≤ 380px) ===== */
+        @media (max-width: 380px) {
+            .ann-bar {
+                font-size: 9.5px;
+                max-height: 100px;
+            }
+
+            .ann-inner {
+                padding: 8px 36px 8px 8px;
+                gap: 6px;
+            }
+
+            .ann-msg {
+                font-size: 9px;
+            }
+
+            .ann-close {
+                right: 4px;
+                width: 20px;
+                height: 20px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ann-bar" id="annBar">
+    <div class="ann-inner">
+        <span class="ann-dot"></span>
+        <span class="ann-msg">Provident voluptatem earum minima magnam dicta deserunt nulla</span>
+                    <a href="Modi accusamus repel" class="ann-cta">Laborum Vel nemo corrupti occaecat eos</a>
+                <button class="ann-close" id="annClose" title="Close"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+<style>
+/* Mobile ann-bar: force single-line clip with ellipsis, hide CTA */
+@media (max-width: 575px) {
+    .ann-bar { overflow: hidden !important; }
+    .ann-bar .ann-inner {
+        flex-wrap: nowrap !important;
+        padding: 0 36px 0 12px !important;
+        gap: 8px !important;
+    }
+    .ann-bar .ann-msg {
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        font-size: 10.5px !important;
+        max-width: calc(100vw - 70px) !important;
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
+    }
+    .ann-bar .ann-cta { display: none !important; }
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var annBar = document.getElementById('annBar');
+    var annClose = document.getElementById('annClose');
+    if (!annBar || !annClose) return;
+    annClose.addEventListener('click', function (e) {
+        e.preventDefault();
+        annBar.classList.add('hidden');
+    });
+});
+</script>
+    <!-- HEADER -->
+    <header class="topbar">
+        <div class="logo">
+            <img src="http://127.0.0.1:3000/img/logo/logo.png" alt="ActToAction Logo">
+        </div>
+    </header>
+
+    <!-- HERO BANNER SECTION -->
+    <section class="site-banner">
+        <img src="http://127.0.0.1:3000/courseassets/img/homebanner/hommebanner.jpeg" alt="Site Banner">
+        <div class="hero-content">
+            <h2>Building secure technology for <span> connected world</span>
+            </h2>
+            <p>Creative Expression, Cognitive Leadership & Technology led Innovation</p>
+        </div>
+    </section>
+
+    <!-- MAIN ACTION SECTION -->
+    <section class="container">
+        <div class="action add">
+            <a href="http://127.0.0.1:3000/course" class="action-link">
+                <div class="icon"><i class="fas fa-book-open"></i></div>
+                <h1>Threat Academy</h1>
+            </a>
+        </div>
+
+        <div class="action send">
+            <span class="badge-free">FREE</span>
+            <a href="http://127.0.0.1:3000/skill-assessment" class="action-link">
+                <div class="icon"><i class="fas fa-file-alt"></i></div>
+                <h1>Skill Assessment</h1>
+            </a>
+        </div>
+
+        <div class="action exchange">
+            <a href="http://127.0.0.1:3000/summer-camp" class="action-link">
+                <div class="icon"><i class="fas fa-campground"></i></div>
+                <h1>Cyber AI Threat Conclave 2026</h1>
+            </a>
+        </div>
+    </section>
+
+    <!-- BOTTOM NAVIGATION (DESKTOP) -->
+    <nav class="bottom-nav">
+        <a href="http://127.0.0.1:3000/blogs">
+            <div>Blog</div>
+        </a>
+        <a href="http://127.0.0.1:3000/event">
+            <div>Events</div>
+        </a>
+        <a href="http://127.0.0.1:3000/aboutus">
+            <div>About us</div>
+        </a>
+        <a href="http://127.0.0.1:3000/volunteer">
+            <div>Join us</div>
+        </a>
+    </nav>
+
+    <!-- HAMBURGER BUTTON (MOBILE) -->
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Open menu">
+        <div class="hb-bars">
+            <span id="hb1"></span>
+            <span id="hb2"></span>
+            <span id="hb3"></span>
+        </div>
+        Menu
+    </button>
+
+    <!-- MOBILE MENU DRAWER -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="http://127.0.0.1:3000/blogs">Blog</a>
+        <a href="http://127.0.0.1:3000/event">Events</a>
+        <a href="http://127.0.0.1:3000/aboutus">About us</a>
+        <a href="http://127.0.0.1:3000/volunteer">
+            <div>Join us</div>
+        </a>
+    </div>
+
+    <!-- SUPPORT BUTTON -->
+    <div class="support">
+        <button class="pill-btn">&#128172; Support</button>
+    </div>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('mobileMenu');
+            var open = menu.classList.toggle('open');
+            document.getElementById('hb1').style.transform = open ? 'rotate(45deg) translate(4px, 4px)' : '';
+            document.getElementById('hb2').style.opacity = open ? '0' : '1';
+            document.getElementById('hb3').style.transform = open ? 'rotate(-45deg) translate(4px, -4px)' : '';
+        }
+
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('mobileMenu');
+            var btn = document.getElementById('hamburgerBtn');
+            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('open');
+                document.getElementById('hb1').style.transform = '';
+                document.getElementById('hb2').style.opacity = '';
+                document.getElementById('hb3').style.transform = '';
+            }
+        });
+    </script>
+    <script>
+    // Banner Slides Data - loaded from database
+    const bannerSlidesData = [{"id":1,"image":"http:\/\/127.0.0.1:3000\/img\/notification_banners\/1776242292_notif.jpg","title":"Course","url":"http:\/\/127.0.0.1:9000\/dfd"},{"id":2,"image":"http:\/\/127.0.0.1:3000\/img\/notification_banners\/1776242383_notif.jpg","title":"Skill assisemt","url":"#"}];
+
+    let currentSlideIndex = 0;
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    // Create Draggable Bell + Banner Slider
+    function createBellAndSlider() {
+
+        if (!bannerSlidesData || bannerSlidesData.length === 0) return;
+
+        const bellHTML = `
+            <div class="bell-notification-wrapper" id="bellWrapper" draggable="false">
+                <button class="bell-icon" id="bellIcon" aria-label="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="bell-badge">${bannerSlidesData.length}</span>
+                </button>
+            </div>
+        `;
+
+        const slides = bannerSlidesData.map((slide) => {
+            if (slide.image) {
+                // blurred background layer + crisp contain image on top
+                return `
+                <div class="banner-slide" onclick="goToBannerPage('${slide.url}')">
+                    <div class="banner-slide-blur" style="background-image:url('${slide.image}')"></div>
+                    <img src="${slide.image}" alt="${slide.title}">
+                    <div class="banner-slide-overlay">
+                        <p>${slide.title}</p>
+                    </div>
+                </div>`;
+            } else {
+                return `
+                <div class="banner-slide" onclick="goToBannerPage('${slide.url}')">
+                    <div class="banner-slide-empty"><i class="fa fa-image"></i></div>
+                    <div class="banner-slide-overlay">
+                        <p>${slide.title}</p>
+                    </div>
+                </div>`;
+            }
+        }).join('');
+
+        const dots = bannerSlidesData.map((_, i) =>
+            `<span class="banner-dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></span>`
+        ).join('');
+
+        const sliderHTML = `
+            <div class="banner-slider-backdrop" id="bannerBackdrop" onclick="closeBannerSlider(event)"></div>
+            <div class="banner-slider-container" id="bannerSliderContainer">
+                <button class="banner-slider-close" onclick="closeBannerSlider(event)" aria-label="Close">✕</button>
+                <div class="banner-slider-wrapper">
+                    <div class="banner-slides" id="bannerSlides">${slides}</div>
+                    ${bannerSlidesData.length > 1 ? `
+                    <button class="banner-arrow banner-arrow-prev" onclick="prevBannerSlide()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="banner-arrow banner-arrow-next" onclick="nextBannerSlide()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>` : ''}
+                </div>
+                ${bannerSlidesData.length > 1 ? `<div class="banner-dots" id="bannerDots">${dots}</div>` : ''}
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', bellHTML);
+        document.body.insertAdjacentHTML('beforeend', sliderHTML);
+        addBellAndSliderStyles();
+        setupDragListeners();
+
+        const bellIcon = document.getElementById('bellIcon');
+        if (bellIcon) {
+            bellIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleBannerSlider();
+            });
+        }
+    }
+
+    // Add Styles
+    function addBellAndSliderStyles() {
+        const styles = `
+            /* ===== DRAGGABLE BELL NOTIFICATION ===== */
+            .bell-notification-wrapper {
+                position: fixed;
+                bottom: 100px;
+                left: 25px;
+                z-index: 150;
+                cursor: grab;
+                user-select: none;
+                touch-action: none;
+            }
+
+            .bell-notification-wrapper.dragging {
+                cursor: grabbing;
+            }
+
+            .bell-icon {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #7C3AED, #9D4EDD);
+                color: #ffffff;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                box-shadow: 0 4px 15px rgba(255, 106, 0, 0.35);
+                transition: all 0.3s ease;
+                pointer-events: auto;
+            }
+
+            .bell-icon:hover {
+                transform: scale(1.1) rotate(15deg);
+                box-shadow: 0 6px 20px rgba(255, 106, 0, 0.45);
+            }
+
+            .bell-icon:active {
+                transform: scale(0.95);
+            }
+
+            .bell-badge {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background: #ff3b3b;
+                color: #ffffff;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                font-weight: 700;
+                border: 2px solid #ffffff;
+                animation: bellPulse 2s infinite;
+                pointer-events: none;
+            }
+
+            @keyframes bellPulse {
+                0%, 100% { transform: scale(1); }
+                50%       { transform: scale(1.15); }
+            }
+
+            /* ===== BANNER SLIDER MODAL ===== */
+            .banner-slider-backdrop {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.6);
+                z-index: 998;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s ease;
+            }
+            .banner-slider-backdrop.open {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            /* ── Container: fluid width + aspect-ratio so no fixed height needed ── */
+            .banner-slider-container {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.95);
+                /* fluid: 92vw on small screens, capped at 860px on desktop */
+                width: min(92vw, 860px);
+                /* 16:9 aspect ratio — adjusts height automatically with the width */
+                aspect-ratio: 16 / 9;
+                /* never taller than 88% of viewport so it stays on screen */
+                max-height: 88vh;
+                background: #111;
+                border-radius: 20px;
+                z-index: 999;
+                box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+                display: flex;
+                flex-direction: column;
+                opacity: 0;
+                pointer-events: none;
+                overflow: hidden;
+                transition: opacity 0.35s ease, transform 0.35s ease;
+            }
+            .banner-slider-container.open {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            .banner-slider-close {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                background: rgba(15, 39, 71, 0.85);
+                color: #ffffff;
+                border: none;
+                width: 34px; height: 34px;
+                border-radius: 50%;
+                font-size: 18px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10;
+                backdrop-filter: blur(4px);
+                transition: background 0.2s ease;
+            }
+            .banner-slider-close:hover { background: #7C3AED; }
+
+            .banner-slider-wrapper {
+                flex: 1;
+                position: relative;
+                overflow: hidden;
+                /* min-height:0 needed so flex child doesn't overflow */
+                min-height: 0;
+            }
+
+            .banner-slides {
+                display: flex;
+                height: 100%;
+                transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+            }
+
+            /* ── Each slide ── */
+            .banner-slide {
+                min-width: 100%;
+                height: 100%;
+                position: relative;
+                cursor: pointer;
+                overflow: hidden;
+                background: #111;
+            }
+
+            /* Blurred background layer — fills the letterbox areas */
+            .banner-slide-blur {
+                position: absolute;
+                inset: -20px;           /* slightly larger than container */
+                background-size: cover;
+                background-position: center;
+                filter: blur(18px) brightness(0.45);
+                transform: scale(1.05); /* hide blur edge artefacts */
+                z-index: 0;
+            }
+
+            /* Crisp image sits on top, fully visible with contain */
+            .banner-slide img {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;    /* never crops — full image always visible */
+                display: block;
+            }
+
+            /* Placeholder when no image */
+            .banner-slide-empty {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #e9ecef;
+                font-size: 2rem;
+                color: #aaa;
+                z-index: 0;
+            }
+
+            .banner-slide-overlay {
+                position: absolute;
+                bottom: 0; left: 0; right: 0;
+                background: linear-gradient(transparent, rgba(10, 20, 40, 0.82));
+                padding: clamp(14px, 3vw, 28px) clamp(14px, 3vw, 24px) clamp(12px, 2vw, 20px);
+                color: #ffffff;
+                z-index: 2;
+            }
+            .banner-slide-overlay p {
+                font-size: clamp(13px, 2vw, 18px);
+                font-weight: 600;
+                margin: 0;
+                text-shadow: 0 1px 4px rgba(0,0,0,.6);
+            }
+
+            /* ── Arrows ── */
+            .banner-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 106, 0, 0.82);
+                color: #ffffff;
+                border: none;
+                width: clamp(32px, 4vw, 44px);
+                height: clamp(32px, 4vw, 44px);
+                border-radius: 50%;
+                font-size: clamp(14px, 1.8vw, 18px);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 5;
+                backdrop-filter: blur(4px);
+                transition: all 0.25s ease;
+            }
+            .banner-arrow:hover {
+                background: #7C3AED;
+                transform: translateY(-50%) scale(1.1);
+            }
+            .banner-arrow-prev { left: clamp(8px, 2vw, 16px); }
+            .banner-arrow-next { right: clamp(8px, 2vw, 16px); }
+
+            /* ── Dots ── */
+            .banner-dots {
+                display: flex;
+                justify-content: center;
+                gap: 7px;
+                padding: clamp(8px, 1.2vw, 14px);
+                background: rgba(0,0,0,0.65);
+                flex-shrink: 0;
+            }
+            .banner-dot {
+                width: 8px; height: 8px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.4);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .banner-dot.active {
+                background: #7C3AED;
+                width: 24px;
+                border-radius: 4px;
+            }
+            .banner-dot:hover { background: rgba(255,255,255,0.8); }
+
+            /* ── Mobile: bell size only (layout already handled by min/clamp) ── */
+            @media (max-width: 600px) {
+                .bell-icon { width: 44px; height: 44px; font-size: 16px; }
+                .bell-badge { width: 20px; height: 20px; font-size: 10px; }
+                .banner-slider-container { border-radius: 14px; }
+            }
+            @media (max-width: 380px) {
+                .bell-icon { width: 40px; height: 40px; font-size: 14px; }
+                .bell-badge { width: 18px; height: 18px; font-size: 9px; }
+            }
+        `;
+        const styleTag = document.createElement('style');
+        styleTag.textContent = styles;
+        document.head.appendChild(styleTag);
+    }
+
+    // Setup Drag Listeners
+    function setupDragListeners() {
+        const bellWrapper = document.getElementById('bellWrapper');
+        if (!bellWrapper) return;
+
+        // Mouse drag
+        bellWrapper.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            e.preventDefault();
+            isDragging = true;
+            offsetX = e.clientX - bellWrapper.getBoundingClientRect().left;
+            offsetY = e.clientY - bellWrapper.getBoundingClientRect().top;
+            bellWrapper.classList.add('dragging');
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const w = document.getElementById('bellWrapper');
+            if (!w) return;
+            let newX = Math.max(0, Math.min(e.clientX - offsetX, window.innerWidth - 50));
+            let newY = Math.max(0, Math.min(e.clientY - offsetY, window.innerHeight - 50));
+            w.style.left   = newX + 'px';
+            w.style.top    = newY + 'px';
+            w.style.bottom = 'auto';
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                const w = document.getElementById('bellWrapper');
+                if (w) w.classList.remove('dragging');
+            }
+        });
+
+        // Touch
+        bellWrapper.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const t = e.touches[0];
+            const r = bellWrapper.getBoundingClientRect();
+            offsetX = t.clientX - r.left;
+            offsetY = t.clientY - r.top;
+            bellWrapper.classList.add('dragging');
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const w = document.getElementById('bellWrapper');
+            if (!w) return;
+            const t = e.touches[0];
+            let newX = Math.max(0, Math.min(t.clientX - offsetX, window.innerWidth - 50));
+            let newY = Math.max(0, Math.min(t.clientY - offsetY, window.innerHeight - 50));
+            w.style.left   = newX + 'px';
+            w.style.top    = newY + 'px';
+            w.style.bottom = 'auto';
+        }, { passive: true });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+            const w = document.getElementById('bellWrapper');
+            if (w) w.classList.remove('dragging');
+        });
+    }
+
+    function toggleBannerSlider() {
+        const c = document.getElementById('bannerSliderContainer');
+        const b = document.getElementById('bannerBackdrop');
+        if (!c || !b) return;
+        c.classList.toggle('open');
+        b.classList.toggle('open');
+    }
+
+    function closeBannerSlider(e) {
+        if (e) e.stopPropagation();
+        document.getElementById('bannerSliderContainer')?.classList.remove('open');
+        document.getElementById('bannerBackdrop')?.classList.remove('open');
+    }
+
+    function nextBannerSlide() {
+        currentSlideIndex = (currentSlideIndex + 1) % bannerSlidesData.length;
+        updateSlide();
+    }
+
+    function prevBannerSlide() {
+        currentSlideIndex = (currentSlideIndex - 1 + bannerSlidesData.length) % bannerSlidesData.length;
+        updateSlide();
+    }
+
+    function goToSlide(index) {
+        currentSlideIndex = index;
+        updateSlide();
+    }
+
+    function updateSlide() {
+        const s = document.getElementById('bannerSlides');
+        if (s) s.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        document.querySelectorAll('.banner-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === currentSlideIndex);
+        });
+    }
+
+    function goToBannerPage(url) {
+        if (url && url !== '#') window.location.href = url;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        createBellAndSlider();
+
+        // Auto-advance when open
+        setInterval(() => {
+            const c = document.getElementById('bannerSliderContainer');
+            if (c && c.classList.contains('open') && bannerSlidesData.length > 1) {
+                nextBannerSlide();
+            }
+        }, 5000);
+
+        window.toggleBannerSlider = toggleBannerSlider;
+        window.closeBannerSlider  = closeBannerSlider;
+        window.nextBannerSlide    = nextBannerSlide;
+        window.prevBannerSlide    = prevBannerSlide;
+        window.goToSlide          = goToSlide;
+        window.goToBannerPage     = goToBannerPage;
+    });
+</script>
+
+</body>
+<script>
+    // ═══════════════════════════════════════════════════════════════
+    //  DYNAMIC CHATBOT — FAQs from backend + Support Ticket flow
+    // ═══════════════════════════════════════════════════════════════
+
+    const CHATBOT_FAQS_URL   = 'http://127.0.0.1:3000/chatbot/faqs';
+    const CHATBOT_TICKET_URL = 'http://127.0.0.1:3000/chatbot/support';
+    const CHATBOT_CSRF       = 'gPwSVTy1o6n1UBjzpjHK071FLguDHxxwUlpmYDsU';
+
+    let chatbotFaqData = [];
+
+    // ── Build HTML ────────────────────────────────────────────────
+    function createChatbot() {
+        const chatbotHTML = `
+        <div class="chatbot-container" id="chatbotContainer">
+
+            <div class="chatbot-header">
+                <div class="chatbot-header-content">
+                    <h3>Support Assistant</h3>
+                    <p>How can we help?</p>
+                </div>
+                <button class="chatbot-close" onclick="closeChatbot()" aria-label="Close">&#x2715;</button>
+            </div>
+
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p>&#x1F44B; Hi there! How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Buttons -->
+            <div class="chatbot-faq" id="chatbotFAQ">
+                <p class="faq-label">Popular Questions:</p>
+                <div class="faq-buttons" id="faqButtons">
+                    <div class="faq-loading">Loading questions&hellip;</div>
+                </div>
+            </div>
+
+            <!-- Support Ticket Form (hidden by default) -->
+            <div class="chatbot-support-form" id="chatbotSupportForm" style="display:none;">
+                <p class="faq-label">Contact Support &mdash; fill in your details:</p>
+                <div class="support-fields">
+                    <input type="text"  id="supportName"    class="chatbot-support-input" placeholder="Your Name *">
+                    <input type="email" id="supportEmail"   class="chatbot-support-input" placeholder="Email Address *">
+                    <div style="display:flex;align-items:center;border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#fff;margin-bottom:8px;">
+                        <span style="padding:0 10px;background:#f5f5f5;border-right:1px solid #ddd;font-size:13px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:4px;user-select:none;">+91</span>
+                        <input type="tel" id="supportMobile" style="border:none!important;flex:1;padding:8px 10px;outline:none;font-size:13px;" placeholder="10-digit number" maxlength="10" inputmode="numeric">
+                    </div>
+                    <textarea          id="supportMessage"  class="chatbot-support-input chatbot-support-textarea" placeholder="Describe your problem *" rows="3"></textarea>
+                    <div class="support-form-actions">
+                        <button class="support-submit-btn" onclick="submitSupportTicket()">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                        <button class="support-cancel-btn" onclick="cancelSupportForm()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="chatbot-input-area" id="chatbotInputArea">
+                <input
+                    type="text"
+                    class="chatbot-input"
+                    id="chatbotInput"
+                    placeholder="Type your question&hellip;"
+                    onkeypress="handleKeyPress(event)">
+                <button class="chatbot-send" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="chatbot-backdrop" id="chatbotBackdrop" onclick="closeChatbot()"></div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+        addChatbotStyles();
+        loadFAQs();
+    }
+
+    // ── Fetch FAQs from backend ───────────────────────────────────
+    function loadFAQs() {
+        fetch(CHATBOT_FAQS_URL)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                chatbotFaqData = data;
+                renderFAQButtons();
+            })
+            .catch(function() {
+                var btn = document.getElementById('faqButtons');
+                if (btn) btn.innerHTML = '<p style="font-size:12px;color:#999;padding:4px 0;">Could not load questions.</p>';
+            });
+    }
+
+    function renderFAQButtons() {
+        var container = document.getElementById('faqButtons');
+        if (!container) return;
+
+        if (chatbotFaqData.length === 0) {
+            container.innerHTML =
+                '<p style="font-size:12px;color:#999;padding:4px 0;">No FAQs available.</p>' +
+                '<button class="faq-btn faq-btn-support" onclick="openSupportForm()">' +
+                '<i class="fas fa-headset" style="margin-right:6px;"></i>Contact Support Team</button>';
+            return;
+        }
+
+        var faqHtml = chatbotFaqData.map(function(item) {
+            return '<button class="faq-btn" onclick="sendQuestion(' + item.id + ')">' + item.question + '</button>';
+        }).join('');
+
+        faqHtml += '<button class="faq-btn faq-btn-support" onclick="openSupportForm()">' +
+                   '<i class="fas fa-headset" style="margin-right:6px;"></i>Contact Support Team</button>';
+
+        container.innerHTML = faqHtml;
+    }
+
+    // ── Send pre-defined FAQ answer ───────────────────────────────
+    function sendQuestion(questionId) {
+        var item = chatbotFaqData.find(function(q) { return q.id === questionId; });
+        if (!item) return;
+
+        hideFAQ();
+        addUserMessage(item.question);
+        showThinking();
+
+        setTimeout(function() {
+            removeThinking();
+            addBotMessage(item.answer);
+            showFAQ();
+        }, 1200);
+    }
+
+    // ── Send typed message ────────────────────────────────────────
+    function sendMessage() {
+        var input   = document.getElementById('chatbotInput');
+        var message = input.value.trim();
+        if (!message) return;
+
+        var msgLower = message.toLowerCase();
+        var matched = null;
+        for (var i = 0; i < chatbotFaqData.length; i++) {
+            var qLower = chatbotFaqData[i].question.toLowerCase();
+            if (qLower.includes(msgLower) || msgLower.includes(qLower.split(' ').slice(0, 3).join(' '))) {
+                matched = chatbotFaqData[i];
+                break;
+            }
+        }
+
+        addUserMessage(message);
+        input.value = '';
+        hideFAQ();
+        showThinking();
+
+        setTimeout(function() {
+            removeThinking();
+            if (matched) {
+                addBotMessage(matched.answer);
+            } else {
+                addBotMessage(
+                    "Thanks for your question! I couldn\u2019t find an exact match. " +
+                    "Select from our popular questions below, or click <strong>Contact Support Team</strong> to send us your query directly."
+                );
+            }
+            showFAQ();
+        }, 1200);
+    }
+
+    // ── Support Ticket Form ───────────────────────────────────────
+    function openSupportForm() {
+        hideFAQ();
+        hideChatInput();
+        addUserMessage('I want to contact the support team.');
+        addBotMessage('Sure! Please fill in your details below and describe your problem. Our team will get back to you soon.');
+
+        setTimeout(function() {
+            var form = document.getElementById('chatbotSupportForm');
+            if (form) form.style.display = 'block';
+        }, 300);
+    }
+
+    function cancelSupportForm() {
+        var form = document.getElementById('chatbotSupportForm');
+        if (form) form.style.display = 'none';
+        showChatInput();
+        showFAQ();
+    }
+
+    // Restrict mobile input to digits only
+    (function() {
+        var el = document.getElementById('supportMobile');
+        if (el) el.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+    })();
+
+    function submitSupportTicket() {
+        var name    = document.getElementById('supportName').value.trim();
+        var email   = document.getElementById('supportEmail').value.trim();
+        var rawMob  = document.getElementById('supportMobile').value.replace(/\D/g, '');
+        var message = document.getElementById('supportMessage').value.trim();
+
+        // Clear previous error
+        var prevErr = document.getElementById('supportFormError');
+        if (prevErr) prevErr.remove();
+
+        if (!name || !email || !rawMob || !message) {
+            showFormError('Please fill in all required fields.');
+            return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showFormError('Please enter a valid email address.');
+            return;
+        }
+        if (rawMob.length !== 10) {
+            showFormError('Please enter a valid 10-digit mobile number.');
+            return;
+        }
+
+        var mobile = '+91' + rawMob;
+
+        var submitBtn = document.querySelector('.support-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting\u2026';
+
+        fetch(CHATBOT_TICKET_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': CHATBOT_CSRF,
+            },
+            body: JSON.stringify({ name: name, email: email, mobile: mobile, message: message }),
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            var form = document.getElementById('chatbotSupportForm');
+            if (form) form.style.display = 'none';
+            showChatInput();
+
+            if (data.success) {
+                addBotMessage(
+                    '\u2705 <strong>Ticket submitted successfully!</strong><br><br>' +
+                    data.message +
+                    '<br><br><small style="opacity:.8;">Submitted by: ' + escapeHtml(name) +
+                    ' | ' + escapeHtml(mobile) + '</small>'
+                );
+            } else {
+                addBotMessage('\u274C Something went wrong. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit';
+            }
+            showFAQ();
+        })
+        .catch(function() {
+            var form = document.getElementById('chatbotSupportForm');
+            if (form) form.style.display = 'none';
+            showChatInput();
+            addBotMessage('\u274C Network error. Please check your connection and try again.');
+            showFAQ();
+        });
+    }
+
+    function showFormError(msg) {
+        var err = document.createElement('p');
+        err.id = 'supportFormError';
+        err.style.cssText = 'color:#e00;font-size:12px;margin:4px 0 0;';
+        err.textContent = msg;
+        document.querySelector('.support-form-actions').before(err);
+    }
+
+    // ── Message helpers ───────────────────────────────────────────
+    function addUserMessage(text) {
+        var container = document.getElementById('chatbotMessages');
+        var div = document.createElement('div');
+        div.className = 'message user-message';
+        div.innerHTML = '<div class="message-content">' + escapeHtml(text) + '</div>';
+        container.appendChild(div);
+        scrollToBottom();
+    }
+
+    function addBotMessage(html) {
+        var container = document.getElementById('chatbotMessages');
+        var div = document.createElement('div');
+        div.className = 'message bot-message';
+        div.innerHTML = '<div class="message-content">' + html + '</div>';
+        container.appendChild(div);
+        scrollToBottom();
+    }
+
+    function escapeHtml(text) {
+        var d = document.createElement('div');
+        d.appendChild(document.createTextNode(text));
+        return d.innerHTML;
+    }
+
+    function showThinking() {
+        var container = document.getElementById('chatbotMessages');
+        var div = document.createElement('div');
+        div.className = 'message bot-message';
+        div.id = 'thinkingMessage';
+        div.innerHTML = '<div class="thinking">' +
+            '<div class="thinking-dot"></div>' +
+            '<div class="thinking-dot"></div>' +
+            '<div class="thinking-dot"></div>' +
+            '</div>';
+        container.appendChild(div);
+        scrollToBottom();
+    }
+
+    function removeThinking() {
+        var el = document.getElementById('thinkingMessage');
+        if (el) el.remove();
+    }
+
+    function showFAQ()     { var el = document.getElementById('chatbotFAQ');         if (el) el.style.display = 'block'; }
+    function hideFAQ()     { var el = document.getElementById('chatbotFAQ');         if (el) el.style.display = 'none';  }
+    function showChatInput(){ var el = document.getElementById('chatbotInputArea');  if (el) el.style.display = 'flex';  }
+    function hideChatInput(){ var el = document.getElementById('chatbotInputArea');  if (el) el.style.display = 'none';  }
+
+    function scrollToBottom() {
+        var container = document.getElementById('chatbotMessages');
+        setTimeout(function() { container.scrollTop = container.scrollHeight; }, 50);
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter') sendMessage();
+    }
+
+    // ── Close ─────────────────────────────────────────────────────
+    function closeChatbot() {
+        var container = document.getElementById('chatbotContainer');
+        var backdrop  = document.getElementById('chatbotBackdrop');
+        if (!container) return;
+        container.style.animation = 'chatbotSlideOut 0.3s ease forwards';
+        backdrop.style.animation  = 'backdropFade 0.3s ease reverse forwards';
+        setTimeout(function() { container.remove(); backdrop.remove(); }, 300);
+    }
+
+    function initChatbot() {
+        if (document.getElementById('chatbotContainer')) return;
+        createChatbot();
+    }
+
+    // ── Slide-out keyframe ────────────────────────────────────────
+    (function() {
+        var s = document.createElement('style');
+        s.textContent = '@keyframes chatbotSlideOut { to { opacity:0; transform:scale(0.8) translateY(20px); } }';
+        document.head.appendChild(s);
+    })();
+
+    // ── Hook support button ───────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+        var supportBtn = document.querySelector('.support .pill-btn');
+        if (supportBtn) supportBtn.onclick = initChatbot;
+    });
+
+    // ══════════════════════════════════════════════════════════════
+    //  CSS
+    // ══════════════════════════════════════════════════════════════
+    function addChatbotStyles() {
+        var styles = `
+        .chatbot-container {
+            position:fixed; bottom:80px; right:25px; width:380px; max-height:640px;
+            background:#fff; border-radius:16px; box-shadow:0 8px 32px rgba(0,0,0,.18);
+            display:flex; flex-direction:column; z-index:999;
+            opacity:0; transform:scale(0.8) translateY(20px);
+            animation:chatbotSlideIn .35s ease forwards;
+        }
+        @keyframes chatbotSlideIn { to { opacity:1; transform:scale(1) translateY(0); } }
+
+        .chatbot-header {
+            background:linear-gradient(135deg,#7C3AED,#9D4EDD); color:#fff;
+            padding:18px 20px; border-radius:16px 16px 0 0;
+            display:flex; justify-content:space-between; align-items:center; flex-shrink:0;
+        }
+        .chatbot-header-content h3 { font-size:16px; font-weight:700; margin:0 0 4px; }
+        .chatbot-header-content p  { font-size:12px; margin:0; opacity:.9; }
+        .chatbot-close {
+            background:none; border:none; color:#fff; font-size:20px; cursor:pointer;
+            padding:0; width:32px; height:32px; display:flex; align-items:center;
+            justify-content:center; border-radius:50%; transition:background .2s;
+        }
+        .chatbot-close:hover { background:rgba(255,255,255,.2); }
+
+        .chatbot-messages {
+            flex:1; overflow-y:auto; padding:16px;
+            display:flex; flex-direction:column; gap:12px;
+            background:#f8f9fb; min-height:0;
+        }
+        .message { display:flex; animation:msgIn .3s ease; }
+        @keyframes msgIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        .bot-message  { justify-content:flex-start; }
+        .user-message { justify-content:flex-end; }
+        .message-content {
+            max-width:78%; padding:10px 14px; border-radius:12px;
+            word-wrap:break-word; line-height:1.5; font-size:13px;
+        }
+        .bot-message  .message-content { background:#fff; color:#0f2747; border:1px solid #e0e4ea; }
+        .user-message .message-content { background:#7C3AED; color:#fff; }
+
+        .thinking { display:flex; gap:4px; padding:12px 14px; }
+        .thinking-dot {
+            width:8px; height:8px; border-radius:50%; background:#0f2747;
+            animation:thinkAnim 1.4s infinite;
+        }
+        .thinking-dot:nth-child(2) { animation-delay:.2s; }
+        .thinking-dot:nth-child(3) { animation-delay:.4s; }
+        @keyframes thinkAnim {
+            0%,60%,100%{transform:translateY(0);opacity:.6}
+            30%{transform:translateY(-10px);opacity:1}
+        }
+
+        .chatbot-faq {
+            padding:12px 16px; border-top:1px solid #e0e4ea;
+            max-height:175px; overflow-y:auto; flex-shrink:0;
+        }
+        .faq-label {
+            font-size:11px; font-weight:700; color:#0f2747;
+            margin:0 0 8px; text-transform:uppercase; letter-spacing:.5px;
+        }
+        .faq-buttons { display:flex; flex-direction:column; gap:6px; }
+        .faq-loading { font-size:12px; color:#aaa; padding:4px 0; }
+        .faq-btn {
+            background:#f0f2f5; border:1px solid #e0e4ea; color:#0f2747;
+            padding:9px 12px; border-radius:8px; font-size:12px; cursor:pointer;
+            transition:all .2s; text-align:left; font-weight:500; line-height:1.3;
+        }
+        .faq-btn:hover { background:#7C3AED; color:#fff; border-color:#7C3AED; transform:translateX(4px); }
+        .faq-btn-support { background:#0f2747; border-color:#0f2747; color:#fff !important; margin-top:4px; }
+        .faq-btn-support:hover { background:#1a3a6b !important; border-color:#1a3a6b !important; }
+
+        .chatbot-support-form {
+            padding:12px 16px; border-top:1px solid #e0e4ea;
+            flex-shrink:0; background:#fff;
+            max-height:250px; overflow-y:auto;
+        }
+        .support-fields { display:flex; flex-direction:column; gap:8px; }
+        .chatbot-support-input {
+            width:100%; border:1px solid #e0e4ea; border-radius:8px;
+            padding:9px 12px; font-size:12px; font-family:Arial,sans-serif;
+            outline:none; transition:border-color .2s; box-sizing:border-box; resize:none;
+        }
+        .chatbot-support-input:focus { border-color:#7C3AED; box-shadow:0 0 0 3px rgba(255,106,0,.1); }
+        .chatbot-support-textarea { min-height:60px; }
+        .support-form-actions { display:flex; gap:8px; }
+        .support-submit-btn {
+            flex:1; background:#7C3AED; color:#fff; border:none; border-radius:8px;
+            padding:9px; font-size:12px; font-weight:600; cursor:pointer;
+            transition:background .2s; display:flex; align-items:center; justify-content:center; gap:6px;
+        }
+        .support-submit-btn:hover:not(:disabled) { background:#6D28D9; }
+        .support-submit-btn:disabled { opacity:.7; cursor:not-allowed; }
+        .support-cancel-btn {
+            background:#f0f2f5; color:#0f2747; border:1px solid #e0e4ea;
+            border-radius:8px; padding:9px 14px; font-size:12px; cursor:pointer;
+            transition:background .2s;
+        }
+        .support-cancel-btn:hover { background:#e0e4ea; }
+
+        .chatbot-input-area {
+            display:flex; gap:8px; padding:12px 16px; background:#fff;
+            border-top:1px solid #e0e4ea; border-radius:0 0 16px 16px; flex-shrink:0;
+        }
+        .chatbot-input {
+            flex:1; border:1px solid #e0e4ea; border-radius:8px;
+            padding:10px 12px; font-size:13px; font-family:Arial,sans-serif;
+            outline:none; transition:border-color .2s;
+        }
+        .chatbot-input:focus { border-color:#7C3AED; box-shadow:0 0 0 3px rgba(255,106,0,.1); }
+        .chatbot-send {
+            background:#7C3AED; color:#fff; border:none; border-radius:8px;
+            width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+            cursor:pointer; transition:background .2s,transform .2s; font-size:14px;
+        }
+        .chatbot-send:hover { background:#6D28D9; transform:scale(1.05); }
+
+        .chatbot-backdrop {
+            position:fixed; inset:0; background:rgba(0,0,0,.3); z-index:998;
+            opacity:0; animation:backdropFade .35s ease forwards;
+        }
+        @keyframes backdropFade { to { opacity:1; } }
+
+        .chatbot-messages::-webkit-scrollbar,
+        .chatbot-faq::-webkit-scrollbar,
+        .chatbot-support-form::-webkit-scrollbar { width:5px; }
+        .chatbot-messages::-webkit-scrollbar-track,
+        .chatbot-faq::-webkit-scrollbar-track,
+        .chatbot-support-form::-webkit-scrollbar-track { background:transparent; }
+        .chatbot-messages::-webkit-scrollbar-thumb,
+        .chatbot-faq::-webkit-scrollbar-thumb,
+        .chatbot-support-form::-webkit-scrollbar-thumb { background:#d0d5dd; border-radius:3px; }
+
+        @media (max-width:600px) {
+            .chatbot-container { width:calc(100% - 24px); max-height:520px; bottom:90px; right:12px; left:12px; }
+            .message-content { max-width:85%; font-size:12px; }
+            .faq-btn { font-size:11px; padding:8px 10px; }
+        }
+        @media (max-width:380px) {
+            .chatbot-container { max-height:460px; bottom:85px; }
+        }
+        `;
+
+        var tag = document.createElement('style');
+        tag.textContent = styles;
+        document.head.appendChild(tag);
+    }
+</script>
+
+
+
+
+</html>
+

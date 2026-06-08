@@ -1089,15 +1089,8 @@
                             {{-- Author card --}}
                             @if ($blog->author)
                                 <div class="author-card">
-                                    @if ($blog->author->image)
-                                        <img src="{{ asset('img/authors/' . $blog->author->image) }}"
-                                            alt="{{ $blog->author->name }}" class="author-avatar">
-                                    @else
-                                        <div class="author-avatar"
-                                            style="background:var(--accent-color);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:1.1rem;">
-                                            {{ strtoupper(substr($blog->author->name, 0, 2)) }}
-                                        </div>
-                                    @endif
+                                    <img src="{{ $blog->author->image_url }}"
+                                        alt="{{ $blog->author->name }}" class="author-avatar">
                                     <div class="author-info">
                                         <h4>{{ $blog->author->name }}</h4>
                                         <span>{{ $blog->author->designation ?? 'Author' }}</span>
@@ -1110,7 +1103,7 @@
                         {{-- Hero image --}}
                         <div class="hero-image">
                             @if ($blog->image)
-                                <img src="{{ asset('img/' . $blog->image) }}" alt="{{ $blog->title }}">
+                                <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}">
                             @else
                                 <div
                                     style="width:100%;height:100%;min-height:300px;background:linear-gradient(135deg,rgba(23,92,221,.15),rgba(23,92,221,.05));border-radius:16px;display:flex;align-items:center;justify-content:center;">
@@ -1261,15 +1254,8 @@
                         {{-- Author bio --}}
                         @if ($blog->author)
                             <div class="author-bio">
-                                @if ($blog->author->image)
-                                    <img src="{{ asset('img/authors/' . $blog->author->image) }}"
-                                        alt="{{ $blog->author->name }}" class="author-bio-avatar">
-                                @else
-                                    <div class="author-bio-avatar"
-                                        style="background:var(--accent-color);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:1.5rem;">
-                                        {{ strtoupper(substr($blog->author->name, 0, 2)) }}
-                                    </div>
-                                @endif
+                                <img src="{{ $blog->author->image_url }}"
+                                    alt="{{ $blog->author->name }}" class="author-bio-avatar">
                                 <div class="author-bio-content">
                                     <h4>{{ $blog->author->name }}</h4>
                                     <div class="role">{{ $blog->author->designation ?? 'Author' }}</div>
@@ -1352,9 +1338,8 @@
                             <div class="recent-posts">
                                 @foreach ($recentPosts as $rp)
                                     <a href="#" class="recent-post">
-                                        @if ($rp->image)
-                                            <img src="{{ asset('img/' . $rp->image) }}" alt="{{ $rp->title }}"
-                                                class="recent-post-image">
+                                        <img src="{{ $rp->image_url }}" alt="{{ $rp->title }}"
+                                            class="recent-post-image">
                                         @else
                                             <div class="recent-post-image"
                                                 style="background:linear-gradient(135deg,rgba(23,92,221,.15),rgba(23,92,221,.05));display:flex;align-items:center;justify-content:center;">
@@ -1409,13 +1394,7 @@
                         @foreach ($related as $rp)
                             <article class="related-card">
                                 <div class="related-card-image">
-                                    @if ($rp->image)
-                                        <img src="{{ asset('img/' . $rp->image) }}" alt="{{ $rp->title }}">
-                                    @else
-                                        <div
-                                            style="width:100%;height:100%;background:linear-gradient(135deg,rgba(23,92,221,.15),rgba(23,92,221,.05));">
-                                        </div>
-                                    @endif
+                                    <img src="{{ $rp->image_url }}" alt="{{ $rp->title }}">
                                     @if ($rp->category)
                                         <span class="related-card-category">{{ $rp->category->category_name }}</span>
                                     @endif

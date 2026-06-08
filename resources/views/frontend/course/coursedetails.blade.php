@@ -729,7 +729,7 @@
 
         <!-- HERO BANNER -->
         <div class="course-hero">
-            <img src="{{ asset($course->banner_image) }}" alt="{{ $course->title }}">
+            <img src="{{ $course->banner_url }}" alt="{{ $course->title }}">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <div class="container">
@@ -754,7 +754,7 @@
                             <div class="hm"><i class="bi bi-people-fill"></i> {{ $course->age_group }}</div>
                         @endif
                     </div>
-                    <a href="https://wa.me/918079034973" target="_blank" class="btn-enroll-hero" data-aos="fade-up"
+                    <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-enroll-hero" data-aos="fade-up"
                         data-aos-delay="140">
                         <i class="bi bi-whatsapp"></i> Enroll Now
                     </a>
@@ -1057,7 +1057,7 @@
                                     class="btn-enroll-big">
                                     <i class="bi bi-person-plus-fill"></i> Enroll Now
                                 </a>
-                                <a href="https://wa.me/918079034973" target="_blank" class="btn-wa">
+                                <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-wa">
                                     <i class="bi bi-whatsapp"></i> Ask on WhatsApp
                                 </a>
                                 <p class="note">🔒 Your details are safe with us. Our team will confirm your batch slot.
@@ -1081,7 +1081,7 @@
                         @foreach ($otherCourses as $other)
                             <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ $loop->index * 60 }}">
                                 <div class="other-card">
-                                    <img src="{{ asset($other->banner_image) }}" alt="{{ $other->title }}">
+                                    <img src="{{ $other->banner_url }}" alt="{{ $other->title }}">
                                     <div class="oc-body">
                                         <div class="oc-meta">
                                             <i class="bi bi-people me-1"></i>{{ $other->age_group ?? 'All Levels' }}
@@ -1110,7 +1110,7 @@
                             you through the enrolment process and find the right program for your goals.</p>
                     </div>
                     <div class="col-lg-5 text-lg-end d-flex flex-wrap gap-3 justify-content-lg-end">
-                        <a href="https://wa.me/918079034973" target="_blank" class="btn-cw">
+                        <a href="https://wa.me/{{ $whatsappDigits }}" target="_blank" class="btn-cw">
                             <i class="bi bi-whatsapp"></i> WhatsApp Us
                         </a>
                         <a href="#" class="btn-co">

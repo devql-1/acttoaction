@@ -4,7 +4,7 @@
 
             {{-- Logo --}}
             <a href="{{ url('/') }}" class="sh-logo">
-                <img src="{{ asset('public/img/logo/logo.png') }}" alt="ActToAction Logo">
+                <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
             </a>
 
             {{-- Right side: socials + nav + hamburger --}}

@@ -9,6 +9,7 @@ use App\Models\CourseSession;
 use App\Models\CourseDocument;
 use App\Models\State;
 use App\Models\CourseCategory;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -44,9 +45,7 @@ class CourseController extends Controller
 
         // Upload Banner Image
         if ($request->hasFile('banner_image')) {
-            $filename = time() . '.' . $request->banner_image->extension();
-            $request->banner_image->move(public_path('img/course_images'), $filename);
-            $bannerPath = 'img/course_images/' . $filename;
+            $bannerPath = $request->file('banner_image')->store('course_images', 'public');
         }
 
         // Generate slug from title
@@ -139,13 +138,11 @@ class CourseController extends Controller
 
         // Upload New Banner Image
         if ($request->hasFile('banner_image')) {
-            if ($bannerPath && file_exists(public_path($bannerPath))) {
-                unlink(public_path($bannerPath));
+            if ($bannerPath && Storage::disk('public')->exists($bannerPath)) {
+                Storage::disk('public')->delete($bannerPath);
             }
 
-            $filename = time() . '.' . $request->banner_image->extension();
-            $request->banner_image->move(public_path('img/course_images'), $filename);
-            $bannerPath = 'img/course_images/' . $filename;
+            $bannerPath = $request->file('banner_image')->store('course_images', 'public');
         }
 
         // Update Course
@@ -187,14 +184,14 @@ class CourseController extends Controller
         $course = Course::findOrFail($id);
 
         // Delete Banner Image
-        if ($course->banner_image && file_exists(public_path($course->banner_image))) {
-            unlink(public_path($course->banner_image));
+        if ($course->banner_image && Storage::disk('public')->exists($course->banner_image)) {
+            Storage::disk('public')->delete($course->banner_image);
         }
 
         // Delete Related Documents
         foreach ($course->documents as $doc) {
-            if (file_exists(public_path('storage/' . $doc->document_file))) {
-                unlink(public_path('storage/' . $doc->document_file));
+            if (Storage::disk('public')->exists($doc->document_file)) {
+                Storage::disk('public')->delete($doc->document_file);
             }
             $doc->delete();
         }

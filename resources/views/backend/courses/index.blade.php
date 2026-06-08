@@ -54,6 +54,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
+                                    <th>Image</th>
                                     <th>Title</th>
                                     <th class="text-center">Duration</th>
                                     <th class="text-center">Sessions</th>
@@ -72,6 +73,14 @@
                             <tr>
 
                                 <td>{{ $loop->iteration }}</td>
+
+                                <td>
+                                    @if($course->banner_image)
+                                        <img src="{{ $course->banner_url }}" alt="{{ $course->title }}" style="width:60px;height:40px;object-fit:cover;border-radius:4px;" />
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
 
                                 <td><strong>{{ $course->title }}</strong></td>
 
@@ -161,7 +170,7 @@
                             @empty
 
                             <tr>
-                                <td colspan="9" class="text-center text-muted py-4">
+                                <td colspan="10" class="text-center text-muted py-4">
                                     No courses found.
                                 </td>
                             </tr>

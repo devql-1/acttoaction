@@ -1352,9 +1352,9 @@
                         @php $mosaicBlogs = \App\Models\Blog::where('status',1)->whereNotNull('image')->latest()->limit(4)->get(); @endphp
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:380px;opacity:.85;">
                             @foreach ($mosaicBlogs as $mi => $mb)
-                                <img src="{{ asset('img/' . $mb->image) }}"
-                                    style="border-radius:16px;height:{{ $mi % 2 === 0 ? '180' : '140' }}px;object-fit:cover;width:100%;{{ $mi === 1 ? 'margin-top:30px;' : ($mi === 2 ? 'margin-top:-30px;' : '') }}"
-                                    alt="{{ $mb->title }}">
+<img src="{{ $mb->image_url }}"
+                                     style="border-radius:16px;height:{{ $mi % 2 === 0 ? '180' : '140' }}px;object-fit:cover;width:100%;{{ $mi === 1 ? 'margin-top:30px;' : ($mi === 2 ? 'margin-top:-30px;' : '') }}"
+                                     alt="{{ $mb->title }}">
                             @endforeach
                             @for ($fi = $mosaicBlogs->count(); $fi < 4; $fi++)
                                 <div
@@ -1396,7 +1396,7 @@
                             <div class="col-lg-6">
                                 <div class="fc-img" style="height:100%;min-height:340px;">
                                     @if ($featured->image)
-                                        <img src="{{ asset('img/' . $featured->image) }}" alt="{{ $featured->title }}"
+                                        <img src="{{ $featured->image_url }}" alt="{{ $featured->title }}"
                                             style="height:100%;min-height:340px;" />
                                     @else
                                         <div
@@ -1427,16 +1427,11 @@
                                     </p>
                                     <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                                         @if ($featured->author)
-                                            <div class="fc-author">
-                                                @if ($featured->author->image)
-                                                    <img src="{{ asset('img/authors/' . $featured->author->image) }}"
-                                                        class="avatar"
-                                                        style="width:44px;height:44px;border-radius:50%;object-fit:cover;"
-                                                        alt="{{ $featured->author->name }}">
-                                                @else
-                                                    <div class="avatar">
-                                                        {{ strtoupper(substr($featured->author->name, 0, 2)) }}</div>
-                                                @endif
+                                            <div class="fc-author d-flex align-items-center gap-2">
+                                                <img src="{{ $featured->author->image_url }}"
+                                                    class="avatar"
+                                                    style="width:44px;height:44px;border-radius:50%;object-fit:cover;"
+                                                    alt="{{ $featured->author->name }}">
                                                 <div class="au-info">
                                                     <span class="au-name">{{ $featured->author->name }}</span>
                                                     <span
@@ -1469,7 +1464,7 @@
                                 <div class="bc" data-cat="{{ $blog->category->slug ?? 'uncategorized' }}">
                                     <div class="bc-img">
                                         @if ($blog->image)
-                                            <img src="{{ asset('img/' . $blog->image) }}" alt="{{ $blog->title }}" />
+                                            <img src="{{ $blog->image_url }}" alt="{{ $blog->title }}" />
                                         @else
                                             <div
                                                 style="height:210px;background:linear-gradient(135deg,#175cdd22,#175cdd55);display:flex;align-items:center;justify-content:center;">
@@ -1505,14 +1500,9 @@
                                         <div class="bc-footer">
                                             <div class="bc-author">
                                                 @if ($blog->author)
-                                                    @if ($blog->author->image)
-                                                        <img src="{{ asset('img/authors/' . $blog->author->image) }}"
-                                                            class="av" style="border-radius:50%;object-fit:cover;"
-                                                            alt="{{ $blog->author->name }}">
-                                                    @else
-                                                        <div class="av">
-                                                            {{ strtoupper(substr($blog->author->name, 0, 2)) }}</div>
-                                                    @endif
+                                                    <img src="{{ $blog->author->image_url }}"
+                                                        class="av" style="border-radius:50%;object-fit:cover;"
+                                                        alt="{{ $blog->author->name }}">
                                                     <span>{{ $blog->author->name }}</span>
                                                 @else
                                                     <div class="av">TX</div>
@@ -1611,7 +1601,7 @@
                                 <a href="{{ route('frontend.blog.details', $rp->slug) }}" class="text-decoration-none">
                                     <div class="recent-post">
                                         @if ($rp->image)
-                                            <img src="{{ asset('img/' . $rp->image) }}" alt="{{ $rp->title }}" />
+                                            <img src="{{ $rp->image_url }}" alt="{{ $rp->title }}" />
                                         @else
                                             <div
                                                 style="width:64px;height:52px;border-radius:8px;background:linear-gradient(135deg,#175cdd22,#175cdd55);flex-shrink:0;">

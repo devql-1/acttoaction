@@ -10,20 +10,13 @@ use App\Services\EmailService;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
-        //
         $this->app->singleton(EmailService::class, function () {
             return new EmailService();
         });
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         view()->composer('*', function ($view) {
@@ -41,8 +34,30 @@ class AppServiceProvider extends ServiceProvider
         });
 
         if (Schema::hasTable('contact_infos')) {
-            view()->share('contactInfo', ContactInfo::first());
+            $ci = ContactInfo::first();
+            view()->share('contactInfo', $ci);
         }
+
+        $correctPhone    = '+91 80790 34973';
+        $correctWhatsapp = '+91 80790 34973';
+        $correctEmail    = 'contact@acttoaction.com';
+        $correctAddress  = 'Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar, Jaipur - 302021';
+
+        view()->share([
+            'phone'          => $correctPhone,
+            'whatsapp'       => $correctWhatsapp,
+            'email'          => $correctEmail,
+            'address'        => $correctAddress,
+            'mapLink'        => '',
+            'fbUrl'          => '',
+            'instaUrl'       => '',
+            'linkedinUrl'    => '',
+            'chatPhones'     => [$correctPhone],
+            'workingHours'   => ['Mon - Sat: 10am - 7pm', 'Sunday: By Appointment Only'],
+            'phoneDigits'    => preg_replace('/\D/', '', $correctPhone),
+            'whatsappDigits' => preg_replace('/\D/', '', $correctWhatsapp),
+            'isEmbedMap'     => false,
+        ]);
 
         if (Schema::hasTable('announcement_bars')) {
             view()->share('activeAnnouncement', AnnouncementBar::active()->latest()->first());

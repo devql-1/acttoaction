@@ -31,4 +31,11 @@ class Blog extends Model
     {
         return $this->belongsToMany(BlogTag::class, 'blog_tag', 'blog_id', 'blog_tag_id');
     }
+
+    public function getImageUrlAttribute(): string
+    {
+        return $this->image
+            ? asset('public/img/' . $this->image)
+            : asset('public/img/default-blog.png');
+    }
 }

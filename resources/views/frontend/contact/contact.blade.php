@@ -453,24 +453,7 @@
             }
         }
     </style>
-    @php
-        $ci = $contactInfo ?? null;
-        $phone = $ci->phone ?? '';
-        $whatsapp = $ci->whatsapp ?? '';
-        $email = $ci->email ?: 'training@threatxpert.com';
-        $address = $ci->address ?: 'ThreatXpert Training Centre, Jaipur, Rajasthan, India';
-        $mapLink = $ci->map_link ?? '';
-        $fbUrl = $ci->fb_url ?? '';
-        $instaUrl = $ci->insta_url ?? '';
-        $linkedinUrl = $ci->linkedin_url ?? '';
-
-        $chatPhones = ['+91 80790 34973'];
-        $workingHours = ['Mon - Sat: 10am - 7pm', 'Sunday: By Appointment Only'];
-
-        $phoneDigits = preg_replace('/\D/', '', $phone);
-        $whatsappDigits = preg_replace('/\D/', '', $whatsapp);
-        $isEmbedMap = $mapLink && str_contains($mapLink, '/maps/embed');
-    @endphp
+    @include('frontend.partialspages.contact-info')
 
 
 

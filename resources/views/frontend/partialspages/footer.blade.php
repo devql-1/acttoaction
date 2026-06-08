@@ -1,4 +1,5 @@
 <footer id="footer" class="footer-16 footer position-relative">
+    @include('frontend.partialspages.contact-info')
     <div class="container">
         <div class="footer-main" data-aos="fade-up" data-aos-delay="100">
             <div class="row align-items-start">

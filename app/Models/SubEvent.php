@@ -81,7 +81,7 @@ class SubEvent extends Model
     public function getBannerUrlAttribute()
     {
         if (!$this->banner_image) {
-            return asset('assets/img/placeholder-image.jpg');
+            return asset('public/assets/img/placeholder-image-1.webp');
         }
 
         if (Str::startsWith($this->banner_image, ['http://', 'https://', '//'])) {
