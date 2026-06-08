@@ -238,7 +238,7 @@
         document.querySelectorAll('.sh-nav a').forEach(a => {
             try {
                 const lp = new URL(a.href, location.origin).pathname;
-                if (lp !== '/' && curPath.startsWith(lp)) {
+                if (lp && lp !== '/' && curPath.startsWith(lp)) {
                     a.classList.add('sh-active');
                     a.closest('.sh-has-drop')?.querySelector(':scope > a')?.classList.add('sh-active');
                 }

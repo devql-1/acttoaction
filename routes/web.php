@@ -197,9 +197,9 @@ Route::get('/enrollment/payment/confirmed', [EnrollmentController::class, 'payme
 // ║                   CYBER AI THREAT CONCLAVE ROUTES                         ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
-Route::get('/summer-camp', [SummerController::class, 'index'])->name('summercamp');
-Route::get('/summer-camp/partners', [SummerController::class, 'partners'])->name('summercamp.partners');
-Route::get('/summer-camp/events', [SummerController::class, 'event'])->name('event.summercamp');
+Route::get('/cyber-ai-threat-conclave-2026', [SummerController::class, 'index'])->name('summercamp');
+Route::get('/cyber-ai-threat-conclave-2026/partners', [SummerController::class, 'partners'])->name('summercamp.partners');
+Route::get('/cyber-ai-threat-conclave-2026/events', [SummerController::class, 'event'])->name('event.summercamp');
 Route::get('summercamp/events/sub/{subEvent:slug}', [SummerController::class, 'subEventDetail'])->name('frontend.events.subevent-detail');
 Route::get('summercamp/events/{event:slug}', [SummerController::class, 'subevent'])->name('summercamp.event');
 

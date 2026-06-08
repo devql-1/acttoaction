@@ -143,7 +143,7 @@
         /* ===== BANNER SECTION ===== */
         .site-banner {
             width: 100%;
-            height: 800px;
+            height: 600px;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -949,9 +949,12 @@
     <!-- HEADER -->
     <header class="topbar">
         <div class="logo">
-<img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
-...
-<img src="{{ asset('courseassets/img/homebanner/hommebanner.jpeg') }}" alt="Site Banner">
+            <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
+        </div>
+    </header>
+
+    <section class="site-banner">
+        <img src="{{ asset('courseassets/img/homebanner/hommebanner.jpeg') }}" alt="Site Banner">
         <div class="hero-content">
             <h2>Building secure technology for <span> connected world</span>
             </h2>

@@ -120,15 +120,15 @@
             overflow: hidden;
         }
 
-        .merch-card-thumb i {
-            font-size: 88px;
-            color: #fff;
-            filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.2));
+        .merch-card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.35s ease;
         }
 
-        .merch-card:hover .merch-card-thumb i {
-            transform: scale(1.12) rotate(-6deg);
+        .merch-card:hover .merch-card-thumb img {
+            transform: scale(1.08);
         }
 
         .thumb-orange {
@@ -367,10 +367,6 @@
                 height: 180px;
             }
 
-            .merch-card-thumb i {
-                font-size: 64px;
-            }
-
             .merch-card-body {
                 padding: 18px;
             }
@@ -427,7 +423,7 @@
                 <div class="merch-card" data-cat="apparel">
                     <div class="merch-card-thumb thumb-orange">
                         <span class="merch-card-badge new">New</span>
-                        <i class="bi bi-shield-fill"></i>
+                        <img src="{{ asset('merchimages/t-shirt.jpeg') }}" alt="Classic Logo T-Shirt" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Apparel</div>
@@ -444,7 +440,7 @@
                 <div class="merch-card" data-cat="apparel">
                     <div class="merch-card-thumb thumb-navy">
                         <span class="merch-card-badge hot">Hot</span>
-                        <i class="bi bi-cpu-fill"></i>
+                        <img src="{{ asset('merchimages/hoodeis.jpeg') }}" alt="Signature Hoodie" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Apparel</div>
@@ -460,7 +456,7 @@
 
                 <div class="merch-card" data-cat="accessories">
                     <div class="merch-card-thumb thumb-teal">
-                        <i class="bi bi-award-fill"></i>
+                        <img src="{{ asset('merchimages/cap.jpeg') }}" alt="Cyber Dad Cap" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Accessories</div>
@@ -476,7 +472,7 @@
 
                 <div class="merch-card" data-cat="accessories">
                     <div class="merch-card-thumb thumb-rose">
-                        <i class="bi bi-droplet-fill"></i>
+                        <img src="{{ asset('merchimages/bottel.jpeg') }}" alt="Insulated Water Bottle" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Accessories</div>
@@ -493,7 +489,7 @@
                 <div class="merch-card" data-cat="stationery">
                     <div class="merch-card-thumb thumb-amber">
                         <span class="merch-card-badge new">New</span>
-                        <i class="bi bi-journal-bookmark-fill"></i>
+                        <img src="{{ asset('merchimages/book.jpeg') }}" alt="Hacker's Notebook" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Stationery</div>
@@ -509,7 +505,7 @@
 
                 <div class="merch-card" data-cat="accessories">
                     <div class="merch-card-thumb thumb-indigo">
-                        <i class="bi bi-bag-heart-fill"></i>
+                        <img src="{{ asset('merchimages/beg.jpeg') }}" alt="Canvas Tote Bag" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Accessories</div>
@@ -525,7 +521,7 @@
 
                 <div class="merch-card" data-cat="stationery">
                     <div class="merch-card-thumb thumb-emerald">
-                        <i class="bi bi-stickies-fill"></i>
+                        <img src="{{ asset('merchimages/sticker.jpeg') }}" alt="Cyber Sticker Pack" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Stationery</div>
@@ -542,7 +538,7 @@
                 <div class="merch-card" data-cat="limited">
                     <div class="merch-card-thumb thumb-plum">
                         <span class="merch-card-badge limited">Limited</span>
-                        <i class="bi bi-cup-hot-fill"></i>
+                        <img src="{{ asset('merchimages/cup.jpeg') }}" alt="Threat Expert Ceramic Mug" style="width:100%;height:100%;object-fit:cover;">
                     </div>
                     <div class="merch-card-body">
                         <div class="merch-card-cat">Limited Edition</div>

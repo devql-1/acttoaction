@@ -144,6 +144,10 @@
         overflow: visible !important;
     }
 
+    .navmenu a {
+        text-decoration: none !important;
+    }
+
     .logo img {
         height: 120px;
     }
