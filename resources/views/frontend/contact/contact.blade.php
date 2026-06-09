@@ -566,7 +566,7 @@
                                 </div>
                             </div>
 
-                            @if ($fbUrl || $instaUrl || $linkedinUrl)
+                            @if ($fbUrl || $instaUrl || $linkedinUrl || $twitchUrl)
                                 <div class="cu-socials">
                                     @if ($fbUrl)
                                         <a href="{{ $fbUrl }}" target="_blank" rel="noopener"
@@ -579,6 +579,10 @@
                                     @if ($linkedinUrl)
                                         <a href="{{ $linkedinUrl }}" target="_blank" rel="noopener"
                                             aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                                    @endif
+                                    @if ($twitchUrl)
+                                        <a href="{{ $twitchUrl }}" target="_blank" rel="noopener"
+                                            aria-label="Twitch"><i class="bi bi-twitch"></i></a>
                                     @endif
                                 </div>
                             @endif

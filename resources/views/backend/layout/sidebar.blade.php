@@ -6,7 +6,7 @@
     <div class="sidebar-logo pt-2">
         <div class="logo-header" data-background-color="dark">
             <a href="{{ route('admin') }}" class="logo">
-                <img src="{{ asset('img/' . get_setting('system_logo_black')) }}" class="navbar-brand rounded-3 bg-white"
+                <img src="{{ asset('img/logo/logo.png') }}" class="navbar-brand rounded-3 bg-white"
                     width="110">
             </a>
             <div class="nav-toggle">

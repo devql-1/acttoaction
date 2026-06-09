@@ -87,7 +87,7 @@
         </div>
         <div class="footer">
             &copy; {{ date('Y') }} Act To Action · India's First Screen Acting School<br>
-            <a href="https://www.acttoaction.com">www.acttoaction.com</a> ·
+            <a href="https://www.threatxpert.com">www.threatxpert.com</a> ·
             <a href="https://wa.me/919352023276">WhatsApp Support</a>
         </div>
     </div>

@@ -5,7 +5,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="{{route('admin')}}" class="logo">
                 <img
-                  src="{{asset('img/'.get_setting('system_logo_white'))}}"
+                  src="{{asset('img/logo/logo.png')}}"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"

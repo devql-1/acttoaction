@@ -151,7 +151,7 @@ Route::post('/newsletter/subscribe', [NewsletterController::class, 'store'])->mi
 // ║                           COURSES ROUTES                                  ║
 // ╚════════════════════════════════════════════════════════════════════════════╝
 
-Route::get('/course', [HomeController::class, 'course'])->name('index.course');
+Route::get('/threat-academy', [HomeController::class, 'course'])->name('threat-academy');
 Route::get('/cat_course/{courseCategory:slug}', [HomeController::class, 'cat_course'])->name('course.show');
 Route::get('/course/{course:slug}', [HomeController::class, 'course_details'])->name('course.details');
 

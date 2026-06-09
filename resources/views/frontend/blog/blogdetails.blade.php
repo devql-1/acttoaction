@@ -1337,9 +1337,10 @@
                             <h3>Recent Articles</h3>
                             <div class="recent-posts">
                                 @foreach ($recentPosts as $rp)
-                                    <a href="#" class="recent-post">
-                                        <img src="{{ $rp->image_url }}" alt="{{ $rp->title }}"
-                                            class="recent-post-image">
+                                    <a href="{{ route('frontend.blog.details', $rp->slug) }}" class="recent-post">
+                                        @if ($rp->image)
+                                            <img src="{{ $rp->image_url }}" alt="{{ $rp->title }}"
+                                                class="recent-post-image">
                                         @else
                                             <div class="recent-post-image"
                                                 style="background:linear-gradient(135deg,rgba(23,92,221,.15),rgba(23,92,221,.05));display:flex;align-items:center;justify-content:center;">
@@ -1404,7 +1405,7 @@
                                     <p>{{ Str::limit(strip_tags($rp->short_description ?? $rp->description), 100) }}</p>
                                     <div class="related-card-footer">
                                         <span>{{ $rp->created_at->format('F j, Y') }}</span>
-                                        <a href="#" class="read-more">
+                                        <a href="{{ route('frontend.blog.details', $rp->slug) }}" class="read-more">
                                             Read More
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2">

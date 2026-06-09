@@ -12,9 +12,9 @@
 
                 {{-- Social icons (hidden on mobile) --}}
                 <div class="sh-soc">
-                    <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-                    <a href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/threatexpert_" aria-label="Instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+                    <a href="https://youtube.com/@risingpassion" aria-label="YouTube" target="_blank"><i class="bi bi-youtube"></i></a>
+                    <a href="https://chat.whatsapp.com/F4tpTdMQCKlJ6CuBXJivXs?mode=gi_t" aria-label="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
                 </div>
 
                 {{-- Mobile drawer wrapper --}}
@@ -31,7 +31,7 @@
                         @endphp
                         <ul class="sh-menu">
                             <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'sh-active' : '' }}">Home</a></li>
-                            <li><a href="{{ route('index.course') }}" class="{{ request()->routeIs('index.course') ? 'sh-active' : '' }}">Threat Academy</a></li>
+                            <li><a href="{{ route('threat-academy') }}" class="{{ request()->routeIs('threat-academy') ? 'sh-active' : '' }}">Threat Academy</a></li>
                             <li><a href="{{ route('event') }}" class="{{ request()->routeIs('event') ? 'sh-active' : '' }}">Event</a></li>
                             <li><a href="{{ route('quiz-test') }}" class="{{ request()->routeIs('quiz-test') ? 'sh-active' : '' }}">Skill Assessment</a></li>
                             <li><a href="{{ route('frontend.blog.index') }}" class="{{ request()->routeIs('frontend.blog.*') ? 'sh-active' : '' }}">Blog</a></li>
@@ -237,8 +237,10 @@
         const curPath = window.location.pathname;
         document.querySelectorAll('.sh-nav a').forEach(a => {
             try {
+                const rawHref = a.getAttribute('href');
+                if (!rawHref || rawHref === '#' || rawHref === '/') return;
                 const lp = new URL(a.href, location.origin).pathname;
-                if (lp && lp !== '/' && curPath.startsWith(lp)) {
+                if (curPath.startsWith(lp)) {
                     a.classList.add('sh-active');
                     a.closest('.sh-has-drop')?.querySelector(':scope > a')?.classList.add('sh-active');
                 }

@@ -1,8 +1,10 @@
 <head>
     <meta charset="UTF-8" />
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cyber AI Threat Conclave 2026 | Act To Action</title>
-    <link rel="icon" type="image/png" href="{{ asset('courseassets/img/faviconsdf.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap"
         rel="stylesheet" />

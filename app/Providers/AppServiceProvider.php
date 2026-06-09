@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
 
         $correctPhone    = '+91 80790 34973';
         $correctWhatsapp = '+91 80790 34973';
-        $correctEmail    = 'contact@acttoaction.com';
+        $correctEmail    = 'info@threatxpert.com';
         $correctAddress  = 'Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar, Jaipur - 302021';
 
         view()->share([
@@ -49,9 +49,10 @@ class AppServiceProvider extends ServiceProvider
             'email'          => $correctEmail,
             'address'        => $correctAddress,
             'mapLink'        => '',
-            'fbUrl'          => '',
-            'instaUrl'       => '',
-            'linkedinUrl'    => '',
+            'fbUrl'          => 'https://www.facebook.com/threatexpert/',
+            'instaUrl'       => 'https://www.instagram.com/threatexpert_',
+            'linkedinUrl'    => 'https://www.linkedin.com/company/threatexpert/',
+            'twitchUrl'      => 'https://www.twitch.tv/threatexpert_',
             'chatPhones'     => [$correctPhone],
             'workingHours'   => ['Mon - Sat: 10am - 7pm', 'Sunday: By Appointment Only'],
             'phoneDigits'    => preg_replace('/\D/', '', $correctPhone),

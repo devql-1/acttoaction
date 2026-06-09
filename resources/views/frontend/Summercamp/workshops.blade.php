@@ -1508,8 +1508,8 @@
                                 <div class="accordion-body">
                                     Registrations can be cancelled up to 48 hours before the workshop start date for a full
                                     refund. Cancellations within 48 hours are eligible for a credit note valid for 6 months.
-                                    For queries, contact us at <a href="mailto:info@acttoaction.in">info@acttoaction.in</a>
-                                    or call our helpline.
+For queries, contact us at <a href="mailto:info@threatxpert.com">info@threatxpert.com</a>
+                                     or call our helpline.
                                 </div>
                             </div>
                         </div>
@@ -1557,10 +1557,10 @@
                             </span>
                         </a>
 
-                        <a href="mailto:info@acttoaction.in" class="faq-contact-item">
+                        <a href="mailto:info@threatxpert.com" class="faq-contact-item">
                             <i class="bi bi-envelope-fill"></i>
                             <span>
-                                <strong>info@acttoaction.in</strong>
+                                <strong>info@threatxpert.com</strong>
                                 Email us anytime
                             </span>
                         </a>

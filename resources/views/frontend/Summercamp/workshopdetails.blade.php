@@ -416,7 +416,7 @@
                                 <div class="ic"><i class="bi bi-envelope-fill"></i></div>
                                 <div>
                                     <div class="lb">Email</div>
-                                    <div class="vl">info@acttoaction.com</div>
+                                    <div class="vl">training@threatxpert.com</div>
                                 </div>
                             </div>
                         </div>

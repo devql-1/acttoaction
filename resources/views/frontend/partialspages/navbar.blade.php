@@ -46,9 +46,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('index.course') }}"
-                            class="{{ request()->routeIs('index.course', 'course.*') ? 'active' : '' }}">
-                            Course
+                        <a href="{{ route('threat-academy') }}"
+                            class="{{ request()->routeIs('threat-academy', 'course.*') ? 'active' : '' }}">
+                            Threat Academy
                         </a>
                     </li>
                     <li>

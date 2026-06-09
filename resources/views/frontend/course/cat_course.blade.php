@@ -1689,7 +1689,7 @@
                     <div class="bc-inner">
                         <a href="{{ route('home') }}">Home</a>
                         <span class="sep">/</span>
-                        <a href="{{ route('index.course') }}">Courses</a>
+                        <a href="{{ route('threat-academy') }}">Courses</a>
                         <span class="sep">/</span>
                         <span class="cur">{{ $currentCategory->name }}</span>
                     </div>
@@ -1764,7 +1764,7 @@
                                 @endif
                             </button>
                         @endforeach
-                        <button class="sw-back" onclick="window.location='{{ route('index.course') }}'">
+                        <button class="sw-back" onclick="window.location='{{ route('threat-academy') }}'">
                             <i class="bi bi-arrow-left"></i> All Categories
                         </button>
                     </div>

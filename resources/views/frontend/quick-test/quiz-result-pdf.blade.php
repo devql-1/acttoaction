@@ -599,7 +599,7 @@ foreach ([0.25, 0.5, 0.75, 1.0] as $lv) {
 </div>
 
 <div class="ftr">
-    Act to Action Performing Arts Academy &nbsp;&middot;&nbsp; acttoaction.com
+    Threat Expert Cyber Solutions Pvt. Ltd. &nbsp;&middot;&nbsp; threatxpert.com
     &nbsp;&middot;&nbsp; This report is personalised and confidential
     &nbsp;&middot;&nbsp; Generated {{ date('d M Y') }}
 </div>

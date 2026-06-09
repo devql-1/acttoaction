@@ -3,8 +3,8 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 mb-4 mb-lg-0">
-                <a href="{{ url('/') }}"><img src="{{ asset('courseassets/img/logo.webp') }}"
-                        alt="Act To Action" style="height:40px;" /></a>
+                <a href="{{ url('/') }}"><img src="{{ asset('img/logo/logo.png') }}"
+                        alt="Threat Expert" style="height:40px;" /></a>
                 <p class="brand-desc">Developing globally competent young performers through age-structured,
                     experiential, skill - based learning, supported by on-demand, personalised programs for academic
                     institutions and individual learners.</p>
@@ -19,8 +19,8 @@
                     <div class="col-6 col-md-3 mb-4">
                         <h6>Quick Links</h6>
                         <ul class="fn-list">
-                            <li><a href="{{ route('index.course') }}">Admissions</a></li>
-                            <li><a href="{{ route('index.course') }}">Courses</a></li>
+                            <li><a href="{{ route('threat-academy') }}">Admissions</a></li>
+                            <li><a href="{{ route('threat-academy') }}">Courses</a></li>
                             <li><a href="{{ route('event') }}">Events</a></li>
                             <li><a href="{{ route('volunteer') }}">Join Us</a></li>
                             <li><a href="{{ route('frontend.blog.index') }}">Blog</a></li>
@@ -48,7 +48,7 @@
                         <h6>Follow Us</h6>
                         <ul class="fn-list">
                             <li>
-                                <a href="https://www.instagram.com/acttoaction_" target="_blank">
+                                <a href="https://www.instagram.com/threatexpert_" target="_blank">
                                     <i class="bi bi-instagram me-2"></i>Instagram
                                 </a>
                             </li>
@@ -60,20 +60,26 @@
                             </li>
 
                             <li>
-                                <a href="https://x.com/acttoaction_?s=21" target="_blank">
+                                <a href="https://x.com/ThreatXpert" target="_blank">
                                     <i class="bi bi-twitter-x me-2"></i>X (Twitter)
                                 </a>
                             </li>
 
                             <li>
-                                <a href="https://www.facebook.com/share/1GB3Jn5JcU/?mibextid=wwXIfr" target="_blank">
+                                <a href="https://www.facebook.com/threatexpert/" target="_blank">
                                     <i class="bi bi-facebook me-2"></i>Facebook
                                 </a>
                             </li>
 
                             <li>
-                                <a href="https://www.linkedin.com/company/acttoaction-skills/" target="_blank">
+                                <a href="https://www.linkedin.com/company/threatexpert/" target="_blank">
                                     <i class="bi bi-linkedin me-2"></i>LinkedIn
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="https://www.twitch.tv/threatexpert_" target="_blank">
+                                    <i class="bi bi-twitch me-2"></i>Twitch
                                 </a>
                             </li>
 

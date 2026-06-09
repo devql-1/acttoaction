@@ -43,7 +43,8 @@
                                         <th scope="col">ID</th>
                                         <th scope="col">Name</th>
                                         <th scope="col" class="text-end">Email</th>
-                                        <th scope="col" class="text-end">Phone No.</th>                  
+                                        <th scope="col" class="text-end">Phone No.</th>
+                                        <th scope="col" class="text-end">Subject</th>
                                         <th scope="col" class="text-end">Message</th>
                                         <th scope="col" class="text-end">Action</th>
                                     </tr>
@@ -60,6 +61,8 @@
                                         <td>{{ $enquiry->email ? $enquiry->email : '--' }}</td>
 
                                         <td>{{ $enquiry->mobile }}</td>
+
+                                        <td>{{ $enquiry->subject ?: '--' }}</td>
 
                                         <td>{{ $enquiry->message ? $enquiry->message : '--' }}</td>
 

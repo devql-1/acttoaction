@@ -1512,7 +1512,7 @@
                             <a href="#tests" class="btn-primary-solid">
                                 <i class="bi bi-play-circle-fill"></i> Take Assessment
                             </a>
-                            <a href="{{ route('index.course') }}" class="btn-ghost">
+                            <a href="{{ route('threat-academy') }}" class="btn-ghost">
                                 <i class="bi bi-grid-3x3-gap"> </i> View All Courses
                             </a>
                         </div>

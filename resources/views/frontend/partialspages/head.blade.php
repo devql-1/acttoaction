@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
+    <link rel="shortcut icon" href="{{ asset('img/logo/logo.png') }}" type="image/x-icon">
+    <link href="{{ asset('img/logo/logo.png') }}" rel="icon">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Threat Expert</title>
     <meta name="description" content="" />
@@ -10,7 +12,6 @@
 
     <!-- Favicons -->
     <link href="{{ asset('courseassets/css/main.css') }}" rel="stylesheet">
-    <link href="{{ asset('courseassets/img/faviconsdf.png') }}" rel="icon">
     <link href="{{ asset('courseassets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
 

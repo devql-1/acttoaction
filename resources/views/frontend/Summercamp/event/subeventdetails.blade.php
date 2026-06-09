@@ -1124,7 +1124,7 @@
                                             <div><strong>Sunday</strong>&nbsp; 10 AM – 4 PM</div>
                                         </li>
                                         <li><i class="bi bi-geo-alt-fill"></i>
-                                            <div>Rising Passion Studio, Vaishali Nagar, Jaipur</div>
+                                            <div>Threat Expert Training Centre, Jaipur, Rajasthan, India</div>
                                         </li>
                                         <li><i class="bi bi-telephone-fill"></i>
                                             <div>+91 93520 23276</div>

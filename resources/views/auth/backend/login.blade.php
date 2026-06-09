@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ get_setting('website_name') }} | ADMIN LOGIN</title>
+    <link rel="shortcut icon" href="{{asset('img/'.get_setting('site_logo'))}}" type="image/x-icon" />
     <link
       rel="icon"
       href="{{asset('img/'.get_setting('site_logo'))}}"
       type="image/x-icon"
     />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ get_setting('website_name') }} | ADMIN LOGIN</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="{{asset('assets/login-content/fonts/material-icon/css/material-design-iconic-font.min.css')}}">

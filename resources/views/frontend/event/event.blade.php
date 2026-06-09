@@ -1067,22 +1067,22 @@
                             <div class="hero-trust-item"><i class="bi bi-patch-check-fill"></i> Since 2020</div>
                         </div>
                     </div>
-                    <div class="col-lg-5 d-none d-lg-flex hero-mosaic">
+                            <div class="col-lg-5 d-none d-lg-flex hero-mosaic">
                         <div class="row g-3 w-100">
                             <div class="col-6">
                                 <div class="mosaic-img"><img
                                         src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80"
-                                        alt="CTF Competition" /></div>
+                                        alt="Cybersecurity CTF" /></div>
                             </div>
                             <div class="col-6">
                                 <div class="mosaic-img" style="margin-top:22px;"><img
-                                        src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=80"
-                                        alt="Security Workshop" /></div>
+                                        src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80"
+                                        alt="Training Workshop" /></div>
                             </div>
                             <div class="col-12">
                                 <div class="mosaic-img" style="height:130px;"><img
-                                        src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80"
-                                        alt="Graduation" /></div>
+                                        src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80"
+                                        alt="Graduation Ceremony" /></div>
                             </div>
                         </div>
                     </div>
@@ -1157,7 +1157,7 @@
                                 <div class="event-card-img">
                                     @if ($event->banner_image)
                                         <img src="{{ $event->banner_url }}" alt="{{ $event->title }}"
-                                            loading="lazy" />
+                                            loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80';" />
                                     @else
                                         <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80"
                                             alt="{{ $event->title }}" loading="lazy" />

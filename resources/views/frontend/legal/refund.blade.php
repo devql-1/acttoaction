@@ -123,7 +123,7 @@
                 <h2>2. Eligibility for Refund</h2>
                 <p>Refund requests are eligible only if they meet the following conditions:</p>
                 <ul>
-                    <li>The request is made in writing via email to <strong>info@acttoaction.com</strong>.</li>
+                    <li>The request is made in writing via email to <strong>training@threatxpert.com</strong>.</li>
                     <li>The request is submitted within the applicable refund window (see the table below).</li>
                     <li>The participant has not already attended a significant portion of the course or workshop.</li>
                 </ul>
@@ -188,7 +188,7 @@
                 <h2>9. Contact Us</h2>
                 <p>For refund requests or any questions about this policy, please contact us:</p>
                 <ul>
-                    <li><strong>Email:</strong> info@acttoaction.com</li>
+                    <li><strong>Email:</strong> training@threatxpert.com</li>
                     <li><strong>Phone:</strong> +91-91191-92811, +91-91191-82511</li>
                 </ul>
             </div>

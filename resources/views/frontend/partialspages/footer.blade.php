@@ -8,7 +8,7 @@
                 <div class="col-lg-4">
                     <div class="brand-section mb-4">
                         <a href="https://threatxpert.com" class="logo d-flex align-items-center mb-3">
-                            <span class="sitename">THREAT EXPERT</span>
+                            <img src="{{ asset('img/logo/logo.png') }}" alt="Threat Expert" style="height:50px;">
                         </a>
                         <p class="brand-description">
                             Cyber Solutions<br>

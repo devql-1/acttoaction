@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ActtoAction</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" type="image/png" href="{{ asset('courseassets/img/faviconsdf.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
     <style>
         /* ===== RESET & BASE ===== */
         *,
@@ -965,7 +967,7 @@
     <!-- MAIN ACTION SECTION -->
     <section class="container">
         <div class="action add">
-            <a href="{{ route('index.course') }}" class="action-link">
+            <a href="{{ route('threat-academy') }}" class="action-link">
                 <div class="icon"><i class="fas fa-book-open"></i></div>
                 <h1>Threat Academy</h1>
             </a>

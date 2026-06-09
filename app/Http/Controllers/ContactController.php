@@ -14,27 +14,27 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
-            'phone'    => 'required|string|max:30',
-            'message'  => 'nullable|string',
+            'name'     => 'required|string|max:255',
             'email'    => 'required|email|max:255',
-            'service_id'  => 'nullable|string',
+            'mobile'   => 'required|string|max:30',
+            'subject'  => 'required|string|max:255',
+            'message'  => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
-                'status' => 'error',
+                'status' => false,
                 'errors' => $validator->errors()
             ], 422);
         }
 
         // Save into DB
         $contact = Contact::create([
-            'username' => $request->username,
-            'phone'    => $request->phone,
+            'username' => $request->name,
+            'phone'    => $request->mobile,
             'message'  => $request->message,
             'email'    => $request->email,
-            'service_id'    => $request->service_id,
+            'service_id'    => $request->subject,
             'status'   => 0,
         ]);
 

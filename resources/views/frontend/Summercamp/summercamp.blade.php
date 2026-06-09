@@ -32,7 +32,7 @@
         <div class="container">
             <div class="brand">
                 <!-- Logo -->
-                <a href="https://www.acttoaction.com" class="logo">
+                <a href="https://www.threatxpert.com" class="logo">
                     <img src="https://static.wixstatic.com/media/495d44_61ec90165a4341cb9bb1dde53c1657c6~mv2.png/v1/fill/w_132,h_74,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/4k%20Act%20To%20Action.png"
                         alt="Act To Action" />
                     <h1>Act To Action</h1>
@@ -41,7 +41,7 @@
                 <div class="header-right">
                     <!-- Social icons (desktop only) -->
                     <div class="header-soc">
-                        <a href="https://www.instagram.com/acttoaction_" target="_blank"><i
+                        <a href="https://www.instagram.com/threatexpert_" target="_blank"><i
                                 class="bi bi-instagram"></i></a>
                         <a href="https://youtube.com/@risingpassion" target="_blank"><i class="bi bi-youtube"></i></a>
                         <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank"><i
@@ -54,7 +54,7 @@
                             <button class="mob-close" id="navClose"><i class="bi bi-x-lg"></i></button>
                             <ul>
                                 <li><a href={{ route('workshops') }}>Workshop</a></li>
-                                <li><a href="https://www.acttoaction.com/team-4-1">Courses</a></li>
+                                <li><a href="https://www.threatxpert.com/team-4-1">Courses</a></li>
 
                                 <!-- ① WORKSHOPS DROPDOWN -->
                                 <li class="has-drop" id="workshopDrop">
@@ -76,20 +76,20 @@
                                 <li class="has-drop" id="eventsDrop">
                                     <a href="#gallery">Events <i class="bi bi-chevron-down drop-arrow"></i></a>
                                     <div class="dropdown">
-                                        <a href="https://www.acttoaction.com/events-1"><i
+                                        <a href="https://www.threatxpert.com/events-1"><i
                                                 class="bi bi-calendar-event"></i>Upcoming Events</a>
                                         <a href="#gallery"><i class="bi bi-camera"></i>Cyber AI Threat Conclave 2025</a>
                                         <a href="#register"><i class="bi bi-pencil-square"></i>Register 2026</a>
                                         <div class="sep"></div>
-                                        <a href="https://www.acttoaction.com/castings"><i class="bi bi-film"></i>Casting
+                                        <a href="https://www.threatxpert.com/castings"><i class="bi bi-film"></i>Casting
                                             Club</a>
                                     </div>
                                 </li>
 
-                                <li><a href="https://www.acttoaction.com/blog">Blog</a></li>
-                                <li><a href="https://www.acttoaction.com/about-us-1">About</a></li>
+                                <li><a href="https://www.threatxpert.com/blog">Blog</a></li>
+                                <li><a href="https://www.threatxpert.com/about-us-1">About</a></li>
                                 <li><a href="#" class="active">Cyber AI Threat Conclave</a></li>
-                                <li><a href="tel:9119118844" class="nav-register"><i class="bi bi-telephone-fill"></i>
+                                <li><a href="tel:+918079034973" class="nav-register"><i class="bi bi-telephone-fill"></i>
                                         Call Now</a></li>
                             </ul>
                         </nav>
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                     <div class="d-flex gap-3 flex-wrap">
-                        <a href="tel:9119118844" class="btn-fill"><i class="bi bi-telephone-fill"></i>Call Us Now</a>
+                        <a href="tel:+918079034973" class="btn-fill"><i class="bi bi-telephone-fill"></i>Call Us Now</a>
                         <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-ghost"><i
                                 class="bi bi-whatsapp"></i>WhatsApp</a>
                     </div>
@@ -340,8 +340,8 @@
                         <p>Be the first to know when registrations open. Call us or chat on WhatsApp to join the
                             priority list.</p>
                     </div>
-                    <div class="col-md-4 text-md-end"><a href="tel:9119118844" class="act-btn"><i
-                                class="bi bi-telephone-fill"></i>+91 91191 88844</a></div>
+                    <div class="col-md-4 text-md-end"><a href="tel:+918079034973" class="act-btn"><i
+                                class="bi bi-telephone-fill"></i>+91 80790 34973</a></div>
                 </div>
             </div>
         </div>
@@ -550,8 +550,8 @@
         </div>
 
         <div class="g-footer">
-            <a href="https://www.instagram.com/acttoaction_" target="_blank"><i class="bi bi-instagram"></i> View
-                more on Instagram @acttoaction_</a>
+            <a href="https://www.instagram.com/threatexpert_" target="_blank"><i class="bi bi-instagram"></i> View
+                more on Instagram @threatexpert_</a>
         </div>
     </section> --}}
 
@@ -679,9 +679,9 @@
                     <p class="desc">Registrations are opening soon. Call us today to secure your child's spot and be
                         part of Jaipur's biggest performing arts program.</p>
                     <div class="cta-links">
-                        <a href="tel:9119118844" class="cta-link-main"><i class="bi bi-telephone-fill"></i>Call Now:
-                            +91 91191 88844 <i class="bi bi-arrow-right"></i></a>
-                        <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="cta-link-sub"><i
+                        <a href="tel:+918079034973" class="cta-link-main"><i class="bi bi-telephone-fill"></i>Call Now:
+                            +91 80790 34973 <i class="bi bi-arrow-right"></i></a>
+                        <a href="https://wa.me/918079034973" target="_blank" class="cta-link-sub"><i
                                 class="bi bi-whatsapp"></i>Chat on WhatsApp <i class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
@@ -716,9 +716,9 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="cta-actions">
-                            <a href="tel:9119118844" class="cta-phone"><i class="bi bi-telephone-fill"></i>+91 91191
+                            <a href="tel:+918079034973" class="cta-phone"><i class="bi bi-telephone-fill"></i>+91 80790
                                 88844</a>
-                            <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="cta-wa"><i
+                            <a href="https://wa.me/918079034973" target="_blank" class="cta-wa"><i
                                     class="bi bi-whatsapp me-1"></i>Chat on WhatsApp</a>
                         </div>
                     </div>
@@ -841,7 +841,7 @@
                         <div class="ci-icon"><i class="bi bi-geo-alt-fill"></i></div>
                         <div>
                             <h3>Studio Location</h3>
-                            <p>Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar, Jaipur – 302021
+                            <p>Threat Expert Training Centre, Jaipur, Rajasthan, India
                             </p>
                         </div>
                     </div>
@@ -856,7 +856,7 @@
                         <div class="ci-icon"><i class="bi bi-telephone-fill"></i></div>
                         <div>
                             <h3>Phone</h3>
-                            <p><a href="tel:9119118844">+91 91191 88844</a></p>
+                            <p><a href="tel:+918079034973">+91 80790 34973</a></p>
                         </div>
                     </div>
                 </div>
@@ -866,7 +866,7 @@
                         <p class="sub">Interested in Cyber AI Threat Conclave 2026? Send us a message.</p>
                         <input type="text" class="form-control" placeholder="Your Child's Name" />
                         <input type="text" class="form-control" placeholder="Parent's Phone Number" />
-                        <input type="email" class="form-control" placeholder="Email Address" />
+                        <input type="email" class="form-control" placeholder="info@threatxpert.com" />
                         <textarea class="form-control" placeholder="Art Form Interest / Message"></textarea>
                         <button class="btn-submit" onclick="alert('Thank you! We will contact you soon.')">Send
                             Enquiry</button>

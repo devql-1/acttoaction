@@ -1410,7 +1410,7 @@ a {
                                         <div><strong>Sunday</strong><br>10:00 AM – 4:00 PM</div>
                                     </li>
                                     <li><i class="bi bi-geo-alt-fill"></i>
-                                        <div>Rising Passion Studio, Vaishali Nagar, Jaipur – 302021</div>
+                                        <div>Threat Expert Training Centre, Jaipur, Rajasthan, India</div>
                                     </li>
                                 </ul>
                             </div>

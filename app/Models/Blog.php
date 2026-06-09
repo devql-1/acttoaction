@@ -35,7 +35,7 @@ class Blog extends Model
     public function getImageUrlAttribute(): string
     {
         return $this->image
-            ? asset('public/img/' . $this->image)
-            : asset('public/img/default-blog.png');
+            ? asset('img/' . $this->image)
+            : asset('img/default-blog.jpg');
     }
 }

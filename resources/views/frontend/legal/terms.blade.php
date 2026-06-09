@@ -139,7 +139,7 @@
                 <h2>12. Contact Us</h2>
                 <p>For any questions regarding these Terms &amp; Conditions, please contact us:</p>
                 <ul>
-                    <li><strong>Email:</strong> info@acttoaction.com</li>
+                    <li><strong>Email:</strong> training@threatxpert.com</li>
                     <li><strong>Phone:</strong> +91-91191-92811, +91-91191-82511</li>
                 </ul>
             </div>

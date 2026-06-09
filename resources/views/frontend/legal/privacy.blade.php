@@ -129,7 +129,7 @@
                 <p>Our programs are intended for children, and we collect children's information only through their parents or guardians during the enrollment process. Parents may request access, correction, or deletion of their child's information at any time.</p>
 
                 <h2>8. Your Rights</h2>
-                <p>You have the right to access, update, or request deletion of your personal data. To exercise these rights, please contact us at <strong>info@acttoaction.com</strong>.</p>
+                <p>You have the right to access, update, or request deletion of your personal data. To exercise these rights, please contact us at <strong>training@threatxpert.com</strong>.</p>
 
                 <h2>9. Changes to This Policy</h2>
                 <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
@@ -137,7 +137,7 @@
                 <h2>10. Contact Us</h2>
                 <p>If you have any questions about this Privacy Policy, please contact us:</p>
                 <ul>
-                    <li><strong>Email:</strong> info@acttoaction.com</li>
+                    <li><strong>Email:</strong> training@threatxpert.com</li>
                     <li><strong>Phone:</strong> +91-91191-92811, +91-91191-82511</li>
                 </ul>
             </div>
