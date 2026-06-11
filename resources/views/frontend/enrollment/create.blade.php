@@ -1920,13 +1920,13 @@
                                 <div class="check-text">
                                     <strong>I agree to the Terms &amp; Conditions <span class="check-req">*</span></strong>
                                     <span>I have read and accept the
-                                        <a href="https://www.threatxpert.com/terms-and-conditions" target="_blank"
+                                        <a href="{{ route('terms') }}" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
                                             onclick="event.stopPropagation()">Terms &amp; Conditions</a>
                                         and
-                                        <a href="https://www.threatxpert.com/refund-policy" target="_blank"
+                                        <a href="{{ route('refund') }}" target="_blank"
                                             style="color:var(--blue);font-weight:600;"
-                                            onclick="event.stopPropagation()">Refund Policy</a>.
+                                            onclick="event.stopPropagation()">Cancellation Policy</a>.
                                     </span>
                                 </div>
                             </label>

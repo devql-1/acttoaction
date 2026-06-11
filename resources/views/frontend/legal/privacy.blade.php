@@ -95,51 +95,33 @@
             </div>
 
             <div class="legal-card">
-                <h2>1. Introduction</h2>
-                <p>At <strong>Act To Action</strong>, we are committed to protecting the privacy of our students, parents, volunteers, and website visitors. This Privacy Policy explains how we collect, use, and safeguard your personal information when you use our website and services.</p>
+                <p>ThreatExpert is committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information.</p>
 
-                <h2>2. Information We Collect</h2>
-                <p>We may collect the following types of information:</p>
+                <h2>1. Information We Collect</h2>
                 <ul>
-                    <li><strong>Personal details:</strong> name, email address, phone number, WhatsApp number, and address provided during enrollment or registration.</li>
-                    <li><strong>Student information:</strong> child's name, age, school, and age group for workshops and courses.</li>
-                    <li><strong>Payment information:</strong> processed securely through third-party payment gateways; we do not store card details on our servers.</li>
-                    <li><strong>Technical data:</strong> IP address, browser type, device type, and cookies used to improve your experience.</li>
+                    <li>Personal information such as name, email, and contact details.</li>
+                    <li>Payment information for subscription-based services.</li>
+                    <li>Technical data including IP address, browser type, and usage statistics.</li>
                 </ul>
 
-                <h2>3. How We Use Your Information</h2>
+                <h2>2. Use of Information</h2>
                 <ul>
-                    <li>To process enrollments, workshop registrations, and payments.</li>
-                    <li>To communicate important updates, schedules, and reminders about our programs.</li>
-                    <li>To send newsletters, marketing messages, and promotional offers (only with your consent).</li>
-                    <li>To improve our website, courses, and overall user experience.</li>
-                    <li>To comply with legal obligations.</li>
+                    <li>We use your information to improve our services, process transactions, and provide customer support.</li>
+                    <li>Your data may be used to send security updates, newsletters, or promotional offers (opt-out available).</li>
                 </ul>
 
-                <h2>4. Sharing of Information</h2>
-                <p>We do not sell or rent your personal information. We may share limited data with trusted third parties such as payment gateways, SMS/email providers, and hosting services strictly for the purpose of delivering our services.</p>
+                <h2>3. Data Security</h2>
+                <p>We implement robust security measures, including encryption and firewalls, to protect your personal information. However, no data transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
 
-                <h2>5. Data Security</h2>
-                <p>We use reasonable technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.</p>
-
-                <h2>6. Cookies</h2>
-                <p>Our website uses cookies to remember preferences, analyze traffic, and improve functionality. You can disable cookies through your browser settings, but some features of the site may not work as intended.</p>
-
-                <h2>7. Children's Privacy</h2>
-                <p>Our programs are intended for children, and we collect children's information only through their parents or guardians during the enrollment process. Parents may request access, correction, or deletion of their child's information at any time.</p>
-
-                <h2>8. Your Rights</h2>
-                <p>You have the right to access, update, or request deletion of your personal data. To exercise these rights, please contact us at <strong>training@threatxpert.com</strong>.</p>
-
-                <h2>9. Changes to This Policy</h2>
-                <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date.</p>
-
-                <h2>10. Contact Us</h2>
-                <p>If you have any questions about this Privacy Policy, please contact us:</p>
+                <h2>4. Third-Party Sharing</h2>
                 <ul>
-                    <li><strong>Email:</strong> training@threatxpert.com</li>
-                    <li><strong>Phone:</strong> +91-91191-92811, +91-91191-82511</li>
+                    <li>We do not sell, trade, or rent your personal information to third parties.</li>
+                    <li>Some third-party tools may collect anonymized usage data to improve user experience.</li>
                 </ul>
+
+                <h2>5. Your Rights</h2>
+                <p>You have the right to access, modify, or delete your personal data upon request.</p>
+                <p>Contact <strong>info@threatxpert.com</strong> to exercise these rights.</p>
             </div>
         </div>
     </div>

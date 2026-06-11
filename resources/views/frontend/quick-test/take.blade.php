@@ -1677,27 +1677,27 @@
 
         const SCALE = [{
                 val: 1,
-                emoji: '😟',
+                emoji: '1',
                 label: 'Never'
             },
             {
                 val: 2,
-                emoji: '😐',
+                emoji: '2',
                 label: 'Rarely'
             },
             {
                 val: 3,
-                emoji: '🙂',
+                emoji: '3',
                 label: 'Sometimes'
             },
             {
                 val: 4,
-                emoji: '😊',
+                emoji: '4',
                 label: 'Often'
             },
             {
                 val: 5,
-                emoji: '🤩',
+                emoji: '5',
                 label: 'Always'
             },
         ];

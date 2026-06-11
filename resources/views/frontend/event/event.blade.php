@@ -1157,9 +1157,9 @@
                                 <div class="event-card-img">
                                     @if ($event->banner_image)
                                         <img src="{{ $event->banner_url }}" alt="{{ $event->title }}"
-                                            loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80';" />
+                                            loading="lazy"                                             onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80';" />
                                     @else
-                                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80"
+                                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80"
                                             alt="{{ $event->title }}" loading="lazy" />
                                     @endif
                                     <span class="event-cat-badge status-{{ $statusLabel }}">

@@ -1,5 +1,5 @@
 @extends('frontend.course.layout')
-@section('title', 'Refund Policy – Act To Action')
+@section('title', 'Cancellation Policy – ThreatExpert')
 
 @section('content')
 
@@ -78,36 +78,6 @@
         margin-bottom: 14px;
     }
     .legal-card strong { color: var(--heading-color); }
-    .refund-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 12px 0 18px;
-        font-size: 0.92rem;
-    }
-    .refund-table th, .refund-table td {
-        border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
-        padding: 10px 14px;
-        text-align: left;
-    }
-    .refund-table th {
-        background: color-mix(in srgb, var(--accent-color), transparent 92%);
-        color: var(--heading-color);
-        font-weight: 700;
-    }
-    .refund-table-wrap {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        margin: 12px 0 18px;
-    }
-    .refund-table-wrap .refund-table { margin: 0; }
-    @media (max-width: 576px) {
-        .legal-card { padding: 24px 18px; }
-        .legal-header { padding: 30px 24px; }
-        .legal-header h1 { font-size: 1.5rem; }
-        .refund-table { min-width: 420px; font-size: 0.85rem; }
-        .refund-table th, .refund-table td { padding: 8px 10px; }
-    }
-    </style>
 <main class="main">
     <div class="legal-page">
         <div class="legal-wrap">
@@ -117,79 +87,31 @@
             </div>
 
             <div class="legal-card">
-                <h2>1. Overview</h2>
-                <p>At <strong>Act To Action</strong>, we understand that plans can change. This Refund Policy explains when and how refunds are processed for Threat Academy courses, workshops, and Cyber AI Threat Conclave programs. Please read this policy carefully before making a payment.</p>
+                <p>At ThreatExpert, customer satisfaction is our priority. Our cancellation policy is as follows:</p>
 
-                <h2>2. Eligibility for Refund</h2>
-                <p>Refund requests are eligible only if they meet the following conditions:</p>
+                <h2>1. Service Cancellation</h2>
                 <ul>
-                    <li>The request is made in writing via email to <strong>training@threatxpert.com</strong>.</li>
-                    <li>The request is submitted within the applicable refund window (see the table below).</li>
-                    <li>The participant has not already attended a significant portion of the course or workshop.</li>
+                    <li>Customers may cancel their subscriptions or services by contacting our support team at least 7 days before the renewal date.</li>
+                    <li>Cancellations requested after the renewal date will apply to the next billing cycle.</li>
                 </ul>
 
-                <h2>3. Refund Timelines</h2>
-                <div class="refund-table-wrap">
-                <table class="refund-table">
-                    <thead>
-                        <tr>
-                            <th>Request Timing</th>
-                            <th>Refund Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>7 or more days before the start date</td>
-                            <td>90% refund (10% processing fee)</td>
-                        </tr>
-                        <tr>
-                            <td>3 – 6 days before the start date</td>
-                            <td>50% refund</td>
-                        </tr>
-                        <tr>
-                            <td>Less than 3 days before the start date</td>
-                            <td>No refund</td>
-                        </tr>
-                        <tr>
-                            <td>After the program has started</td>
-                            <td>No refund</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-
-                <h2>4. Cancellation by Act To Action</h2>
-                <p>If a workshop, course, or event is cancelled by Act To Action due to unforeseen circumstances (such as low enrollment, instructor unavailability, or force majeure), participants will be offered either:</p>
+                <h2>2. Effect of Cancellation</h2>
                 <ul>
-                    <li>A full refund of the fees paid, or</li>
-                    <li>The option to transfer to another program of equal value.</li>
+                    <li>Upon cancellation, access to ThreatExpert's services will be revoked at the end of the billing cycle.</li>
+                    <li>Data associated with canceled accounts may be permanently deleted after a retention period.</li>
                 </ul>
 
-                <h2>5. Non-Refundable Items</h2>
+                <h2>3. No Partial Refunds</h2>
                 <ul>
-                    <li>Registration fees and processing charges are non-refundable.</li>
-                    <li>Merchandise, kits, and materials already dispatched or handed over are non-refundable.</li>
-                    <li>Discounted or promotional enrollments are non-refundable unless stated otherwise.</li>
+                    <li>ThreatExpert does not offer partial refunds for unused portions of a service period.</li>
+                    <li>Users on prepaid plans will not receive refunds for the remaining period.</li>
                 </ul>
 
-                <h2>6. Refund Process</h2>
+                <h2>4. How to Cancel</h2>
                 <ul>
-                    <li>Approved refunds will be processed within <strong>7–14 business days</strong> of approval.</li>
-                    <li>Refunds will be credited back to the original payment method used at the time of purchase.</li>
-                    <li>Any bank or gateway charges incurred during the refund will be borne by the customer.</li>
-                </ul>
-
-                <h2>7. Transfers &amp; Rescheduling</h2>
-                <p>In lieu of a refund, you may request to transfer your enrollment to another batch or a different participant (subject to availability and approval). Transfer requests must be made at least 3 days before the program start date.</p>
-
-                <h2>8. Disputes</h2>
-                <p>Any disputes arising from this Refund Policy shall be subject to the exclusive jurisdiction of the courts in Jaipur, Rajasthan.</p>
-
-                <h2>9. Contact Us</h2>
-                <p>For refund requests or any questions about this policy, please contact us:</p>
-                <ul>
-                    <li><strong>Email:</strong> training@threatxpert.com</li>
-                    <li><strong>Phone:</strong> +91-91191-92811, +91-91191-82511</li>
+                    <li>Send a cancellation request to <strong>info@threatxpert.com</strong> with your account details.</li>
+                    <li>Our team will process your cancellation and confirm within 3 business days.</li>
+                    <li>For further assistance, please contact our support team at <strong>info@threatxpert.com</strong>.</li>
                 </ul>
             </div>
         </div>

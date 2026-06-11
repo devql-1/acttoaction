@@ -52,10 +52,10 @@
                                 <div class="nav-column">
                                     <h6>Legal</h6>
                                     <nav class="footer-nav">
-                                        <a href="https://threatxpert.com/terms">Terms of Service</a>
-                                        <a href="https://threatxpert.com/privacy">Privacy Policy</a>
-                                        <a href="https://threatxpert.com/Cancellations">Cancellation Policy</a>
-                                        <a href="https://threatxpert.com/refund">Refund Policy</a>
+                                        <a href="{{ route('terms') }}">Terms of Service</a>
+                                        <a href="{{ route('privacy') }}">Privacy Policy</a>
+                                        <a href="{{ route('refund') }}">Cancellation Policy</a>
+                                        <a href="{{ route('refund') }}">Refund Policy</a>
                                     </nav>
                                 </div>
                             </div>

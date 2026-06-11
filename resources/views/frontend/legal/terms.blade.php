@@ -1,5 +1,5 @@
 @extends('frontend.course.layout')
-@section('title', 'Terms & Conditions – Act To Action')
+@section('title', 'Terms & Conditions – ThreatExpert')
 
 @section('content')
 
