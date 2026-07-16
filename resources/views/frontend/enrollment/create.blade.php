@@ -627,60 +627,8 @@
             line-height: 1.3;
         }
 
-        .coll-age {
-            font-size: 11px;
-            color: var(--muted);
-        }
-
         .course-card-opt input:checked+.course-opt-label .coll-name {
             color: var(--blue);
-        }
-
-        /* Coupon input row */
-        .coupon-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .coupon-row .fi {
-            flex: 1;
-        }
-
-        .btn-apply {
-            padding: 12px 22px;
-            background: var(--ink);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-family: var(--font-body);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: background .2s;
-        }
-
-        .btn-apply:hover {
-            background: var(--blue);
-        }
-
-        .coupon-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #dcfce7;
-            color: #15803d;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 8px;
-            margin-top: 6px;
-            display: none;
-        }
-
-        .coupon-badge.show {
-            display: inline-flex;
         }
 
         /* ── NAVIGATION BUTTONS ── */
@@ -1103,18 +1051,6 @@
                 gap: 10px;
             }
 
-            .coupon-row {
-                flex-wrap: wrap;
-            }
-
-            .coupon-row .fi {
-                min-width: 0;
-            }
-
-            .btn-apply {
-                width: 100%;
-            }
-
             .success-screen {
                 padding: 40px 20px;
             }
@@ -1298,39 +1234,6 @@
         $modeMeta = $modeMap[$courseMode] ?? $modeMap['Offline'];
     @endphp
 
-    @php
-        $centresByState = $centresByState ?? [];
-        $courseStates = $courseStates ?? [];
-        $otherCourses = $otherCourses ?? collect();
-
-        if (empty($centresByState) && $course->relationLoaded('centers')) {
-            foreach ($course->centers as $center) {
-                $stateName = $center->state && $center->state->name ? $center->state->name : 'Other';
-                if (!isset($centresByState[$stateName])) {
-                    $centresByState[$stateName] = [];
-                }
-                $centresByState[$stateName][] = [
-                    'id' => $center->id,
-                    'name' => $center->name,
-                    'fees' => $center->pivot->fees ?? 0,
-                    'address' => $center->address ?? '',
-                    'phone' => $center->phone ?? '',
-                    'email' => $center->email ?? '',
-                    'map' => $center->map_link ?? '',
-                ];
-            }
-            $courseStates = array_keys($centresByState);
-        }
-
-        $modeMap = [
-            'Online' => ['icon' => '💻', 'label' => 'Online — Live Classes', 'id' => 'm-online'],
-            'Offline' => ['icon' => '🏫', 'label' => 'Offline — At Centre', 'id' => 'm-offline'],
-            'Hybrid' => ['icon' => '🔄', 'label' => 'Hybrid — Online + Centre', 'id' => 'm-hybrid'],
-        ];
-        $courseMode = $course->mode ?? 'Offline';
-        $modeMeta = $modeMap[$courseMode] ?? $modeMap['Offline'];
-    @endphp
-
     <main class="main">
         <div class="page-title"></div>
 
@@ -1370,7 +1273,7 @@
                 </div>
                 <div class="step-item" id="si-1">
                     <div class="step-circle">2</div>
-                    <div class="step-label">Emergency</div>
+                    <div class="step-label">Guardian</div>
                 </div>
                 <div class="step-item" id="si-2">
                     <div class="step-circle">3</div>
@@ -1427,20 +1330,11 @@
                             <div class="field-group">
                                 <label>Date of Birth <span class="req">*</span></label>
                                 <input class="fi" type="date" id="dob" />
-                                <div class="field-hint">Eligibility for this course:
-                                    <strong>{{ $course->age_group ?? '18+ years' }}</strong>
-                                </div>
                                 <div class="field-error" id="err-dob"><i class="bi bi-exclamation-circle"></i> Please
                                     enter a valid date of birth</div>
                             </div>
                             <div class="field-group">
-                                <label>Age <span class="opt">(auto-calculated)</span></label>
-                                <input class="fi" type="text" id="ageDisplay" placeholder="Will auto-fill"
-                                    readonly style="background:#f5f7fc;color:var(--muted);cursor:default;" />
-                            </div>
-                        </div>
-                        <div class="field-group">
-                            <label>Gender <span class="req">*</span></label>
+                                <label>Gender <span class="req">*</span></label>
                             <div class="radio-group">
                                 <div class="radio-card">
                                     <input type="radio" name="gender" id="g-male" value="Male" />
@@ -1472,7 +1366,7 @@
                     </div>
                 </div>
 
-                {{-- ===================== STEP 2: Emergency Contact ===================== --}}
+                {{-- ===================== STEP 2: Guardian Contact ===================== --}}
                 <div class="step-content" data-step="1">
                     <div class="panel-head">
                         <div class="ph-icon" style="background:#fdf2f8;color:#db2777;">
@@ -1480,7 +1374,7 @@
                         </div>
                         <div>
                             <div class="ph-step">Step 2 of 6</div>
-                            <h2 class="ph-title">Emergency Contact Details</h2>
+                            <h2 class="ph-title">Guardian Contact Details</h2>
                             <p class="ph-sub">We use this to contact someone on your behalf if needed.</p>
                         </div>
                     </div>
@@ -1599,27 +1493,6 @@
                                     placeholder="e.g. Infosys, Jaipur Engineering College" />
                                 <div class="field-error" id="err-school"><i class="bi bi-exclamation-circle"></i>
                                     Organisation or college name is required</div>
-                            </div>
-                            <div class="field-group">
-                                <label>Current Role / Year <span class="req">*</span></label>
-                                <select class="fi" id="grade">
-                                    <option value="">— Select Your Role —</option>
-                                    <option>Student — 1st Year</option>
-                                    <option>Student — 2nd Year</option>
-                                    <option>Student — 3rd Year</option>
-                                    <option>Student — Final Year</option>
-                                    <option>Fresh Graduate</option>
-                                    <option>IT Professional (0–2 yrs exp)</option>
-                                    <option>IT Professional (2–5 yrs exp)</option>
-                                    <option>IT Professional (5+ yrs exp)</option>
-                                    <option>Network / System Admin</option>
-                                    <option>Developer / Software Engineer</option>
-                                    <option>Security Analyst</option>
-                                    <option>Manager / Team Lead</option>
-                                    <option>Other</option>
-                                </select>
-                                <div class="field-error" id="err-grade"><i class="bi bi-exclamation-circle"></i> Please
-                                    select your current role</div>
                             </div>
                         </div>
                         <div class="field-group">
@@ -1822,30 +1695,6 @@
                                 style="display:none;" />
                         </div>
 
-                        @if ($otherCourses->count() > 0)
-                            <div class="form-divider"><span>Or Switch to Another Course</span></div>
-                            <div class="course-grid" style="margin-bottom:24px;">
-                                @foreach ($otherCourses as $oc)
-                                    <div class="course-card-opt">
-                                        <input type="radio" name="course" id="c-{{ $oc->id }}"
-                                            value="{{ $oc->title }}" />
-                                        <label class="course-opt-label" for="c-{{ $oc->id }}">
-                                            <div class="coll-icon">🔐</div>
-                                            <div class="coll-name">{{ $oc->title }}</div>
-                                            <div class="coll-age">
-                                                @if ($oc->age_group)
-                                                    {{ $oc->age_group }} ·
-                                                @endif{{ $oc->duration ?? '3 months' }}
-                                            </div>
-                                            @if ($oc->fees)
-                                                <div style="font-size:13px;font-weight:800;color:#175cdd;margin-top:6px;">
-                                                    ₹{{ number_format($oc->fees) }}</div>
-                                            @endif
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
 
                         <div class="field-error" id="err-course" style="margin-bottom:16px;"><i
                                 class="bi bi-exclamation-circle"></i> Please select a course</div>
@@ -1862,18 +1711,6 @@
                             <img src="https://razorpay.com/favicon.ico"
                                 style="width:22px;height:22px;border-radius:4px;margin-left:auto;"
                                 onerror="this.style.display='none'" alt="Razorpay" />
-                        </div>
-
-                        <div class="field-group">
-                            <label>Coupon Code <span class="opt">(optional)</span></label>
-                            <div class="coupon-row">
-                                <input class="fi" type="text" id="coupon" placeholder="e.g. CYBER20"
-                                    style="text-transform:uppercase;" />
-                                <button class="btn-apply" onclick="applyCoupon()">Apply</button>
-                            </div>
-                            <div class="coupon-badge" id="couponBadge" style="display:none;">
-                                <i class="bi bi-check-circle-fill"></i> Coupon applied! ₹200 off
-                            </div>
                         </div>
                     </div>
                     <div class="panel-footer">
@@ -2221,28 +2058,6 @@
             };
         }
 
-        // ── Coupon ─────────────────────────────────────────────────────────────
-        function applyCoupon() {
-            var code = document.getElementById('coupon').value.trim();
-            var badge = document.getElementById('couponBadge');
-            if (code.length > 0) {
-                badge.style.display = 'inline-flex';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-        // ── DOB auto-age ───────────────────────────────────────────────────────
-        document.getElementById('dob').addEventListener('change', function() {
-            var dob = new Date(this.value);
-            if (isNaN(dob.getTime())) return;
-            var today = new Date();
-            var age = today.getFullYear() - dob.getFullYear();
-            var m = today.getMonth() - dob.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-            document.getElementById('ageDisplay').value = age >= 0 ? age + ' years old' : '';
-        });
-
         // ── Checkboxes ─────────────────────────────────────────────────────────
         function toggleCheck(id) {
             var inp = document.getElementById(id);
@@ -2272,6 +2087,9 @@
                 if (idx === step) {
                     el.classList.add('active');
                     if (goingBack) el.classList.add('back-anim');
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
                 }
             });
             window.scrollTo({
@@ -2302,15 +2120,7 @@
                 req('firstName', document.getElementById('firstName').value.trim() !== '');
                 req('lastName', document.getElementById('lastName').value.trim() !== '');
                 var dobVal = document.getElementById('dob').value;
-                var dobOk = false;
-                if (dobVal) {
-                    var d = new Date(dobVal),
-                        now = new Date();
-                    var age = now.getFullYear() - d.getFullYear();
-                    var mo = now.getMonth() - d.getMonth();
-                    if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
-                    dobOk = (age >= 3 && age <= 29);
-                }
+                var dobOk = dobVal !== '' && !isNaN(new Date(dobVal).getTime());
                 req('dob', dobOk);
                 req('gender', document.querySelector('input[name="gender"]:checked') !== null);
 
@@ -2328,7 +2138,6 @@
                 req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
                 req('address', document.getElementById('address').value.trim() !== '');
                 req('school', document.getElementById('school').value.trim() !== '');
-                req('grade', document.getElementById('grade').value !== '');
                 req('achievements', document.getElementById('achievements').value.trim() !== '');
 
             } else if (step === 3) {
@@ -2397,7 +2206,6 @@
                         email: getVal('email'),
                         address: getVal('address'),
                         school: getVal('school'),
-                        grade: getVal('grade'),
                         achievements: getVal('achievements'),
                         state: getVal('state'),
                         city: getVal('state'),
@@ -2440,14 +2248,12 @@
                 ['Email', getVal('email')],
                 ['Address', getVal('address')],
                 ['School', getVal('school')],
-                ['Class', getVal('grade')],
                 ['Achievements', getVal('achievements')],
                 ['State', getVal('state')],
                 ['Centre', getVal('centre')],
                 ['Mode', radioVal('mode')],
                 ['Course', '{{ $course->title }}'],
                 ['Course Fee', feeText],
-                ['Coupon', (getVal('coupon') && getVal('coupon') !== '—') ? getVal('coupon') : 'None'],
             ];
 
             var grid = document.getElementById('summary-grid');
@@ -2519,7 +2325,6 @@
                 email: getVal('email'),
                 address: getVal('address'),
                 school: getVal('school'),
-                grade: getVal('grade'),
                 achievements: getVal('achievements'),
                 state: getVal('state'),
                 city: getVal('state'),
@@ -2528,7 +2333,6 @@
                 centre_fees: centre.fees,
                 mode: radioVal('mode'),
                 course: '{{ $course->title }}',
-                coupon: getVal('coupon'),
                 newsletter_subscribed: document.getElementById('newsletter').checked ? 1 : 0,
                 terms_accepted: document.getElementById('terms').checked ? 1 : 0,
                 enrollment_id: _enrollmentId,
@@ -2645,7 +2449,7 @@
         function retryPayment() {
             document.getElementById('failedScreen').style.display = 'none';
             document.querySelectorAll('.step-content').forEach(function(el) {
-                el.style.display = '';
+                el.style.display = 'none';
             });
             var btn = document.querySelector('.submit-btn');
             btn.disabled = false;
@@ -2663,587 +2467,4 @@
 
 
 
-    {{-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script>
-        var CENTRE_DATA = @json($centresByState);
-        var COURSE_STATES = @json($courseStates);
-
-        var _enrollmentId = null;
-        var _silentSaveDone = false;
-
-        var _ajaxTimers = {};
-        var _ajaxCache = {};
-
-        function ajaxValidateField(fieldId, value, rules) {
-            var indicator = document.getElementById('ajax-' + fieldId);
-            var errEl = document.getElementById('err-' + fieldId);
-            var succEl = document.getElementById('succ-' + fieldId);
-
-            if (!indicator) return;
-
-            var cacheKey = fieldId + ':' + value;
-            if (_ajaxCache[cacheKey] !== undefined) {
-                applyAjaxResult(fieldId, _ajaxCache[cacheKey]);
-                return;
-            }
-
-            clearTimeout(_ajaxTimers[fieldId]);
-            indicator.className = 'ajax-indicator checking';
-            if (errEl) errEl.classList.remove('show');
-            if (succEl) succEl.style.display = 'none';
-
-            _ajaxTimers[fieldId] = setTimeout(function() {
-                fetch('{{ route('enrollment.validate') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            field: fieldId,
-                            value: value
-                        })
-                    })
-                    .then(function(res) {
-                        return res.json();
-                    })
-                    .then(function(data) {
-                        var ok = data.valid === true;
-                        _ajaxCache[cacheKey] = {
-                            ok: ok,
-                            message: data.message || ''
-                        };
-                        applyAjaxResult(fieldId, _ajaxCache[cacheKey]);
-                    })
-                    .catch(function() {
-                        indicator.className = 'ajax-indicator';
-                    });
-            }, 550);
-        }
-
-        function applyAjaxResult(fieldId, result) {
-            var indicator = document.getElementById('ajax-' + fieldId);
-            var errEl = document.getElementById('err-' + fieldId);
-            var succEl = document.getElementById('succ-' + fieldId);
-            var inputEl = document.getElementById(fieldId);
-
-            if (result.ok) {
-                if (indicator) indicator.className = 'ajax-indicator ok';
-                if (errEl) errEl.classList.remove('show');
-                if (inputEl) inputEl.classList.remove('has-error');
-                if (succEl) succEl.style.display = 'flex';
-            } else {
-                if (indicator) indicator.className = 'ajax-indicator bad';
-                if (errEl) {
-                    if (result.message) errEl.innerHTML = '<i class="bi bi-exclamation-circle"></i> ' + result.message;
-                    errEl.classList.add('show');
-                }
-                if (inputEl) inputEl.classList.add('has-error');
-                if (succEl) succEl.style.display = 'none';
-            }
-        }
-
-        document.getElementById('phone').addEventListener('blur', function() {
-            var val = this.value.replace(/\D/g, '');
-            if (val.length === 10) ajaxValidateField('phone', '+91' + val, {});
-        });
-
-        document.getElementById('phone').addEventListener('input', function() {
-            var indicator = document.getElementById('ajax-phone');
-            var succEl = document.getElementById('succ-phone');
-            if (indicator) indicator.className = 'ajax-indicator';
-            if (succEl) succEl.style.display = 'none';
-            _ajaxCache = Object.fromEntries(Object.entries(_ajaxCache).filter(function(e) {
-                return !e[0].startsWith('phone:');
-            }));
-        });
-
-        document.getElementById('email').addEventListener('blur', function() {
-            var val = this.value.trim();
-            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) ajaxValidateField('email', val, {});
-        });
-
-        document.getElementById('email').addEventListener('input', function() {
-            var indicator = document.getElementById('ajax-email');
-            var succEl = document.getElementById('succ-email');
-            if (indicator) indicator.className = 'ajax-indicator';
-            if (succEl) succEl.style.display = 'none';
-            _ajaxCache = Object.fromEntries(Object.entries(_ajaxCache).filter(function(e) {
-                return !e[0].startsWith('email:');
-            }));
-        });
-
-        function updateCentres() {
-            var state = document.getElementById('state').value;
-            var sel = document.getElementById('centre');
-            var wrap = document.getElementById('centre-info-wrap');
-
-            sel.innerHTML = '<option value="">— Select a Centre —</option>';
-            wrap.style.display = 'none';
-            if (!state) return;
-
-            var list = CENTRE_DATA[state];
-            if (list && list.length > 0) {
-                for (var i = 0; i < list.length; i++) {
-                    var o = document.createElement('option');
-                    o.value = list[i].name;
-                    o.textContent = list[i].name;
-                    o.dataset.address = list[i].address || '';
-                    o.dataset.phone = list[i].phone || '';
-                    o.dataset.email = list[i].email || '';
-                    o.dataset.map = list[i].map || '';
-                    sel.appendChild(o);
-                }
-            }
-        }
-
-        function showCentreInfo() {
-            var sel = document.getElementById('centre');
-            var wrap = document.getElementById('centre-info-wrap');
-            var opt = sel.options[sel.selectedIndex];
-
-            if (!opt || !opt.value) {
-                wrap.style.display = 'none';
-                return;
-            }
-
-            document.getElementById('ci-name').textContent = opt.value;
-            document.getElementById('ci-address').textContent = opt.dataset.address || '—';
-
-            var phoneWrap = document.getElementById('ci-phone-wrap');
-            var emailWrap = document.getElementById('ci-email-wrap');
-            var mapLink = document.getElementById('ci-map');
-
-            if (opt.dataset.phone) {
-                document.getElementById('ci-phone').textContent = opt.dataset.phone;
-                phoneWrap.style.display = 'inline-flex';
-            } else {
-                phoneWrap.style.display = 'none';
-            }
-
-            if (opt.dataset.email) {
-                document.getElementById('ci-email').textContent = opt.dataset.email;
-                emailWrap.style.display = 'inline-flex';
-            } else {
-                emailWrap.style.display = 'none';
-            }
-
-            if (opt.dataset.map) {
-                mapLink.href = opt.dataset.map;
-                mapLink.style.display = 'inline-flex';
-            } else {
-                mapLink.style.display = 'none';
-            }
-
-            wrap.style.display = 'block';
-        }
-
-        function applyCoupon() {
-            var code = document.getElementById('coupon').value.trim();
-            var badge = document.getElementById('couponBadge');
-            if (code.length > 0) {
-                badge.style.display = 'inline-flex';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-        document.getElementById('dob').addEventListener('change', function() {
-            var dob = new Date(this.value);
-            if (isNaN(dob.getTime())) return;
-            var today = new Date();
-            var age = today.getFullYear() - dob.getFullYear();
-            var m = today.getMonth() - dob.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-            document.getElementById('ageDisplay').value = age >= 0 ? age + ' years old' : '';
-        });
-
-        function toggleCheck(id) {
-            var card = document.getElementById('chk-' + id + '-card');
-            var inp = document.getElementById(id);
-            inp.checked = !inp.checked;
-            card.classList.toggle('checked', inp.checked);
-            if (id === 'terms') document.getElementById('err-terms').classList.remove('show');
-        }
-
-        var currentStep = 0;
-        var TOTAL_STEPS = 6;
-
-        function updateStepper(step, goingBack) {
-            for (var i = 0; i < TOTAL_STEPS; i++) {
-                var si = document.getElementById('si-' + i);
-                var circle = si.querySelector('.step-circle');
-                si.className = 'step-item' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
-                circle.textContent = i < step ? '\u2713' : String(i + 1);
-            }
-            var pct = step === 0 ? 0 : (step / (TOTAL_STEPS - 1)) * 100;
-            document.getElementById('stepperProgress').style.width = pct + '%';
-            document.getElementById('miniBar').style.width = ((step + 1) / TOTAL_STEPS * 100) + '%';
-
-            document.querySelectorAll('.step-content').forEach(function(el, idx) {
-                el.classList.remove('active', 'back-anim');
-                if (idx === step) {
-                    el.classList.add('active');
-                    if (goingBack) el.classList.add('back-anim');
-                }
-            });
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        function showErr(id, show) {
-            var el = document.getElementById('err-' + id);
-            if (el) el.classList.toggle('show', show);
-            var fi = document.getElementById(id);
-            if (fi) fi.classList.toggle('has-error', show);
-            var wrap = document.getElementById('wrap-' + id);
-            if (wrap) wrap.classList.toggle('has-error', show);
-        }
-
-        function validateStep(step) {
-            var ok = true;
-
-            function req(id, cond) {
-                showErr(id, !cond);
-                if (!cond) ok = false;
-            }
-
-            if (step === 0) {
-                req('firstName', document.getElementById('firstName').value.trim() !== '');
-                req('lastName', document.getElementById('lastName').value.trim() !== '');
-                var dobVal = document.getElementById('dob').value;
-                var dobOk = false;
-                if (dobVal) {
-                    var d = new Date(dobVal),
-                        now = new Date();
-                    var age = now.getFullYear() - d.getFullYear();
-                    var mo = now.getMonth() - d.getMonth();
-                    if (mo < 0 || (mo === 0 && now.getDate() < d.getDate())) age--;
-                    dobOk = (age >= 3 && age <= 29);
-                }
-                req('dob', dobOk);
-                req('gender', document.querySelector('input[name="gender"]:checked') !== null);
-
-            } else if (step === 1) {
-                req('fatherName', document.getElementById('fatherName').value.trim() !== '');
-                req('motherName', document.getElementById('motherName').value.trim() !== '');
-
-            } else if (step === 2) {
-                var ph = document.getElementById('phone').value.replace(/\D/g, '');
-                req('phone', ph.length === 10);
-                req('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim()));
-                req('school', document.getElementById('school').value.trim() !== '');
-                req('grade', document.getElementById('grade').value !== '');
-
-            } else if (step === 3) {
-                req('state', document.getElementById('state').value !== '');
-                req('centre', document.getElementById('centre').value !== '');
-
-            } else if (step === 4) {
-                req('course', document.querySelector('input[name="course"]:checked') !== null);
-
-            } else if (step === 5) {
-                var terms = document.getElementById('terms').checked;
-                showErr('terms', !terms);
-                if (!terms) ok = false;
-            }
-            return ok;
-        }
-
-        function nextStep(step) {
-            if (!validateStep(step)) return;
-            if (step === 3 && !_silentSaveDone) silentSave();
-            if (step === 4) buildSummary();
-            currentStep = step + 1;
-            updateStepper(currentStep, false);
-        }
-
-        function prevStep(step) {
-            currentStep = step - 1;
-            updateStepper(currentStep, true);
-        }
-
-        function getVal(id) {
-            var el = document.getElementById(id);
-            return (el && el.value) ? el.value : '';
-        }
-
-        function radioVal(name) {
-            var el = document.querySelector('input[name="' + name + '"]:checked');
-            return el ? el.value : '';
-        }
-
-        function silentSave() {
-            fetch('{{ route('enrollment.store') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        _token: '{{ csrf_token() }}',
-                        course_id: '{{ $course->id }}',
-                        first_name: getVal('firstName'),
-                        last_name: getVal('lastName'),
-                        dob: getVal('dob'),
-                        gender: radioVal('gender'),
-                        father_name: getVal('fatherName'),
-                        mother_name: getVal('motherName'),
-                        parent_phone: '+91' + getVal('parentPhone').replace(/\D/g, ''),
-                        parent_email: getVal('parentEmail'),
-                        phone: '+91' + getVal('phone').replace(/\D/g, ''),
-                        email: getVal('email'),
-                        address: getVal('address'),
-                        school: getVal('school'),
-                        grade: getVal('grade'),
-                        achievements: getVal('achievements'),
-                        state: getVal('state'),
-                        city: getVal('state'),
-                        centre: getVal('centre'),
-                        mode: radioVal('mode'),
-                        course: '{{ $course->title }}',
-                        is_lead: 1,
-                    }),
-                })
-                .then(function(res) {
-                    return res.ok ? res.json() : null;
-                })
-                .then(function(data) {
-                    if (data && data.enrollment_id) {
-                        _enrollmentId = data.enrollment_id;
-                        _silentSaveDone = true;
-                    }
-                })
-                .catch(function() {});
-        }
-
-        function buildSummary() {
-            var items = [
-                ['Student Name', getVal('firstName') + ' ' + getVal('lastName')],
-                ['Date of Birth', getVal('dob')],
-                ['Gender', radioVal('gender')],
-                ["Father's Name", getVal('fatherName')],
-                ["Mother's Name", getVal('motherName')],
-                ['Phone', getVal('phone') ? '+91 ' + getVal('phone').replace(/\D/g, '') : '—'],
-                ['Email', getVal('email')],
-                ['School', getVal('school')],
-                ['Class', getVal('grade')],
-                ['State', getVal('state')],
-                ['Centre', getVal('centre')],
-                ['Mode', radioVal('mode')],
-                ['Course', '{{ $course->title }}'],
-                ['Coupon', (getVal('coupon') && getVal('coupon') !== '\u2014') ? getVal('coupon') : 'None'],
-            ];
-            var grid = document.getElementById('summary-grid');
-            grid.innerHTML = '';
-            for (var i = 0; i < items.length; i++) {
-                var div = document.createElement('div');
-                div.style.cssText = 'border-bottom:1px solid var(--border);padding-bottom:10px;';
-
-                // Use textContent (not innerHTML) to prevent DOM XSS from user-typed values
-                var label = document.createElement('div');
-                label.style.cssText = 'font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;';
-                label.textContent = items[i][0];
-
-                var value = document.createElement('div');
-                value.style.cssText = 'font-size:14px;font-weight:600;color:var(--ink);';
-                value.textContent = items[i][1];
-
-                div.appendChild(label);
-                div.appendChild(value);
-                grid.appendChild(div);
-            }
-        }
-
-        function showResultScreen(screenId) {
-            document.querySelectorAll('.step-content').forEach(function(el) {
-                el.style.display = 'none';
-            });
-            document.getElementById(screenId).style.display = 'block';
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        function startFailedCountdown() {
-            var countdown = 10;
-            var courseUrl = '{{ url('/courses/' . $course->id) }}';
-            var timer = setInterval(function() {
-                countdown--;
-                var el = document.getElementById('failedCountdown');
-                if (el) el.textContent = countdown;
-                if (countdown <= 0) {
-                    clearInterval(timer);
-                    window.location.href = courseUrl;
-                }
-            }, 1000);
-        }
-
-        function submitForm() {
-            if (!validateStep(5)) return;
-
-            var payload = {
-                _token: '{{ csrf_token() }}',
-                course_id: '{{ $course->id }}',
-                first_name: getVal('firstName'),
-                last_name: getVal('lastName'),
-                dob: getVal('dob'),
-                gender: radioVal('gender'),
-                father_name: getVal('fatherName'),
-                mother_name: getVal('motherName'),
-                parent_phone: '+91' + getVal('parentPhone').replace(/\D/g, ''),
-                parent_email: getVal('parentEmail'),
-                phone: '+91' + getVal('phone').replace(/\D/g, ''),
-                email: getVal('email'),
-                address: getVal('address'),
-                school: getVal('school'),
-                grade: getVal('grade'),
-                achievements: getVal('achievements'),
-                state: getVal('state'),
-                city: getVal('state'),
-                centre: getVal('centre'),
-                centre_id: getSelectedCentre().id,
-                mode: radioVal('mode'),
-                course: '{{ $course->title }}',
-                coupon: getVal('coupon'),
-                newsletter_subscribed: document.getElementById('newsletter').checked ? 1 : 0,
-                terms_accepted: document.getElementById('terms').checked ? 1 : 0,
-                enrollment_id: _enrollmentId,
-            };
-
-            var btn = document.querySelector('.submit-btn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting…';
-
-            fetch('{{ route('enrollment.store') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify(payload),
-                })
-                .then(function(res) {
-                    if (res.status === 422) {
-                        return res.json().then(function(data) {
-                            var msgs;
-                            if (data.errors) {
-                                msgs = Object.values(data.errors).flat().join('\n');
-                            } else if (data.message) {
-                                msgs = data.message;
-                            } else {
-                                msgs = 'Validation failed. Please check all fields.';
-                            }
-                            alert('Please fix the following:\n\n' + msgs);
-                            btn.disabled = false;
-                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                        });
-                    }
-                    if (!res.ok) {
-                        return res.text().then(function() {
-                            alert('Server error (' + res.status + '). Please try again.');
-                            btn.disabled = false;
-                            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                        });
-                    }
-                    return res.json();
-                })
-                .then(function(data) {
-                    if (!data || !data.success) return;
-
-                    var rzp = new Razorpay({
-                        key: data.rzp_key,
-                        amount: data.amount,
-                        currency: 'INR',
-                        name: 'Act To Action',
-                        description: 'Course Enrollment',
-                        order_id: data.order_id,
-                        handler: function(response) {
-                            verifyPayment(response, data.enrollment_id);
-                        },
-                        prefill: {
-                            name: payload.first_name + ' ' + payload.last_name,
-                            email: payload.email,
-                            contact: payload.phone,
-                        },
-                        theme: {
-                            color: '#175cdd'
-                        },
-                        modal: {
-                            ondismiss: function() {
-                                btn.disabled = false;
-                                btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                            }
-                        }
-                    });
-                    rzp.open();
-                })
-                .catch(function() {
-                    alert('Network error. Please check your connection and try again.');
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-                });
-        }
-
-        function verifyPayment(response, enrollmentId) {
-            fetch('{{ route('enrollment.verify') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        razorpay_order_id: response.razorpay_order_id,
-                        razorpay_payment_id: response.razorpay_payment_id,
-                        razorpay_signature: response.razorpay_signature,
-                        enrollment_id: enrollmentId,
-                    }),
-                })
-                .then(function(res) {
-                    return res.json();
-                })
-                .then(function(data) {
-                    if (data.success) {
-                        document.getElementById('refId').textContent = data.reference_id || ('ATA-' + enrollmentId);
-                        showResultScreen('successScreen');
-                    } else {
-                        showResultScreen('failedScreen');
-                        if (response.razorpay_payment_id) {
-                            document.getElementById('failedPidText').textContent = response.razorpay_payment_id;
-                            document.getElementById('failedPaymentId').style.display = 'block';
-                        }
-                        startFailedCountdown();
-                    }
-                })
-                .catch(function() {
-                    showResultScreen('failedScreen');
-                    startFailedCountdown();
-                });
-        }
-
-        function retryPayment() {
-            document.getElementById('failedScreen').style.display = 'none';
-            document.querySelectorAll('.step-content').forEach(function(el) {
-                el.style.display = '';
-            });
-            var btn = document.querySelector('.submit-btn');
-            btn.disabled = false;
-            btn.innerHTML = '<i class="bi bi-check2-circle"></i> Submit Enrollment';
-            currentStep = 5;
-            updateStepper(5, false);
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-
-        updateStepper(0, false);
-    </script> --}}
 @endsection

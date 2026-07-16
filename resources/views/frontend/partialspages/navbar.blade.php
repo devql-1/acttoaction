@@ -21,12 +21,13 @@
                 </i>
                 @endif
             </div>
-            {{-- <div class="social-links d-none d-md-flex align-items-center">
-                <a href="#!" class="twitter"><i class="bi bi-twitter-x"></i></a>
-                <a href="#!" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#!" class="instagram"><i class="bi bi-instagram"></i></a>
-                <a href="#!" class="linkedin"><i class="bi bi-linkedin"></i></a>
-            </div> --}}
+            <div class="social-links d-none d-md-flex align-items-center">
+                <a href="https://twitter.com/threatxpert" target="_blank" rel="noopener" aria-label="ThreatXpert on X" class="twitter"><i class="bi bi-twitter-x"></i></a>
+                <a href="https://facebook.com/threatxpert" target="_blank" rel="noopener" aria-label="ThreatXpert on Facebook" class="facebook"><i class="bi bi-facebook"></i></a>
+                <a href="https://instagram.com/threatxpert" target="_blank" rel="noopener" aria-label="ThreatXpert on Instagram" class="instagram"><i class="bi bi-instagram"></i></a>
+                <a href="https://linkedin.com/company/threatxpert" target="_blank" rel="noopener" aria-label="ThreatXpert on LinkedIn" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                <a href="https://youtube.com/@threatxpert" target="_blank" rel="noopener" aria-label="ThreatXpert on YouTube" class="youtube"><i class="bi bi-youtube"></i></a>
+            </div>
         </div>
     </div>
 
@@ -388,6 +389,29 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .header .topbar .social-links {
+        gap: 12px;
+    }
+
+    .header .topbar .social-links a {
+        color: #ffffff;
+        font-size: 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .header .topbar .social-links a:hover {
+        background: #ffffff;
+        color: #0d1b2a;
+        text-decoration: none;
     }
 
     @media (max-width: 1100px) {

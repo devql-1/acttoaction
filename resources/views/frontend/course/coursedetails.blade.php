@@ -1014,10 +1014,6 @@
                     <!-- RIGHT SIDEBAR -->
                     <div class="col-lg-4">
                         <div class="enroll-card" data-aos="fade-left">
-                            <div class="card-top">
-                                <div class="price-big">₹{{ number_format($course->fees) }}</div>
-                                <div class="price-label">Full Course Fee</div>
-                            </div>
                             <div class="card-body-p">
                                 <ul class="info-list">
                                     @if ($course->duration)

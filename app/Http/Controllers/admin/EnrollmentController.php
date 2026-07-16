@@ -88,12 +88,7 @@ class EnrollmentController extends Controller
             'email'        => 'required|email|max:150',
             'address'      => 'required|string|max:500',
             'school'       => 'required|string|max:200',
-            'grade'        => ['required', 'string', Rule::in([
-                'Nursery / Pre-School', 'KG (Kindergarten)',
-                'Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6',
-                'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12',
-                'Undergraduate (College)', 'Postgraduate', 'Working Professional', 'Other',
-            ])],
+            'grade'        => 'nullable|string|max:200',
             'achievements' => 'nullable|string|max:1000',
             'state'        => 'required|string|max:100',
             'city'         => 'nullable|string|max:100',

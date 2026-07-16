@@ -38,9 +38,9 @@ class AppServiceProvider extends ServiceProvider
             view()->share('contactInfo', $ci);
         }
 
-        $correctPhone    = '+91 80790 34973';
-        $correctWhatsapp = '+91 80790 34973';
-        $correctEmail    = 'info@threatxpert.com';
+        $correctPhone    = '+91 80036 48098';
+        $correctWhatsapp = '+91 80036 48098';
+        $correctEmail    = 'training@threatexpert.in';
         $correctAddress  = 'Rising Passion Studio, Hoshiar Singh Marg, Moti Nagar, Vaishali Nagar, Jaipur - 302021';
 
         view()->share([
