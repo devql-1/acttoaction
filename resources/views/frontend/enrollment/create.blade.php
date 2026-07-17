@@ -942,8 +942,8 @@
 <script>
     var CENTRE_DATA = @json($centresByState);
     var COURSE_STATES = @json($courseStates);
-    var COURSE_ID = {{ $course->id }};
-    var COURSE_TITLE = {{ json_encode($course->title) }};
+    var COURSE_ID = {{ $course->id ?? 'null' }};
+    var COURSE_TITLE = {!! json_encode($course->title ?? '') !!};
 
     var _enrollmentId = null;
     var _silentSaveDone = false;
