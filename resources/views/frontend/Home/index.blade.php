@@ -288,7 +288,7 @@
         }
 
         /* ===== MAIN CONTAINER & ACTIONS ===== */
-        .container {
+        .main-actions-container {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -418,7 +418,7 @@
                 font-size: 15px;
             }
 
-            .container {
+            .main-actions-container {
                 padding: 60px 20px 130px;
             }
 
@@ -469,7 +469,7 @@
                 font-size: 13px;
             }
 
-            .container {
+            .main-actions-container {
                 padding: 50px 16px 120px;
                 align-items: center;
                 justify-content: flex-start;
@@ -785,7 +785,7 @@
     </section>
 
     <!-- MAIN ACTION SECTION -->
-    <section class="container">
+    <section class="container main-actions-container">
         <div class="action add">
             <a href="{{ route('threat-academy') }}" class="action-link">
                 <div class="icon"><i class="fas fa-book-open"></i></div>

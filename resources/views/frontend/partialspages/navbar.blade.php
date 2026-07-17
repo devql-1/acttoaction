@@ -34,9 +34,7 @@
     <div class="branding d-flex align-items-center">
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-                <div class="logo">
-                    <img src="{{ asset('img/logo/logo.png') }}" alt="Threat Expert Logo">
-                </div>
+                <img src="{{ asset('img/logo/logo.png') }}" alt="Threat Expert Logo">
             </a>
 
             <nav id="navmenu" class="navmenu">
