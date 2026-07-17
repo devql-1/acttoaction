@@ -79,9 +79,11 @@ class Course extends Model
             return asset($assetPrefix . Str::after($normalizedPath, 'public/'));
         }
 
-        if (Str::startsWith($normalizedPath, 'img/')) {
-            return asset($assetPrefix . $normalizedPath);
-        }
+if (Str::startsWith($normalizedPath, 'img/')) {
+    // Course banner images are stored in storage/ not public/img/
+    $storagePath = Str::replaceFirst('img/', 'storage/', $normalizedPath);
+    return asset($assetPrefix . $storagePath);
+}
 
         if (Str::startsWith($normalizedPath, 'storage/')) {
             return asset($assetPrefix . $normalizedPath);
