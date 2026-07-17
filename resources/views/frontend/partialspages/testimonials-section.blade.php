@@ -2,9 +2,9 @@
     $sectionTitle = $sectionTitle ?? 'Parents Testimonials';
     $sectionDesc =
         $sectionDesc ??
-        'Real stories from families whose children found their voice, confidence and craft at Act to Action.';
+        'Real stories from families whose children found their voice, confidence and craft at Threat Expert.';
     $ytChannel = $ytChannel ?? 'https://youtube.com/@risingpassion';
-    $igHandle = $igHandle ?? '@acttoaction_';
+    $igHandle = $igHandle ?? '@threatexpert_';
     $igUrl = 'https://www.instagram.com/' . ltrim($igHandle, '@');
     $showInstagram = $showInstagram ?? true;
 
@@ -15,15 +15,15 @@
             'fb' => 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600',
             'cap' =>
                 "There's no power like the power of a story told together.\n\nWe came, we performed, and we're just getting started!",
-            'tags' => ['#ActToAction', '#KuchBadaKaro', '#StreetPlay', '#NukkadNatak'],
+            'tags' => ['#ThreatExpert', '#KuchBadaKaro', '#StreetPlay', '#NukkadNatak'],
             'type' => 'reel',
         ],
         [
             'img' =>
                 'https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/642995574_1434865508019922_6831886684256629567_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ccb=7-5&_nc_sid=18de74&_nc_ohc=_GXls7-bm0gQ7kNvwHEUFGW&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_AfxJnrOBLuZrsAvUZ_FTzZ4atbpr4PgDvKG6SxLDCMeIGA&oe=69B870E9',
             'fb' => 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600',
-            'cap' => 'The buzz around the Act to Action booth was incredible!',
-            'tags' => ['#ActToAction', '#EmpoweringYouth', '#FICCIFLOJaipur'],
+            'cap' => 'The buzz around the Threat Expert booth was incredible!',
+            'tags' => ['#ThreatExpert', '#EmpoweringYouth', '#FICCIFLOJaipur'],
             'type' => 'reel',
         ],
         [
@@ -31,7 +31,7 @@
                 'https://scontent-den2-1.cdninstagram.com/v/t51.82787-15/642489611_18133815724518628_7670526883441129105_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&_nc_ohc=WFpfVx1EuSkQ7kNvwGhurYj&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_AfxwjRKnWCf5CCWnDye7r-ESL3N8sjyC8Fdlu_RUyo55eg&oe=69B861B5',
             'fb' => 'https://images.unsplash.com/photo-1549737221-bef65e2604a6?w=600',
             'cap' => 'When Gen Alpha meets legacy entrepreneurs.',
-            'tags' => ['#ActToAction', '#HumanIntelligence', '#GenAlpha'],
+            'tags' => ['#ThreatExpert', '#HumanIntelligence', '#GenAlpha'],
             'type' => 'carousel',
         ],
         [
@@ -39,7 +39,7 @@
                 'https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/629205528_940446055174611_240539305886177698_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&_nc_ohc=eCRKQe5NsaYQ7kNvwFDxm8a&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_AfyCo1ZZYJswGr3qCXW26neV68nfwREja6094nSeHIMAbA&oe=69B87ED1',
             'fb' => 'https://images.unsplash.com/photo-1588702547954-4800eb827c08?w=600',
             'cap' => 'The cosmos dances to the rhythm of Mahadev. 🔱',
-            'tags' => ['#acttoaction', '#nanhekalakar', '#shiva'],
+            'tags' => ['#ThreatExpert', '#nanhekalakar', '#shiva'],
             'type' => 'reel',
         ],
         [
@@ -47,7 +47,7 @@
                 'https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/622025181_875874845188741_2864669811760520803_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&_nc_ohc=2naZBQWzZcAQ7kNvwFMWSn2&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_AfwmmQhPt4xte1t501PEbgR_lkrP4nqGNn-mqigf-Ev43g&oe=69B87B65',
             'fb' => 'https://images.unsplash.com/photo-1560523159-4a9692d222ef?w=600',
             'cap' => 'When real cinema becomes the classroom. 🎬',
-            'tags' => ['#ActToAction', '#NukkadNatakKarwan', '#YoungActors'],
+            'tags' => ['#ThreatExpert', '#NukkadNatakKarwan', '#YoungActors'],
             'type' => 'reel',
         ],
         [
@@ -55,21 +55,21 @@
                 'https://scontent-den2-1.cdninstagram.com/v/t51.71878-15/623037715_1424572239251577_5102042722729972561_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&_nc_ohc=f_lNdC5t7scQ7kNvwHPvR8Q&_nc_ht=scontent-den2-1.cdninstagram.com&oh=00_Afy_AjaMF-rJhSG4W5Jq_rnyRGCBlZM3B2mj61MORKp5eQ&oe=69B87FC7',
             'fb' => 'https://images.unsplash.com/photo-1616469829526-7057a1427626?w=600',
             'cap' => 'Scene work with Bollywood filmmakers in Jaipur.',
-            'tags' => ['#ActToAction', '#SceneWork', '#JaipurActing'],
+            'tags' => ['#ThreatExpert', '#SceneWork', '#JaipurActing'],
             'type' => 'reel',
         ],
         [
             'img' => 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600',
             'fb' => 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600',
             'cap' => 'Cyber AI Threat Conclave 2024 was magical! ✨',
-            'tags' => ['#SummerCamp', '#ActToAction', '#Jaipur'],
+            'tags' => ['#SummerCamp', '#ThreatExpert', '#Jaipur'],
             'type' => 'photo',
         ],
         [
             'img' => 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600',
             'fb' => 'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600',
             'cap' => 'Graduation Ceremony 2024 — every parent beaming with pride. 🎓',
-            'tags' => ['#Graduation', '#ActToAction', '#GraduationCeremony2024'],
+            'tags' => ['#Graduation', '#ThreatExpert', '#GraduationCeremony2024'],
             'type' => 'carousel',
         ],
     ];
@@ -309,7 +309,7 @@
                         </div>
                         <div>
                             <span class="t-ig-mname">{{ $igHandle }}</span>
-                            <span class="t-ig-mhandle">Act to Action · Jaipur</span>
+                            <span class="t-ig-mhandle">Threat Expert · Jaipur</span>
                         </div>
                     </div>
                     <button class="t-ig-mx" onclick="tCloseIg()"><i class="bi bi-x-lg"></i></button>

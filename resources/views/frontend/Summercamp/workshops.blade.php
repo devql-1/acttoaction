@@ -1,7 +1,7 @@
 {{-- resources/views/frontend/workshops.blade.php --}}
 @extends('frontend.course.layoutsummercamp')
 
-@section('title', 'Workshops — Act To Action')
+@section('title', 'Workshops — Threat Expert')
 
 {{-- ── Styles ── --}}
 
@@ -1070,7 +1070,7 @@
 
             <div class="row justify-content-center text-center mb-5">
                 <div class="col-lg-7">
-                    <span class="section-eyebrow">Why Act To Action</span>
+                    <span class="section-eyebrow">Why Threat Expert</span>
                     <h2 class="section-title">Why Parents Trust Our Workshops</h2>
                     <p class="section-desc mx-auto">
                         We blend structured learning with hands-on fun, ensuring every child gains skills they'll carry for
@@ -1286,7 +1286,7 @@
                     <span class="section-eyebrow">Testimonials</span>
                     <h2 class="section-title">What Parents &amp; Kids Are Saying</h2>
                     <p class="section-desc mx-auto">
-                        Real stories from families who've experienced the Act To Action difference firsthand.
+                        Real stories from families who've experienced the Threat Expert difference firsthand.
                     </p>
                 </div>
             </div>
@@ -1524,7 +1524,7 @@ For queries, contact us at <a href="mailto:info@threatxpert.com">info@threatxper
                             <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#workshopFaq">
                                 <div class="accordion-body">
                                     Yes! Every child who completes a workshop receives a digitally signed Certificate of
-                                    Achievement from Act To Action. The certificate mentions the skill area, hours
+                                    Achievement from Threat Expert. The certificate mentions the skill area, hours
                                     completed, and is aligned with the Skill India Mission framework — making it a
                                     meaningful addition to your child's portfolio.
                                 </div>

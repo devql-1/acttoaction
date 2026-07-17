@@ -44,7 +44,7 @@ return new class extends Migration {
             // ── Meta ──
             $table->string('duration', 10)->nullable(); // e.g. "2:30"
             $table->string('thumbnail_url')->nullable(); // override auto thumbnail
-            $table->string('channel_name')->default('Act to Action');
+            $table->string('channel_name')->default('Threat Expert');
             $table->string('watch_url')->nullable(); // direct youtu.be link override
 
             // ── Display control ──

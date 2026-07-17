@@ -937,7 +937,7 @@ a {
                     <div class="col-lg-6">
                         <div class="biz-badge"><i class="bi bi-buildings-fill"></i> For Schools & Organisations</div>
                         <h2>Unlock your school's true creative potential</h2>
-                        <p>Act to Action partners with schools, NGOs, hospitals, and corporates to deliver impactful
+                        <p>Threat Expert partners with schools, NGOs, hospitals, and corporates to deliver impactful
                             workshops, events, and ongoing programmes. Get started in minutes — no consultants, no wasted
                             time, just results.</p>
                         <div class="biz-feature-row">
@@ -995,7 +995,7 @@ a {
         <section class="why-join section">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
-                    <h2>Why Join Act to Action?</h2>
+                    <h2>Why Join Threat Expert?</h2>
                     <p>We're not just a school — we're a movement. Joining us means directly contributing to the growth and
                         confidence of thousands of children across India.</p>
                 </div>
@@ -1028,7 +1028,7 @@ a {
                         <div class="reason-card">
                             <div class="icon"><i class="bi bi-award"></i></div>
                             <h4>Certificate & Recognition</h4>
-                            <p>Receive an official Act to Action volunteer certificate, letter of recommendation, and
+                            <p>Receive an official Threat Expert volunteer certificate, letter of recommendation, and
                                 recognition in our nationally appreciated events and programmes.</p>
                         </div>
                     </div>
@@ -1046,7 +1046,7 @@ a {
                         </div>
                         <p style="font-size:15px;line-height:1.8;margin-bottom:18px;">Whether you're a creative
                             professional, a student, a teacher, or simply someone who believes in the power of children —
-                            there's a place for you at Act to Action.</p>
+                            there's a place for you at Threat Expert.</p>
                         <p style="font-size:15px;line-height:1.8;margin-bottom:28px;">We're actively looking for passionate
                             individuals across multiple roles. Every contribution, big or small, helps us build a brighter
                             future for the children of India.</p>
@@ -1075,7 +1075,7 @@ a {
                                 <div class="badge-role">Media</div>
                                 <h5>Photographer / Videographer</h5>
                                 <p>Capture our events, workshops, graduation ceremonies, and student performances. Help
-                                    document the Act to Action journey.</p>
+                                    document the Threat Expert journey.</p>
                             </div>
                         </div>
                         <div class="role-item">
@@ -1084,7 +1084,7 @@ a {
                                 <div class="badge-role">Marketing</div>
                                 <h5>Social Media &amp; PR Volunteer</h5>
                                 <p>Create content, manage social channels, assist in outreach events, and help spread the
-                                    word about Act to Action's work across India.</p>
+                                    word about Threat Expert's work across India.</p>
                             </div>
                         </div>
                         <div class="role-item">
@@ -1343,9 +1343,9 @@ a {
                                     </div>
 
                                     <div class="col-12">
-                                        <label class="form-label">Why do you want to join Act to Action?</label>
+                                        <label class="form-label">Why do you want to join Threat Expert?</label>
                                         <textarea name="message" class="form-control" rows="4"
-                                            placeholder="Tell us about yourself, your passion, and what you'd love to contribute to Act to Action..."></textarea>
+                                            placeholder="Tell us about yourself, your passion, and what you'd love to contribute to Threat Expert..."></textarea>
                                     </div>
 
                                     <div class="col-12">
@@ -1366,7 +1366,7 @@ a {
                                 <div class="success-msg" id="successMsg" style="display:none;">
                                     <i class="bi bi-check-circle-fill"></i>
                                     <h5>Application Submitted Successfully! 🎉</h5>
-                                    <p>Thank you for your interest in joining Act to Action. Our team will soon contact you
+                                    <p>Thank you for your interest in joining Threat Expert. Our team will soon contact you
                                         via WhatsApp or phone.</p>
                                 </div>
 
@@ -1394,7 +1394,7 @@ a {
                                         completion</li>
                                     <li><i class="bi bi-check-circle-fill"></i> Letter of recommendation for dedicated
                                         volunteers</li>
-                                    <li><i class="bi bi-check-circle-fill"></i> Access to Act to Action events and shows
+                                    <li><i class="bi bi-check-circle-fill"></i> Access to Threat Expert events and shows
                                     </li>
                                 </ul>
                             </div>
@@ -1436,13 +1436,13 @@ a {
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
                     <h2>From Our Team</h2>
-                    <p>Hear from the passionate people already making a difference at Act to Action.</p>
+                    <p>Hear from the passionate people already making a difference at Threat Expert.</p>
                 </div>
                 <div class="row gy-4">
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="voice-card">
                             <div class="quote"><i class="bi bi-quote"></i></div>
-                            <p>"Being a part of Act to Action has been the most rewarding experience of my career. Watching
+                            <p>"Being a part of Threat Expert has been the most rewarding experience of my career. Watching
                                 children transform from shy to stage-confident in just months is indescribable."</p>
                             <div class="author">
                                 <div class="avatar">D</div>
@@ -1456,7 +1456,7 @@ a {
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="150">
                         <div class="voice-card">
                             <div class="quote"><i class="bi bi-quote"></i></div>
-                            <p>"Act to Action doesn't just teach acting — it builds people. As someone with a journalism
+                            <p>"Threat Expert doesn't just teach acting — it builds people. As someone with a journalism
                                 background, the storytelling and creativity here is unlike anything I've experienced."</p>
                             <div class="author">
                                 <div class="avatar">K</div>
@@ -1470,7 +1470,7 @@ a {
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                         <div class="voice-card">
                             <div class="quote"><i class="bi bi-quote"></i></div>
-                            <p>"Collaborating with Act to Action from a neurotherapy perspective has opened my eyes to how
+                            <p>"Collaborating with Threat Expert from a neurotherapy perspective has opened my eyes to how
                                 deeply the arts can support child development. Science and art are powerful together."</p>
                             <div class="author">
                                 <div class="avatar">B</div>

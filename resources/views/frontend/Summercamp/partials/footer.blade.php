@@ -54,8 +54,8 @@
                             </li>
 
                             <li>
-                                <a href="https://youtube.com/@acttoaction-21?si=Qz1Or7FLOiVJDVtv" target="_blank">
-                                    <i class="bi bi-youtube me-2"></i>YouTube Act To Action
+                                <a href="https://youtube.com/@threatexpert?si=Qz1Or7FLOiVJDVtv" target="_blank">
+                                    <i class="bi bi-youtube me-2"></i>YouTube Threat Expert
                                 </a>
                             </li>
 
@@ -95,7 +95,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p>©2025 All Rights Reserved · <span>Act To Action</span></p>
+            <p>©2025 All Rights Reserved · <span>Threat Expert</span></p>
             <div class="legal-links">
                 <a href="{{ route('privacy') }}">Privacy</a>
                 <a href="{{ route('terms') }}">Terms</a>

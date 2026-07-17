@@ -33,8 +33,6 @@
                                         'Date of Birth' => $enrollment->dob,
                                         'Age' => $enrollment->age . ' years',
                                         'Gender' => $enrollment->gender,
-                                        "Father's Name" => $enrollment->father_name,
-                                        "Mother's Name" => $enrollment->mother_name,
                                         'Phone' => $enrollment->phone,
                                         'Email' => $enrollment->email,
                                         'School' => $enrollment->school,

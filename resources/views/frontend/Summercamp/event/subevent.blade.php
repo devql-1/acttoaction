@@ -1293,7 +1293,7 @@
             <section class="other-events-section">
                 <div class="container">
                     <div class="section-title">
-                        <h2>Other Events by Act to Action</h2>
+                        <h2>Other Events by Threat Expert</h2>
                         <span class="divider-line"></span>
                         <p>Explore more exciting programmes for young performers.</p>
                     </div>

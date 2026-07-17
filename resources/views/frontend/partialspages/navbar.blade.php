@@ -35,7 +35,7 @@
         <div class="container position-relative d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="logo d-flex align-items-center">
                 <div class="logo">
-                    <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
+                    <img src="{{ asset('img/logo/logo.png') }}" alt="Threat Expert Logo">
                 </div>
             </a>
 
@@ -150,18 +150,18 @@
     }
 
     .logo img {
-        height: 120px;
+        height: 60px;
     }
 
     @media (max-width: 768px) {
         .logo img {
-            height: 60px;
+            height: 54px;
         }
     }
 
     @media (max-width: 480px) {
         .logo img {
-            height: 50px;
+            height: 44px;
         }
     }
 
@@ -175,7 +175,7 @@
         font-size: 12px;
         border-bottom: 1px solid rgba(255, 106, 0, 0.25);
         transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-        max-height: 60px;
+        max-height: 48px;
         opacity: 1;
         overflow: hidden;
     }
@@ -194,7 +194,7 @@
         width: 100%;
         gap: 12px;
         position: relative;
-        padding: 12px 40px;
+        padding: 8px 40px;
     }
 
     .ann-dot {

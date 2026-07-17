@@ -11,7 +11,7 @@
     <section class="hero hero--fallback" id="hero">
         <div class="hero-fallback-content">
             <div class="hero-fallback-inner">
-                <span class="hero-fallback-tag">🎭 Act To Action</span>
+                <span class="hero-fallback-tag">🎭 Threat Expert</span>
                 <h2>Cyber AI Threat Conclave 2026</h2>
                 <p>Jaipur's Biggest Performing Arts Camp</p>
             </div>

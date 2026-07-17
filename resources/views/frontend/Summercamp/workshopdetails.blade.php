@@ -1,6 +1,6 @@
 {{-- resources/views/frontend/Summercamp/workshopdetails.blade.php --}}
 @extends('frontend.course.layout')
-@section('title', $school->name . ' – Act To Action')
+@section('title', $school->name . ' – Threat Expert')
 
 @section('content')
 

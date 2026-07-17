@@ -1,6 +1,6 @@
 {{-- resources/views/frontend/Summercamp/register.blade.php --}}
 @extends('frontend.course.layout')
-@section('title', 'Register – ' . $school->name . ' – Act To Action')
+@section('title', 'Register – ' . $school->name . ' – Threat Expert')
 
 @section('content')
 
@@ -1220,7 +1220,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 key:         WS_RZP_KEY,
                 amount:      data.amount,
                 currency:    data.currency || 'INR',
-                name:        'Act To Action',
+                name:        'Threat Expert',
                 description: data.workshop_name + (childNames.length > 1 ? ' (' + childNames.length + ' children)' : ''),
                 order_id:    data.order_id,
                 prefill:     { name: parentName, email: email, contact: phone },

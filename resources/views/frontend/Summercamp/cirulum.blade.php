@@ -1235,7 +1235,7 @@ a {
         <section class="why-join section">
             <div class="container">
                 <div class="section-title" data-aos="fade-up">
-                    <h2>Why Join Act to Action?</h2>
+                    <h2>Why Join Threat Expert?</h2>
                     <p>We're not just a school — we're a movement. Joining us means directly contributing to the growth and
                         confidence of thousands of children across India.</p>
                 </div>
@@ -1268,7 +1268,7 @@ a {
                         <div class="reason-card">
                             <div class="icon"><i class="bi bi-award"></i></div>
                             <h4>Certificate & Recognition</h4>
-                            <p>Receive an official Act to Action volunteer certificate, letter of recommendation, and
+                            <p>Receive an official Threat Expert volunteer certificate, letter of recommendation, and
                                 recognition in our nationally appreciated events and programmes.</p>
                         </div>
                     </div>
@@ -1286,7 +1286,7 @@ a {
                         </div>
                         <p style="font-size:15px;line-height:1.8;margin-bottom:18px;">Whether you're a creative
                             professional, a student, a teacher, or simply someone who believes in the power of children —
-                            there's a place for you at Act to Action.</p>
+                            there's a place for you at Threat Expert.</p>
                         <p style="font-size:15px;line-height:1.8;margin-bottom:28px;">We're actively looking for passionate
                             individuals across multiple roles. Every contribution, big or small, helps us build a brighter
                             future for the children of India.</p>
@@ -1315,7 +1315,7 @@ a {
                                 <div class="badge-role">Media</div>
                                 <h5>Photographer / Videographer</h5>
                                 <p>Capture our events, workshops, graduation ceremonies, and student performances. Help
-                                    document the Act to Action journey.</p>
+                                    document the Threat Expert journey.</p>
                             </div>
                         </div>
                         <div class="role-item">
@@ -1324,7 +1324,7 @@ a {
                                 <div class="badge-role">Marketing</div>
                                 <h5>Social Media &amp; PR Volunteer</h5>
                                 <p>Create content, manage social channels, assist in outreach events, and help spread the
-                                    word about Act to Action's work across India.</p>
+                                    word about Threat Expert's work across India.</p>
                             </div>
                         </div>
                         <div class="role-item">
@@ -1471,7 +1471,7 @@ a {
                         <i class="bi bi-building"></i> School Partnerships
                     </div>
                     <h2>Trusted by {{ $allSchools->count() > 0 ? $allSchools->count() . '+' : '25+' }} Schools Across India</h2>
-                    <p>Act to Action proudly collaborates with leading schools, educational institutes, and child
+                    <p>Threat Expert proudly collaborates with leading schools, educational institutes, and child
                         development organisations to nurture every child's potential.</p>
                 </div>
 

@@ -5,7 +5,7 @@
 
     <style>
         /* ════════════════════════════════════════════
-                                                                                       QUIZ RESULT PAGE — Act to Action
+                                                                                       QUIZ RESULT PAGE — Threat Expert
                                                                                        Design: Deep navy + electric blue, editorial
                                                                                        premium feel with bold typographic hierarchy
                                                                                     ════════════════════════════════════════════ */

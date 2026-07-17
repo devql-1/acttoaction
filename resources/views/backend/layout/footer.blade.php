@@ -7,7 +7,7 @@
 
       <!-- LEFT -->
       <div>
-        <strong style="color:#374151;">4K Act To Action</strong> Admin Panel
+        <strong style="color:#374151;">4K Threat Expert</strong> Admin Panel
       </div>
 
       <!-- CENTER -->

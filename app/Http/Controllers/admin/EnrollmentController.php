@@ -67,19 +67,6 @@ class EnrollmentController extends Controller
             'last_name'    => 'required|string|max:100',
             'dob'          => ['required', 'date', 'before:today', 'after:' . now()->subYears(100)->toDateString()],
             'gender'       => 'required|in:Male,Female,Other',
-            'father_name'  => 'required|string|max:100',
-            'mother_name'  => 'required|string|max:100',
-            'parent_phone' => ['required', 'string', 'max:20', function ($attr, $val, $fail) {
-                if (!preg_match('/^\+91\d{10}$/', $val)) {
-                    $fail('The parent phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
-                }
-            }],
-            'parent_email' => 'required|email|max:150',
-            'mother_phone' => ['nullable', 'string', 'max:20', function ($attr, $val, $fail) {
-                if (!empty($val) && !preg_match('/^\+91\d{10}$/', $val)) {
-                    $fail('The mother phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
-                }
-            }],
             'phone'        => ['required', 'string', 'max:20', function ($attr, $val, $fail) {
                 if (!preg_match('/^\+91\d{10}$/', $val)) {
                     $fail('The phone must be a valid Indian 10-digit number (+91XXXXXXXXXX).');
@@ -88,7 +75,6 @@ class EnrollmentController extends Controller
             'email'        => 'required|email|max:150',
             'address'      => 'required|string|max:500',
             'school'       => 'required|string|max:200',
-            'grade'        => 'nullable|string|max:200',
             'achievements' => 'nullable|string|max:1000',
             'state'        => 'required|string|max:100',
             'city'         => 'nullable|string|max:100',
@@ -141,9 +127,6 @@ class EnrollmentController extends Controller
 
             if ($enrollment) {
                 $enrollment->update([
-                    'mother_phone'          => $validated['mother_phone'] ?? null,
-                    'parent_phone'          => $validated['parent_phone'],
-                    'parent_email'          => $validated['parent_email'],
                     'address'               => $validated['address'],
                     'city'                  => $validated['city'] ?? null,
                     'achievements'          => $validated['achievements'] ?? null,
@@ -164,16 +147,10 @@ class EnrollmentController extends Controller
                 'dob'                   => $validated['dob'],
                 'age'                   => $age,
                 'gender'                => $validated['gender'],
-                'father_name'           => $validated['father_name'],
-                'mother_name'           => $validated['mother_name'],
-                'mother_phone'          => $validated['mother_phone'] ?? null,
-                'parent_phone'          => $validated['parent_phone'],
-                'parent_email'          => $validated['parent_email'],
                 'phone'                 => $validated['phone'],
                 'email'                 => $validated['email'],
                 'address'               => $validated['address'],
                 'school'                => $validated['school'],
-                'grade'                 => $validated['grade'],
                 'achievements'          => $validated['achievements'] ?? null,
                 'state'                 => $validated['state'],
                 'city'                  => $validated['city'] ?? null,

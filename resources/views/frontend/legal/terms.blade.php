@@ -96,10 +96,10 @@
 
             <div class="legal-card">
                 <h2>1. Acceptance of Terms</h2>
-                <p>By accessing or using the <strong>Act To Action</strong> website, enrolling in any Threat Academy program, or registering for a workshop, you agree to be bound by these Terms &amp; Conditions. If you do not agree to these terms, please do not use our services.</p>
+                <p>By accessing or using the <strong>Threat Expert</strong> website, enrolling in any Threat Academy program, or registering for a workshop, you agree to be bound by these Terms &amp; Conditions. If you do not agree to these terms, please do not use our services.</p>
 
                 <h2>2. Services</h2>
-                <p>Act To Action provides Threat Academy courses, Cyber AI Threat Conclave programs, workshops, skill assessments, and related educational programs for children and young learners. We reserve the right to modify, add, or discontinue any program at any time.</p>
+                <p>Threat Expert provides Threat Academy courses, Cyber AI Threat Conclave programs, workshops, skill assessments, and related educational programs for children and young learners. We reserve the right to modify, add, or discontinue any program at any time.</p>
 
                 <h2>3. Enrollment &amp; Registration</h2>
                 <ul>
@@ -119,15 +119,15 @@
                 <p>Students are expected to attend sessions regularly and follow the code of conduct shared by our instructors. Disruptive behavior may result in suspension or termination of enrollment without a refund.</p>
 
                 <h2>6. Intellectual Property</h2>
-                <p>All content on this website — including text, graphics, logos, images, videos, and course materials — is the property of Act To Action and protected by copyright laws. You may not reproduce, distribute, or use any content without prior written permission.</p>
+                <p>All content on this website — including text, graphics, logos, images, videos, and course materials — is the property of Threat Expert and protected by copyright laws. You may not reproduce, distribute, or use any content without prior written permission.</p>
 
                 <h2>7. Photography &amp; Media</h2>
-                <p>Act To Action may capture photographs or videos during workshops and events for promotional purposes. By registering, you consent to the use of such media unless you notify us in writing to opt out.</p>
+                <p>Threat Expert may capture photographs or videos during workshops and events for promotional purposes. By registering, you consent to the use of such media unless you notify us in writing to opt out.</p>
 
                 <h2>8. Limitation of Liability</h2>
-                <p>Act To Action shall not be held liable for any indirect, incidental, or consequential damages resulting from participation in our programs or use of our website. Parents/guardians are responsible for ensuring the safety and well-being of their children during travel to and from our venues.</p>
+                <p>Threat Expert shall not be held liable for any indirect, incidental, or consequential damages resulting from participation in our programs or use of our website. Parents/guardians are responsible for ensuring the safety and well-being of their children during travel to and from our venues.</p>
 
-                <h2>9. Cancellation by Act To Action</h2>
+                <h2>9. Cancellation by Threat Expert</h2>
                 <p>We reserve the right to cancel or reschedule any workshop, course, or event due to unforeseen circumstances. In such cases, participants will be offered a rescheduled session or a full refund.</p>
 
                 <h2>10. Governing Law</h2>

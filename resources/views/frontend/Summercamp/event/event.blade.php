@@ -836,10 +836,10 @@
             <div class="container position-relative">
                 <div class="row align-items-center g-5">
                     <div class="col-lg-7">
-                        <div class="eyebrow"><i class="bi bi-calendar-star-fill"></i> Events & Programmes — Act to Action
+                        <div class="eyebrow"><i class="bi bi-calendar-star-fill"></i> Events & Programmes — Threat Expert
                         </div>
                         <h1>Where Young Talent Meets<br />the <em>Spotlight</em></h1>
-                        <p class="hero-sub">From inter-school drama competitions to graduation ceremonies — Act to Action
+                        <p class="hero-sub">From inter-school drama competitions to graduation ceremonies — Threat Expert
                             hosts Jaipur's most exciting performing arts events for children aged 3 to 29.</p>
                         <div class="d-flex flex-wrap gap-3">
                             <a href="https://wa.me/message/PE3X4SUC2OJTB1" target="_blank" class="btn-primary-solid">
@@ -1066,8 +1066,8 @@
                         <div class="biz-badge"><i class="bi bi-buildings-fill me-1"></i> For Schools & Institutions</div>
                         <h2>Bring Our Events to Your School</h2>
                         <p class="biz-p">Want to host DramATA, Actor's Chaupal, or a Cyber AI Threat Conclave at your school campus? We
-                            bring the full Act to Action experience directly to your students.</p>
-                        @foreach ([['bi-calendar-check-fill', 'Custom Event Scheduling', 'Choose a date that works for your school calendar — we\'ll come to you.'], ['bi-people-fill', 'Suitable for All Ages', 'From Nursery to Class 12 — tailored activities for every age group.'], ['bi-award-fill', 'Certificates & Awards', 'Every participant receives an official Act to Action certificate of participation.']] as [$ico, $title, $text])
+                            bring the full Threat Expert experience directly to your students.</p>
+                        @foreach ([['bi-calendar-check-fill', 'Custom Event Scheduling', 'Choose a date that works for your school calendar — we\'ll come to you.'], ['bi-people-fill', 'Suitable for All Ages', 'From Nursery to Class 12 — tailored activities for every age group.'], ['bi-award-fill', 'Certificates & Awards', 'Every participant receives an official Threat Expert certificate of participation.']] as [$ico, $title, $text])
                             <div class="biz-feature-row">
                                 <div class="biz-ico"><i class="bi {{ $ico }}"></i></div>
                                 <div>

@@ -34,8 +34,8 @@
                 <!-- Logo -->
                 <a href="https://www.threatxpert.com" class="logo">
                     <img src="https://static.wixstatic.com/media/495d44_61ec90165a4341cb9bb1dde53c1657c6~mv2.png/v1/fill/w_132,h_74,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/4k%20Act%20To%20Action.png"
-                        alt="Act To Action" />
-                    <h1>Act To Action</h1>
+                        alt="Threat Expert" />
+                    <h1>Threat Expert</h1>
                 </a>
 
                 <div class="header-right">
@@ -147,7 +147,7 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-6 order-2 order-lg-1">
                     <h2 class="section-heading">Cyber AI Threat Conclave for Young Dreamers — Jaipur 2025</h2>
-                    <p class="lead-p">Act To Action's Cyber AI Threat Conclave 2025 brought together young performers from across
+                    <p class="lead-p">Threat Expert's Cyber AI Threat Conclave 2025 brought together young performers from across
                         Jaipur for a transformative journey into performing arts.</p>
                     <p class="body-p">From drama workshops to dance sessions, our expert faculty guided children aged
                         5–17 through immersive experiences that built confidence, creativity and lifelong friendships.
@@ -732,7 +732,7 @@
         <div class="container">
             <div class="sec-title">
                 <h2>What Parents Say</h2>
-                <p>Hear from families whose children transformed through Act To Action Cyber AI Threat Conclave 2025.
+                <p>Hear from families whose children transformed through Threat Expert Cyber AI Threat Conclave 2025.
                 </p>
             </div>
             <div class="swiper ts-swiper" id="tsSwiper">

@@ -214,8 +214,8 @@ h6 {
 }
 
 .header .branding {
-  min-height: 60px;
-  padding: 10px 0;
+  min-height: auto;
+  padding: 6px 0;
 }
 
 .header .logo {
@@ -223,7 +223,7 @@ h6 {
 }
 
 .header .logo img {
-  max-height: 86px;
+  max-height: 60px;
   margin-right: 8px;
 }
 

@@ -16,7 +16,7 @@ class SchoolSectionSeeder extends Seeder
             ['slug' => 'curriculum'],
             [
                 'name'        => 'Curriculum',
-                'description' => 'Schools partnered with Act to Action for our core curriculum programme.',
+                'description' => 'Schools partnered with Threat Expert for our core curriculum programme.',
                 'sort_order'  => 1,
                 'status'      => true,
             ]

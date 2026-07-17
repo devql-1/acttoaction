@@ -107,7 +107,7 @@
                                         <div class="form-group">
                                             <label class="form-label fw-bold">Channel Name</label>
                                             <input type="text" name="channel_name" class="form-control"
-                                                value="{{ old('channel_name', 'Act to Action') }}" />
+                                                value="{{ old('channel_name', 'Threat Expert') }}" />
                                         </div>
                                     </div>
                                 </div>

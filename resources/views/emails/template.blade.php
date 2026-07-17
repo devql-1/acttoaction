@@ -80,13 +80,13 @@
 <body>
     <div class="wrap">
         <div class="header">
-            <h1>🎭 Act To Action</h1>
+            <h1>🎭 Threat Expert</h1>
         </div>
         <div class="body">
             {!! $htmlBody !!}
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} Act To Action · India's First Screen Acting School<br>
+            &copy; {{ date('Y') }} Threat Expert · Cybersecurity Education & Innovation<br>
             <a href="https://www.threatxpert.com">www.threatxpert.com</a> ·
             <a href="https://wa.me/919352023276">WhatsApp Support</a>
         </div>

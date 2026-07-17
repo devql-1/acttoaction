@@ -6,9 +6,14 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ActtoAction</title>
+    <title>Threat Expert</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="{{ asset('img/logo/logo.png') }}">
+
+    <!-- Shared navbar assets (keep home navbar identical to other pages) -->
+    <link href="{{ asset('courseassets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('courseassets/css/main.css') }}" rel="stylesheet">
     <style>
         /* ===== RESET & BASE ===== */
         *,
@@ -33,18 +38,6 @@
             min-height: 100vh;
         }
 
-        /* ===== TOPBAR ===== */
-        .topbar {
-            width: 100%;
-            padding: 16px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #ffffff;
-            position: relative;
-            z-index: 10;
-            flex-shrink: 0;
-        }
 
         .logo img {
             height: 80px;
@@ -375,148 +368,10 @@
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
 
-        /* ===== BOTTOM NAV (DESKTOP) ===== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%) translateY(40px);
-            background: #0f2747;
-            color: #ffffff;
-            padding: 14px 32px;
-            border-radius: 50px;
-            display: flex;
-            gap: 30px;
-            font-size: 15px;
-            font-family: Arial, sans-serif;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-            z-index: 200;
-            opacity: 0;
-            animation: navSlideUp 0.8s ease 0.6s forwards;
-        }
 
-        .bottom-nav a {
-            text-decoration: none;
-            color: #ffffff;
-            display: inline-block;
-        }
 
-        .bottom-nav a div {
-            cursor: pointer;
-            transition: color 0.25s ease, transform 0.25s ease;
-            white-space: nowrap;
-            user-select: none;
-        }
 
-        .bottom-nav a div:hover {
-            color: #7C3AED;
-            transform: translateY(-3px);
-        }
 
-        .bottom-nav a div.active {
-            color: #7C3AED;
-            font-weight: 600;
-        }
-
-        /* ===== HAMBURGER BUTTON (MOBILE) ===== */
-        .hamburger-btn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #0f2747;
-            color: #ffffff;
-            border: none;
-            border-radius: 33px;
-            padding: 13px 28px;
-            font-size: 15px;
-            font-weight: 600;
-            font-family: Arial, sans-serif;
-            cursor: pointer;
-            z-index: 201;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
-            align-items: center;
-            gap: 10px;
-            transition: background 0.25s ease;
-        }
-
-        .hamburger-btn:hover {
-            background: #1a3a62;
-        }
-
-        .hb-bars {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .hb-bars span {
-            width: 18px;
-            height: 2px;
-            background: #ffffff;
-            border-radius: 2px;
-            display: block;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        /* ===== MOBILE MENU ===== */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            bottom: 78px;
-            left: 50%;
-            transform: translateX(-50%) scale(0.94);
-            background: #0f2747;
-            border-radius: 20px;
-            padding: 8px 12px;
-            z-index: 202;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
-            min-width: 190px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.22s ease, transform 0.22s ease;
-        }
-
-        .mobile-menu.open {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
-            pointer-events: all;
-        }
-
-        .mobile-menu a {
-            display: block;
-            text-decoration: none;
-            color: #ffffff;
-            padding: 13px 18px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 500;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            transition: background 0.2s ease, color 0.2s ease;
-        }
-
-        .mobile-menu a+a {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .mobile-menu a:hover {
-            background: rgba(255, 106, 0, 0.18);
-            color: #7C3AED;
-        }
-
-        /* ===== SUPPORT BUTTON ===== */
-        .support {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 200;
-        }
-
-        .support .pill-btn {
-            box-shadow: 0 6px 20px rgba(255, 106, 0, 0.38);
-        }
 
         /* ===== ANIMATIONS ===== */
         @keyframes fadeSlide {
@@ -531,17 +386,6 @@
             }
         }
 
-        @keyframes navSlideUp {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
 
         /* ===== LARGE DESKTOP (1200px+) ===== */
         @media (min-width: 1200px) {
@@ -558,15 +402,9 @@
             }
         }
 
-        /* ===== TABLET (601px – 900px) ===== */
+        /* ===== TABLET (601px â€“ 900px) ===== */
         @media (max-width: 900px) and (min-width: 601px) {
-            .topbar {
-                padding: 14px 30px;
-            }
 
-            .logo img {
-                height: 56px;
-            }
 
             .site-banner {
                 height: 260px;
@@ -612,27 +450,12 @@
                 font-size: 10px;
             }
 
-            .bottom-nav {
-                font-size: 14px;
-                gap: 20px;
-                padding: 12px 24px;
-            }
 
-            .support .pill-btn {
-                font-size: 13px;
-                padding: 8px 16px;
-            }
         }
 
-        /* ===== MOBILE (≤ 600px) ===== */
+        /* ===== MOBILE (â‰¤ 600px) ===== */
         @media (max-width: 600px) {
-            .topbar {
-                padding: 10px 16px;
-            }
 
-            .logo img {
-                height: 48px;
-            }
 
             .site-banner {
                 height: 200px;
@@ -697,30 +520,13 @@
                 padding: 6px 8px;
             }
 
-            .bottom-nav {
-                display: none !important;
-            }
 
-            .hamburger-btn {
-                display: flex !important;
-            }
 
-            .mobile-menu {
-                display: block;
-            }
 
-            .support {
-                bottom: 18px;
-                right: 12px;
-            }
 
-            .support .pill-btn {
-                font-size: 12px;
-                padding: 9px 13px;
-            }
         }
 
-        /* ===== SMALL MOBILE (≤ 380px) ===== */
+        /* ===== SMALL MOBILE (â‰¤ 380px) ===== */
         @media (max-width: 380px) {
             .site-banner {
                 height: 170px;
@@ -860,7 +666,7 @@
             color: #ffffff;
         }
 
-        /* ===== TABLET (601px – 900px) ===== */
+        /* ===== TABLET (601px â€“ 900px) ===== */
         @media (max-width: 900px) and (min-width: 601px) {
             .ann-bar {
                 font-size: 11px;
@@ -882,7 +688,7 @@
             }
         }
 
-        /* ===== MOBILE (≤ 600px) ===== */
+        /* ===== MOBILE (â‰¤ 600px) ===== */
         @media (max-width: 600px) {
             .ann-bar {
                 font-size: 10.5px;
@@ -919,7 +725,7 @@
             }
         }
 
-        /* ===== SMALL MOBILE (≤ 380px) ===== */
+        /* ===== SMALL MOBILE (â‰¤ 380px) ===== */
         @media (max-width: 380px) {
             .ann-bar {
                 font-size: 9.5px;
@@ -942,18 +748,32 @@
                 font-size: 11px;
             }
         }
+        </style>
+
+    <!-- Home-page navbar: reuse shared navbar but render in normal flow (not fixed) so it never overlaps the banner -->
+    <style>
+        body.home-page .header.fixed-top {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            z-index: 997;
+        }
+
+        body.home-page .header {
+            box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+        }
+
+        /* When the shared navbar is in normal flow, the hero should sit directly beneath it */
+        body.home-page .site-banner {
+            margin-top: 0;
+        }
     </style>
 </head>
 
-<body>
+<body class="home-page">
 
-    @include('frontend.partialspages.ann_bar')
-    <!-- HEADER -->
-    <header class="topbar">
-        <div class="logo">
-            <img src="{{ asset('img/logo/logo.png') }}" alt="ActToAction Logo">
-        </div>
-    </header>
+    @include('frontend.partialspages.navbar')
 
     <section class="site-banner">
         <img src="{{ asset('courseassets/img/homebanner/hommebanner.jpeg') }}" alt="Site Banner">
@@ -989,66 +809,7 @@
         </div>
     </section>
 
-    <!-- BOTTOM NAVIGATION (DESKTOP) -->
-    <nav class="bottom-nav">
-        <a href="{{ route('frontend.blog.index') }}">
-            <div>Blog</div>
-        </a>
-        <a href="{{ route('event') }}">
-            <div>Events</div>
-        </a>
-        <a href="{{ route('aboutus') }}">
-            <div>About us</div>
-        </a>
-        <a href="{{ route('volunteer') }}">
-            <div>Join us</div>
-        </a>
-    </nav>
 
-    <!-- HAMBURGER BUTTON (MOBILE) -->
-    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Open menu">
-        <div class="hb-bars">
-            <span id="hb1"></span>
-            <span id="hb2"></span>
-            <span id="hb3"></span>
-        </div>
-        Menu
-    </button>
-
-    <!-- MOBILE MENU DRAWER -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="{{ route('frontend.blog.index') }}">Blog</a>
-        <a href="{{ route('event') }}">Events</a>
-        <a href="{{ route('aboutus') }}">About us</a>
-        <a href="{{ route('volunteer') }}">
-            <div>Join us</div>
-        </a>
-    </div>
-
-    <!-- SUPPORT BUTTON -->
-    <div class="support">
-        <button class="pill-btn">&#128172; Support</button>
-    </div>
-    <script>
-        function toggleMenu() {
-            var menu = document.getElementById('mobileMenu');
-            var open = menu.classList.toggle('open');
-            document.getElementById('hb1').style.transform = open ? 'rotate(45deg) translate(4px, 4px)' : '';
-            document.getElementById('hb2').style.opacity = open ? '0' : '1';
-            document.getElementById('hb3').style.transform = open ? 'rotate(-45deg) translate(4px, -4px)' : '';
-        }
-
-        document.addEventListener('click', function(e) {
-            var menu = document.getElementById('mobileMenu');
-            var btn = document.getElementById('hamburgerBtn');
-            if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
-                menu.classList.remove('open');
-                document.getElementById('hb1').style.transform = '';
-                document.getElementById('hb2').style.opacity = '';
-                document.getElementById('hb3').style.transform = '';
-            }
-        });
-    </script>
     @include('frontend.Home.notification')
 
 </body>
@@ -1058,3 +819,5 @@
 
 
 </html>
+
+

@@ -33,7 +33,7 @@
   <!-- CSS Files -->
   <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" />
   <link rel="stylesheet" href="{{asset('assets/css/plugins.min.css')}}" />
-  <link rel="stylesheet" href="{{asset('assets/css/acttoaction.min.css')}}" />
+  <link rel="stylesheet" href="{{asset('assets/css/threatexpert.min.css')}}" />
 
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}" />
@@ -170,10 +170,10 @@
 
   <!-- Sweet Alert -->
 
-  <!-- Acttoaction JS -->
-  <script src="{{asset('assets/js/acttoaction.min.js')}}"></script>
+  <!-- Threatexpert JS -->
+  <script src="{{asset('assets/js/threatexpert.min.js')}}"></script>
 
-  <!-- Acttoaction DEMO methods, don't include it in your project! -->
+  <!-- Threatexpert DEMO methods, don't include it in your project! -->
   <script src="{{asset('assets/js/setting-demo.js')}}"></script>
   <script src="{{asset('assets/js/demo.js')}}"></script>
 
